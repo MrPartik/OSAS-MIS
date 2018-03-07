@@ -1,0 +1,177 @@
+<?php 
+include ('connection.php');    
+$view_studProfile_cond = "";
+$view_studSanctionCond ="";
+$view_studSanctionComputation="";
+$view_studSanctionDetails ="";
+$view_studFinanCond ="";
+$view_studLossCond="";
+                function dateNow()
+                {
+                    return  date('D M d, Y h:i A');
+                }
+                function viewStud_LossCond($ID,$StudNo) 
+                {
+                    global $view_studLossCond;
+                    $view_studLossCond = mysql_query("SELECT  `AssLoss_ID` ID
+                                        ,`AssLoss_STUD_NO` StudNo
+                                        ,`AssLoss_TYPE` type
+                                         ,`AssLoss_REMARKS` remarks
+                                         ,`AssLoss_DATE_CLAIM` claim
+                                        ,`AssLoss_DATE_ADD` start 
+                                        ,`AssLoss_DATE_MOD` mods
+                                        ,`AssLoss_DISPLAY_STAT` display
+                                        FROM t_assign_stud_loss_id_regicard
+                                        where (`AssLoss_STUD_NO` = '$StudNo'
+                                        or `AssLoss_ID` = $ID )
+                                        and `AssLoss_DISPLAY_STAT` <>'Inactive' ");
+                }
+                function viewFinanStudCond($ID,$StudNo)
+                {
+                    global $view_studFinanCond;
+                    $view_studFinanCond = mysql_query("SELECT 
+                                        B.AssStudFinanAssistance_ID AssID
+                                        ,B.AssStudFinanAssistance_DATE_ADD Start
+                                        ,B.AssStudFinanAssistance_DATE_MOD Mods
+                                        ,A.Stud_NO
+                                        ,CONCAT(A.Stud_LNAME,', ',A.Stud_FNAME,' ',COALESCE(A.Stud_MNAME,'')) AS FullName 
+                                        ,A.Stud_EMAIL
+                                        ,A.Stud_CONTACT_NO
+                                        ,b.AssStudFinanAssistance_REMARKS remarks
+                                        ,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) as Course
+                                        ,B.AssStudFinanAssistance_STATUS as Status
+                                        ,B.AssStudFinanAssistance_FINAN_NAME as Finan_Name
+                                        ,C.FinAssiTitle_DESC FinanDesc
+                                        ,C.FinAssiTitle_DESC as Finan_Desc
+                                        ,b.AssStudFinanAssistance_ID as ID
+                                        FROM r_stud_profile a
+                                        right join t_assign_stud_finan_assistance b
+                                        on a.Stud_NO =b.AssStudFinanAssistance_STUD_NO
+                                        inner join r_financial_assistance_title c 
+                                        on b.AssStudFinanAssistance_FINAN_NAME = c.FinAssiTitle_NAME
+                                        WHERE
+                                        a.Stud_DISPLAY_STATUS = 'Active'
+                                        and b.AssStudFinanAssistance_DISPLAY_STAT <> 'Inactive'
+                                        and c.FinAssiTitle_DISPLAY_STAT <> 'Inactive' and
+                                        ( a.Stud_NO = '$StudNo'
+                                        or b.AssStudFinanAssistance_ID = $ID)");
+                }
+                function viewStudProfileCond($StudID,$Studno)
+                {
+                    global $view_studProfile_cond; 
+                    $view_studProfile_cond = mysql_query("select Stud_ID as ID ,Stud_NO ,Stud_LNAME,Stud_FNAME,Stud_MNAME,CONCAT(Stud_LNAME,', ',Stud_FNAME,' ',COALESCE(Stud_MNAME,'')) as FullName ,Stud_COURSE,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) as Course ,Stud_EMAIL , Stud_SECTION,Stud_CONTACT_NO ,Stud_GENDER ,Stud_BIRHT_DATE ,Stud_BIRTH_PLACE ,Stud_STATUS ,Stud_ADDRESS FROM osas.r_stud_profile where (Stud_id = $StudID or Stud_NO= '$Studno') and Stud_DISPLAY_STATUS='active'"); 
+                }
+                function viewStudSanctionCond($StudNO)
+                {
+                    global $view_studSanctionCond;
+                    $view_studSanctionCond = mysql_query("SELECT A.Stud_NO
+                                    ,CONCAT(A.Stud_LNAME,', ',A.Stud_FNAME,' ',COALESCE(A.Stud_MNAME,'')) AS FullName
+                                    ,C.SancDetails_NAME AS SanctionName
+                                    ,C.SancDetails_TIMEVAL AS TimeVal
+                                    ,D.DesOffDetails_NAME AS Office
+                                    ,b.AssSancStudStudent_CONSUMED_HOURS AS Consumed
+                                    ,b.AssSancStudStudent_DATE_ADD AS start
+                                    ,b.AssSancStudStudent_DATE_MOD as mods
+                                    FROM r_stud_profile A
+                                    INNER JOIN  t_assign_stud_saction B ON 
+                                        A.Stud_NO = B.AssSancStudStudent_STUD_NO
+                                    INNER JOIN r_sanction_details C ON
+                                        C.SancDetails_CODE = B.AssSancStudStudent_SancDetails_CODE
+                                    INNER JOIN r_designated_offices_details D ON
+                                        D.DesOffDetails_CODE = B.AssSancStudStudent_DesOffDetails_CODE 
+                                    WHERE A.Stud_DISPLAY_STATUS='ACTIVE'
+                                    AND B.AssSancStudStudent_DISPLAY_STAT='ACTIVE'
+                                    AND C.SancDetails_DISPLAY_STAT='ACTIVE'
+                                    AND D.DesOffDetails_DISPLAY_STAT='ACTIVE'
+                                    AND B.AssSancStudStudent_IS_FINISH<>'FINISHED'
+                                    AND A.Stud_NO = '$StudNO'
+                                    AND B.AssSancStudStudent_CONSUMED_HOURS <> C.SancDetails_TIMEVAL ");
+                }
+         
+                function viewStudSanctionComputation($StudNO)
+                {
+                    global $view_studSanctionComputation;
+                    $view_studSanctionComputation = mysql_query("SELECT A.Stud_NO  
+                                    ,SUM(C.SancDetails_TIMEVAL) AS TimeVal 
+                                    ,SUM(B.AssSancStudStudent_CONSUMED_HOURS) AS Consumed
+                                    ,(SUM(C.SancDetails_TIMEVAL) - SUM(B.AssSancStudStudent_CONSUMED_HOURS)) AS TOTAL
+                                    ,((SUM(B.AssSancStudStudent_CONSUMED_HOURS)/ SUM(C.SancDetails_TIMEVAL))*100) AS Percentage
+                                    FROM r_stud_profile A
+                                    INNER JOIN  t_assign_stud_saction B ON
+                                        A.Stud_NO = B.AssSancStudStudent_STUD_NO
+                                    INNER JOIN r_sanction_details C ON
+                                        C.SancDetails_CODE = B.AssSancStudStudent_SancDetails_CODE 
+                                    WHERE A.Stud_DISPLAY_STATUS='ACTIVE'
+                                    AND B.AssSancStudStudent_DISPLAY_STAT='ACTIVE'
+                                    AND C.SancDetails_DISPLAY_STAT='ACTIVE' 
+                                    AND B.AssSancStudStudent_IS_FINISH<>'FINISHED'
+                                    AND B.AssSancStudStudent_CONSUMED_HOURS <> C.SancDetails_TIMEVAL
+                                    AND A.Stud_NO = '$StudNO'
+                                    GROUP BY A.Stud_NO");
+                } 
+            
+            function view_studSanctionDetails($StudNo)
+            {
+                global $view_studSanctionDetails;
+                $view_studSanctionDetails= mysql_query("SELECT B.AssSancStudStudent_ID AssSancID
+                                    ,A.Stud_NO
+                                    ,CONCAT(A.Stud_LNAME,', ',A.Stud_FNAME,' ',COALESCE(A.Stud_MNAME,'')) AS FullName
+                                    ,C.SancDetails_NAME AS SanctionName
+                                    ,C.SancDetails_TIMEVAL AS TimeVal
+                                    ,D.DesOffDetails_NAME AS Office
+                                    ,b.AssSancStudStudent_CONSUMED_HOURS AS Consumed
+                                    ,B.AssSancStudStudent_IS_FINISH AS FINISHED
+                                    ,B.AssSancStudStudent_DATE_ADD Start
+                                    ,B.AssSancStudStudent_DATE_MOD Mods
+                                    ,B.AssSancStudStudent_REMARKS Remarks
+                                    FROM r_stud_profile A
+                                    INNER JOIN  t_assign_stud_saction B ON
+                                        A.Stud_NO = B.AssSancStudStudent_STUD_NO
+                                    INNER JOIN r_sanction_details C ON
+                                        C.SancDetails_CODE = B.AssSancStudStudent_SancDetails_CODE
+                                    INNER JOIN r_designated_offices_details D ON
+                                        D.DesOffDetails_CODE = B.AssSancStudStudent_DesOffDetails_CODE 
+                                    WHERE A.Stud_DISPLAY_STATUS='ACTIVE'
+                                    AND B.AssSancStudStudent_DISPLAY_STAT='ACTIVE'
+                                    AND C.SancDetails_DISPLAY_STAT='ACTIVE'
+                                    AND D.DesOffDetails_DISPLAY_STAT='ACTIVE'
+                                    AND A.Stud_NO ='$StudNo'
+                                    ORDER BY B.AssSancStudStudent_DATE_MOD DESC");
+}
+
+$view_studSanction = mysql_query("SELECT B.AssSancStudStudent_ID AssSancID
+                                    ,A.Stud_NO
+                                    ,CONCAT(A.Stud_LNAME,', ',A.Stud_FNAME,' ',COALESCE(A.Stud_MNAME,'')) AS FullName
+                                    ,C.SancDetails_NAME AS SanctionName
+                                    ,C.SancDetails_TIMEVAL AS TimeVal
+                                    ,D.DesOffDetails_NAME AS Office
+                                    ,b.AssSancStudStudent_CONSUMED_HOURS AS Consumed
+                                    FROM r_stud_profile A
+                                    INNER JOIN  t_assign_stud_saction B ON
+                                        A.Stud_NO = B.AssSancStudStudent_STUD_NO
+                                    INNER JOIN r_sanction_details C ON
+                                        C.SancDetails_CODE = B.AssSancStudStudent_SancDetails_CODE
+                                    INNER JOIN r_designated_offices_details D ON
+                                        D.DesOffDetails_CODE = B.AssSancStudStudent_DesOffDetails_CODE 
+                                    WHERE A.Stud_DISPLAY_STATUS='ACTIVE'
+                                    AND B.AssSancStudStudent_DISPLAY_STAT='ACTIVE'
+                                    AND C.SancDetails_DISPLAY_STAT='ACTIVE'
+                                    AND D.DesOffDetails_DISPLAY_STAT='ACTIVE' 
+                                    AND B.AssSancStudStudent_IS_FINISH<>'FINISHED'
+                                    AND B.AssSancStudStudent_CONSUMED_HOURS <> C.SancDetails_TIMEVAL ");
+
+
+$view_studProfile = mysql_query("select Stud_ID as ID 
+                                    ,Stud_NO ,CONCAT(Stud_LNAME,', ',Stud_FNAME,' ',COALESCE(Stud_MNAME,'')) as FullName 
+                                    ,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) as Course
+                                    ,Stud_EMAIL ,Stud_CONTACT_NO 
+                                    ,Stud_GENDER 
+                                    ,Stud_BIRHT_DATE
+                                    ,Stud_BIRTH_PLACE 
+                                    ,Stud_STATUS 
+                                    ,Stud_ADDRESS
+                                    ,Stud_DATE_ADD  
+                                        FROM osas.r_stud_profile 
+                                    where Stud_DISPLAY_STATUS='active'"); 
+
+$view_course = mysql_query("select * from r_courses where course_display_stat ='active'"); ?>
