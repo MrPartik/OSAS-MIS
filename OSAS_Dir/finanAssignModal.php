@@ -148,19 +148,14 @@
                 var dataSrc = [];
                 var table = $('#dynamic-table-modal').DataTable({
                     'initComplete': function () {
-                        var api = this.api();
-                        // Populate a dataset for autocomplete functionality
-                        // using data from first, second and third columns
-                        api.cells('tr', [1]).every(function () {
-                            // Get cell data as plain text
+                        var api = this.api(); 
+                        api.cells('tr', [1]).every(function () { 
                             var data = $('<div>').html(this.data()).text();
                             if (dataSrc.indexOf(data) === -1) {
                                 dataSrc.push(data);
                             }
-                        });
-                        // Sort dataset alphabetically
-                        dataSrc.sort();
-                        // Initialize Typeahead plug-in
+                        }); 
+                        dataSrc.sort(); 
                         $('.dataTables_filter input[type="search"]', api.table().container()).typeahead({
                             source: dataSrc
                             , afterSelect: function (value) {
@@ -168,8 +163,8 @@
                             }
                         });
                     }
-                    , bDestroy: true
-                    , aaSorting: [[1, "desc"]]
+                    , bDestroy: true 
+                    ,iDisplayLength: 3
                 });
             });
             $('#addFinanStud').on("click", function () {
