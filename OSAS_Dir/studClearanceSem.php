@@ -51,17 +51,8 @@ $currentPage ='OSAS_StudClearance';
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php     
-                                        if($count_stud <= 0) { ?>
-                                                    <tr>
-                                                        <td>Empty table</td>
-                                                        <td> </td>
-                                                        <td> </td>
-                                                        <td> </td>
-                                                        <td> </td>
-                                                        <td> </td>
-                                                    </tr>
-                                                    <?php } else { while($stud_row=mysql_fetch_array($view_studProfile)) { ?>
+                                                
+                                                    <?php   while($stud_row=mysql_fetch_array($view_studProfile)) { ?>
                                                         <tr>
                                                             <td>
                                                                 <?php echo $stud_row['Stud_NO'];?>
@@ -105,7 +96,7 @@ $currentPage ='OSAS_StudClearance';
                                                                 </center>
                                                             </td>
                                                         </tr>
-                                                        <?php }}?>
+                                                        <?php }?>
                                             </tbody>
                                             <tfoot>
                                                 <tr>

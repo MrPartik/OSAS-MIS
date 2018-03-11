@@ -120,19 +120,14 @@ $currentPage ='OSAS_Financial';
                         var dataSrc = [];
                         var table = $('#dynamic-table').DataTable({
                             'initComplete': function () {
-                                var api = this.api();
-                                // Populate a dataset for autocomplete functionality
-                                // using data from first, second and third columns
-                                api.cells('tr', [0, 1, 2]).every(function () {
-                                    // Get cell data as plain text
+                                var api = this.api(); 
+                                api.cells('tr', [0, 1, 2]).every(function () { 
                                     var data = $('<div>').html(this.data()).text();
                                     if (dataSrc.indexOf(data) === -1) {
                                         dataSrc.push(data);
                                     }
-                                });
-                                // Sort dataset alphabetically
-                                dataSrc.sort();
-                                // Initialize Typeahead plug-in
+                                }); 
+                                dataSrc.sort(); 
                                 $('.dataTables_filter input[type="search"]', api.table().container()).typeahead({
                                     source: dataSrc
                                     , afterSelect: function (value) {
