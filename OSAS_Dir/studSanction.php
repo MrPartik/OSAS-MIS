@@ -40,7 +40,7 @@ $currentPage ='OSAS_StudSanction';
                                         <table class="display table table-bordered table-striped" id="dynamic-table">
                                             <thead>
                                                 <tr>
-                                                    <th>Student Number</th>
+                                                    <th width="15%">Student Number</th>
                                                     <th>Full Name</th>
                                                     <th>Course year and Section</th>
                                                     <th>Status</th>
@@ -89,13 +89,12 @@ $currentPage ='OSAS_StudSanction';
                                                                     </div>
                                                                     <?php }?>
                                                             </td>
-                                                            <td>
                                                                 <?php   
                                                                         $StudNo= $stud_row['Stud_NO'];
-                                                                       $row=mysql_fetch_array(mysql_query("select max(AssSancStudStudent_DATE_MOD) from t_assign_stud_saction where AssSancStudStudent_STUD_NO ='$StudNo'"));
-                                                                        echo  ($row[0]==null )?"":(new DateTime($row[0]))->format('D M d, Y h:i A');
-                                                                                                                          
-                                                                ?>
+                                                                       $row=mysql_fetch_array(mysql_query("select max(AssSancStudStudent_DATE_MOD) from t_assign_stud_saction where AssSancStudStudent_STUD_NO ='$StudNo'"));?>
+                                                            
+                                                            <td data-order="<?php   echo  ($row[0]==null )?"":($row[0]); ?>">
+                                                                     <?php   echo  ($row[0]==null )?"":(new DateTime($row[0]))->format('D M d, Y h:i A'); ?>
                                                             </td>
                                                             <td>
                                                                 <center>
