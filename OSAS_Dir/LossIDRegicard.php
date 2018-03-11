@@ -81,15 +81,11 @@ $currentPage ='OSAS_LossID';
                                                                 ?>
                                                                     <center> <span title="Identification Card" class="label label-success"><?php echo $ID ?> </span> &nbsp; <span title="Registration Card" class="label label-info"><?php echo $Regi  ?></span></center>
                                                             </td>
-                                                            <td>
                                                                 <?php   
                                                                         $StudNo= $stud_row['Stud_NO'];
                                                                        $row=mysql_fetch_array(mysql_query("select max(AssLoss_DATE_MOD) from t_assign_stud_loss_id_regicard
-                                                                        where AssLoss_STUD_NO ='$StudNo' and AssLoss_DISPLAY_STAT='Active'"));
-                                                                        echo  ($row[0]==null )?"":(new DateTime($row[0]))->format('D M d, Y h:i A');
-                                                                                                                          
-                                                                ?>
-                                                            </td>
+                                                                        where AssLoss_STUD_NO ='$StudNo' and AssLoss_DISPLAY_STAT='Active'")); ?>
+                                                            <td data-order="<?php    echo  ($row[0]==null )?"":($row[0]);  ?>"> <?php    echo  ($row[0]==null )?"":(new DateTime($row[0]))->format('D M d, Y h:i A');  ?> </td>
                                                             <td>
                                                                 <center>
                                                                     <button id="btnStudLoss" value="<?php echo $stud_row['Stud_NO']; ?>" data-toggle="modal" href="#studLoss" class="btn btn-info"> <i class="fa  fa-info-circle"></i> </button>
@@ -117,8 +113,7 @@ $currentPage ='OSAS_LossID';
                         </div>
                     </div>
                 </section>
-            </section>
-            <!-- Modal -->
+            </section> 
             <!-- modal -->
             <div id="studLoss" class="modal fade content-loss" role="dialog"> </div>
             <!--main content end-->
@@ -130,19 +125,14 @@ $currentPage ='OSAS_LossID';
                         var dataSrc = [];
                         var table = $('#dynamic-table').DataTable({
                             'initComplete': function () {
-                                var api = this.api();
-                                // Populate a dataset for autocomplete functionality
-                                // using data from first, second and third columns
-                                api.cells('tr', [0, 1, 2]).every(function () {
-                                    // Get cell data as plain text
+                                var api = this.api(); 
+                                api.cells('tr', [0, 1, 2]).every(function () { 
                                     var data = $('<div>').html(this.data()).text();
                                     if (dataSrc.indexOf(data) === -1) {
                                         dataSrc.push(data);
                                     }
-                                });
-                                // Sort dataset alphabetically
-                                dataSrc.sort();
-                                // Initialize Typeahead plug-in
+                                }); 
+                                dataSrc.sort(); 
                                 $('.dataTables_filter input[type="search"]', api.table().container()).typeahead({
                                     source: dataSrc
                                     , afterSelect: function (value) {
