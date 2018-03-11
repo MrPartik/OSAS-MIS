@@ -1,6 +1,6 @@
-
-<?php include('../config/session.php'); 
-include('../config/dashboard/count.php'); 
+<?php 
+include('../config/dashboard/count.php');
+include('../config/session.php'); 
 include('../config/query.php')?>
     <!DOCTYPE html>
 <head>

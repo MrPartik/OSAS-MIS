@@ -2,33 +2,23 @@
 <html>
 
 <head>
-    <title>OSAS - Organization Category</title>
-    <?php include('../header.php');    
-$currentPage ='OSAS_OrganizationCategory'; include('../../../config/connection.php');
+    <title>OSAS - Financial Assistance Title</title>
+    <?php include('header.php');    
+$currentPage ='Admin_Title'; 
+include('../config/connection.php');
 ?>
-    <link href="../../../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-    <link href="../../../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../js/data-tables/DT_bootstrap.css" />
-
-    <!-- Custom styles for this template -->
-    <link href="../../../css/style.css" rel="stylesheet">
-    <link href="../../../css/style-responsive.css" rel="stylesheet" />
-
 </head>
 
 <body>
 
     <section id="container">
         <aside>
-            <div id="sidebar" class="nav-collapse">
-                <!-- sidebar menu start-->
-                <?php
+            <?php
                 
-                include('../sidenav.php')
+                include('sidenav.php')
             
             ?>
-                    <!-- sidebar menu end-->
-            </div>
+
         </aside>
         <!--sidebar end-->
         <!--main content start-->
@@ -40,10 +30,10 @@ $currentPage ='OSAS_OrganizationCategory'; include('../../../config/connection.p
                         <!--breadcrumbs start -->
                         <ul class="breadcrumbs-alt ">
                             <li>
-                                <a class="current" href="#">Organization Category</a>
+                                <a class="current" href="#">Financial Assistance Title</a>
                             </li>
                             <li>
-                                <a href="#">Organization Setup</a>
+                                <a href="#">Student Setup</a>
                             </li>
                             <!-- <li> -->
                             <!-- <a class="active-trail active" href="#">Pages</a> -->
@@ -78,38 +68,35 @@ $currentPage ='OSAS_OrganizationCategory'; include('../../../config/connection.p
                                     <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                         <thead>
                                             <tr>
-                                                <th>Category Code</th>
-                                                <th>Category Name</th>
-                                                <th>Category Description</th>
-                                                <th>Action</th>
-
+                                                <th>Title Code</th>
+                                                <th>Title Name</th>
+                                                <th>Title Description</th>
+                                                <th>Action</th> 
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php
-							
-										include('../connection.php');
-										
-										$view_query = mysqli_query($connection,"select * from `r_org_category` where OrgCat_DISPLAY_STAT = 'Active'");
-										while($row = mysqli_fetch_assoc($view_query))
-										{
-											$code = $row["OrgCat_CODE"];
-											$name = $row["OrgCat_NAME"];
-											$desc = $row["OrgCat_DESC"];											
-                                            $id = $row["OrgCat_ID"];										
-											
-											echo "
-											<tr>
-												<td>$code</td>
-												<td>$name</td>
-												<td>$desc</td>	
-												<td style='width:180px'>
-													<center>
-														<a class='btn btn-success edit' href='javascript:;'>Edit</a>
-														<a class='btn btn-danger delete' href='javascript:;'>Delete</a>								
-													<center>
-												</td>
-											</tr>
+                                            <?php 
+								$view_query = mysqli_query($con,"select * from `r_financial_assistance_title` where FinAssiTitle_DISPLAY_STAT = 'Active' ");
+								while($row = mysqli_fetch_assoc($view_query))
+								{
+									$code = $row["FinAssiTitle_CODE"];
+									$name = $row["FinAssiTitle_NAME"];
+									$desc = $row["FinAssiTitle_DESC"];										
+									$id = $row["FinAssiTitle_ID"];										
+									
+									echo "
+									<tr>
+										<td>$code</td>
+										<td>$name</td>
+										<td>$desc</td>
+										<td style='width:180px'>
+											<center>
+												<a class='btn btn-success edit' href='javascript:;'>Edit</a>
+												<a class='btn btn-danger delete' href='javascript:;'>Delete</a>								
+											<center>
+										</td>
+                                        
+									</tr>
 											";
 										}			
 											
@@ -117,6 +104,14 @@ $currentPage ='OSAS_OrganizationCategory'; include('../../../config/connection.p
 									?>
 
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Title Code</th>
+                                                <th>Title Name</th>
+                                                <th>Title Description</th>
+                                                <th>Action</th> 
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -156,21 +151,22 @@ $currentPage ='OSAS_OrganizationCategory'; include('../../../config/connection.p
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Add Organization Category</h4>
+                    <h4 class="modal-title">Add Financial Assistance Title</h4>
                 </div>
                 <div class="modal-body">
                     <form method="post" id="form-data">
-
+                        <div class="row">
+                            <header class="panel-heading">
+                                Title Code:
+                                <asd id='latcode'></asd>
+                            </header>
+                        </div>
                         <div class="row" style="padding-left:15px;padding-top:10px">
                             <div class="col-lg-6">
-                                Category Code <input type="text" class="form-control" placeholder="ex. ACAD_ORG" id="txtcode">
+                                Title Name <input type="text" class="form-control" placeholder="ex. CHED" id="txtname">
                             </div>
-                            <div class="col-lg-6">
-                                Category Name <input type="text" class="form-control" placeholder="ex. Academic Organization" id="txtname">
-                            </div>
-
                             <div class="col-lg-8 " style="padding-top:10px">
-                                Category Description<textarea class="form-control" placeholder="ex. For Academic Purpose" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
+                                Title Description<textarea class="form-control" placeholder="ex. Commission on Higher Education of the Philippines" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
                             </div>
                         </div>
                     </form>
@@ -182,54 +178,24 @@ $currentPage ='OSAS_OrganizationCategory'; include('../../../config/connection.p
             </div>
         </div>
     </div>
-
-    <!-- Placed js at the end of the document so the pages load faster -->
-
-    <!--Core js-->
-    <script src="../../../js/jquery-1.8.3.min.js"></script>
-    <script src="../../../bs3/js/bootstrap.min.js"></script>
-    <script class="include" type="text/javascript" src="../../../js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="../../../js/jquery.scrollTo.min.js"></script>
-    <script src="../../../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-    <script src="../../../js/jquery.nicescroll.js"></script>
-    <!--Easy Pie Chart-->
-    <script src="../../../js/easypiechart/jquery.easypiechart.js"></script>
-    <!--Sparkline Chart-->
-    <script src="../../../js/sparkline/jquery.sparkline.js"></script>
-    <!--jQuery Flot Chart-->
-    <script src="../js/flot-chart/jquery.flot.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.tooltip.min.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.resize.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.pie.resize.js"></script>
-
-    <script type="text/javascript" src="../../../js/data-tables/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="../../../js/data-tables/DT_bootstrap.js"></script>
-    <script type="text/javascript" src="../sweetalert/sweetalert.min.js"></script>
-
-    <!--common script init for all pages-->
-    <script src="../../../js/scripts.js"></script>
-
-    <!--script for this page only-->
-    <script src="OrganizationCategory.js"></script>
+    <?php include("footer.php")?>
+    <script src="StudentSetup/Title.js"></script>
 
     <!-- END JAVASCRIPTS -->
     <script>
-        //        $(document).ready(function() {
-        //            $('.add').click(function() {
-        //                $.ajax({
-        //                    type: "GET",
-        //                    url: 'OrganizationCategory/GetLatest-Code.php',
-        //                    success: function(data) {
-        //                        jqTds[0].innerHTML = '<input type="text" class="form-control small " value="' + data + '" disabled style="width:100%">';
-        //                    }
-        //                });
-        //                jqTds[1].innerHTML = '<input type="text" class="form-control small" value="' + aData[1] + '" style="width:100%">';
-        //                jqTds[2].innerHTML = '<input type="text" class="form-control small" value="' + aData[2] + '" style="width:100%">';
-        //                jqTds[3].innerHTML = '<center><a class="btn btn-success  edit" href="">Add</a> <a class="btn btn-danger cancel" href="">Cancel</a></center>';
-        //
-        //            });
-        //
-        //        });
+        $(document).ready(function() {
+            $('.add').click(function() {
+                $.ajax({
+                    type: "GET",
+                    url: 'StudentSetup/Title/GetLatest-Code.php',
+                    success: function(data) {
+                        document.getElementById('latcode').innerText = data;
+                    }
+                });
+
+            });
+
+        });
         jQuery(document).ready(function() {
             EditableTable.init();
         });

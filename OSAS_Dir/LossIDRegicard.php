@@ -47,18 +47,8 @@ $currentPage ='OSAS_LossID';
                                                     </th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <?php     
-                                        if($count_stud <= 0) { ?>
-                                                    <tr>
-                                                        <td>Empty table</td>
-                                                        <td> </td>
-                                                        <td> </td>
-                                                        <td> </td>
-                                                        <td> </td>
-                                                        <td> </td>
-                                                    </tr>
-                                                    <?php } else { while($stud_row=mysql_fetch_array($view_studProfile)) { ?>
+                                            <tbody> 
+                                                    <?php  while($stud_row=mysqli_fetch_array($view_studProfile)) { ?>
                                                         <tr>
                                                             <td>
                                                                 <?php echo $stud_row['Stud_NO'];?>
@@ -74,7 +64,7 @@ $currentPage ='OSAS_LossID';
                                                                             $ID =0;
                                                                             $Regi =0;
                                                                             $StudNo =$stud_row['Stud_NO'];
-                                                                            $row = mysql_fetch_array(mysql_query("SELECT (SELECT Count(`AssLoss_STUD_NO`) FROM `t_assign_stud_loss_id_regicard` WHERE `AssLoss_STUD_NO` = '$StudNo' and `AssLoss_DISPLAY_STAT` <>'Inactive' and `AssLoss_TYPE` = 'Identification Card') as ID
+                                                                            $row = mysqli_fetch_array(mysqli_query($con,"SELECT (SELECT Count(`AssLoss_STUD_NO`) FROM `t_assign_stud_loss_id_regicard` WHERE `AssLoss_STUD_NO` = '$StudNo' and `AssLoss_DISPLAY_STAT` <>'Inactive' and `AssLoss_TYPE` = 'Identification Card') as ID
 ,(SELECT Count(`AssLoss_STUD_NO`) FROM `t_assign_stud_loss_id_regicard` WHERE `AssLoss_STUD_NO` = '$StudNo' and `AssLoss_DISPLAY_STAT` <>'Inactive' and `AssLoss_TYPE` = 'Registration Card') as Regi"));
                                                                              $ID = $row["ID"];
                                                                              $Regi = $row["Regi"];
@@ -83,7 +73,7 @@ $currentPage ='OSAS_LossID';
                                                             </td>
                                                                 <?php   
                                                                         $StudNo= $stud_row['Stud_NO'];
-                                                                       $row=mysql_fetch_array(mysql_query("select max(AssLoss_DATE_MOD) from t_assign_stud_loss_id_regicard
+                                                                       $row=mysqli_fetch_array(mysqli_query($con,"select max(AssLoss_DATE_MOD) from t_assign_stud_loss_id_regicard
                                                                         where AssLoss_STUD_NO ='$StudNo' and AssLoss_DISPLAY_STAT='Active'")); ?>
                                                             <td data-order="<?php    echo  ($row[0]==null )?"":($row[0]);  ?>"> <?php    echo  ($row[0]==null )?"":(new DateTime($row[0]))->format('D M d, Y h:i A');  ?> </td>
                                                             <td>
@@ -92,7 +82,7 @@ $currentPage ='OSAS_LossID';
                                                                 </center>
                                                             </td>
                                                         </tr>
-                                                        <?php }}?>
+                                                        <?php }?>
                                             </tbody>
                                             <tfoot>
                                                 <tr>

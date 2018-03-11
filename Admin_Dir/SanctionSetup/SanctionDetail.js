@@ -1,6 +1,5 @@
 var getcode = '';
-var getname = '';
-var latcode = '';
+var getname = ''; 
 
 
 var EditableTable = function () {
@@ -111,7 +110,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'Sanction/Delete-ajax.php',
+                                url: 'SanctionSetup/Sanction/Delete-ajax.php',
                                 data: {
                                     _code: getval
                                 },
@@ -155,9 +154,9 @@ var EditableTable = function () {
 
                 }*/
                 var txtname = document.getElementById("txtname").value;
+                var txtcode = document.getElementById("txtcode").value;
                 var txtdesc = document.getElementById("txtdesc").value;
-                var txthour = document.getElementById("txthour").value;
-                var latcode = document.getElementById("latcode").innerText;
+                var txthour = document.getElementById("txthour").value; 
 
 
                 $("#close").click();
@@ -178,15 +177,16 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'Sanction/Add-ajax.php',
+                                url: 'SanctionSetup/Sanction/Add-ajax.php',
                                 data: {
                                     _name: txtname,
                                     _time: txthour,
-                                    _desc: txtdesc
+                                    _desc: txtdesc,
+                                    _code: txtcode
                                 },
                                 success: function (response) {
                                     swal("Record Added!", "The data is successfully added!", "success");
-                                    var aiNew = oTable.fnAddData([latcode, txtname, txthour, txtdesc, '<center><a class="btn btn-success  edit" href="">Edit</a> <a class="btn btn-danger delete" href="javascript:;">Delete</a>	</center>', '']);
+                                    var aiNew = oTable.fnAddData([txtcode, txtname, txthour, txtdesc, '<center><a class="btn btn-success  edit" href="">Edit</a> <a class="btn btn-danger delete" href="javascript:;">Delete</a>	</center>', '']);
                                     var nRow = oTable.fnGetNodes(aiNew[0]);
                                     document.getElementById("form-data").reset();
                                 },
@@ -225,7 +225,7 @@ var EditableTable = function () {
                     if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 5 && jqInputs[3].value.length < 100 && jqInputs[3].value.length > 5 && jqInputs[2].value.length > 0) {
                         $.ajax({
                             type: 'post',
-                            url: 'Sanction/Update-ajax.php',
+                            url: 'SanctionSetup/Sanction/Update-ajax.php',
                             data: {
                                 _name: jqInputs[1].value,
                                 _desc: jqInputs[3].value,
@@ -282,7 +282,7 @@ var EditableTable = function () {
                                 if (isConfirm) {
                                     $.ajax({
                                         type: 'post',
-                                        url: 'Sanction/Add-ajax.php',
+                                        url: 'SanctionSetup/Sanction/Add-ajax.php',
                                         data: {
                                             _name: jqInputs[1].value,
                                             _time: jqInputs[2].value,

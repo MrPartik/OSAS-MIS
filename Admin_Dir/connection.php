@@ -1,6 +1,4 @@
 <?php
 
-	$connection = mysqli_connect("localhost","root","","osas");
-			
-
+	$connection = mysqli_connect("localhost","root","","osas"); 
 ?>

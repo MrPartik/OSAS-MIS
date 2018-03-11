@@ -4,7 +4,6 @@
 <?php include('header.php');    
 $currentPage ='OSAS_StudProfile';  
     include('../config/connection.php');
-    
 ?>
 <link href="../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
 <link href="../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />

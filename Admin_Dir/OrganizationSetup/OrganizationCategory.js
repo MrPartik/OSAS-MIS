@@ -120,7 +120,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'OrganizationCategory/Add-ajax.php',
+                                url: 'OrganizationSetup/OrganizationCategory/Add-ajax.php',
                                 data: {
                                     _code: txtcode,
                                     _name: txtname,
@@ -173,7 +173,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'OrganizationCategory/Delete-ajax.php',
+                                url: 'OrganizationSetup/OrganizationCategory/Delete-ajax.php',
                                 data: {
                                     _code: getval
                                 },
@@ -226,7 +226,7 @@ var EditableTable = function () {
                     if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 5 && jqInputs[2].value.length < 100 && jqInputs[2].value.length > 5) {
                         $.ajax({
                             type: 'post',
-                            url: 'OrganizationCategory/Update-ajax.php',
+                            url: 'OrganizationSetup/OrganizationCategory/Update-ajax.php',
                             data: {
                                 _name: jqInputs[1].value,
                                 _desc: jqInputs[2].value,

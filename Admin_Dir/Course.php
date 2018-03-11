@@ -3,16 +3,10 @@
 
 <head>
     <title>OSAS - Course</title>
-    <?php include('../header.php');    
-$currentPage ='OSAS_Course'; include('../../../config/connection.php');
-?>
-    <link href="../../../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-    <link href="../../../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../js/data-tables/DT_bootstrap.css" />
-
-    <!-- Custom styles for this template -->
-    <link href="../../../css/style.css" rel="stylesheet">
-    <link href="../../../css/style-responsive.css" rel="stylesheet" />
+    <?php include('header.php');    
+$currentPage ='Admin_Course'; 
+include('../config/connection.php');
+?> 
 
 </head>
 
@@ -24,7 +18,7 @@ $currentPage ='OSAS_Course'; include('../../../config/connection.php');
                 <!-- sidebar menu start-->
                 <?php
                 
-                    include('../sidenav.php')
+                    include('sidenav.php')
             
                 ?>
                     <!-- sidebar menu end-->
@@ -86,13 +80,11 @@ $currentPage ='OSAS_Course'; include('../../../config/connection.php');
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php
-							
-										include('../connection.php');
+                                            <?php 
 										$option = 'qwe';
-										$getyear = mysqli_query($connection,"select * from `r_batch_details` where Batch_DISPLAY_STAT = 'Active' ");
+										$getyear = mysqli_query($con,"select * from `r_batch_details` where Batch_DISPLAY_STAT = 'Active' ");
 
-										$view_query = mysqli_query($connection,"select * from `r_courses` where Course_DISPLAY_STAT = 'Active'");
+										$view_query = mysqli_query($con,"select * from `r_courses` where Course_DISPLAY_STAT = 'Active'");
 										while($row = mysqli_fetch_assoc($view_query))
 										{
 											$code = $row["Course_CODE"];
@@ -121,6 +113,15 @@ $currentPage ='OSAS_Course'; include('../../../config/connection.php');
 									?>
 
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Course Code</th>
+                                                <th>Course Name</th>
+                                                <th>Curriculum Year</th>
+                                                <th>Course Description</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -157,7 +158,7 @@ $currentPage ='OSAS_Course'; include('../../../config/connection.php');
     <!-- Modal -->
     <?php
 
-        $getyear = mysqli_query($connection,'select * from `r_batch_details` order by Batch_ID desc ');
+        $getyear = mysqli_query($con,'select * from `r_batch_details` order by Batch_ID desc ');
 
         while($getrow = mysqli_fetch_assoc($getyear))
         {
@@ -205,35 +206,8 @@ $currentPage ='OSAS_Course'; include('../../../config/connection.php');
                 </div>
             </div>
         </div>
-
-        <!-- Placed js at the end of the document so the pages load faster -->
-
-        <!--Core js-->
-        <script src="../../../js/jquery-1.8.3.min.js"></script>
-        <script src="../../../bs3/js/bootstrap.min.js"></script>
-        <script class="include" type="text/javascript" src="../../../js/jquery.dcjqaccordion.2.7.js"></script>
-        <script src="../../../js/jquery.scrollTo.min.js"></script>
-        <script src="../../../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-        <script src="../../../js/jquery.nicescroll.js"></script>
-        <!--Easy Pie Chart-->
-        <script src="../../../js/easypiechart/jquery.easypiechart.js"></script>
-        <!--Sparkline Chart-->
-        <script src="../../../js/sparkline/jquery.sparkline.js"></script>
-        <!--jQuery Flot Chart-->
-        <script src="../js/flot-chart/jquery.flot.js"></script>
-        <script src="../../../js/flot-chart/jquery.flot.tooltip.min.js"></script>
-        <script src="../../../js/flot-chart/jquery.flot.resize.js"></script>
-        <script src="../../../js/flot-chart/jquery.flot.pie.resize.js"></script>
-
-        <script type="text/javascript" src="../../../js/data-tables/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="../../../js/data-tables/DT_bootstrap.js"></script>
-        <script type="text/javascript" src="../sweetalert/sweetalert.min.js"></script>
-
-        <!--common script init for all pages-->
-        <script src="../../../js/scripts.js"></script>
-
-        <!--script for this page only-->
-        <script src="Course.js"></script>
+        <?php include("footer.php") ?>
+        <script src="OrganizationSetup/course.js"></script>
 
         <!-- END JAVASCRIPTS -->
         <script>

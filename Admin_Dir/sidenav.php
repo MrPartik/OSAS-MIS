@@ -4,43 +4,43 @@
         <div class="leftside-navigation">
             <ul class="sidebar-menu" id="nav-accordion">
                 <li>
-                    <a <?php if( $currentPage==='OSAS_AdminDashboard' ) {echo 'class="active"';} ?> href="../Dashboard.php">
+                    <a <?php if( $currentPage==='Admin_Dashboard' ) {echo 'class="active"';} ?> href="Dashboard.php">
                         <i class ="fa fa-dashboard" ></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a <?php if( $currentPage==='OSAS_BatchYear' || $currentPage==='OSAS_Title' || $currentPage==='OSAS_Semester' ) { echo 'class="active"';} ?> href="javascript:;">
+                    <a <?php if( $currentPage==='Admin_BYear' || $currentPage==='Admin_Title' || $currentPage==='Admin_Semester' ) { echo 'class="active"';} ?> href="javascript:;">
                         <i class="fa fa-user"></i>
                         <span>Student Setup</span>
                     </a>
                     <ul class="sub">
-                        <li <?php if( $currentPage==='OSAS_Title' ) { echo 'class="active"';} ?>><a href="../StudentSetup/FinancialAssistanceTitle.php">Assistance Title</a></li>
-                        <li <?php if( $currentPage==='OSAS_BatchYear' ) { echo 'class="active"';} ?> ><a href="../StudentSetup/BatchYear.php">Batch Year</a></li>
-                        <li <?php if( $currentPage==='OSAS_Semester' ) { echo 'class="active"';} ?>><a href="../StudentSetup/Semester.php">Semester</a></li>
+                        <li <?php if( $currentPage==='Admin_Title' ) { echo 'class="active"';} ?>><a href="FinancialAssistanceTitle.php">Assistance Title</a></li>
+                        <li <?php if( $currentPage==='Admin_BYear' ) { echo 'class="active"';} ?> ><a href="BatchYear.php">Batch Year</a></li>
+                        <li <?php if( $currentPage==='Admin_Semester' ) { echo 'class="active"';} ?>><a href="Semester.php">Semester</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
-                    <a <?php if( $currentPage==='OSAS_AccreditationRequirement' || $currentPage==='OSAS_Course' || $currentPage==='OSAS_OfficerPosition' || $currentPage==='OSAS_OrganizationCategory' ) { echo 'class="active"';} ?> href="javascript:;">
+                    <a <?php if( $currentPage==='Admin_AccrReq' || $currentPage==='Admin_Course' || $currentPage==='Admin_OfficerPos' || $currentPage==='Admin_OrgCat' ) { echo 'class="active"';} ?> href="javascript:;">
                         <i class="fa fa-users"></i>
                         <span>Organization Setup</span>
                     </a>
-                    <ul class="sub">
-                        <li <?php if( $currentPage==='OSAS_AccreditationRequirement' ) { echo 'class="active"';} ?> ><a href="../OrganizationSetup/AccreditationRequirement.php">Accreditation Requirement</a></li>
-                        <li <?php if( $currentPage==='OSAS_Course' ) { echo 'class="active"';} ?>><a href="../OrganizationSetup/Course.php">Course</a></li>
-                        <li <?php if( $currentPage==='OSAS_OrganizationCategory' ) { echo 'class="active"';} ?>><a href="../OrganizationSetup/OrganizationCategory.php">Organization Category</a></li>
-                        <li <?php if( $currentPage==='OSAS_OfficerPosition' ) { echo 'class="active"';} ?>><a href="../OrganizationSetup/OfficerPosition.php">Officer Position</a></li>
+                    <ul class="sub"> 
+                        <li <?php if( $currentPage==='Admin_AccrReq' ) { echo 'class="active"';} ?> ><a href="AccreditationRequirement.php">Accreditation Requirement</a></li>
+                        <li <?php if( $currentPage==='Admin_Course' ) { echo 'class="active"';} ?>><a href="Course.php">Course</a></li>
+                        <li <?php if( $currentPage==='Admin_OrgCat' ) { echo 'class="active"';} ?>><a href="OrganizationCategory.php">Organization Category</a></li>
+                        <li <?php if( $currentPage==='Admin_OfficerPos' ) { echo 'class="active"';} ?>><a href="OfficerPosition.php">Officer Position</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
-                    <a <?php if( $currentPage==='OSAS_ClearanceSignatory' || $currentPage==='OSAS_DesignatedOffice' || $currentPage==='OSAS_SanctionDetail' ) { echo 'class="active"';} ?> href="javascript:;">
+                    <a <?php if( $currentPage==='Admin_ClearanceSig' || $currentPage==='Admin_Designated' || $currentPage==='Admin_SancDet' ) { echo 'class="active"';} ?> href="javascript:;">
                         <i class="fa fa-user"></i>
                         <span>Sanction Setup</span>
                     </a>
                     <ul class="sub">
-                        <li <?php if( $currentPage==='OSAS_ClearanceSignatory' ) { echo 'class="active"';} ?> ><a href="../SanctionSetup/ClearanceSignatory.php">Clearance Signatory</a></li>
-                        <li <?php if( $currentPage==='OSAS_DesignatedOffice' ) { echo 'class="active"';} ?>><a href="../SanctionSetup/DesignatedOffice.php">Designated Office</a></li>
-                        <li <?php if( $currentPage==='OSAS_SanctionDetail' ) { echo 'class="active"';} ?>><a href="../SanctionSetup/SanctionDetail.php">Sanction Detail</a></li>
+                        <li <?php if( $currentPage==='Admin_ClearanceSig' ) { echo 'class="active"';} ?> ><a href="ClearanceSignatory.php">Clearance Signatory</a></li>
+                        <li <?php if( $currentPage==='Admin_Designated' ) { echo 'class="active"';} ?>><a href="DesignatedOffice.php">Designated Office</a></li>
+                        <li <?php if( $currentPage==='Admin_SancDet' ) { echo 'class="active"';} ?>><a href="SanctionDetail.php">Sanction Detail</a></li>
                     </ul>
                 </li>
             </ul>

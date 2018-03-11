@@ -2,17 +2,11 @@
 <html>
 
 <head>
-    <title>OSAS - Semester</title>
-    <?php include('../header.php');    
-$currentPage ='OSAS_Semester'; include('../../../config/connection.php');
+    <title>OSAS - Clearance Signatory</title>
+    <?php include('header.php');    
+$currentPage ='Admin_ClearanceSig';  include('../config/connection.php');
 ?>
-    <link href="../../../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-    <link href="../../../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../js/data-tables/DT_bootstrap.css" />
-
-    <!-- Custom styles for this template -->
-    <link href="../../../css/style.css" rel="stylesheet">
-    <link href="../../../css/style-responsive.css" rel="stylesheet" />
+     
 </head>
 
 <body>
@@ -23,9 +17,9 @@ $currentPage ='OSAS_Semester'; include('../../../config/connection.php');
                 <!-- sidebar menu start-->
                 <?php
                 
-                include('../sidenav.php')
+                include('sidenav.php')
             
-            ?>
+                ?>
                     <!-- sidebar menu end-->
             </div>
         </aside>
@@ -39,10 +33,10 @@ $currentPage ='OSAS_Semester'; include('../../../config/connection.php');
                         <!--breadcrumbs start -->
                         <ul class="breadcrumbs-alt ">
                             <li>
-                                <a class="current" href="#">Semester</a>
+                                <a class="current" href="#">Accreditation Requirement</a>
                             </li>
                             <li>
-                                <a href="#">Student Setup</a>
+                                <a href="#">Sanction Setup</a>
                             </li>
                             <!-- <li> -->
                             <!-- <a class="active-trail active" href="#">Pages</a> -->
@@ -77,46 +71,55 @@ $currentPage ='OSAS_Semester'; include('../../../config/connection.php');
                                     <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                         <thead>
                                             <tr>
-                                                <th>Semestral Code</th>
-                                                <th>Semestral Name</th>
-                                                <th>Semestral Description</th>
+                                                <th>Signatory Code</th>
+                                                <th>Signatory Name</th>
+                                                <th>Signatory Description</th>
                                                 <th>Action</th>
+
 
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php
-							
-								include('../connection.php');
-								$view_query = mysqli_query($connection,"select * from `r_semester` where Semestral_DISPLAY_STAT = 'Active'  ");
-								while($row = mysqli_fetch_assoc($view_query))
-								{
-									$code = $row["Semestral_CODE"];
-									$name = $row["Semestral_NAME"];
-									$desc = $row["Semestral_DESC"];										
-									
-									$id = $row["Semestral_ID"];										
-									
-									echo "
-									<tr>
-										<td>$code</td>
-										<td>$name</td>
-										<td>$desc</td>
-										<td style='width:180px' >
-												<center>
-													<a class='btn btn-success edit' href='javascript:;'>Edit</a>
-													<a class='btn btn-danger delete' href='javascript:;'>Delete</a>								
-												<center>
-											</td>
-                                       
-										</tr>
+                                            <?php 
+										$view_query = mysqli_query($con,"select * from `r_clearance_signatories` where ClearSignatories_DISPLAY_STAT = 'Active'");
+										while($row = mysqli_fetch_assoc($view_query))
+										{
+											$code = $row["ClearSignatories_CODE"];
+											$name = $row["ClearSignatories_NAME"];
+											$desc = $row["ClearSignatories_DESC"];										
+											$id = $row["ClearSignatories_ID"];										
+											
+											echo "
+											<tr class=''>
+												<td>$code</td>
+												<td>$name</td>
+												<td >$desc</td>
+												<td style='width:180px'>
+													<center>
+														<a class='btn btn-success edit' href='javascript:;'>Edit</a>
+														<a class='btn btn-danger delete' href='javascript:;'>Delete</a>								
+													<center>
+												</td>
+                                                
+
+											</tr>
 											";
 										}			
 											
 										
 									?>
 
-                                        </tbody>
+                                        </tbody> 
+                                        <tfoot>
+                                            <tr>
+                                                <th>Signatory Code</th>
+                                                <th>Signatory Name</th>
+                                                <th>Signatory Description</th>
+                                                <th>Action</th>
+
+
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -156,22 +159,22 @@ $currentPage ='OSAS_Semester'; include('../../../config/connection.php');
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Add Semester</h4>
+                    <h4 class="modal-title">Add Clearance Signatory</h4>
                 </div>
                 <div class="modal-body">
                     <form method="post" id="form-data">
                         <div class="row">
                             <header class="panel-heading">
-                                Semester Code:
+                                Clearance Signatory Code:
                                 <asd id='latcode'></asd>
                             </header>
                         </div>
                         <div class="row" style="padding-left:15px;padding-top:10px">
                             <div class="col-lg-6">
-                                Semester Name <input type="text" class="form-control" placeholder="ex. First Semester" id="txtname">
+                                Clearance Signatory Name <input type="text" class="form-control" placeholder="ex. Accounting Office" id="txtname">
                             </div>
                             <div class="col-lg-8 " style="padding-top:10px">
-                                Semester Description<textarea class="form-control" placeholder="ex. Semester Description" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
+                                Clearance Signatory Description<textarea class="form-control" placeholder="ex. Accounting Office" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
                             </div>
                         </div>
                     </form>
@@ -183,34 +186,13 @@ $currentPage ='OSAS_Semester'; include('../../../config/connection.php');
             </div>
         </div>
     </div>
+
+
     <!-- Placed js at the end of the document so the pages load faster -->
 
     <!--Core js-->
-    <script src="../../../js/jquery-1.8.3.min.js"></script>
-    <script src="../../../bs3/js/bootstrap.min.js"></script>
-    <script class="include" type="text/javascript" src="../../../js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="../../../js/jquery.scrollTo.min.js"></script>
-    <script src="../../../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-    <script src="../../../js/jquery.nicescroll.js"></script>
-    <!--Easy Pie Chart-->
-    <script src="../../../js/easypiechart/jquery.easypiechart.js"></script>
-    <!--Sparkline Chart-->
-    <script src="../../../js/sparkline/jquery.sparkline.js"></script>
-    <!--jQuery Flot Chart-->
-    <script src="../js/flot-chart/jquery.flot.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.tooltip.min.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.resize.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.pie.resize.js"></script>
-
-    <script type="text/javascript" src="../../../js/data-tables/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="../../../js/data-tables/DT_bootstrap.js"></script>
-    <script type="text/javascript" src="../sweetalert/sweetalert.min.js"></script>
-
-    <!--common script init for all pages-->
-    <script src="../../../js/scripts.js"></script>
-
-    <!--script for this page only-->
-    <script src="Semester.js"></script>
+    <?php include("footer.php") ?> 
+    <script src="SanctionSetup/ClearanceSignatory.js"></script>
 
     <!-- END JAVASCRIPTS -->
     <script>
@@ -218,7 +200,7 @@ $currentPage ='OSAS_Semester'; include('../../../config/connection.php');
             $('.add').click(function() {
                 $.ajax({
                     type: "GET",
-                    url: 'Semester/GetLatest-Code.php',
+                    url: 'SanctionSetup/ClearanceSignatory/GetLatest-Code.php',
                     success: function(data) {
                         document.getElementById('latcode').innerText = data;
                     }

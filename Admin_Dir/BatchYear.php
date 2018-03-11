@@ -2,17 +2,10 @@
 <html>
 
 <head>
-    <title>OSAS - Designated Office</title>
-    <?php include('../header.php');    
-$currentPage ='OSAS_DesignatedOffice'; include('../../../config/connection.php');
+    <title>Admin - Batch Year</title>
+    <?php include('header.php');    
+$currentPage ='Admin_BYear'; include('../config/connection.php');
 ?>
-    <link href="../../../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-    <link href="../../../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../js/data-tables/DT_bootstrap.css" />
-
-    <!-- Custom styles for this template -->
-    <link href="../../../css/style.css" rel="stylesheet">
-    <link href="../../../css/style-responsive.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -21,11 +14,12 @@ $currentPage ='OSAS_DesignatedOffice'; include('../../../config/connection.php')
         <aside>
             <div id="sidebar" class="nav-collapse">
                 <!-- sidebar menu start-->
+
                 <?php
                 
-                include('../sidenav.php')
+                    include('sidenav.php')
             
-            ?>
+                ?>
                     <!-- sidebar menu end-->
             </div>
         </aside>
@@ -39,15 +33,11 @@ $currentPage ='OSAS_DesignatedOffice'; include('../../../config/connection.php')
                         <!--breadcrumbs start -->
                         <ul class="breadcrumbs-alt ">
                             <li>
-                                <a class="current" href="#">Accreditation Requirement</a>
+                                <a class="current" href="#">Batch Year</a>
                             </li>
                             <li>
-                                <a href="#">Sanction Setup</a>
+                                <a href="#">Organization Setup</a>
                             </li>
-                            <!-- <li> -->
-                            <!-- <a class="active-trail active" href="#">Pages</a> -->
-                            <!-- </li> -->
-
                         </ul>
                         <!--breadcrumbs end -->
                     </div>
@@ -77,9 +67,9 @@ $currentPage ='OSAS_DesignatedOffice'; include('../../../config/connection.php')
                                     <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                         <thead>
                                             <tr>
-                                                <th>Office Code</th>
-                                                <th>Office Name</th>
-                                                <th>Office Description</th>
+                                                <th class="hidden">Batch Code </th>
+                                                <th>Batch Year </th>
+                                                <th>Batch Year Description</th>
                                                 <th>Action</th>
 
                                             </tr>
@@ -87,27 +77,26 @@ $currentPage ='OSAS_DesignatedOffice'; include('../../../config/connection.php')
                                         <tbody>
                                             <?php
 							
-										include('../connection.php');
-										$view_query = mysqli_query($connection,"select * from `r_designated_offices_details` WHERE DesOffDetails_DISPLAY_STAT = 'Active'");
+										$view_query = mysqli_query($con,"select * from `r_batch_details` where Batch_DISPLAY_STAT = 'Active' ");
 										while($row = mysqli_fetch_assoc($view_query))
 										{
-											$code = $row["DesOffDetails_CODE"];
-											$name = $row["DesOffDetails_NAME"];
-											$desc = $row["DesOffDetails_DESC"];										
-											$id = $row["DesOffDetails_ID"];										
+											$code = $row["Batch_CODE"];
+											$name = $row["Batch_YEAR"];
+											$desc = $row["Batch_DESC"];										
+											$id = $row["Batch_ID"];										
 											
 											echo "
 											<tr class=''>
-												<td>$code</td>
-												<td>$name</td>
+												<td class='hidden' >$code</td>
+												<td >$name</td>
 												<td >$desc</td>
-												<td style='width:180px'>
+												<td value='qweqwe' style='width:180px'>
 													<center>
 														<a class='btn btn-success edit' href='javascript:;'>Edit</a>
-														<a class='btn btn-danger delete' href='javascript:;'>Delete</a>								
+														<a class='btn btn-danger delete' href='javascript:;'>Delete</a>							
 													<center>
 												</td>
-                                                
+												
 											</tr>
 											";
 										}			
@@ -116,6 +105,15 @@ $currentPage ='OSAS_DesignatedOffice'; include('../../../config/connection.php')
 									?>
 
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th class="hidden">Batch Code </th>
+                                                <th>Batch Year </th>
+                                                <th>Batch Year Description</th>
+                                                <th>Action</th>
+
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -155,22 +153,22 @@ $currentPage ='OSAS_DesignatedOffice'; include('../../../config/connection.php')
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Add Designated Office</h4>
+                    <h4 class="modal-title">Add Clearance Signatory</h4>
                 </div>
                 <div class="modal-body">
                     <form method="post" id="form-data">
                         <div class="row">
                             <header class="panel-heading">
-                                Office Code:
+                                Batch Code:
                                 <asd id='latcode'></asd>
                             </header>
                         </div>
                         <div class="row" style="padding-left:15px;padding-top:10px">
                             <div class="col-lg-6">
-                                Office Name <input type="text" class="form-control" placeholder="ex. Library" id="txtname">
+                                Batch Year <input type="text" class="form-control" placeholder="ex. 2018-2019" id="txtname">
                             </div>
                             <div class="col-lg-8 " style="padding-top:10px">
-                                Office Description<textarea class="form-control" placeholder="ex. Library" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
+                                Batch Description<textarea class="form-control" placeholder="ex. Batch Description" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
                             </div>
                         </div>
                     </form>
@@ -182,35 +180,9 @@ $currentPage ='OSAS_DesignatedOffice'; include('../../../config/connection.php')
             </div>
         </div>
     </div>
-
-    <!-- Placed js at the end of the document so the pages load faster -->
-
-    <!--Core js-->
-    <script src="../../../js/jquery-1.8.3.min.js"></script>
-    <script src="../../../bs3/js/bootstrap.min.js"></script>
-    <script class="include" type="text/javascript" src="../../../js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="../../../js/jquery.scrollTo.min.js"></script>
-    <script src="../../../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-    <script src="../../../js/jquery.nicescroll.js"></script>
-    <!--Easy Pie Chart-->
-    <script src="../../../js/easypiechart/jquery.easypiechart.js"></script>
-    <!--Sparkline Chart-->
-    <script src="../../../js/sparkline/jquery.sparkline.js"></script>
-    <!--jQuery Flot Chart-->
-    <script src="../js/flot-chart/jquery.flot.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.tooltip.min.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.resize.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.pie.resize.js"></script>
-
-    <script type="text/javascript" src="../../../js/data-tables/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="../../../js/data-tables/DT_bootstrap.js"></script>
-    <script type="text/javascript" src="../sweetalert/sweetalert.min.js"></script>
-
-    <!--common script init for all pages-->
-    <script src="../../../js/scripts.js"></script>
-
-    <!--script for this page only-->
-    <script src="DesignatedOffice.js"></script>
+ 
+    <?php include("footer.php") ?> 
+    <script src="StudentSetup/BatchYear.js"></script>
 
     <!-- END JAVASCRIPTS -->
     <script>
@@ -218,7 +190,7 @@ $currentPage ='OSAS_DesignatedOffice'; include('../../../config/connection.php')
             $('.add').click(function() {
                 $.ajax({
                     type: "GET",
-                    url: 'DesignatedOffice/GetLatest-Code.php',
+                    url: 'StudentSetup/BatchYear/GetLatest-Code.php',
                     success: function(data) {
                         document.getElementById('latcode').innerText = data;
                     }

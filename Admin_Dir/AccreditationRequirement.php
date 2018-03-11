@@ -1,33 +1,19 @@
 <!DOCTYPE html>
-<html>
-
+<html> 
 <head>
-    <title>OSAS - Sanction Detail</title>
-    <?php include('../header.php');    
-$currentPage ='OSAS_SanctionDetail'; include('../../../config/connection.php');
+    <title>Admin - Accreditation Requirement</title>
+    <?php include('header.php');    
+$currentPage ='Admin_AccrReq'; include('../config/connection.php');
 ?>
-    <link href="../../../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-    <link href="../../../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../js/data-tables/DT_bootstrap.css" />
-
-    <!-- Custom styles for this template -->
-    <link href="../../../css/style.css" rel="stylesheet">
-    <link href="../../../css/style-responsive.css" rel="stylesheet" />
-
+     
 </head>
 
 <body>
 
     <section id="container">
         <aside>
-            <div id="sidebar" class="nav-collapse">
-                <!-- sidebar menu start-->
-                <?php
-                
-                    include('../sidenav.php')
-            
-                ?>
-                    <!-- sidebar menu end-->
+            <div id="sidebar" class="nav-collapse"> 
+                <?php include('sidenav.php')   ?> 
             </div>
         </aside>
         <!--sidebar end-->
@@ -40,15 +26,11 @@ $currentPage ='OSAS_SanctionDetail'; include('../../../config/connection.php');
                         <!--breadcrumbs start -->
                         <ul class="breadcrumbs-alt ">
                             <li>
-                                <a class="current" href="#">Sanction Detail</a>
+                                <a class="current" href="#">Accreditation Requirement</a>
                             </li>
                             <li>
-                                <a href="#">Sanction Setup</a>
+                                <a href="#">Organization Setup</a>
                             </li>
-                            <!-- <li> -->
-                            <!-- <a class="active-trail active" href="#">Pages</a> -->
-                            <!-- </li> -->
-
                         </ul>
                         <!--breadcrumbs end -->
                     </div>
@@ -78,41 +60,35 @@ $currentPage ='OSAS_SanctionDetail'; include('../../../config/connection.php');
                                     <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                         <thead>
                                             <tr>
-                                                <th>Sanction Code</th>
-                                                <th>Sanction Name</th>
-                                                <th>Time Value (Hour/s)</th>
-                                                <th>Sanction Description</th>
-                                                <th>Action</th>
-
-
+                                                <th>Requirement Code</th>
+                                                <th>Requirement Name</th>
+                                                <th>Requirement Description</th>
+                                                <th>Action</th> 
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-							
-										include('../connection.php');
-										$view_query = mysqli_query($connection,"select * from `r_sanction_details` where SancDetails_DISPLAY_STAT = 'Active' ");
+							 
+										$view_query = mysqli_query($con,"select * from `r_org_accreditation_details` where OrgAccrDetail_DISPLAY_STAT = 'Active'");
 										while($row = mysqli_fetch_assoc($view_query))
 										{
-											$code = $row["SancDetails_CODE"];
-											$name = $row["SancDetails_NAME"];
-											$time = $row["SancDetails_TIMEVAL"];
-											$desc = $row["SancDetails_DESC"];										
-											$id = $row["SancDetails_ID"];										
+											$code = $row["OrgAccrDetail_CODE"];
+											$name = $row["OrgAccrDetail_NAME"];
+											$desc = $row["OrgAccrDetail_DESC"];										
+											$id = $row["OrgAccrDetail_ID"];										
 											
 											echo "
 											<tr class=''>
 												<td>$code</td>
 												<td>$name</td>
-												<td >$time</td>
 												<td >$desc</td>
-												<td style='width:200px'>
+												<td style='width:150px'>
 													<center>
 														<a class='btn btn-success edit' href='javascript:;'>Edit</a>
 														<a class='btn btn-danger delete' href='javascript:;'>Delete</a>								
 													<center>
 												</td>
-                                                
+												
 											</tr>
 											";
 										}			
@@ -120,7 +96,15 @@ $currentPage ='OSAS_SanctionDetail'; include('../../../config/connection.php');
 										
 									?>
 
-                                        </tbody>
+                                        </tbody>  
+                                        <tfoot>
+                                            <tr>
+                                                <th>Requirement Code</th>
+                                                <th>Requirement Name</th>
+                                                <th>Requirement Description</th>
+                                                <th>Action</th> 
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -154,30 +138,28 @@ $currentPage ='OSAS_SanctionDetail'; include('../../../config/connection.php');
         <!--right sidebar end-->
 
     </section>
+    <!-- Modal -->
     <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Add" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Add Sanction Detail</h4>
+                    <h4 class="modal-title">Add Accreditation Requirement</h4>
                 </div>
                 <div class="modal-body">
                     <form method="post" id="form-data">
                         <div class="row">
                             <header class="panel-heading">
-                                Sanction Code:
+                                Requirement Code:
                                 <asd id='latcode'></asd>
                             </header>
                         </div>
                         <div class="row" style="padding-left:15px;padding-top:10px">
                             <div class="col-lg-6">
-                                Sanction Name <input type="text" class="form-control" placeholder="ex. Sanction" id="txtname">
-                            </div>
-                            <div class="col-lg-6">
-                                Time Value (hour/s) <input type="text" class="form-control" placeholder="ex. 8" id="txthour">
+                                Accreditation Requirement Name <input type="text" class="form-control" placeholder="ex. Organization Name" id="txtreqname">
                             </div>
                             <div class="col-lg-8 " style="padding-top:10px">
-                                Sanction Description<textarea class="form-control" placeholder="ex. Sanction" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
+                                Accreditation Requirement Description<textarea class="form-control" placeholder="ex. Every organization must have unique name" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtreqdesc"></textarea>
                             </div>
                         </div>
                     </form>
@@ -191,32 +173,11 @@ $currentPage ='OSAS_SanctionDetail'; include('../../../config/connection.php');
     </div>
     <!-- Placed js at the end of the document so the pages load faster -->
 
-    <!--Core js-->
-    <script src="../../../js/jquery-1.8.3.min.js"></script>
-    <script src="../../../bs3/js/bootstrap.min.js"></script>
-    <script class="include" type="text/javascript" src="../../../js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="../../../js/jquery.scrollTo.min.js"></script>
-    <script src="../../../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-    <script src="../../../js/jquery.nicescroll.js"></script>
-    <!--Easy Pie Chart-->
-    <script src="../../../js/easypiechart/jquery.easypiechart.js"></script>
-    <!--Sparkline Chart-->
-    <script src="../../../js/sparkline/jquery.sparkline.js"></script>
-    <!--jQuery Flot Chart-->
-    <script src="../js/flot-chart/jquery.flot.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.tooltip.min.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.resize.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.pie.resize.js"></script>
-
-    <script type="text/javascript" src="../../../js/data-tables/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="../../../js/data-tables/DT_bootstrap.js"></script>
-    <script type="text/javascript" src="../sweetalert/sweetalert.min.js"></script>
-
-    <!--common script init for all pages-->
-    <script src="../../../js/scripts.js"></script>
+    <?php include("footer.php") ?>
+    <!--Core js-->   
 
     <!--script for this page only-->
-    <script src="SanctionDetail.js"></script>
+    <script src="OrganizationSetup/AccreditationRequirement.js"></script>
 
     <!-- END JAVASCRIPTS -->
     <script>
@@ -224,7 +185,7 @@ $currentPage ='OSAS_SanctionDetail'; include('../../../config/connection.php');
             $('.add').click(function() {
                 $.ajax({
                     type: "GET",
-                    url: 'Sanction/GetLatest-Code.php',
+                    url: 'OrganizationSetup/AccreditationRequirement/GetLatest-Code.php',
                     success: function(data) {
                         document.getElementById('latcode').innerText = data;
                     }

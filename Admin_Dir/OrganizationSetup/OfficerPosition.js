@@ -40,7 +40,7 @@ var EditableTable = function () {
 					
 					$.ajax({
 						type: "GET",
-						url: 'OfficerPosition/GetLatest-Code.php',
+						url: 'OrganizationSetup/OfficerPosition/GetLatest-Code.php',
 						success: function(data){
 						jqTds[0].innerHTML = '<input type="text" class="form-control small " value="'+data+'" disabled style="width:100%">';
 						}
@@ -139,7 +139,7 @@ var EditableTable = function () {
 						$.ajax
 						({
 							type: 'post',
-							url: 'OfficerPosition/Delete-ajax.php',
+							url: 'OrganizationSetup/OfficerPosition/Delete-ajax.php',
 							data: 
 						{
 							_code:jqInputs[0].value
@@ -200,7 +200,7 @@ var EditableTable = function () {
 						$.ajax
 						({
 							type: 'post',
-							url: 'OfficerPosition/Update-ajax.php',
+							url: 'OrganizationSetup/OfficerPosition/Update-ajax.php',
 							data: 
 						{
 							_name:jqInputs[1].value,
@@ -273,7 +273,7 @@ var EditableTable = function () {
 									$.ajax
 									({
 										type: 'post',
-										url: 'OfficerPosition/Add-ajax.php',
+										url: 'OrganizationSetup/OfficerPosition/Add-ajax.php',
 										data: 
 									{
 										_name:jqInputs[1].value,

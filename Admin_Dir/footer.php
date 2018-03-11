@@ -1,4 +1,4 @@
-<script src="../js/jquery.js"></script>
+<script src="../js/jquery-1.8.3.min.js"></script> 
 <script src="../js/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
 <script src="../bs3/js/bootstrap.min.js"></script>
 <script src="../js/jquery.dcjqaccordion.2.7.js"></script>
@@ -30,10 +30,14 @@
 <script src="../js/jquery.customSelect.min.js"></script>
 <!--sweet alert -->
 <script src="../js/sweetalert/sweetalert-dev.js"></script>
-<script src="../js/sweetalert/sweetalert.min.js"></script>
+<script type="text/javascript" src="../js/sweetalert/sweetalert.min.js"></script> 
 <!--common script init for all pages-->
 <script src="../js/scripts.js"></script>
 <!--script for this page-->
 <script src="../js/advanced-form.js"></script>
 <script type="text/javascript" src="../js/fuelux/js/spinner.min.js"></script>
 <script src="../js/advanced-datatable/js/autocomplete.js"></script>
+
+    <script type="text/javascript" src="../js/data-tables/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="../js/data-tables/DT_bootstrap.js"></script>
+  

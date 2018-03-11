@@ -37,7 +37,7 @@ var EditableTable = function () {
 
                     $.ajax({
                         type: "GET",
-                        url: 'Semester/GetLatest-Code.php',
+                        url: 'StudentSetup/Semester/GetLatest-Code.php',
                         success: function (data) {
                             jqTds[0].innerHTML = '<input type="text" class="form-control small " value="' + data + '" disabled style="width:100%">';
                         }
@@ -142,7 +142,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'Semester/Add-ajax.php',
+                                url: 'StudentSetup/Semester/Add-ajax.php',
                                 data: {
                                     _name: txtname,
                                     _desc: txtdesc
@@ -192,7 +192,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'Semester/Delete-ajax.php',
+                                url: 'StudentSetup/Semester/Delete-ajax.php',
                                 data: {
                                     _code: getval
                                 },
@@ -244,7 +244,7 @@ var EditableTable = function () {
                     if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 5 && jqInputs[0].value.length < 100 && jqInputs[0].value.length > 5) {
                         $.ajax({
                             type: 'post',
-                            url: 'Semester/Update-ajax.php',
+                            url: 'StudentSetup/Semester/Update-ajax.php',
                             data: {
                                 _name: jqInputs[1].value,
                                 _desc: jqInputs[2].value,
@@ -300,7 +300,7 @@ var EditableTable = function () {
                                 if (isConfirm) {
                                     $.ajax({
                                         type: 'post',
-                                        url: 'Semester/Add-ajax.php',
+                                        url: 'StudentSetup/Semester/Add-ajax.php',
                                         data: {
                                             _name: jqInputs[1].value,
                                             _desc: jqInputs[2].value

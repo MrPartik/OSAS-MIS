@@ -2,17 +2,11 @@
 <html>
 
 <head>
-    <title>OSAS - Organization Category</title>
-    <?php include('../header.php');    
-$currentPage ='OSAS_OfficerPosition'; include('../../../config/connection.php');
+    <title>OSAS - Organization Category</title>    
+<?php include('header.php');    
+$currentPage ='Admin_OfficerPos'; 
+include('../config/connection.php');
 ?>
-    <link href="../../../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-    <link href="../../../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../js/data-tables/DT_bootstrap.css" />
-
-    <!-- Custom styles for this template -->
-    <link href="../../../css/style.css" rel="stylesheet">
-    <link href="../../../css/style-responsive.css" rel="stylesheet" />
 
 </head>
 
@@ -23,7 +17,7 @@ $currentPage ='OSAS_OfficerPosition'; include('../../../config/connection.php');
         <aside>
             <?php
                 
-                include('../sidenav.php')
+                include('sidenav.php')
             
             ?>
         </aside>
@@ -83,12 +77,11 @@ $currentPage ='OSAS_OfficerPosition'; include('../../../config/connection.php');
                                         </thead>
                                         <tbody>
                                             <?php
-							
-										include('../connection.php');
-										$view_query = mysqli_query($connection,"select * from `r_org_officer_position_details` where OrgOffiPosDetails_DISPLAY_STAT = 'Active'");
+							 
+										$view_query = mysqli_query($con,"select * from `r_org_officer_position_details` where OrgOffiPosDetails_DISPLAY_STAT = 'Active'");
 										while($row = mysqli_fetch_assoc($view_query))
 										{
-											$code = $row["OrgOffiPosDetails_CODE"];
+											$code = $row["OrgOffiPosDetails_ORG_CODE"];
 											$name = $row["OrgOffiPosDetails_NAME"];
 											$desc = $row["OrgOffiPosDetails_DESC"];										
 											
@@ -151,7 +144,7 @@ $currentPage ='OSAS_OfficerPosition'; include('../../../config/connection.php');
                                     <option selected disabled>Please select batch year...</option>
                                     <?php
                                     
-                                        $view_query = mysqli_query($connection,"SELECT Batch_YEAR AS YEAR,Batch_CODE as CODE FROM `r_batch_details` ORDER BY `Batch_ID` DESC");
+                                        $view_query = mysqli_query($con,"SELECT Batch_YEAR AS YEAR,Batch_CODE as CODE FROM `r_batch_details` ORDER BY `Batch_ID` DESC");
                                         $batchyear = '';
                                         while($row = mysqli_fetch_assoc($view_query))
                                         {
@@ -204,38 +197,8 @@ $currentPage ='OSAS_OfficerPosition'; include('../../../config/connection.php');
 
     </section>
 
-    <!-- Placed js at the end of the document so the pages load faster -->
-
-    <!--Core js-->
-    <script src="../../../js/jquery-1.8.3.min.js"></script>
-    <script src="../../../bs3/js/bootstrap.min.js"></script>
-    <script class="include" type="text/javascript" src="../../../js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="../../../js/jquery.scrollTo.min.js"></script>
-    <script src="../../../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-    <script src="../../../js/jquery.nicescroll.js"></script>
-    <!--Easy Pie Chart-->
-    <script src="../../../js/easypiechart/jquery.easypiechart.js"></script>
-    <!--Sparkline Chart-->
-    <script src="../../../js/sparkline/jquery.sparkline.js"></script>
-    <!--jQuery Flot Chart-->
-    <script src="../js/flot-chart/jquery.flot.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.tooltip.min.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.resize.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.pie.resize.js"></script>
-
-    <script type="text/javascript" src="../../../js/data-tables/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="../../../js/data-tables/DT_bootstrap.js"></script>
-    <script type="text/javascript" src="../sweetalert/sweetalert.min.js"></script>
-
-    <!--common script init for all pages-->
-    <script src="../../../js/scripts.js"></script>
-
-
-    <!--common script init for all pages-->
-    <script src="../js/scripts.js"></script>
-
-    <!--script for this page only-->
-    <script src="OfficerPosition.js"></script>
+<?php include("footer.php")?>
+    <script src="OrganizationSetup/OfficerPosition.js"></script>
 
     <!-- END JAVASCRIPTS -->
     <script>
@@ -266,7 +229,7 @@ $currentPage ='OSAS_OfficerPosition'; include('../../../config/connection.php');
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'OfficerPosition/Add-ajax.php',
+                                url: 'OrganizationSetup/OfficerPosition/Add-ajax.php',
                                 data: {
                                     _pos: posname,
                                     _org: orgname,

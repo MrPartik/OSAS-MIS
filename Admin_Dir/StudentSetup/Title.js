@@ -108,7 +108,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'Title/Delete-ajax.php',
+                                url: 'StudentSetup/Title/Delete-ajax.php',
                                 data: {
                                     _code: getval
                                 },
@@ -166,7 +166,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'Title/Add-ajax.php',
+                                url: 'StudentSetup/Title/Add-ajax.php',
                                 data: {
                                     _name: txtname,
                                     _desc: txtdesc
@@ -213,7 +213,7 @@ var EditableTable = function () {
                     if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 5 && jqInputs[0].value.length < 100 && jqInputs[0].value.length > 5) {
                         $.ajax({
                             type: 'post',
-                            url: 'Title/Update-ajax.php',
+                            url: 'StudentSetup/Title/Update-ajax.php',
                             data: {
                                 _name: jqInputs[1].value,
                                 _desc: jqInputs[2].value,
@@ -269,7 +269,7 @@ var EditableTable = function () {
                                 if (isConfirm) {
                                     $.ajax({
                                         type: 'post',
-                                        url: 'Title/Add-ajax.php',
+                                        url: 'StudentSetup/Title/Add-ajax.php',
                                         data: {
                                             _name: jqInputs[1].value,
                                             _desc: jqInputs[2].value

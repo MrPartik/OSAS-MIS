@@ -8,7 +8,7 @@
                 <div class='twt-feed maroon-bg'>
                     <?php viewStudProfileCond($_GET['StudID'],''); 
                 $data =$_GET['StudID'];?>
-                        <?php while($profileLayoutRow = mysql_fetch_array($view_studProfile_cond)){ ?>
+                        <?php while($profileLayoutRow = mysqli_fetch_array($view_studProfile_cond)){ ?>
                             <div class='corner-ribon black-ribon'><i class='fa fa-user'></i></div>
                             <div class='fa fa-user wtt-mark'></div> <a href='#'><img alt='<?php echo $profileLayoutRow['FullName']?>' src='../images/Student//Student.png'></a>
                             <h1>
@@ -37,7 +37,7 @@
                              <?php  
                                         $counterSanction=0; 
                                         viewStudSanctionCond($profileLayoutRow['Stud_NO']);
-                                        while(mysql_fetch_row($view_studSanctionCond)){
+                                        while(mysqli_fetch_array($view_studSanctionCond)){
                                             $counterSanction++;}
                                          if($counterSanction!=0){
                                          ?>
@@ -50,7 +50,7 @@
                             </li>
                               <?php $percentageSanction = "0 %";
                             viewStudSanctionComputation($profileLayoutRow['Stud_NO']);
-                            while($row=mysql_fetch_array($view_studSanctionComputation)){ 
+                            while($row=mysqli_fetch_array($view_studSanctionComputation)){ 
                             
                             $percentageSanction = $row['Percentage'];
                             ?>
@@ -61,13 +61,13 @@
                             </li>
                                 <?php viewFinanStudCond(0,$profileLayoutRow['Stud_NO']);  
                                                                     $scholarship ="";
-                                                        while($row = mysql_fetch_array($view_studFinanCond)){ ?>
+                                                        while($row = mysqli_fetch_array($view_studFinanCond)){ ?>
                             <li>
                                 <a href="javascript:;"> <i class="fa fa-money"></i>Scholarship/s
                                     <span class="pull-right ">
                                             <?php viewFinanStudCond(0,$profileLayoutRow['Stud_NO']);  
                                                                     $scholarship ="";
-                                                        while($row = mysql_fetch_array($view_studFinanCond)){ 
+                                                        while($row = mysqli_fetch_array($view_studFinanCond)){ 
                                                              
                                                                     $scholarship =  $row["Finan_Name"]." "; 
                                                                     $statusColor = ($row["Status"]==="Active")? "label-success" : "label-danger";
@@ -78,7 +78,7 @@
                                 <?php  
                                             $statusFinan = 'INACTIVE';    
                                             viewFinanStudCond (0,$profileLayoutRow['Stud_NO']); 
-                                            while ($finanStud= mysql_fetch_array($view_studFinanCond)){
+                                            while ($finanStud= mysqli_fetch_array($view_studFinanCond)){
                                             $statusFinan=  $finanStud['Status']; ?>
                             </li>
                             <?php } ?>
@@ -92,7 +92,7 @@
                                                                             $ID =0;
                                                                             $Regi =0;
                                                                             $StudNo =$profileLayoutRow['Stud_NO'];
-                                                                            $row = mysql_fetch_array(mysql_query("SELECT (SELECT Count(`AssLoss_STUD_NO`) FROM `t_assign_stud_loss_id_regicard` WHERE `AssLoss_STUD_NO` = '$StudNo' and `AssLoss_DISPLAY_STAT` <>'Inactive' and `AssLoss_TYPE` = 'Identification Card') as ID
+                                                                            $row = mysqli_fetch_array(mysqli_query($con,"SELECT (SELECT Count(`AssLoss_STUD_NO`) FROM `t_assign_stud_loss_id_regicard` WHERE `AssLoss_STUD_NO` = '$StudNo' and `AssLoss_DISPLAY_STAT` <>'Inactive' and `AssLoss_TYPE` = 'Identification Card') as ID
 ,(SELECT Count(`AssLoss_STUD_NO`) FROM `t_assign_stud_loss_id_regicard` WHERE `AssLoss_STUD_NO` = '$StudNo' and `AssLoss_DISPLAY_STAT` <>'Inactive' and `AssLoss_TYPE` = 'Registration Card') as Regi"));
                                                                              $ID = $row["ID"];
                                                                              $Regi = $row["Regi"];
@@ -126,7 +126,7 @@
                         <div class="col-md-4 form-group"> *Course
                             <select id="course1" type="text" class="form-control m-bot15" required>
                                 <?php   
-                                    while($course_row =mysql_fetch_array($view_course)){?>
+                                    while($course_row =mysqli_fetch_array($view_course)){?>
                                     <option value="<?php echo $course_row['Course_CODE'] ?>" <?php if($course_row[ 'Course_CODE']===$profileLayoutRow[ 'Stud_COURSE']){ echo 'selected';} ?>>
                                         <?php echo $course_row['Course_CODE'] ?>
                                     </option>

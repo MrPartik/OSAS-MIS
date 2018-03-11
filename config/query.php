@@ -12,8 +12,9 @@ $view_studLossCond="";
                 }
                 function viewStud_LossCond($ID,$StudNo) 
                 {
+                    include ('connection.php');    
                     global $view_studLossCond;
-                    $view_studLossCond = mysql_query("SELECT  `AssLoss_ID` ID
+                    $view_studLossCond = mysqli_query($con,"SELECT  `AssLoss_ID` ID
                                         ,`AssLoss_STUD_NO` StudNo
                                         ,`AssLoss_TYPE` type
                                          ,`AssLoss_REMARKS` remarks
@@ -28,8 +29,9 @@ $view_studLossCond="";
                 }
                 function viewFinanStudCond($ID,$StudNo)
                 {
+                    include ('connection.php');    
                     global $view_studFinanCond;
-                    $view_studFinanCond = mysql_query("SELECT 
+                    $view_studFinanCond = mysqli_query($con,"SELECT 
                                         B.AssStudFinanAssistance_ID AssID
                                         ,B.AssStudFinanAssistance_DATE_ADD Start
                                         ,B.AssStudFinanAssistance_DATE_MOD Mods
@@ -58,13 +60,15 @@ $view_studLossCond="";
                 }
                 function viewStudProfileCond($StudID,$Studno)
                 {
+                    include ('connection.php');    
                     global $view_studProfile_cond; 
-                    $view_studProfile_cond = mysql_query("select Stud_ID as ID ,Stud_NO ,Stud_LNAME,Stud_FNAME,Stud_MNAME,CONCAT(Stud_LNAME,', ',Stud_FNAME,' ',COALESCE(Stud_MNAME,'')) as FullName ,Stud_COURSE,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) as Course ,Stud_EMAIL , Stud_SECTION,Stud_CONTACT_NO ,Stud_GENDER ,Stud_BIRHT_DATE ,Stud_BIRTH_PLACE ,Stud_STATUS ,Stud_ADDRESS FROM osas.r_stud_profile where (Stud_id = $StudID or Stud_NO= '$Studno') and Stud_DISPLAY_STATUS='active'"); 
+                    $view_studProfile_cond = mysqli_query($con,"select Stud_ID as ID ,Stud_NO ,Stud_LNAME,Stud_FNAME,Stud_MNAME,CONCAT(Stud_LNAME,', ',Stud_FNAME,' ',COALESCE(Stud_MNAME,'')) as FullName ,Stud_COURSE,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) as Course ,Stud_EMAIL , Stud_SECTION,Stud_CONTACT_NO ,Stud_GENDER ,Stud_BIRHT_DATE ,Stud_BIRTH_PLACE ,Stud_STATUS ,Stud_ADDRESS FROM osas.r_stud_profile where (Stud_id = $StudID or Stud_NO= '$Studno') and Stud_DISPLAY_STATUS='active'"); 
                 }
                 function viewStudSanctionCond($StudNO)
                 {
+                    include ('connection.php');    
                     global $view_studSanctionCond;
-                    $view_studSanctionCond = mysql_query("SELECT A.Stud_NO
+                    $view_studSanctionCond = mysqli_query($con,"SELECT A.Stud_NO
                                     ,CONCAT(A.Stud_LNAME,', ',A.Stud_FNAME,' ',COALESCE(A.Stud_MNAME,'')) AS FullName
                                     ,C.SancDetails_NAME AS SanctionName
                                     ,C.SancDetails_TIMEVAL AS TimeVal
@@ -90,8 +94,9 @@ $view_studLossCond="";
          
                 function viewStudSanctionComputation($StudNO)
                 {
+                    include ('connection.php');    
                     global $view_studSanctionComputation;
-                    $view_studSanctionComputation = mysql_query("SELECT A.Stud_NO  
+                    $view_studSanctionComputation = mysqli_query($con,"SELECT A.Stud_NO  
                                     ,SUM(C.SancDetails_TIMEVAL) AS TimeVal 
                                     ,SUM(B.AssSancStudStudent_CONSUMED_HOURS) AS Consumed
                                     ,(SUM(C.SancDetails_TIMEVAL) - SUM(B.AssSancStudStudent_CONSUMED_HOURS)) AS TOTAL
@@ -112,8 +117,9 @@ $view_studLossCond="";
             
             function view_studSanctionDetails($StudNo)
             {
+                include ('connection.php');    
                 global $view_studSanctionDetails;
-                $view_studSanctionDetails= mysql_query("SELECT B.AssSancStudStudent_ID AssSancID
+                $view_studSanctionDetails= mysqli_query($con,"SELECT B.AssSancStudStudent_ID AssSancID
                                     ,A.Stud_NO
                                     ,CONCAT(A.Stud_LNAME,', ',A.Stud_FNAME,' ',COALESCE(A.Stud_MNAME,'')) AS FullName
                                     ,C.SancDetails_NAME AS SanctionName
@@ -139,7 +145,7 @@ $view_studLossCond="";
                                     ORDER BY B.AssSancStudStudent_DATE_MOD DESC");
 }
 
-$view_studSanction = mysql_query("SELECT B.AssSancStudStudent_ID AssSancID
+$view_studSanction = mysqli_query($con,"SELECT B.AssSancStudStudent_ID AssSancID
                                     ,A.Stud_NO
                                     ,CONCAT(A.Stud_LNAME,', ',A.Stud_FNAME,' ',COALESCE(A.Stud_MNAME,'')) AS FullName
                                     ,C.SancDetails_NAME AS SanctionName
@@ -161,7 +167,7 @@ $view_studSanction = mysql_query("SELECT B.AssSancStudStudent_ID AssSancID
                                     AND B.AssSancStudStudent_CONSUMED_HOURS <> C.SancDetails_TIMEVAL ");
 
 
-$view_studProfile = mysql_query("select Stud_ID as ID 
+$view_studProfile = mysqli_query($con,"select Stud_ID as ID 
                                     ,Stud_NO ,CONCAT(Stud_LNAME,', ',Stud_FNAME,' ',COALESCE(Stud_MNAME,'')) as FullName 
                                     ,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) as Course
                                     ,Stud_EMAIL ,Stud_CONTACT_NO 
@@ -174,4 +180,4 @@ $view_studProfile = mysql_query("select Stud_ID as ID
                                         FROM osas.r_stud_profile 
                                     where Stud_DISPLAY_STATUS='active'"); 
 
-$view_course = mysql_query("select * from r_courses where course_display_stat ='active'"); ?>
+$view_course = mysqli_query($con,"select * from r_courses where course_display_stat ='active'"); ?>

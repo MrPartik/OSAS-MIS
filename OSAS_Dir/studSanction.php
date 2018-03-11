@@ -53,7 +53,7 @@ $currentPage ='OSAS_StudSanction';
                                             </thead>
                                             <tbody>
                                        
-                                                    <?php   while($stud_row=mysql_fetch_array($view_studProfile)) { ?>
+                                                    <?php   while($stud_row=mysqli_fetch_array($view_studProfile)) { ?>
                                                         <tr>
                                                             <td>
                                                                 <?php echo $stud_row['Stud_NO'];?>
@@ -67,13 +67,13 @@ $currentPage ='OSAS_StudSanction';
                                                             <td>
                                                                 <?php  
                                                             $studNo = $stud_row['Stud_NO'];
-                                                            $noRow = mysql_fetch_row(mysql_query("SELECT (SELECT COUNT(a.AssSancStudStudent_STUD_NO) FROM t_assign_stud_saction a inner join r_sanction_details b on a.AssSancStudStudent_SancDetails_CODE = b.SancDetails_CODE and b.SancDetails_DISPLAY_STAT='Active' WHERE a.AssSancStudStudent_STUD_NO = '$studNo' and a.AssSancStudStudent_DISPLAY_STAT <> 'Inactive'  and a.AssSancStudStudent_IS_FINISH <>'finished'), (SELECT COUNT(a.AssSancStudStudent_STUD_NO) FROM t_assign_stud_saction a inner join r_sanction_details b on a.AssSancStudStudent_SancDetails_CODE= b.SancDetails_CODE WHERE a.AssSancStudStudent_STUD_NO  = '$studNo' and a.AssSancStudStudent_IS_FINISH ='finished' and a.AssSancStudStudent_DISPLAY_STAT <> 'Inactive' )")); ?>
+                                                            $noRow = mysqli_fetch_array(mysqli_query($con,"SELECT (SELECT COUNT(a.AssSancStudStudent_STUD_NO) FROM t_assign_stud_saction a inner join r_sanction_details b on a.AssSancStudStudent_SancDetails_CODE = b.SancDetails_CODE and b.SancDetails_DISPLAY_STAT='Active' WHERE a.AssSancStudStudent_STUD_NO = '$studNo' and a.AssSancStudStudent_DISPLAY_STAT <> 'Inactive'  and a.AssSancStudStudent_IS_FINISH <>'finished'), (SELECT COUNT(a.AssSancStudStudent_STUD_NO) FROM t_assign_stud_saction a inner join r_sanction_details b on a.AssSancStudStudent_SancDetails_CODE= b.SancDetails_CODE WHERE a.AssSancStudStudent_STUD_NO  = '$studNo' and a.AssSancStudStudent_IS_FINISH ='finished' and a.AssSancStudStudent_DISPLAY_STAT <> 'Inactive' )")); ?>
                                                                     <center> <span class="label label-danger label-mini"> <?php echo $noRow[0] ?>  </span> &nbsp; <span class="label label-success label-mini"> <?php echo $noRow[1] ?>  </span> </center>
                                                             </td>
                                                             <td style="width:20%;">
                                                                 <?php
                                                 viewStudSanctionComputation($stud_row['Stud_NO']);
-                                                while($row=mysql_fetch_array($view_studSanctionComputation)){ 
+                                                while($row=mysqli_fetch_array($view_studSanctionComputation)){ 
                                                 ?>
                                                                     <div class="progress progress-striped progress-xs">
                                                                         <div style="width:0<?php echo $row['Percentage'] ?>%" aria-valuemax="100%" aria-valuemin="0" role="progressbar" class="progress-bar progress-bar-success"> <span class="sr-only">40% Complete (success)</span> </div>
@@ -82,7 +82,7 @@ $currentPage ='OSAS_StudSanction';
                                                             </td>
                                                                 <?php   
                                                                         $StudNo= $stud_row['Stud_NO'];
-                                                                       $row=mysql_fetch_array(mysql_query("select max(AssSancStudStudent_DATE_MOD) from t_assign_stud_saction where AssSancStudStudent_STUD_NO ='$StudNo'"));?>
+                                                                       $row=mysqli_fetch_array(mysqli_query($con,"select max(AssSancStudStudent_DATE_MOD) from t_assign_stud_saction where AssSancStudStudent_STUD_NO ='$StudNo'"));?>
                                                             
                                                             <td data-order="<?php   echo  ($row[0]==null )?"":($row[0]); ?>">
                                                                      <?php   echo  ($row[0]==null )?"":(new DateTime($row[0]))->format('D M d, Y h:i A'); ?>

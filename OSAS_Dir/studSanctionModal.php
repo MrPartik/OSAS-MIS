@@ -7,7 +7,7 @@
             <div class="modal-body">
                 <div class='twt-feed maroon-bg'>
                     <?php viewStudProfileCond( 0,$_GET['StudNo']) ?>
-                        <?php while($profileLayoutRow = mysql_fetch_array($view_studProfile_cond)){ ?>
+                        <?php while($profileLayoutRow = mysqli_fetch_array($view_studProfile_cond)){ ?>
                             <div class='corner-ribon black-ribon'><i class='fa fa-user'></i></div>
                             <div class='fa fa-user wtt-mark'></div><a href='#'><img alt='<?php echo $profileLayoutRow['FullName']?>' src='../images/Student//Student.png'></a>
                             <h1>
@@ -28,7 +28,7 @@
                                 <?php  
                                         $counterSanction=0; 
                                         viewStudSanctionCond($profileLayoutRow['Stud_NO']);
-                                        while(mysql_fetch_row($view_studSanctionCond)){
+                                        while(mysqli_fetch_array($view_studSanctionCond)){
                                             $counterSanction++;
                                         }
                                         echo $counterSanction;  
@@ -37,7 +37,7 @@
                                     <li>
                                         <?php $percentageSanction = "0 %";
                             viewStudSanctionComputation($profileLayoutRow['Stud_NO']);
-                            while($row=mysql_fetch_array($view_studSanctionComputation)){ 
+                            while($row=mysqli_fetch_array($view_studSanctionComputation)){ 
                             
                             $percentageSanction = $row['Percentage']." %";
                             }?>
@@ -62,8 +62,8 @@
                         <div id="sanctionDiv" class="row collapse panel-body">
                             <div class="col-md-4" style="width:300px"> Available Sanction
                                 <select id="sanctionSelection" class="js-example-basic-single form-control m-bot15">
-                                    <?php $querySanc =mysql_query("select * from r_sanction_details where SancDetails_DISPLAY_STAT = 'Active'"); 
-                                          while($row =mysql_fetch_array($querySanc)) { ?>
+                                    <?php $querySanc =mysqli_query($con,"select * from r_sanction_details where SancDetails_DISPLAY_STAT = 'Active'"); 
+                                          while($row =mysqli_fetch_array($querySanc)) { ?>
                                         <option sanctionCode="<?php echo $row['SancDetails_CODE'];?>" sanctionTimeValue="<?php echo $row['SancDetails_TIMEVAL']?>">
                                             <?php echo $row['SancDetails_NAME']?>
                                         </option>
@@ -72,8 +72,8 @@
                             </div>
                             <div class="col-md-4" style="width:270px"> Available Designated Office
                                 <select id="officesSelection" class="form-control m-bot15">
-                                    <?php $queryDesignatedOffice =mysql_query("select * from r_designated_offices_details where DesOffDetails_DISPLAY_STAT = 'active'"); 
-                                          while($desRow =mysql_fetch_array($queryDesignatedOffice)) { ?>
+                                    <?php $queryDesignatedOffice =mysqli_query($con,"select * from r_designated_offices_details where DesOffDetails_DISPLAY_STAT = 'active'"); 
+                                          while($desRow =mysqli_fetch_array($queryDesignatedOffice)) { ?>
                                         <option value="<?php echo  $desRow['DesOffDetails_CODE']?>">
                                             <?php echo  $desRow['DesOffDetails_NAME']?>
                                         </option>
@@ -104,7 +104,7 @@
                                     <tbody id="tbodySanctions">
                                         <?php 
                             view_studSanctionDetails($profileLayoutRow['Stud_NO']);
-                            while($SancDetrow=mysql_fetch_array($view_studSanctionDetails)){ ?>
+                            while($SancDetrow=mysqli_fetch_array($view_studSanctionDetails)){ ?>
                                             <tr>
                                                 <td class="hidden">
                                                     <?php echo $SancDetrow['AssSancID']?>

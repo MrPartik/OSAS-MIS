@@ -8,7 +8,7 @@
                 <div class='twt-feed maroon-bg'>
                     <?php viewStudProfileCond(0,$_GET['StudNo']); 
                     $data =$_GET['StudNo'];
-                    while($profileLayoutRow = mysql_fetch_array($view_studProfile_cond)){ ?>
+                    while($profileLayoutRow = mysqli_fetch_array($view_studProfile_cond)){ ?>
                         <div class='corner-ribon black-ribon'><i class='fa fa-user'></i></div>
                         <div class='fa fa-user wtt-mark'></div><a href='#'><img alt='<?php echo $profileLayoutRow['FullName']?>' src='../images/Student//Student.png'></a>
                         <h1>
@@ -28,13 +28,13 @@
                                     <h5> <?php  
                                             $statusFinan = 'INACTIVE';    
                                             viewFinanStudCond (0,$_GET['StudNo']); 
-                                            while ($finanStud= mysql_fetch_array($view_studFinanCond)){
+                                            while ($finanStud= mysqli_fetch_array($view_studFinanCond)){
                                             $statusFinan=  $finanStud['Status'];}
                                             echo $statusFinan;
                                             ?>
                             </h5> Scholarship Status </li>
                                 <li>
-                                    <h5> <?php $counter=0; $StudNo =$_GET['StudNo'];  $query= mysql_query("select 	AssStudFinanAssistance_STUD_NO  from t_assign_stud_finan_assistance where AssStudFinanAssistance_STUD_NO ='$StudNo' and AssStudFinanAssistance_DISPLAY_STAT = 'Active'" );  while(mysql_fetch_array($query)){$counter++;} 
+                                    <h5> <?php $counter=0; $StudNo =$_GET['StudNo'];  $query= mysqli_query($con,"select 	AssStudFinanAssistance_STUD_NO  from t_assign_stud_finan_assistance where AssStudFinanAssistance_STUD_NO ='$StudNo' and AssStudFinanAssistance_DISPLAY_STAT = 'Active'" );  while(mysqli_fetch_array($query)){$counter++;} 
                                             echo $counter?>
                                             
                                             
@@ -57,8 +57,8 @@
                         <div id="FinanDiv" class="row collapse panel-body">
                             <div class="col-md-6" >Financial Assistance 
                                 <select id="finanDesc" class="form-control m-bot15">
-                                    <?php $querySanc =mysql_query("select * from r_financial_assistance_title where FinAssiTitle_DISPLAY_STAT<>'Inactive'"); 
-                                          while($row =mysql_fetch_array($querySanc)) { ?>
+                                    <?php $querySanc =mysqli_query($con,"select * from r_financial_assistance_title where FinAssiTitle_DISPLAY_STAT<>'Inactive'"); 
+                                          while($row =mysqli_fetch_array($querySanc)) { ?>
                                         <option desc="<?php echo $row['FinAssiTitle_DESC']?>"><?php echo $row['FinAssiTitle_NAME']?></option>
                                         <?php } ?>
                                 </select>
@@ -97,7 +97,7 @@
                                     <tbody id="tbodyFinancial" >
                                         <?php 
                             viewFinanStudCond(0,$profileLayoutRow['Stud_NO']);
-                            while($FinanDet=mysql_fetch_array($view_studFinanCond)){ ?>
+                            while($FinanDet=mysqli_fetch_array($view_studFinanCond)){ ?>
                                             <tr>
                                                 <td class="hidden "><?php echo $FinanDet['ID']?></td>
                                                 <td class="TDFinanDesc">

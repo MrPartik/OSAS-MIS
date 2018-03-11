@@ -1,6 +1,6 @@
 <?php
 	
-	include('../../connection.php');
+	include('../../../config/connection.php');
 	if(isset($_POST['_name']) && isset($_POST['_desc']) )
 	{
 		$name = $_POST['_name'];
@@ -8,7 +8,7 @@
 		$code = $_POST['_code'];
 			
 		
-		$query = mysqli_query($connection,"INSERT INTO `r_org_category` (OrgCat_CODE,OrgCat_NAME,OrgCat_DESC) VALUES ('$code','$name','$desc')");
+		$query = mysqli_query($con,"INSERT INTO `r_org_category` (OrgCat_CODE,OrgCat_NAME,OrgCat_DESC) VALUES ('$code','$name','$desc')");
 
 	}
 

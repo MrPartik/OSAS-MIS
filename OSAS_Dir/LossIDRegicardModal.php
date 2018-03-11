@@ -8,7 +8,7 @@
                 <div class='twt-feed maroon-bg'>
                     <?php viewStudProfileCond(0,$_GET['StudNo']); 
                     $data =$_GET['StudNo'];
-                    while($profileLayoutRow = mysql_fetch_array($view_studProfile_cond)){ ?>
+                    while($profileLayoutRow = mysqli_fetch_array($view_studProfile_cond)){ ?>
                         <div class='corner-ribon black-ribon'><i class='fa fa-user'></i></div>
                         <div class='fa fa-user wtt-mark'></div><a href='#'><img alt='<?php echo $profileLayoutRow['FullName']?>' src='../images/Student//Student.png'></a>
                         <h1>
@@ -26,7 +26,7 @@
                                                                             $ID =0;
                                                                             $Regi =0;
                                                                             $StudNo =$profileLayoutRow['Stud_NO'];
-                                                                            $row = mysql_fetch_array(mysql_query("SELECT (SELECT Count(`AssLoss_STUD_NO`) FROM `t_assign_stud_loss_id_regicard` WHERE `AssLoss_STUD_NO` = '$StudNo' and `AssLoss_DISPLAY_STAT` <>'Inactive' and `AssLoss_TYPE` = 'Identification Card') as ID
+                                                                            $row = mysqli_fetch_array(mysqli_query($con,"SELECT (SELECT Count(`AssLoss_STUD_NO`) FROM `t_assign_stud_loss_id_regicard` WHERE `AssLoss_STUD_NO` = '$StudNo' and `AssLoss_DISPLAY_STAT` <>'Inactive' and `AssLoss_TYPE` = 'Identification Card') as ID
 ,(SELECT Count(`AssLoss_STUD_NO`) FROM `t_assign_stud_loss_id_regicard` WHERE `AssLoss_STUD_NO` = '$StudNo' and `AssLoss_DISPLAY_STAT` <>'Inactive' and `AssLoss_TYPE` = 'Registration Card') as Regi"));
                                                                              $ID = $row["ID"];
                                                                              $Regi = $row["Regi"];
@@ -88,7 +88,7 @@
                                     <tbody id="tbodyLosscial" >
                                         <?php 
                             viewStud_LossCond(0,$profileLayoutRow['Stud_NO']);
-                            while($LossDet=mysql_fetch_array($view_studLossCond)){ ?>
+                            while($LossDet=mysqli_fetch_array($view_studLossCond)){ ?>
                                             <tr>
                                                 <td class="hidden "><?php echo $LossDet['ID']?></td>
                                                 <td class="TDLossDesc">

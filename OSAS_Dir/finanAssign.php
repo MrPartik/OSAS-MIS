@@ -49,7 +49,7 @@ $currentPage ='OSAS_Financial';
                                                 </tr>
                                             </thead>
                                             <tbody> 
-                                                    <?php while($stud_row=mysql_fetch_array($view_studProfile)) { ?>
+                                                    <?php while($stud_row=mysqli_fetch_array($view_studProfile)) { ?>
                                                         <tr>
                                                             <td>
                                                                 <?php echo $stud_row['Stud_NO'];?>
@@ -63,7 +63,7 @@ $currentPage ='OSAS_Financial';
                                                             <td>
                                                                 <?php viewFinanStudCond(0,$stud_row['Stud_NO']);  
                                                                     $scholarship ="";
-                                                        while($row = mysql_fetch_array($view_studFinanCond)){ 
+                                                        while($row = mysqli_fetch_array($view_studFinanCond)){ 
                                                              
                                                                     $scholarship =  $row["Finan_Name"]." "; 
                                                                     $statusColor = ($row["Status"]==="Active")? "label-success" : "label-danger";
@@ -72,7 +72,7 @@ $currentPage ='OSAS_Financial';
                                                                     }
                                                                 ?> </td>
                                                                 <?php  $StudNo= $stud_row['Stud_NO'];
-                                                                       $row=mysql_fetch_array(mysql_query("select max(AssStudFinanAssistance_DATE_MOD) from t_assign_stud_finan_assistance where AssStudFinanAssistance_STUD_NO ='$StudNo'")); ?>
+                                                                       $row=mysqli_fetch_array( mysqli_query($con,"select max(AssStudFinanAssistance_DATE_MOD) from t_assign_stud_finan_assistance where AssStudFinanAssistance_STUD_NO ='$StudNo'")); ?>
                                                             <td data-order="<?php    echo  ($row[0]==null )?"":($row[0]);  ?>">
                                                                        <?php  echo  ($row[0]==null )?"":(new DateTime($row[0]))->format('D M d, Y h:i A');
                                                                 ?>

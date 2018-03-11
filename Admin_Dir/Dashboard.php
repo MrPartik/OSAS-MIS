@@ -2,72 +2,18 @@
 <html>
 
 <head>
-    <title>OSAS - Designated Office</title>
-    <link href="../../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-    <link href="../../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../js/data-tables/DT_bootstrap.css" />
-
-    <!-- Custom styles for this template -->
-    <link href="../../css/style.css" rel="stylesheet">
-    <link href="../../css/style-responsive.css" rel="stylesheet" />
-    <link href="../../bs3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet">
-    <link href="../../css/bootstrap-reset.css" rel="stylesheet">
-    <link href="../../font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="../../js/jvector-map/jquery-jvectormap-1.2.2.css" rel="stylesheet">
-    <link href="../../css/clndr.css" rel="stylesheet">
-    <link href="../../js/css3clock/css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../js/morris-chart/morris.css">
-    <link href="../../css/style.css" rel="stylesheet">
-    <link href="../../css/style-responsive.css" rel="stylesheet" />
-    <link href="sweetalert/sweetalert.css" rel="stylesheet">
-
+    <title>OSAS - Dashboard</title><?php include('header.php');    
+$currentPage ='Admin_Dashboard'; 
+include('../config/connection.php');
+?>
 </head>
 
 <body>
     <!--header start-->
-    <header class="header fixed-top clearfix">
-        <!--logo start-->
-        <div class="brand">
-
-            <a href="Dashboard.php" class="logo"> 
-        <img src="../../images/logo.png" alt=""> 
-    </a>
-
-            <div class="sidebar-toggle-box">
-                <div class="fa fa-bars"></div>
-            </div>
-        </div>
-
-        <div class="top-nav clearfix">
-            <!--search & user info start-->
-            <ul class="nav pull-right top-menu">
-                <li>
-                    <input type="text" class="form-control search" placeholder=" Search">
-                </li>
-                <!-- user login dropdown start-->
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                <img alt="" src="../../images/OSAS/zxc.png">
-                <span class="username">Eric Valdez</span>
-                <b class="caret"></b>
-            </a>
-                    <ul class="dropdown-menu extended logout">
-                        <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                        <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                        <li><a href="../login.php"><i class="fa fa-key"></i> Log Out</a></li>
-                    </ul>
-                </li>
-                <!-- user login dropdown end -->
-
-            </ul>
-            <!--search & user info end-->
-        </div>
-    </header>
+     
     <?php
-
-            include('connection.php');
-            $view_query = mysqli_query($connection,"SELECT (SELECT COUNT(*) FROM `r_batch_details` WHERE Batch_DISPLAY_STAT = 'Active') AS BATCH, (SELECT COUNT(*) FROM `r_clearance_signatories` WHERE ClearSignatories_DISPLAY_STAT = 'Active') AS SIGNATORY, (SELECT COUNT(*) FROM `r_courses` WHERE Course_DISPLAY_STAT = 'Active') AS COURSE, (SELECT COUNT(*) FROM `r_designated_offices_details` WHERE DesOffDetails_DISPLAY_STAT = 'Active') AS OFFICE,(SELECT COUNT(*) FROM `r_financial_assistance_title` WHERE FinAssiTitle_DISPLAY_STAT = 'Active') AS TITLE,(SELECT COUNT(*) FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active') AS ACCDET,(SELECT COUNT(*) FROM `r_sanction_details` WHERE SancDetails_DISPLAY_STAT = 'Active') AS SANCDET,(SELECT COUNT(*) FROM `r_org_category` WHERE OrgCat_DISPLAY_STAT = 'Active') AS CAT,(SELECT COUNT(*) FROM `r_semester` WHERE Semestral_DISPLAY_STAT = 'Active') AS SEM");
+ 
+            $view_query = mysqli_query($con,"SELECT (SELECT COUNT(*) FROM `r_batch_details` WHERE Batch_DISPLAY_STAT = 'Active') AS BATCH, (SELECT COUNT(*) FROM `r_clearance_signatories` WHERE ClearSignatories_DISPLAY_STAT = 'Active') AS SIGNATORY, (SELECT COUNT(*) FROM `r_courses` WHERE Course_DISPLAY_STAT = 'Active') AS COURSE, (SELECT COUNT(*) FROM `r_designated_offices_details` WHERE DesOffDetails_DISPLAY_STAT = 'Active') AS OFFICE,(SELECT COUNT(*) FROM `r_financial_assistance_title` WHERE FinAssiTitle_DISPLAY_STAT = 'Active') AS TITLE,(SELECT COUNT(*) FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active') AS ACCDET,(SELECT COUNT(*) FROM `r_sanction_details` WHERE SancDetails_DISPLAY_STAT = 'Active') AS SANCDET,(SELECT COUNT(*) FROM `r_org_category` WHERE OrgCat_DISPLAY_STAT = 'Active') AS CAT,(SELECT COUNT(*) FROM `r_semester` WHERE Semestral_DISPLAY_STAT = 'Active') AS SEM");
             while($row = mysqli_fetch_assoc($view_query))
             {
                 $batch = $row["BATCH"];
@@ -87,85 +33,7 @@
         ?>
         <!--header end-->
         <section id="container">
-            <aside>
-                <div id="sidebar" class="nav-collapse">
-                    <!-- sidebar menu start-->
-                    <aside>
-                        <div id="sidebar" class="nav-collapse">
-                            <!-- sidebar menu start-->
-                            <div class="leftside-navigation">
-                                <ul class="sidebar-menu" id="nav-accordion">
-                                    <li>
-                                        <a href="Dashboard.php" class="active">
-                        <i class ="fa fa-dashboard" ></i>
-                        <span>Dashboard</span>
-                    </a>
-                                    </li>
-                                    <li class="sub-menu">
-                                        <a href="javascript:;">
-                        <i class="fa fa-user"></i>
-                        <span>Student Setup</span>
-                    </a>
-                                        <ul class="sub">
-                                            <li><a href="StudentSetup/FinancialAssistanceTitle.php">Assistance Title</a></li>
-                                            <li><a href="StudentSetup/BatchYear.php">Batch Year</a></li>
-                                            <li><a href="StudentSetup/Semester.php">Semester</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="sub-menu">
-                                        <a href="javascript:;">
-                        <i class="fa fa-users"></i>
-                        <span>Organization Setup</span>
-                    </a>
-                                        <ul class="sub">
-                                            <li><a href="OrganizationSetup/AccreditationRequirement.php">Accreditation Requirement</a></li>
-                                            <li><a href="OrganizationSetup/Course.php">Course</a></li>
-                                            <li><a href="OrganizationSetup/OrganizationCategory.php">Organization Category</a></li>
-                                            <li><a href="OrganizationSetup/OfficerPosition.php">Officer Position</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="sub-menu">
-                                        <a href="javascript:;">
-                        <i class="fa fa-user"></i>
-                        <span>Sanction Setup</span>
-                    </a>
-                                        <ul class="sub">
-                                            <li><a href="SanctionSetup/ClearanceSignatory.php">Clearance Signatory</a></li>
-                                            <li><a href="SanctionSetup/DesignatedOffice.php">Designated Office</a></li>
-                                            <li><a href="SanctionSetup/SanctionDetail.php">Sanction Detail</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- sidebar menu end-->
-                        </div>
-                    </aside>
-                    <!-- Modal -->
-                    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="admin-login" class="modal fade">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    <h4 class="modal-title">Forgot Password ?</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Enter your e-mail address below to reset your password.</p>
-                                    <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button data-dismiss="modal" class="btn btn-               default" type="button">Cancel</button>
-                                    <button class="btn btn-success" type="button">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- modal -->
-
-                    <!-- sidebar menu end-->
-                </div>
-            </aside>
-            <!--sidebar end-->
+             <?php include("sidenav.php")?>
             <!--main content start-->
             <section id="main-content">
                 <section class="wrapper">

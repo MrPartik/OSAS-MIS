@@ -25,7 +25,6 @@ var EditableTable = function () {
                 var aData = oTable.fnGetData(nRow);
                 var jqTds = $('>td', nRow);
                 getcode = aData[0];
-                //                alert(aData[0].substring(aData[0].indexOf("*") + 5, aData[0].length));
                 if (getcode != '') {
 
                     jqTds[0].innerHTML = '<input type="text" class="form-control small " value="' + aData[0] + '" disabled style="width:100%" >';
@@ -34,29 +33,7 @@ var EditableTable = function () {
                     jqTds[3].innerHTML = '<center><a class="btn btn-success  edit" href="">Save</a> <a class="btn btn-danger cancel"  href="" >Cancel</a></center>';
 
                 }
-                //                   else {
-                //                    //                    $('#hidecol').addClass('hidden');
-                //
-                //                    if (addflag == 0) {
-                //
-                //                        $.ajax({
-                //                            type: "GET",
-                //                            url: 'AccreditationRequirement/GetLatest-Code.php',
-                //                            success: function (data) {
-                //                                jqTds[0].innerHTML = '<input type="text" class="form-control small " value="' + data + '" disabled style="width:100%">';
-                //                            }
-                //                        });
-                //                        jqTds[1].innerHTML = '<input type="text" class="form-control small" value="' + aData[1] + '" style="width:100%">';
-                //                        jqTds[2].innerHTML = '<input type="text" class="form-control small" value="' + aData[2] + '" style="width:100%">';
-                //                        jqTds[3].innerHTML = '<center><a class="btn btn-success  edit" href="">Add</a> <a class="btn btn-danger  cancel"  data-mode="new" href="">Cancel</a></center>';
-                //                        addflag = 1;
-                //
-                //                    }
-                //
-                //
-                //                }
-
-            }
+              }
 
 
             function saveRow(oTable, nRow) {
@@ -110,16 +87,7 @@ var EditableTable = function () {
 
             $('#submit-data').click(function (e) {
                 e.preventDefault();
-
-                /*
-                if (addflag == 0) {
-
-                    var aiNew = oTable.fnAddData(['', '', '', '', '']);
-                    var nRow = oTable.fnGetNodes(aiNew[0]);
-                    editRow(oTable, nRow);
-                    nEditing = nRow;
-
-                }*/
+ 
                 var txtreqname = document.getElementById("txtreqname").value;
                 var txtreqdesc = document.getElementById("txtreqdesc").value;
                 var latcode = document.getElementById("latcode").innerText;
@@ -141,7 +109,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'AccreditationRequirement/Add-ajax.php',
+                                url: 'OrganizationSetup/AccreditationRequirement/Add-ajax.php',
                                 data: {
                                     _name: txtreqname,
                                     _desc: txtreqdesc
@@ -194,7 +162,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'AccreditationRequirement/Delete-ajax.php',
+                                url: 'OrganizationSetup/AccreditationRequirement/Delete-ajax.php',
                                 data: {
                                     _code: getval
                                 },
@@ -250,7 +218,7 @@ var EditableTable = function () {
                     if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 5 && jqInputs[2].value.length < 100 && jqInputs[2].value.length > 5) {
                         $.ajax({
                             type: 'post',
-                            url: 'AccreditationRequirement/Update-ajax.php',
+                            url: 'OrganizationSetup/AccreditationRequirement/Update-ajax.php',
                             data: {
                                 _name: jqInputs[1].value,
                                 _desc: jqInputs[2].value,
@@ -306,7 +274,7 @@ var EditableTable = function () {
                                 if (isConfirm) {
                                     $.ajax({
                                         type: 'post',
-                                        url: 'AccreditationRequirement/Add-ajax.php',
+                                        url: 'OrganizationSetup/AccreditationRequirement/Add-ajax.php',
                                         data: {
                                             _name: jqInputs[1].value,
                                             _desc: jqInputs[2].value

@@ -117,7 +117,7 @@ $currentPage ='OSAS_docuArchive';
                                 <div class="col-md-4 form-group"> *Course
                                     <select id="course" type="text" class="form-control m-bot15" required>
                                         <?php   
-                                    while($course_row =mysql_fetch_array($view_course)){?>
+                                    while($course_row =mysqli_fetch_array($view_course)){?>
                                             <option value="<?php echo $course_row['Course_CODE'] ?>">
                                                 <?php echo $course_row['Course_CODE'] ?>
                                             </option>

@@ -33,7 +33,7 @@ var EditableTable = function () {
 
                     $.ajax({
                         type: "GET",
-                        url: 'Course/GetYear.php',
+                        url: 'OrganizationSetup/Course/GetYear.php',
                         dataType: 'json',
                         data: {
                             _code: aData[2]
@@ -146,7 +146,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'Course/Add-ajax.php',
+                                url: 'OrganizationSetup/Course/Add-ajax.php',
                                 data: {
                                     _name: txtname,
                                     _year: getyear,
@@ -198,7 +198,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'Course/Delete-ajax.php',
+                                url: 'OrganizationSetup/Course/Delete-ajax.php',
                                 data: {
                                     _code: getval
                                 },
@@ -253,7 +253,7 @@ var EditableTable = function () {
                     if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 5 && jqInputs[2].value.length < 100 && jqInputs[2].value.length > 5) {
                         $.ajax({
                             type: 'post',
-                            url: 'Course/Update-ajax.php',
+                            url: 'OrganizationSetup/Course/Update-ajax.php',
                             data: {
                                 _name: jqInputs[1].value,
                                 _desc: jqInputs[2].value,
@@ -299,7 +299,7 @@ var EditableTable = function () {
                     getyear = e.options[e.selectedIndex].text;
                     $.ajax({
                         type: 'post',
-                        url: 'Course/Add-ajax.php',
+                        url: 'OrganizationSetup/Course/Add-ajax.php',
                         data: {
                             _name: jqInputs[1].value,
                             _year: getyear,

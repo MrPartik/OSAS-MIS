@@ -108,7 +108,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'DesignatedOffice/Delete-ajax.php',
+                                url: 'SanctionSetup/DesignatedOffice/Delete-ajax.php',
                                 data: {
                                     _code: getval
                                 },
@@ -175,7 +175,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'DesignatedOffice/Add-ajax.php',
+                                url: 'SanctionSetup/DesignatedOffice/Add-ajax.php',
                                 data: {
                                     _name: txtname,
                                     _desc: txtdesc
@@ -220,7 +220,7 @@ var EditableTable = function () {
                     if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 5 && jqInputs[2].value.length < 100 && jqInputs[2].value.length > 5) {
                         $.ajax({
                             type: 'post',
-                            url: 'DesignatedOffice/Update-ajax.php',
+                            url: 'SanctionSetup/DesignatedOffice/Update-ajax.php',
                             data: {
                                 _name: jqInputs[1].value,
                                 _desc: jqInputs[2].value,
@@ -276,7 +276,7 @@ var EditableTable = function () {
                                 if (isConfirm) {
                                     $.ajax({
                                         type: 'post',
-                                        url: 'DesignatedOffice/Add-ajax.php',
+                                        url: 'SanctionSetup/DesignatedOffice/Add-ajax.php',
                                         data: {
                                             _name: jqInputs[1].value,
                                             _desc: jqInputs[2].value

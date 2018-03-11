@@ -14,7 +14,7 @@ $bday=$_POST['bdate'];
 $bplace=$_POST['bplace'];  
 $status=$_POST['status'];
 $address=$_POST['address'];
-mysql_query(" Call Insert_StudProfile(
+mysqli_query($con," Call Insert_StudProfile(
 '$studno'
 ,'$fname'
 ,'$mname'
@@ -44,7 +44,7 @@ mysql_query(" Call Insert_StudProfile(
     $status=$_POST['status'];
     $address=$_POST['address'];
     $studID = $_POST['studID'];
-    mysql_query(" Call Update_StudProfile(
+    mysqli_query($con," Call Update_StudProfile(
     $studID
     ,'$studno'
     ,'$fname'
@@ -62,7 +62,7 @@ mysql_query(" Call Insert_StudProfile(
     } 
     else if ($_POST['action']==="ArchiveActive"){  
     $studID = $_POST['studID'];
-    mysql_query("Call Archive_StudProfile(
+    mysqli_query($con,"Call Archive_StudProfile(
     $studID)")or die(mysql_error());  
     }  
 ?>
