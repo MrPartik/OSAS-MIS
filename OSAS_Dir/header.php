@@ -1,9 +1,9 @@
+
 <?php include('../config/session.php'); 
 include('../config/dashboard/count.php'); 
 include('../config/query.php')?>
     <!DOCTYPE html>
-
-    <head>
+<head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
@@ -29,6 +29,8 @@ include('../config/query.php')?>
     <link href="../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
     <link rel="stylesheet" href="../js/data-tables/DT_bootstrap.css" />
 </head>
+    
+
     <section id="container">
         <!--header start-->
         <header class="header fixed-top clearfix">
