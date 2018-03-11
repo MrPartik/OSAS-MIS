@@ -48,18 +48,8 @@ $currentPage ='OSAS_Financial';
                                                     </th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <?php     
-                                        if($count_stud <= 0) { ?>
-                                                    <tr>
-                                                        <td>Empty table</td>
-                                                        <td> </td>
-                                                        <td> </td>
-                                                        <td> </td>
-                                                        <td> </td>
-                                                        <td> </td>
-                                                    </tr>
-                                                    <?php } else { while($stud_row=mysql_fetch_array($view_studProfile)) { ?>
+                                            <tbody> 
+                                                    <?php while($stud_row=mysql_fetch_array($view_studProfile)) { ?>
                                                         <tr>
                                                             <td>
                                                                 <?php echo $stud_row['Stud_NO'];?>
@@ -81,11 +71,10 @@ $currentPage ='OSAS_Financial';
                                                                     echo "<span title ='".$date->format('D M d, Y h:i A')."' class='label ".$statusColor." label-mini'>".$scholarship."</span> &nbsp;";
                                                                     }
                                                                 ?> </td>
-                                                            <td>
-                                                                <?php                                      
-                                                                        $StudNo= $stud_row['Stud_NO'];
-                                                                       $row=mysql_fetch_array(mysql_query("select max(AssStudFinanAssistance_DATE_MOD) from t_assign_stud_finan_assistance where AssStudFinanAssistance_STUD_NO ='$StudNo'"));
-                                                                        echo  ($row[0]==null )?"":(new DateTime($row[0]))->format('D M d, Y h:i A');
+                                                                <?php  $StudNo= $stud_row['Stud_NO'];
+                                                                       $row=mysql_fetch_array(mysql_query("select max(AssStudFinanAssistance_DATE_MOD) from t_assign_stud_finan_assistance where AssStudFinanAssistance_STUD_NO ='$StudNo'")); ?>
+                                                            <td data-order="<?php    echo  ($row[0]==null )?"":($row[0]);  ?>">
+                                                                       <?php  echo  ($row[0]==null )?"":(new DateTime($row[0]))->format('D M d, Y h:i A');
                                                                 ?>
                                                             </td>
                                                             <td>
@@ -94,7 +83,7 @@ $currentPage ='OSAS_Financial';
                                                                 </center>
                                                             </td>
                                                         </tr>
-                                                        <?php }}?>
+                                                        <?php }?>
                                             </tbody>
                                             <tfoot>
                                                 <tr>
