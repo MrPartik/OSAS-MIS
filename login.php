@@ -24,22 +24,38 @@
                         <div class="input-group m-bot15"> <span class="input-group-addon"><i class ="fa fa-lock"></i></span>
                             <input name="password" id="password" type="password" class="form-control" placeholder="Password" required> </div>
                         <?php
-				session_start();
+				    session_start();
                     if(isset($_SESSION['logged_in']))
                     {
-                        header('location:osas_dir/dashboard.php'); 
+                        header('location: ../osas_dir/dashboard.php');  
                     }
                     else{
 								if (isset($_POST['login'])){
 								$username = $_POST['username'];
 								$password = $_POST['password'];
 								$query = "call Login_User('$username','$password')";
-								$result = mysql_query($query);
-								$num_row = mysql_num_rows($result); 
+								$result = mysqli_query($con,$query);
+                                $num_row = mysqli_num_rows($result); 
+                                $row = mysqli_fetch_assoc($result); 
 									if( $num_row > 0 ) {
-										$_SESSION['logged_in']=	$username;
-                                        header('location:osas_dir/dashboard.php');
-							
+                                        $_SESSION['logged_in']=	$row["Users_USERNAME"];
+                                        $_SESSION['logged_user']=array(
+                                            'username'=>$row['Users_USERNAME'], 
+                                            'role'=>$row['Users_ROLES'],
+                                            'ppath'=>$row['Users_PROFILE_PATH'],
+                                            'ref'=>$row['Users_REFERENCED']);
+                                        $role = $_SESSION['logged_user']['role'];
+                                            switch($role){
+                                               case 'OSAS HEAD':
+                                               header('location: ../osas_dir/dashboard.php');  
+                                               break;
+                                               case 'moderator':
+                                               header('location:moderator.php');
+                                               break;
+                                               case 'admin':
+                                               header('location:admin.php');
+                                               break;
+                                              }
 									}
 									else{ ?>
                             <div class="alert alert-danger">Access Denied</div>

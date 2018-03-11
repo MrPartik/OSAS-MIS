@@ -2,9 +2,20 @@
 <html>
 
 <head>
-    <title>OSAS - Dashboard</title><?php include('header.php');    
+    <title>OSAS - Dashboard</title>
+    <?php 
 $currentPage ='Admin_Dashboard'; 
+include('header.php');  
 include('../config/connection.php');
+      
+if($_SESSION['logged_user']['role']=="OSAS HEAD")
+{ header("location:../osas_dir/dashboard.php"); }
+else if($_SESSION['logged_user']['role']=="Organization")
+{ } 
+else if($_SESSION['logged_user']['role']=="Student")
+{ }
+else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
+{ header("location:../");}
 ?>
 </head>
 

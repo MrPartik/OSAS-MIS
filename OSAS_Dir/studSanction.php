@@ -8,10 +8,19 @@ $breadcrumbs ="<div class='col-md-12'>
     <li> <a href=#'>Student Management</a> </li>
     <li> <a class='current' href='studSanction.php'>Student Sanction</a> </li>
 </ul>
-</div>";
-include('header.php');    
-$currentPage ='OSAS_StudSanction';
-?> 
+</div>"; 
+$currentPage ='OSAS_StudSanction';     
+include('header.php'); 
+include('../config/connection.php');     
+     if($_SESSION['logged_user']['role']=="Organization")
+    { }
+    else if($_SESSION['logged_user']['role']=="Administrator")
+    { header("location:../admin_dir/dashboard.php"); }
+    else if($_SESSION['logged_user']['role']=="Student")
+    { }  
+    else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
+    { header("location:../");}
+?>
 
     <body>
         <!--sidebar start-->

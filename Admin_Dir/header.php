@@ -1,7 +1,8 @@
 <?php 
-include('../config/dashboard/count.php');
-include('../config/session.php'); 
-include('../config/query.php')?>
+session_start();
+include('../config/dashboard/count.php'); 
+include('../config/query.php');
+$user_check = $_SESSION['logged_user']['username']; ?>
     <!DOCTYPE html>
 <head>
         <meta charset="utf-8">

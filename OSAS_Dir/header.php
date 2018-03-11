@@ -1,7 +1,10 @@
 
-<?php include('../config/session.php'); 
+<?php 
+session_start();
 include('../config/dashboard/count.php'); 
-include('../config/query.php')?>
+include('../config/query.php');
+$user_check = $_SESSION['logged_user']['username']; 
+ ?>
     <!DOCTYPE html>
 <head>
         <meta charset="utf-8">
@@ -44,8 +47,7 @@ include('../config/query.php')?>
             <div class="top-nav clearfix">
            
                 <!--search & user info start-->
-                <ul class="nav pull-right top-menu">
-                   
+                <ul class="nav pull-right top-menu"> 
                     <li>
                         <input type="text" class="form-control search" placeholder=" Search"> </li>
                     <!-- user login dropdown start-->
