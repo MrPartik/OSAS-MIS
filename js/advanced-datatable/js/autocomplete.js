@@ -14,6 +14,7 @@
  * Copyright 2011-2016 Twitter, Inc.
  * Licensed under the MIT license
  */
+
 if ("undefined" == typeof jQuery) throw new Error("Bootstrap's JavaScript requires jQuery"); + function (a) {
     "use strict";
     var b = a.fn.jquery.split(" ")[0].split(".");
@@ -3993,7 +3994,7 @@ if ("undefined" == typeof jQuery) throw new Error("Bootstrap's JavaScript requir
         , aaSorting: [[0, "asc"]]
         , aaSortingFixed: []
         , ajax: null
-        , aLengthMenu: [5,10, 25, 50, 100,500]
+        , aLengthMenu: [3,5,10, 25, 50, 100,500]
         , aoColumns: null
         , aoColumnDefs: null
         , aoSearchCols: []
@@ -4284,8 +4285,8 @@ if ("undefined" == typeof jQuery) throw new Error("Bootstrap's JavaScript requir
         , sPageButton: "paginate_button"
         , sPageButtonActive: "current"
         , sPageButtonDisabled: "disabled"
-        , sStripeOdd: "odd"
-        , sStripeEven: "even"
+        , sStripeOdd: ""
+        , sStripeEven: ""
         , sRowEmpty: "dataTables_empty"
         , sWrapper: "dataTables_wrapper"
         , sFilter: "dataTables_filter"

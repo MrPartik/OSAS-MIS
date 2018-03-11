@@ -122,18 +122,15 @@
     transform: rotateX(100deg), scale(0.5);
     -webkit-transform: rotateX(100deg), scale(0.5);
     opacity: 0; }
-
   100% {
     transform: rotateX(0deg), scale(0.5);
     -webkit-transform: rotateX(0deg), scale(0.5);
     opacity: 1; } }
-
 @keyframes animateErrorIcon {
   0% {
     transform: rotateX(100deg), scale(0.5);
     -webkit-transform: rotateX(100deg), scale(0.5);
     opacity: 0; }
-
   100% {
     transform: rotateX(0deg), scale(0.5);
     -webkit-transform: rotateX(0deg), scale(0.5);

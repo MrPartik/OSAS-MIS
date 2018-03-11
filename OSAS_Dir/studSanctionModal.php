@@ -159,19 +159,14 @@
                 var dataSrc = [];
                 var table = $('#dynamic-table-modal').DataTable({
                     'initComplete': function () {
-                        var api = this.api();
-                        // Populate a dataset for autocomplete functionality
-                        // using data from first, second and third columns
-                        api.cells('tr', [1]).every(function () {
-                            // Get cell data as plain text
+                        var api = this.api(); 
+                        api.cells('tr', [1]).every(function () { 
                             var data = $('<div>').html(this.data()).text();
                             if (dataSrc.indexOf(data) === -1) {
                                 dataSrc.push(data);
                             }
-                        });
-                        // Sort dataset alphabetically
-                        dataSrc.sort();
-                        // Initialize Typeahead plug-in
+                        }); 
+                        dataSrc.sort(); 
                         $('.dataTables_filter input[type="search"]', api.table().container()).typeahead({
                             source: dataSrc
                             , afterSelect: function (value) {
@@ -179,8 +174,8 @@
                             }
                         });
                     }
-                    , bDestroy: true
-                    , aaSorting: [[5, "desc"]]
+                    , bDestroy: true 
+                    ,iDisplayLength: 3
                 });
             });
             $('#assignSanction').on("click", function () {
@@ -264,8 +259,9 @@
                     $(this).closest('tr').find("#checkFinished").prop("checked", false);
                 }
             });
-            $("#saveSanctionSet").on("click", function () {
-                $("tbody").find("tr[id='newSanction']").each(function (i) {
+            $("#saveSanctionSet").on("click", function () { 
+                
+                $("tbody").find("tr [id='newSanction']").each(function (i) {
                     var $tds = $(this).find('td')
                         , SanctionCode = $tds.eq(0).text()
                         , DesignatedOfficeCode = $tds.eq(1).text()
@@ -317,14 +313,14 @@
                     });
                 });
                 $("tbody").find("tr[class='updatingRow']").each(function (i) {
+                     
                     var $tds = $(this).find('td')
                         , ID = $tds.eq(0).text()
                         , UpdateConsumed = $tds.eq(3).find("input[id='inputConsume']").val()
                         , UpdateMax = $tds.eq(3).find("input[id='inputConsume']").attr('maxVal')
                         , Remaining = $tds.eq(4).html()
                         , Finish = $tds.eq(5).find("input[id='checkFinished']").is(':checked') ? 'Finished' : 'Processing'
-                        , sancRemarks = $tds.eq(2).find("textarea[id='sancRemarks']").val();;
-                    alert(Remaining)
+                        , sancRemarks = $tds.eq(2).find("textarea[id='sancRemarks']").val(); 
                     $.ajax({
                         type: 'post'
                         , url: 'studSanctionSave.php'
