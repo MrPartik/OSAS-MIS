@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html>
 <title>OSAS - Student Profile</title>
-<?php include('header.php');    
+<?php 
+$breadcrumbs="<div class='col-md-12'>
+<ul class='breadcrumbs-alt'>
+    <li> <a href='dashboard.php'>Home</a> </li>
+    <li> <a class='current' href='finanAssign.php'>Financial Assistance</a> </li>
+</ul>
+</div>";
+include('header.php');    
 $currentPage ='OSAS_Financial';  
     include('../config/connection.php');
 ?> 
@@ -14,12 +21,12 @@ $currentPage ='OSAS_Financial';
             <section id="main-content">
                 <section class="wrapper">
                     <div class="row ">
-                        <div class="col-md-12">
+                        <!-- <div class="col-md-12">
                             <ul class="breadcrumbs-alt">
                                 <li> <a href="dashboard.php">Home</a> </li>
                                 <li> <a class="current" href="finanAssign.php">Financial Assistance</a> </li>
                             </ul>
-                        </div>
+                        </div> -->
                         <div class="col-md-3">
                             <div class="mini-stat clearfix"> <span class="mini-stat-icon blue"><i class="fa fa-money"></i></span>
                                 <div class="mini-stat-info"> <span><?php echo $count_stud_financial_assistance; ?></span> Number of Students who has Financial Statement </div>

@@ -42,8 +42,10 @@ include('../config/query.php')?>
                 </div>
             </div>
             <div class="top-nav clearfix">
+           
                 <!--search & user info start-->
                 <ul class="nav pull-right top-menu">
+                   
                     <li>
                         <input type="text" class="form-control search" placeholder=" Search"> </li>
                     <!-- user login dropdown start-->
@@ -58,6 +60,11 @@ include('../config/query.php')?>
                     <!-- user login dropdown end -->
                 </ul>
                 <!--search & user info end-->
+                <ul class="nav top-menu">
+             <li>
+                    <?php echo $breadcrumbs ?>
+            </li>
+            </ul>
             </div>
         </header>
         <!--header end-->
