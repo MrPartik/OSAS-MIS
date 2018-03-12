@@ -73,6 +73,10 @@ var EditableTable = function () {
                 ]
             });
 
+            var oTable2 = $('#proftable').dataTable({
+
+            });
+
             jQuery('#editable-sample_wrapper .dataTables_filter input').addClass("form-control medium"); // modify table search input
             jQuery('#editable-sample_wrapper .dataTables_length select').addClass("form-control xsmall"); // modify table per page dropdown
 
@@ -135,11 +139,123 @@ var EditableTable = function () {
                     nEditing = null;
                 }
             });
+            $('#editable-sample a.view').live('click', function (e) {
+                e.preventDefault();
+                var code = $(this).closest('tr').children('td:first').text();
+                var name = $(this).closest('tr').children('td:first').next().text();
+                var advname = $(this).closest('tr').children('td:first').next().next().text();
+                document.getElementById('lblcode').innerText = code;
+                document.getElementById('lblname').innerText = name;
+                document.getElementById('lbladvname').innerText = advname;
+
+
+                $.ajax({
+                    type: "GET",
+                    url: 'OrganizationCompliance/GetOrgMem.php',
+                    dataType: 'json',
+                    data: {
+                        _code: code
+                    },
+                    success: function (data) {
+                        $.each(data, function (key, val) {
+                            //                            alert(val.name);
+                            var aiNew = oTable2.fnAddData([val.num, val.name, val.cas]);
+                            var nRow = oTable2.fnGetNodes(aiNew[0]);
+                        });
+
+
+                    },
+                    error: function (response) {
+                        swal("Error encountered while adding data", "Please try again", "error");
+                    }
+
+                });
+                $.ajax({
+                    type: "GET",
+                    url: 'OrganizationCompliance/GetOrgProf.php',
+                    dataType: 'json',
+                    data: {
+                        _id: code
+                    },
+                    success: function (data) {
+                        document.getElementById('lblyear').innerHTML = data.year;
+                        document.getElementById('lblcat').innerHTML = data.catname;
+                        document.getElementById('lblvision').innerText = data.vis;
+                        document.getElementById('lblmission').innerText = data.mis;
+                        if (data.setstat == '1')
+                            alert('not hide');
+                        else
+                            alert('hide');
+
+
+                    },
+                    error: function (response) {
+                        swal("Error encountered while adding data", "Please try again", "error");
+                    }
+
+                });
+
+                $.ajax({
+                    type: "GET",
+                    url: 'OrganizationCompliance/GetOrgAccStat.php',
+                    dataType: 'json',
+                    data: {
+                        _code: code
+                    },
+                    success: function (data) {
+                        //                        alert(data.count);
+                        document.getElementById('accreqlist').innerHTML = data.list;
+                        $('#prgbar').css("width", data.prgbar + "%");
+
+                    },
+                    error: function (response) {
+                        swal("Error encountered while adding data", "Please try again", "error");
+                    }
+
+                });
+
+
+            });
+
+
+            $('#lblprof').live('click', function (e) {
+                e.preventDefault();
+                $('#bodyprof').show(500);
+                $('#bodymem').hide(500);
+                $('#bodystat').hide(500);
+                $('#stat').css("color", "#BDBDC3");
+                $('#prof').css("color", "black");
+                $('#mem').css("color", "#BDBDC3");
+
+
+            });
+            $('#lblmem').live('click', function (e) {
+                e.preventDefault();
+                $('#bodyprof').hide(500);
+                $('#bodystat').hide(500);
+                $('#bodymem').show(500);
+                $('#stat').css("color", "#BDBDC3");
+                $('#prof').css("color", "#BDBDC3");
+                $('#mem').css("color", "black");
+            });
+            $('#lblstat').live('click', function (e) {
+                e.preventDefault();
+                $('#bodyprof').hide(500);
+                $('#bodystat').show(500);
+                $('#bodymem').hide(500);
+                $('#stat').css("color", "black");
+                $('#prof').css("color", "#BDBDC3");
+                $('#mem').css("color", "#BDBDC3");
+            });
+
+            $('#bodymem').hide();
+            $('#bodystat').hide();
 
             $('#editable-sample a.edit').live('click', function (e) {
                 e.preventDefault();
                 var id = $(this).closest('tr').children('td:first').text();
                 document.getElementById('updappcode').innerText = id;
+                //alert(id);
                 $.ajax({
                     type: "GET",
                     url: 'OrganizationCompliance/GetData-ajax.php',
@@ -182,12 +298,11 @@ var EditableTable = function () {
                 var drpcatname = drpcate.options[drpcate.selectedIndex].text;
                 var drpcatcode = drpcate.options[drpcate.selectedIndex].value;
                 var drpcourse = document.getElementById('upddrpcourse').value;
-                var txtvision = document.getElementById('updtxtmission').value;
-                var txtmission = document.getElementById('updtxtvision').value;
+                var txtvision = document.getElementById('updtxtvision').value;
+                var txtmission = document.getElementById('updtxtmission').value;
                 var chkstat = '';
                 var chkcode = '';
                 var stat = 0;
-                alert(drpyear);
 
                 swal({
                     title: "Are you sure?",
@@ -201,7 +316,6 @@ var EditableTable = function () {
                     closeOnCancel: false
                 }, function (isConfirm) {
                     if (isConfirm) {
-                        alert(compcode);
                         $.ajax({
                             type: 'post',
                             url: 'OrganizationCompliance/Update-ajax.php',
@@ -320,6 +434,92 @@ var EditableTable = function () {
                     nEditing = nRow;
                 }
             });
+        }
+
+    };
+
+}();
+var initproftable = function () {
+
+    return {
+
+        //main function to initiate the module
+        init: function () {
+
+            function restoreRow(oTable2, nRow) {
+                var aData = oTable2.fnGetData(nRow);
+                var jqTds = $('>td', nRow);
+
+                for (var i = 0, iLen = jqTds.length; i < iLen; i++) {
+                    oTable2.fnUpdate(aData[i], nRow, i, false);
+                }
+
+                oTable2.fnDraw();
+
+            }
+
+            function editRow(oTable2, nRow) {
+                var aData = oTable2.fnGetData(nRow);
+                var jqTds = $('>td', nRow);
+
+
+
+
+            }
+
+            function saveRow(oTable2, nRow) {
+                var jqInputs = $('input', nRow);
+
+                oTable2.fnUpdate(jqInputs[0].value, nRow, 0, false);
+                oTable2.fnUpdate(jqInputs[1].value, nRow, 1, false);
+                oTable2.fnUpdate(jqInputs[2].value, nRow, 2, false);
+                oTable2.fnUpdate('<center><a class="btn btn-success edit" href="">Edit</a> <a class="btn btn-danger delete" href="">Delete</a></center>', nRow, 3, false);
+                oTable2.fnDraw();
+
+
+            }
+
+            function cancelEditRow(oTable2, nRow) {
+                var jqInputs = $('input', nRow);
+                oTable2.fnUpdate(jqInputs[0].value, nRow, 0, false);
+                oTable2.fnUpdate(jqInputs[1].value, nRow, 1, false);
+                oTable2.fnUpdate(jqInputs[2].value, nRow, 2, false);
+                oTable2.fnUpdate('<a class="btn btn-success edit" href="">Edit</a>', nRow, 3, false);
+                oTable2.fnDraw();
+            }
+
+
+            var oTable2 = $('#proftable').dataTable({
+
+                "aLengthMenu": [
+                    [5, 15, 20, -1],
+                    [5, 15, 20, "All"] // change per page values here
+                ],
+                // set the initial value
+                "iDisplayLength": 5,
+                "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
+                "sPaginationType": "bootstrap",
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ <br/><br/>records per page",
+                    "oPaginate": {
+                        "sPrevious": "Prev",
+                        "sNext": "Next"
+                    }
+                },
+                "aoColumnDefs": [{
+                        'bSortable': false,
+                        'aTargets': [0]
+                    }
+                ]
+            });
+
+
+            jQuery('#proftable_wrapper .dataTables_filter input').addClass("form-control medium"); // modify table search input
+            jQuery('#proftable_wrapper .dataTables_length select').addClass("form-control xsmall"); // modify table per page dropdown
+
+            var nEditing = null;
+
+
         }
 
     };

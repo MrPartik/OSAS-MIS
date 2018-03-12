@@ -17,14 +17,14 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
 <body>
 
     <section id="container">
-        r
+
         <!--header end-->
         <aside>
             <div id="sidebar" class="nav-collapse">
                 <!-- sidebar menu start-->
                 <?php
                 
-                include('sidenav.php')
+                include('../../sidenav.php')
             
                 ?>
                     <!-- sidebar menu end-->
@@ -107,8 +107,9 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                                 <td>$adv</td>
                                                 <td>$cat</td>
                                                 <td style='width:200px'>
-                                                    <center><a class='btn btn-cancel tar edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'>Profile</a>
-														<a class='btn btn-danger delete' href='javascript:;'>Delete</a>	
+                                                    <center><a class='btn btn-cancel view tar' style='color:white' data-toggle='modal' href='#View' href='javascript:;'><i class='fa  fa-eye'></i></a>
+                                                    <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-edit'></i></a>		                              
+                                                    <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-trash-o'></i></a>	
                                                     </center>
                                                 </td>
                                             </tr>
@@ -168,28 +169,28 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                     <div class="col-lg-6 form-group">
                                         Applicant
                                         <select class="form-control input-sm m-bot15 selectAppCode" style="width:100%" id="drpappcode"> 
-                                                                <?php
+                                            <?php
 
-                                                                    $view_query = mysqli_query($connection,"SELECT * FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgAppProfile_APPL_CODE NOT IN (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_DISPAY_STAT = 'Active')");
-                                                                    while($row = mysqli_fetch_assoc($view_query))
-                                                                    {
-                                                                        $name = $row["OrgAppProfile_NAME"];
-                                                                        $code = $row["OrgAppProfile_APPL_CODE"];
+                                                $view_query = mysqli_query($connection,"SELECT * FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgAppProfile_APPL_CODE NOT IN (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_DISPAY_STAT = 'Active')");
+                                                while($row = mysqli_fetch_assoc($view_query))
+                                                {
+                                                    $name = $row["OrgAppProfile_NAME"];
+                                                    $code = $row["OrgAppProfile_APPL_CODE"];
 
-                                                                        echo "
-                                                                            <option value='$code'>$name</option>
-                                                                                ";
-                                                                    }	
+                                                    echo "
+                                                        <option value='$code'>$name</option>
+                                                            ";
+                                                }	
 
 
 
-                                                                ?>  
+                                            ?>  
                                         </select>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="col-lg-6 form-group">
-                                                Batch Year
+                                                Academic Year
                                                 <select class="form-control input-sm m-bot15 selectYear" style="width:100%" id="drpyear"> 
                                                                         <?php
 
@@ -303,7 +304,7 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="col-lg-6 form-group">
-                                                Batch Year
+                                                Academic Year
                                                 <select class="form-control input-sm m-bot15 selectYear" style="width:100%" id="upddrpyear"> 
                                                  </select>
                                             </div>
@@ -354,6 +355,143 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
             </div>
         </div>
     </div>
+
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="View" class="modal fade">
+        <div class="modal-dialog" style="width:55%">
+            <div class="modal-content">
+                <div class="twt-feed blue-bg">
+                    <div class="corner-ribon black-ribon">
+                        <i class="fa fa-group"></i>
+                    </div>
+                    <div class="fa fa-group wtt-mark"></div>
+                    <a href="#">
+                                    <img alt="" src="../../../images/OSAS/Organization_Icon.png">
+                    </a>
+                    <h1 id="lblcode"></h1>
+                    <p id="lblname"></p>
+                    <p id="lbladvname"></p>
+
+                </div>
+                <div class="weather-category twt-category">
+                    <ul>
+                        <li class="active" id="lblprof">
+                            <a id="prof">Profile</a>
+                        </li>
+                        <li id="lblmem">
+                            <a id="mem" style="color:#BDBDC3">Members</a>
+                        </li>
+                        <li id="lblstat">
+                            <a id="stat" style="color:#BDBDC3">Status</a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="bodyprof">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="mini-stat clearfix" style="border:solid">
+                                <div class="mini-stat-info">
+                                    <span style="font-size:15px">Organization Category</span>
+                                    <span id="lblcat" style="font-size:13px"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mini-stat clearfix" style="border:solid">
+                                <div class="mini-stat-info">
+                                    <span style="font-size:15px">Academic Year</span>
+                                    <span id="lblyear" style="font-size:13px"></span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="mini-stat clearfix" style="border:solid">
+                                <div class="mini-stat-info">
+                                    <span style="font-size:15px">Vision</span>
+                                    <span id="lblvision" style="font-size:13px"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mini-stat clearfix" style="border:solid">
+                                <div class="mini-stat-info">
+                                    <span style="font-size:15px">Mission</span>
+                                    <span id="lblmission" style="font-size:13px"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="bodymem">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <section class="panel">
+                                <div class="panel-body">
+                                    <div class="clearfix">
+                                        <div class="btn-group pull-right">
+                                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
+                                                </button>
+                                            <ul class="dropdown-menu pull-right">
+                                                <li><a href="#">Print</a></li>
+                                                <li><a href="#">Save as PDF</a></li>
+                                                <li><a href="#">Export to Excel</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="adv-table proftable ">
+                                        <div class="space15"></div>
+                                        <table class="table table-striped table-hover table-bordered" id="proftable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Student Number</th>
+                                                    <th>Student Name</th>
+                                                    <th>Course - Year and Section</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="updaccreqlist">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div id="bodystat">
+                    <div class="col-lg-12">
+                        <div style='padding-top:10px'>
+                            <div class='progress progress-striped progress-xs'>
+                                <div style='width: 10%' aria-valuemax='100' aria-valuemin='0' aria-valuenow='40' role='progressbar' class='progress-bar progress-bar-success' id="prgbar">
+                                    <span class='sr-only'></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Accreditation Name</th>
+                                    <th>Status</th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="accreqlist">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <?php
     
         $codelist = array();
@@ -378,7 +516,7 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
         <script class="include" type="text/javascript" src="../../../js/jquery.dcjqaccordion.2.7.js"></script>
         <script src="../../../js/jquery.scrollTo.min.js"></script>
         <script src="../../../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-        <script src="../../../js/jquery.nicescroll.js"></script>
+        <script src="../../../js/jquery.nicescroll.js"></script>1
         <!--Easy Pie Chart-->
         <script src="../../../js/easypiechart/jquery.easypiechart.js"></script>
         <!--Sparkline Chart-->
@@ -392,6 +530,9 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
         <script type="text/javascript" src="../../../js/data-tables/jquery.dataTables.js"></script>
         <script type="text/javascript" src="../../../js/data-tables/DT_bootstrap.js"></script>
         <script type="text/javascript" src="../sweetalert/sweetalert.min.js"></script>
+
+        <script src="../../../js/dynamic_table_init.js"></script>
+
 
         <!--common script init for all pages-->
         <script src="../../../js/scripts.js"></script>
@@ -425,7 +566,7 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                 });
                 $('.edit').click(function() {
 
-                    alert('qwe');
+
 
 
                 });
@@ -433,6 +574,8 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                 $('#submit-data').click(function() {
                     var e = document.getElementById('drpappcode');
                     var code = e.options[e.selectedIndex].value;
+                    var appname = e.options[e.selectedIndex].text;
+
                     var advname = document.getElementById('txtadvname').value;
                     var drpyear = document.getElementById('drpyear').value;
                     var drpcate = document.getElementById('drpcat');
@@ -468,6 +611,7 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                     _drpcatname: drpcatname,
                                     _drpcou: drpcourse,
                                     _vision: txtvision,
+                                    _name: appname,
                                     _mission: txtmission
 
                                 },
@@ -491,6 +635,7 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
 
             });
             jQuery(document).ready(function() {
+                initproftable.init();
                 EditableTable.init();
             });
 

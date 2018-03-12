@@ -5,7 +5,7 @@
     $stat = $_GET['_stat'];
     
 
-    $view_query = mysqli_query($connection," SELECT CONCAT(Stud_LNAME,' ,',Stud_FNAME ,' ', Stud_MNAME) AS NAME , Stud_NO FROM t_assign_org_members
+    $view_query = mysqli_query($connection," SELECT CONCAT(Stud_LNAME,', ',Stud_FNAME ,' ', IFNULL(Stud_MNAME,''))  AS NAME , Stud_NO FROM t_assign_org_members
 		INNER JOIN r_stud_profile ON AssOrgMem_STUD_NO = Stud_NO
         WHERE AssOrgMem_DISPLAY_STAT = 'Active' AND AssOrgMem_APPL_ORG_CODE = '$compcode' ");
 
@@ -43,7 +43,7 @@
             <tr class=''>
                 <td >$no</td>
                 <td >$name</td>
-                <td><a class='btn btn-danger delete tooltips' data-toggle='tooltip' href='javascript:;' data-placement='bottom' data-original-title='Delete $no record? '><i class='fa fa-trash-o' ></i></a></td>
+                <td><center><a class='btn btn-danger delete tooltips' data-toggle='tooltip' href='javascript:;'><i class='fa fa-trash-o' ></i></a></center></td>
             </tr>
                     ";
             
@@ -53,10 +53,10 @@
         
     }
 
-//    if($i == 0)
-//        $list = $list. "<br/><a>No members recorded in this organization</a>";
+    if($i == 0)
+        $list = $list. '<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty">No data available in table</td></tr>';
 
      echo json_encode(
-          array("list" => $list)
+          array("list" => $list,"getcountlist" => $i)
      );
 ?>

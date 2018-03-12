@@ -3,7 +3,7 @@
 
 <head>
     <?php include('../header.php');    
-$currentPage ='OSAS_OrgAccreditation'; include('../../../config/connection.php');
+$currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
 ?>
     <link href="../../../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
     <link href="../../../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
@@ -17,14 +17,14 @@ $currentPage ='OSAS_OrgAccreditation'; include('../../../config/connection.php')
 <body>
 
     <section id="container">
-        r
+
         <!--header end-->
         <aside>
             <div id="sidebar" class="nav-collapse">
                 <!-- sidebar menu start-->
                 <?php
                 
-                include('sidenav.php')
+                include('../../sidenav.php')
             
                 ?>
                     <!-- sidebar menu end-->
@@ -58,22 +58,7 @@ $currentPage ='OSAS_OrgAccreditation'; include('../../../config/connection.php')
                         <section class="panel">
                             <div class="panel-body">
                                 <div class="adv-table editable-table ">
-                                    <div class="clearfix">
-                                        <div class="btn-group">
-                                            <button id="editable-sample_new" data-toggle="modal" href="#Add" class="btn btn-success">
-                                        Add New <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                        <div class="btn-group pull-right">
-                                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
-                                    </button>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li><a href="#">Print</a></li>
-                                                <li><a href="#">Save as PDF</a></li>
-                                                <li><a href="#">Export to Excel</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
+
                                     <div class="space15"></div>
                                     <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                         <thead>
@@ -129,7 +114,7 @@ $currentPage ='OSAS_OrgAccreditation'; include('../../../config/connection.php')
                                                 </td>
                                                 <td>$stat</td>
                                                 <td style='width:200px'>
-                                                    <center><a class='btn btn-cancel tar edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'>Preview <i class='fa fa-eye'></i></a>
+                                                    <center><a class='btn btn-cancel tar edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-eye'></i></a>
                                                     </center>
                                                 </td>
                                             </tr>

@@ -13,7 +13,7 @@
         
 
 
-        $query = mysqli_query($connection,"UPDATE r_org_applicant_profile SET OrgAppProfile_NAME = '$name',OrgAppProfile_DESCRIPTION = '$desc',OrgAppProfile_STATUS = '$accstat' WHERE OrgAppProfile_APPL_CODE  = $id ");
+        $query = mysqli_query($connection,"UPDATE r_org_applicant_profile SET OrgAppProfile_NAME = '$name',OrgAppProfile_DESCRIPTION = '$desc',OrgAppProfile_STATUS = '$accstat' WHERE OrgAppProfile_APPL_CODE  = '$id' ");
                 
 
         

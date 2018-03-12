@@ -29,10 +29,9 @@ var EditableTable = function () {
             }
 
             function saveRow(oTable, nRow) {
-                alert(document.getElementById('txtupdcode').value);
+                //                alert(document.getElementById('txtupdcode').value);
                 var code = document.getElementById('txtupdcode').value;
                 oTable.fnUpdate(code, nRow, 0, false);
-                alert('qwe');
                 oTable.fnUpdate(document.getElementById('txtupdname').value, nRow, 1, false);
                 oTable.fnUpdate(document.getElementById('txtupddesc').value, nRow, 2, false);
                 if (document.getElementById('chkupdacc').checked)
@@ -86,7 +85,7 @@ var EditableTable = function () {
             $('#submit-data').click(function (e) {
                 e.preventDefault();
 
-                var code = document.getElementById('txtcode').value;
+                //                var code = document.getElementById('txtcode').value;
                 var name = document.getElementById('txtname').value;
                 var desc = document.getElementById('txtdesc').value;
                 var acc = document.getElementById('chkacc');
@@ -120,7 +119,6 @@ var EditableTable = function () {
                             type: 'post',
                             url: 'OrganizationProfile/Add-ajax.php',
                             data: {
-                                _code: code,
                                 _name: name,
                                 _desc: desc,
                                 _accstat: accstat
@@ -129,8 +127,8 @@ var EditableTable = function () {
                             },
                             success: function (response) {
                                 swal("Record Updated!", "The data is successfully Added!", "success");
-                                var aiNew = oTable.fnAddData([code, name, desc, accstat, "<center><a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'>Edit</a> <a class='btn btn-danger delete' href='javascript:;'>Delete</a>		</center>", '']);
-                                var nRow = oTable.fnGetNodes(aiNew[0]);
+                                //                                var aiNew = oTable.fnAddData([code, name, desc, accstat, "<center><a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'>Edit</a> <a class='btn btn-danger delete' href='javascript:;'>Delete</a>		</center>", '']);
+                                //                                var nRow = oTable.fnGetNodes(aiNew[0]);
                                 document.getElementById("form-data").reset();
                             },
                             error: function (response) {

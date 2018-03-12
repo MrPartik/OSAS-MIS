@@ -3,7 +3,8 @@
 
 <head>
     <?php include('../header.php');    
-$currentPage ='OSAS_OrgApplication'; include('../../../config/connection.php');
+$currentPage ='OSAS_OrgApplication'; 
+       include('../connection.php');
 ?>
     <link href="../../../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
     <link href="../../../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
@@ -17,14 +18,13 @@ $currentPage ='OSAS_OrgApplication'; include('../../../config/connection.php');
 <body>
 
     <section id="container">
-        r
         <!--header end-->
         <aside>
             <div id="sidebar" class="nav-collapse">
                 <!-- sidebar menu start-->
                 <?php
                 
-                include('sidenav.php')
+                include('../../sidenav.php')
             
                 ?>
                     <!-- sidebar menu end-->
@@ -81,7 +81,7 @@ $currentPage ='OSAS_OrgApplication'; include('../../../config/connection.php');
                                                 <th>Application Code</th>
                                                 <th>Organization Name</th>
                                                 <th>Organization Description</th>
-                                                <th>Organization Status</th>
+                                                <th>Remarks</th>
                                                 <th>Action</th>
 
                                             </tr>
@@ -105,12 +105,11 @@ $currentPage ='OSAS_OrgApplication'; include('../../../config/connection.php');
                                                 <td>$code</td>
                                                 <td>$name</td>
                                                 <td>$desc</td>
-                                                <td>$stat</td>
+                                                <td >Remarks</td>
                                                 <td style='width:200px'>
                                                     <center>
-                                                        <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'>Edit</a>
-                                                        
-														<a class='btn btn-danger delete' href='javascript:;'>Delete</a>	
+                                                        <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-edit'></i></a>      
+                                                        <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-trash-o'></i></a>	
                                                     </center>
                                                 </td>
                                             </tr>
@@ -169,15 +168,12 @@ $currentPage ='OSAS_OrgApplication'; include('../../../config/connection.php');
                             <form method="post" id="form-data">
                                 <div class="row" id="profile">
                                     <div class="col-lg-6 form-group">
-                                        Organization Application Code <input name="studno" type="text" class="form-control" placeholder="ex. COMMITS" id="txtcode">
-                                    </div>
-                                    <div class="col-lg-6 form-group">
                                         Organization Name<input name="emailadd" type="text" class="form-control" placeholder="ex. COMMITS Pioneer" id="txtname">
                                     </div>
                                     <div class="col-lg-12 form-group">
                                         Organization Description<textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
                                     </div>
-                                    <div class="col-lg-3 form-group">
+                                    <div class="col-lg-3 form-group hidethis">
                                         <input type="checkbox" id="chkacc" name="chkacc" class="checkbox form-control" style="width: 20px">
                                         <label for="chkacc">Accredited</label>
                                     </div>
@@ -214,7 +210,7 @@ $currentPage ='OSAS_OrgApplication'; include('../../../config/connection.php');
                                     <div class="col-lg-12 form-group">
                                         Organization Description<textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtupddesc"></textarea>
                                     </div>
-                                    <div class="col-lg-3 form-group">
+                                    <div class="col-lg-3 form-group hidethis">
                                         <input type="checkbox" id="chkupdacc" name="chkupdacc" class="checkbox form-control" style="width: 20px">
                                         <label for="chkacc">Accredited</label>
                                     </div>
@@ -264,6 +260,7 @@ $currentPage ='OSAS_OrgApplication'; include('../../../config/connection.php');
     <!-- END JAVASCRIPTS -->
     <script>
         $(document).ready(function() {
+            $('.hidethis').hide();
             $('#drpcat').change(function() {
                 var e = document.getElementById("drpcat");
                 var getcat = e.options[e.selectedIndex].text;

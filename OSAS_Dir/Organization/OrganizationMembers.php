@@ -3,28 +3,31 @@
 
 <head>
     <?php include('../header.php');    
-$currentPage ='OSAS_OrgMembers'; include('../../../config/connection.php');
+    $currentPage ='OSAS_OrgMembers'; 
+   include('../connection.php');
 ?>
     <link href="../../../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
     <link href="../../../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../../js/data-tables/DT_bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../../../js/bootstrap-fileupload/bootstrap-fileupload.css" />
 
     <!-- Custom styles for this template -->
     <link href="../../../css/style.css" rel="stylesheet">
     <link href="../../../css/style-responsive.css" rel="stylesheet" />
+
 </head>
 
 <body>
 
     <section id="container">
-        r
+
         <!--header end-->
         <aside>
             <div id="sidebar" class="nav-collapse">
                 <!-- sidebar menu start-->
                 <?php
                 
-                include('sidenav.php')
+                include('../../sidenav.php')
             
                 ?>
                     <!-- sidebar menu end-->
@@ -40,10 +43,10 @@ $currentPage ='OSAS_OrgMembers'; include('../../../config/connection.php');
                         <!--breadcrumbs start -->
                         <ul class="breadcrumbs-alt ">
                             <li>
-                                <a class="current" href="#">Accreditation Requirement</a>
+                                <a class="current" href="#">Organization Members</a>
                             </li>
                             <li>
-                                <a href="#">Sanction Setup</a>
+                                <a href="#">Organization Management</a>
                             </li>
                             <!-- <li> -->
                             <!-- <a class="active-trail active" href="#">Pages</a> -->
@@ -75,21 +78,26 @@ $currentPage ='OSAS_OrgMembers'; include('../../../config/connection.php');
 							
 										include('../connection.php');
                 
-                                        $view_query = mysqli_query($connection,"SELECT  OrgAppProfile_APPL_CODE ,OrgForCompliance_ORG_CODE,OrgAppProfile_NAME,OrgForCompliance_ADVISER,OrgAppProfile_STATUS,OC.OrgCat_NAME,OC.OrgCat_NAME FROM `r_org_applicant_profile` AS OAP INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE INNER JOIN t_assign_org_category AOC ON AOC.AssOrgCategory_ORG_CODE = OFC.OrgForCompliance_ORG_CODE INNER JOIN r_org_category OC ON OC.OrgCat_CODE = AOC.AssOrgCategory_ORGCAT_CODE WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active'");
+                                        $view_query = mysqli_query($connection,"SELECT OrgForCompliance_OrgApplProfile_APPL_CODE,OrgAppProfile_NAME,OrgForCompliance_ADVISER,OrgAppProfile_STATUS,OC.OrgCat_NAME,(SELECT COUNT(*) FROM t_assign_org_members WHERE AssOrgMem_DISPLAY_STAT = 'Active' AND AssOrgMem_APPL_ORG_CODE = OAP.OrgAppProfile_APPL_CODE) AS COU
+FROM `r_org_applicant_profile` AS OAP INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE INNER JOIN t_assign_org_category AOC ON AOC.AssOrgCategory_ORG_CODE = OFC.OrgForCompliance_ORG_CODE INNER JOIN r_org_category OC ON OC.OrgCat_CODE = AOC.AssOrgCategory_ORGCAT_CODE 
+WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active'");
                                         while($row = mysqli_fetch_assoc($view_query))
                                         {
-                                            $code = $row["OrgAppProfile_APPL_CODE"];
+                                            $code = $row["OrgForCompliance_OrgApplProfile_APPL_CODE"];
                                             $name = $row["OrgAppProfile_NAME"];
                                             $cat = $row["OrgCat_NAME"];
+                                            $cou = $row["COU"];
+                                            $i = 0;
+                                             
                                             
                                             echo "
                                             <tr class=''>
                                                 <td class='hidden'>$code</td>
                                                 <td>$name</td>
                                                 <td>$cat</td>
-                                                <td>12</td>
-                                                <td style='width:200px'>
-                                                    <center><a class='btn btn-cancel tar edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'>Profile</a>
+                                                <td>$cou</td>
+                                                <td style='width:100px'>
+                                                    <center><a class='btn btn-cancel tar edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-eye'></i> </a>
                                                     </center>
                                                 </td>
                                             </tr>
@@ -135,7 +143,7 @@ $currentPage ='OSAS_OrgMembers'; include('../../../config/connection.php');
     </section>
     <!-- Modal -->
     <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Edit" class="modal fade">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="width:70%">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -154,6 +162,10 @@ $currentPage ='OSAS_OrgMembers'; include('../../../config/connection.php');
                                         </div>
                                         <div class="clearfix">
                                             <div class="btn-group">
+                                                <button id="btnstudadd" class="btn btn-success">
+                                                        Add <i class="fa fa-plus"></i>
+                                                    </button>
+                                                <a class='btn btn-primary delete tooltips' id="btnsync" data-toggle='tooltip' href='javascript:;' data-placement='bottom' data-original-title='Sync the data? '>Sync <i class='fa fa-refresh' ></i></a>
                                             </div>
                                             <div class="btn-group pull-right">
                                                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
@@ -166,7 +178,7 @@ $currentPage ='OSAS_OrgMembers'; include('../../../config/connection.php');
                                             </div>
                                         </div>
                                         <div id="drpstudent">
-                                            Student Name
+                                            <br/> Student Name
                                             <select class="form-control input-sm m-bot15 selectAppCode" style="width:100%" id="drpstud"> 
                                                     <option selected disabled>Choose Student...</option>
                                                     <?php
@@ -188,7 +200,7 @@ $currentPage ='OSAS_OrgMembers'; include('../../../config/connection.php');
                                                     ?>  
                                             </select>
                                             <div class="pull-right">
-                                                <button id="" class="btn btn-success">
+                                                <button id="btnaddstud" class="btn btn-success">
                                                         Add <i class="fa fa-plus"></i>
                                                 </button>
                                                 <button id="btncancel" class="btn btn-cancel">
@@ -199,54 +211,54 @@ $currentPage ='OSAS_OrgMembers'; include('../../../config/connection.php');
 
                                         </div>
                                         <form method="post" id="form-data">
-                                            <div class="adv-table editable-table2 ">
+                                            <div class="adv-table proftable ">
                                                 <div class="space15"></div>
-                                                <table class="table table-striped table-hover table-bordered" id="editable-sample2">
+                                                <table class="table table-striped table-hover table-bordered" id="proftable">
                                                     <thead>
                                                         <tr>
                                                             <th>Student Number</th>
                                                             <th>Student Name</th>
+                                                            <th>Course - Year and Section</th>
                                                             <th id="hideaction">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="updaccreqlist">
-                                                        <?php
-                                                                            
-                                                            $view_query = mysqli_query($connection,"SELECT OrgAccrDetail_DESC as des,OrgAccrDetail_CODE as code FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active' ");
-                                                            $i = 0;
-                                                            while($row = mysqli_fetch_assoc($view_query))
-                                                            {
-                                                                $i++;
-                                                                $desc = $row["des"];
-                                                                $code = $row["code"];
-                                                                echo "
-                                                                <tr class=''>
-                                                                    <td >qwe</td>
-                                                                    <td >asd</td>
-                                                                    <td >zxc</td>
-                                                                    <td><a class='btn btn-danger delete tooltips' data-toggle='tooltip' href='javascript:;' data-placement='bottom' data-original-title='Delete $code record? '><i class='fa fa-trash-o' ></i></a></td>
-                                                                </tr>
-                                                                        ";
-                                                            }			
-
-                                                        
-                                                        ?>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </form>
-                                        <div>
-                                            <div class="clearfix">
-                                                <div class="btn-group">
-                                                    <button id="btnstudadd" class="btn btn-success">
-                                                        Add <i class="fa fa-plus"></i>
-                                                    </button>
+                                        <div class="row">
+                                            <form id="upload_csv" method="post" enctype="multipart/form-data">
+                                                <div class="controls col-md-12">
+                                                    <div class="fileupload fileupload-new row" data-provides="fileupload">
+                                                        <span class="btn btn-white btn-file" style="width:200px">
+                                                        <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Click to Import Members</span>
+                                                        <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                                        <input name="employee_file" id="file" type="file" class="default" accept=".csv" />
+                                                        </span>
+                                                        <span class="fileupload-preview" style="margin-left:5px;"></span>
+                                                        <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none; margin-left:5px;"></a>
+                                                        <button type="submit" class='btn btn-success' id="upload">Import <i class='fa fa-cloud-upload' ></i></button>
+                                                    </div>
                                                 </div>
-                                                <div class="btn-group pull-right">
-                                                    <a class='btn btn-primary delete tooltips' id="btnsync" data-toggle='tooltip' href='javascript:;' data-placement='bottom' data-original-title='Sync the data? '>Sync <i class='fa fa-refresh' ></i></a>
+                                            </form>
+                                            <form id="upload_csv2" method="post" enctype="multipart/form-data">
+                                                <div class="controls col-md-12">
+                                                    <div class="fileupload fileupload-new row" data-provides="fileupload">
+                                                        <span class="btn btn-white btn-file" style="width:200px">
+                                                        <span class="fileupload-new" ><i class="fa fa-paper-clip"></i>Click to Import Officers   </span>
+                                                        <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                                        <input name="employee_file2" id="file2" type="file" class="default" accept=".csv" />
+                                                        </span>
+                                                        <span class="fileupload-preview" style="margin-left:5px;"></span>
+                                                        <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none; margin-left:5px;"></a>
+                                                        <button type="submit" class='btn btn-primary' id="upload2">Import <i class='fa fa-cloud-upload' ></i></button>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
+
+
                                     </div>
                                 </div>
                             </section>
@@ -263,25 +275,21 @@ $currentPage ='OSAS_OrgMembers'; include('../../../config/connection.php');
     <!-- Placed js at the end of the document so the pages load faster -->
 
     <!--Core js-->
-    <script src="../../../js/jquery-1.8.3.min.js"></script>
+
+    <script type="text/javascript" src="../../../js/jquery-2.2.3.min.js"></script>
+
     <script src="../../../bs3/js/bootstrap.min.js"></script>
     <script class="include" type="text/javascript" src="../../../js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="../../../js/jquery.scrollTo.min.js"></script>
     <script src="../../../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="../../../js/jquery.nicescroll.js"></script>
-    <!--Easy Pie Chart-->
-    <script src="../../../js/easypiechart/jquery.easypiechart.js"></script>
-    <!--Sparkline Chart-->
-    <script src="../../../js/sparkline/jquery.sparkline.js"></script>
-    <!--jQuery Flot Chart-->
-    <script src="../js/flot-chart/jquery.flot.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.tooltip.min.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.resize.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.pie.resize.js"></script>
 
     <script type="text/javascript" src="../../../js/data-tables/jquery.dataTables.js"></script>
+    <script type="text/javascript" language="javascript" src="../../../js/advanced-datatable/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="../../../js/data-tables/DT_bootstrap.js"></script>
     <script type="text/javascript" src="../sweetalert/sweetalert.min.js"></script>
+    <script type="text/javascript" src="../../../js/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+
 
     <!--common script init for all pages-->
     <script src="../../../js/scripts.js"></script>
@@ -295,8 +303,69 @@ $currentPage ='OSAS_OrgMembers'; include('../../../config/connection.php');
         $('#btnsync').hide();
         $('#drpstudent').hide();
 
+
         $(document).ready(function() {
             var countreq = 0;
+            var flag = 0;
+
+
+            $('#upload_csv').on("submit", function(e) {
+                e.preventDefault(); //form will not submitted  
+
+                $.ajax({
+                    url: "OrganizationMembers/Export_Members.php",
+                    method: "POST",
+                    data: new FormData(this),
+                    contentType: false, // The content type used when sending data to the server.  
+                    cache: false, // To unable request pages to be cached  
+                    processData: false, // To send DOMDocument or non processed data file it is set to false  
+                    success: function(data) {
+                        if (data == 'Error1') {
+                            swal("Invalid File");
+                        } else if (data == "Error2") {
+                            swal("Cancelled", "Please Select File", "error");
+                        } else {
+                            alert(data);
+                            //                            $.each(data, function(key, val) {
+                            //
+                            //                                alert('qwe');
+                            //                            });
+                            swal("Record Updated!", "The data is successfully imported!", "success");
+                        }
+                    }
+                })
+
+            });
+            $('#upload_csv2').on("submit", function(e) {
+                e.preventDefault(); //form will not submitted  
+
+                $.ajax({
+                    url: "OrganizationMembers/Export_Officers.php",
+                    method: "POST",
+                    data: new FormData(this),
+                    contentType: false, // The content type used when sending data to the server.  
+                    cache: false, // To unable request pages to be cached  
+                    processData: false, // To send DOMDocument or non processed data file it is set to false  
+                    success: function(data) {
+                        if (data == 'Error1') {
+                            swal("Invalid File");
+                        } else if (data == "Error2") {
+                            swal("Cancelled", "Please Select File", "error");
+                        } else {
+                            alert(data);
+                            //                            $.each(data, function(key, val) {
+                            //
+                            //                                alert('qwe');
+                            //                            });
+                            swal("Record Updated!", "The data is successfully imported!", "success");
+                        }
+                    }
+                })
+
+            });
+
+
+
             $('#drpappcode').change(function() {
                 //                alert('qwe');
                 var _drpappcode = document.getElementById('drpappcode');
@@ -337,6 +406,27 @@ $currentPage ='OSAS_OrgMembers'; include('../../../config/connection.php');
                 $('#btnstudadd').show(800);
 
 
+            });
+            $('#btnimports').click(function() {
+                alert(document.getElementById("file").value);
+
+                /*
+                $.ajax({
+                    type: 'POST',
+                    url: 'OrganizationMembers/import.php',
+                    data: {
+                        _t: 'asd'
+
+                    },
+                    success: function(response) {
+                        swal("Record Updated!", "The data is successfully Added!", "success");
+                        //document.getElementById("form-data").reset();
+                    },
+                    error: function(response) {
+                        swal("Error encountered while adding data", "Please try again", "error");
+                    }
+                });
+                */
             });
 
             $('#submit-data').click(function() {
@@ -416,33 +506,33 @@ $currentPage ='OSAS_OrgMembers'; include('../../../config/connection.php');
                     closeOnCancel: false
                 }, function(isConfirm) {
                     if (isConfirm) {
-
-                        for (x = 1; x <= <?php echo $i; ?>; x++) {
-                            chkstat = document.getElementById('chkupdstat' + x);
-                            if (chkstat.checked)
-                                stat = 1;
-                            else
-                                stat = 0;
-                            reccode = document.getElementById('updcode' + x).innerText;
-
-                            $.ajax({
-                                type: 'post',
-                                url: 'OrganizationAccreditation/UpdAccReq-ajax.php',
-                                data: {
-                                    _compcode: compcode,
-                                    _reccode: reccode,
-                                    _stat: stat
-
-                                },
-                                success: function(response) {
-                                    swal("Record Updated!", "The data is successfully Added!", "success");
-                                    //document.getElementById("form-data").reset();
-                                },
-                                error: function(response) {
-                                    swal("Error encountered while adding data", "Please try again", "error");
-                                }
-                            });
-                        }
+                        //
+                        //                        for (x = 1; x <= </?php echo $i; ?>; x++) {
+                        //                            chkstat = document.getElementById('chkupdstat' + x);
+                        //                            if (chkstat.checked)
+                        //                                stat = 1;
+                        //                            else
+                        //                                stat = 0;
+                        //                            reccode = document.getElementById('updcode' + x).innerText;
+                        //
+                        //                            $.ajax({
+                        //                                type: 'post',
+                        //                                url: 'OrganizationAccreditation/UpdAccReq-ajax.php',
+                        //                                data: {
+                        //                                    _compcode: compcode,
+                        //                                    _reccode: reccode,
+                        //                                    _stat: stat
+                        //
+                        //                                },
+                        //                                success: function(response) {
+                        //                                    swal("Record Updated!", "The data is successfully Added!", "success");
+                        //                                    //document.getElementById("form-data").reset();
+                        //                                },
+                        //                                error: function(response) {
+                        //                                    swal("Error encountered while adding data", "Please try again", "error");
+                        //                                }
+                        //                            });
+                        //                        }
 
                     } else swal("Cancelled", "The transaction is cancelled", "error");
                 });
@@ -450,11 +540,13 @@ $currentPage ='OSAS_OrgMembers'; include('../../../config/connection.php');
             });
         });
         jQuery(document).ready(function() {
+            initproftable.init();
             EditableTable.init();
 
         });
 
     </script>
+
 
 </body>
 
