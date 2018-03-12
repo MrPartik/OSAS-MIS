@@ -72,7 +72,7 @@
                                                                     $scholarship =  $row["Finan_Name"]." "; 
                                                                     $statusColor = ($row["Status"]==="Active")? "label-success" : "label-danger";
                                                                     $date = new DateTime($row["Start"]);
-                                                        echo " &nbsp;<span title ='".$date->format('D M d, Y h:i A')."' class='label ".$statusColor." r-activity'>".$scholarship."</span>";}?> 
+                                                        echo " &nbsp;<span title ='".$date->format('D M d, Y h:i A')."' class='label ".$statusColor." r-activity'>".$scholarship."</span>";}?>
                                     </span>
                                 </a>
                                 <?php  
