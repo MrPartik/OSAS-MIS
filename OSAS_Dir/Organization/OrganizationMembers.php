@@ -325,11 +325,10 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                         } else if (data == "Error2") {
                             swal("Cancelled", "Please Select File", "error");
                         } else {
-                            alert(data);
-                            //                            $.each(data, function(key, val) {
-                            //
-                            //                                alert('qwe');
-                            //                            });
+                            $(this).each(data, function(key, val) {
+
+                                alert(data);
+                            });
                             swal("Record Updated!", "The data is successfully imported!", "success");
                         }
                     }
