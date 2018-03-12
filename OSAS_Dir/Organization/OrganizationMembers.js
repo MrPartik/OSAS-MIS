@@ -184,6 +184,23 @@ var EditableTable = function () {
 
                 $.ajax({
                     type: "GET",
+                    url: 'OrganizationMembers/FillPos.php',
+                    dataType: 'json',
+                    data: {
+                        _code: getcode
+                    },
+                    success: function (data2) {
+                        document.getElementById('drppos').innerHTML = data2.list;
+                    },
+                    error: function (response) {
+                        swal("Error encountered while adding data", "Please try again", "error");
+                    }
+
+                });
+
+
+                $.ajax({
+                    type: "GET",
                     url: 'OrganizationMembers/FillTableStud.php',
                     dataType: 'json',
                     data: {
@@ -194,7 +211,7 @@ var EditableTable = function () {
                     success: function (data2) {
 
                         $.each(data2, function (key, val) {
-                            var aiNew = oTable2.fnAddData([val.num, val.name, val.cas, '<center><a class="btn btn-danger delete tooltips" data-toggle="tooltip" href="javascript:;"><i class="fa fa-trash-o" ></i></a></center>', ]);
+                            var aiNew = oTable2.fnAddData([val.num, val.name, val.cas, val.pos, '<center><a class="btn btn-danger delete tooltips" data-toggle="tooltip" href="javascript:;"><i class="fa fa-trash-o" ></i></a></center>', ]);
                             var nRow = oTable2.fnGetNodes(aiNew[0]);
                         });
                     },
@@ -380,11 +397,15 @@ var initproftable = function () {
                 var _drpstud = document.getElementById('drpstud');
                 var drpstud = _drpstud.options[_drpstud.selectedIndex].value;
                 var drpname = _drpstud.options[_drpstud.selectedIndex].text;
+                var _drppos = document.getElementById('drppos');
+                var drppos = _drppos.options[_drppos.selectedIndex].value;
+
                 $.ajax({
                     type: 'post',
                     url: 'OrganizationMembers/AddStud.php',
                     data: {
                         _studno: drpstud,
+                        _pos: drppos,
                         _appcode: appcode
                     },
                     success: function (response) {
@@ -395,7 +416,7 @@ var initproftable = function () {
                     }
 
                 });
-
+                alert(drpstud + '-' + appcode);
                 $.ajax({
                     type: "GET",
                     url: 'OrganizationMembers/GetCourseYS.php',
@@ -411,7 +432,8 @@ var initproftable = function () {
                         x.remove(x.selectedIndex);
                         swal("Record Added!", "The data is successfully added!", "success");
                     },
-                    error: function (response) {
+                    error: function (data) {
+                        alert(data);
                         swal("Error encountered while adding data", "Please try again", "error");
                     }
 
@@ -423,7 +445,6 @@ var initproftable = function () {
 
             $('#proftable a.delete').click(function (e) {
                 e.preventDefault();
-                alert('qwe');
                 var nRow = $(this).parents('tr')[0];
                 var getval = $(this).closest('tr').children('td:first').text();
                 var getname = $(this).closest('tr').children('td:first').next().text();

@@ -178,27 +178,41 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                                             </div>
                                         </div>
                                         <div id="drpstudent">
-                                            <br/> Student Name
-                                            <select class="form-control input-sm m-bot15 selectAppCode" style="width:100%" id="drpstud"> 
-                                                    <option selected disabled>Choose Student...</option>
-                                                    <?php
+                                            <div class="row" style="padding-top:10px">
+                                                <div class="col-lg-6">
+                                                    Student Name
+                                                    <select class="form-control input-sm m-bot15 selectAppCode" style="width:100%" id="drpstud"> 
+                                                        <option selected disabled>Choose Student...</option>
+                                                        <?php
 
-                                                        $view_query = mysqli_query($connection,"SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME FROM `t_org_for_compliance` INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_ORG_CODE NOT IN (SELECT DISTINCT OrgAccrProcess_ORG_CODE FROM `t_org_accreditation_process` WHERE OrgAccrProcess_DISPLAY_STAT = 'Active' )
-                                                        ");
-                                                        while($row = mysqli_fetch_assoc($view_query))
-                                                        {
-                                                            $name = $row["OrgAppProfile_NAME"];
-                                                            $code = $row["OrgForCompliance_ORG_CODE"];
+                                                            $view_query = mysqli_query($connection,"SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME FROM `t_org_for_compliance` INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_ORG_CODE NOT IN (SELECT DISTINCT OrgAccrProcess_ORG_CODE FROM `t_org_accreditation_process` WHERE OrgAccrProcess_DISPLAY_STAT = 'Active' )
+                                                            ");
+                                                            while($row = mysqli_fetch_assoc($view_query))
+                                                            {
+                                                                $name = $row["OrgAppProfile_NAME"];
+                                                                $code = $row["OrgForCompliance_ORG_CODE"];
 
-                                                            echo "
-                                                                <option value='$code'>$name</option>
-                                                                    ";
-                                                        }	
+                                                                echo "
+                                                                    <option value='$code'>$name</option>
+                                                                        ";
+                                                            }	
 
 
+                                                        
+                                                        ?>  
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    Position
+                                                    <select class="form-control input-sm m-bot15 " style="width:100%" id="drppos"> 
+                                                    <option selected disabled>Choose Position...</option>
 
-                                                    ?>  
-                                            </select>
+                                                    </select>
+
+                                                </div>
+
+
+                                            </div>
                                             <div class="pull-right">
                                                 <button id="btnaddstud" class="btn btn-success">
                                                         Add <i class="fa fa-plus"></i>
@@ -219,6 +233,7 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                                                             <th>Student Number</th>
                                                             <th>Student Name</th>
                                                             <th>Course - Year and Section</th>
+                                                            <th>Position</th>
                                                             <th id="hideaction">Action</th>
                                                         </tr>
                                                     </thead>
@@ -325,10 +340,10 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                         } else if (data == "Error2") {
                             swal("Cancelled", "Please Select File", "error");
                         } else {
-                            $(this).each(data, function(key, val) {
-
-                                alert(data);
-                            });
+                            //                            $(this).each(data, function(key, val) {
+                            //
+                            //                                alert(data);
+                            //                            });
                             swal("Record Updated!", "The data is successfully imported!", "success");
                         }
                     }
