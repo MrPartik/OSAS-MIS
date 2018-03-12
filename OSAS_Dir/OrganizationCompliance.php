@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <?php include('../header.php');    
+    <?php include('../header.php');
 $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
 ?>
     <link href="../../../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
@@ -23,9 +23,9 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
             <div id="sidebar" class="nav-collapse">
                 <!-- sidebar menu start-->
                 <?php
-                
+
                 include('../../sidenav.php')
-            
+
                 ?>
                     <!-- sidebar menu end-->
             </div>
@@ -88,17 +88,17 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                         </thead>
                                         <tbody>
                                             <?php
-							
+
 										include('../connection.php');
-                
+
                                         $view_query = mysqli_query($connection,"SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME,OrgForCompliance_ADVISER,OrgAppProfile_STATUS,OC.OrgCat_NAME FROM `r_org_applicant_profile` AS OAP INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE INNER JOIN t_assign_org_category AOC ON AOC.AssOrgCategory_ORG_CODE = OFC.OrgForCompliance_ORG_CODE INNER JOIN r_org_category OC ON OC.OrgCat_CODE = AOC.AssOrgCategory_ORGCAT_CODE WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active'");
                                         while($row = mysqli_fetch_assoc($view_query))
                                         {
                                             $code = $row["OrgForCompliance_ORG_CODE"];
                                             $name = $row["OrgAppProfile_NAME"];
-                                            $adv = $row["OrgForCompliance_ADVISER"];										
+                                            $adv = $row["OrgForCompliance_ADVISER"];
                                             $cat = $row["OrgCat_NAME"];
-                                            
+
 
                                             echo "
                                             <tr class=''>
@@ -108,16 +108,16 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                                 <td>$cat</td>
                                                 <td style='width:200px'>
                                                     <center><a class='btn btn-cancel view tar' style='color:white' data-toggle='modal' href='#View' href='javascript:;'><i class='fa  fa-eye'></i></a>
-                                                    <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-edit'></i></a>		                              
-                                                    <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-trash-o'></i></a>	
+                                                    <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-edit'></i></a>
+                                                    <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-trash-o'></i></a>
                                                     </center>
                                                 </td>
                                             </tr>
                                                     ";
-                                        }	
+                                        }
 
-											
-										
+
+
 									?>
 
                                         </tbody>
@@ -168,7 +168,7 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                 <div class="row" id="profile">
                                     <div class="col-lg-6 form-group">
                                         Applicant
-                                        <select class="form-control input-sm m-bot15 selectAppCode" style="width:100%" id="drpappcode"> 
+                                        <select class="form-control input-sm m-bot15 selectAppCode" style="width:100%" id="drpappcode">
                                             <?php
 
                                                 $view_query = mysqli_query($connection,"SELECT * FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgAppProfile_APPL_CODE NOT IN (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_DISPAY_STAT = 'Active')");
@@ -180,18 +180,18 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                                     echo "
                                                         <option value='$code'>$name</option>
                                                             ";
-                                                }	
+                                                }
 
 
 
-                                            ?>  
+                                            ?>
                                         </select>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="col-lg-6 form-group">
                                                 Academic Year
-                                                <select class="form-control input-sm m-bot15 selectYear" style="width:100%" id="drpyear"> 
+                                                <select class="form-control input-sm m-bot15 selectYear" style="width:100%" id="drpyear">
                                                                         <?php
 
                                                                             $view_query = mysqli_query($connection,"SELECT Batch_YEAR AS YEAR FROM `r_batch_details` WHERE Batch_DISPLAY_STAT = 'Active'");
@@ -202,11 +202,11 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                                                                 echo "
                                                                                     <option value='$year'>$year</option>
                                                                                         ";
-                                                                            }	
+                                                                            }
 
 
 
-                                                                        ?>  
+                                                                        ?>
                                                  </select>
                                             </div>
                                             <div class="col-lg-6 form-group">
@@ -218,7 +218,7 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                         <div class="col-lg-12 form-group">
                                             <div class="col-lg-6 form-group">
                                                 Organization Category
-                                                <select class="form-control input-sm m-bot15 selectYear" id="drpcat"> 
+                                                <select class="form-control input-sm m-bot15 selectYear" id="drpcat">
                                                                 <?php
 
                                                                     $view_query = mysqli_query($connection,"SELECT OrgCat_CODE AS CODE , OrgCat_NAME AS NAME FROM `r_org_category` WHERE OrgCat_DISPLAY_STAT = 'Active'");
@@ -230,16 +230,16 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                                                         echo "
                                                                             <option value='$catcode'>$catname</option>
                                                                                 ";
-                                                                    }	
+                                                                    }
 
 
 
-                                                                ?>  
+                                                                ?>
                                                 </select>
                                             </div>
                                             <div class="col-lg-6 form-group" id="course">
                                                 Course
-                                                <select class="form-control input-sm m-bot15 selectYear" id="drpcourse"> 
+                                                <select class="form-control input-sm m-bot15 selectYear" id="drpcourse">
                                                                 <?php
 
                                                                     $view_query = mysqli_query($connection,"SELECT Course_CODE as CODE FROM `r_courses` WHERE Course_DISPLAY_STAT = 'Active'");
@@ -250,11 +250,11 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                                                         echo "
                                                                             <option value='$coucode'>$coucode</option>
                                                                                 ";
-                                                                    }	
+                                                                    }
 
 
 
-                                                                ?>                          
+                                                                ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -305,7 +305,7 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                         <div class="col-lg-12">
                                             <div class="col-lg-6 form-group">
                                                 Academic Year
-                                                <select class="form-control input-sm m-bot15 selectYear" style="width:100%" id="upddrpyear"> 
+                                                <select class="form-control input-sm m-bot15 selectYear" style="width:100%" id="upddrpyear">
                                                  </select>
                                             </div>
                                             <div class="col-lg-6 form-group">
@@ -317,12 +317,12 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                         <div class="col-lg-12 form-group">
                                             <div class="col-lg-6 form-group">
                                                 Organization Category
-                                                <select class="form-control input-sm m-bot15 selectYear" id="upddrpcat"> 
+                                                <select class="form-control input-sm m-bot15 selectYear" id="upddrpcat">
                                                 </select>
                                             </div>
                                             <div class="col-lg-6 form-group" id="updcourse">
                                                 Course
-                                                <select class="form-control input-sm m-bot15 selectYear" id="upddrpcourse">                       
+                                                <select class="form-control input-sm m-bot15 selectYear" id="upddrpcourse">
                                                 </select>
                                             </div>
                                         </div>
@@ -493,19 +493,19 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
     </div>
 
     <?php
-    
+
         $codelist = array();
         $j = 1;
-    
+
         $view_query = mysqli_query($connection,"SELECT OrgAccrDetail_CODE as CODE FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active' ");
         while($row = mysqli_fetch_array($view_query))
-        {   
+        {
             $codelist = $row['CODE'];
 
         }
-    
-    
-    
+
+
+
     ?>
         <!-- modal -->
         <!-- Placed js at the end of the document so the pages load faster -->

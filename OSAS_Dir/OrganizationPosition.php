@@ -2,8 +2,8 @@
 <html>
 
 <head>
-    <?php include('../header.php');    
-    $currentPage ='OSAS_OrgPos'; 
+    <?php include('../header.php');
+    $currentPage ='OSAS_OrgPos';
  include('../connection.php');
 
 ?>
@@ -23,9 +23,9 @@
             <div id="sidebar" class="nav-collapse">
                 <!-- sidebar menu start-->
                 <?php
-                
+
                 include('../../sidenav.php')
-            
+
             ?>
                     <!-- sidebar menu end-->
             </div>
@@ -77,15 +77,15 @@
                                         <select class="form-control m-bot15" id="selOrg">
                                                 <option selected disabled>Please Select an Organization</option>
                                                   <?php
-							
-										
+
+
                                                     $view_query = mysqli_query($connection,"SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME,OrgForCompliance_ADVISER,OrgAppProfile_STATUS,OC.OrgCat_NAME FROM `r_org_applicant_profile` AS OAP INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE INNER JOIN t_assign_org_category AOC ON AOC.AssOrgCategory_ORG_CODE = OFC.OrgForCompliance_ORG_CODE INNER JOIN r_org_category OC ON OC.OrgCat_CODE = AOC.AssOrgCategory_ORGCAT_CODE WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active'");
                                                     while($row = mysqli_fetch_assoc($view_query))
                                                     {
                                                         $code = $row["OrgForCompliance_ORG_CODE"];
-                                                        $name = $row["OrgAppProfile_NAME"];		
+                                                        $name = $row["OrgAppProfile_NAME"];
                                                         echo '<option value="'.$code.'">',$name.'</option>';
-                                                    }			
+                                                    }
 
 
                                                 ?>

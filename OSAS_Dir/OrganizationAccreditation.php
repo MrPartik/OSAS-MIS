@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <?php include('../header.php');    
+    <?php include('../header.php');
 $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
 ?>
     <link href="../../../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
@@ -23,9 +23,9 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
             <div id="sidebar" class="nav-collapse">
                 <!-- sidebar menu start-->
                 <?php
-                
+
                 include('../../sidenav.php')
-            
+
                 ?>
                     <!-- sidebar menu end-->
             </div>
@@ -73,22 +73,22 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
                                         </thead>
                                         <tbody>
                                             <?php
-							
+
 										include('../connection.php');
-                
-                                        $view_query = mysqli_query($connection,"SELECT DISTINCT 
-				
+
+                                        $view_query = mysqli_query($connection,"SELECT DISTINCT
+
                 OrgAccrProcess_ORG_CODE AS CODE ,OrgAppProfile_NAME AS NAME,
                 (SELECT COUNT(*) AS COU FROM `t_org_accreditation_process` WHERE OrgAccrProcess_ORG_CODE = OrgForCompliance_ORG_CODE AND 									OrgAccrProcess_DISPLAY_STAT = 'Active' AND OrgAccrProcess_IS_ACCREDITED = '1')
                 /
                 (SELECT COUNT(*) AS COU FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active')  * 100  PROGRESS    ,
                 IF(
-                    (SELECT COUNT(*) AS COU FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active') = 
+                    (SELECT COUNT(*) AS COU FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active') =
                     (SELECT COUNT(*) AS COU FROM `t_org_accreditation_process` WHERE OrgAccrProcess_ORG_CODE = OrgForCompliance_ORG_CODE AND 									OrgAccrProcess_DISPLAY_STAT = 'Active' AND OrgAccrProcess_IS_ACCREDITED = '1') ,
-                    'Accredited','Running for accreditation') AS STAT 
-                    FROM t_org_accreditation_process 
-                    INNER JOIN t_org_for_compliance ON OrgForCompliance_ORG_CODE = OrgAccrProcess_ORG_CODE 
-					INNER JOIN r_org_applicant_profile ON OrgAppProfile_APPL_CODE = OrgForCompliance_OrgApplProfile_APPL_CODE 
+                    'Accredited','Running for accreditation') AS STAT
+                    FROM t_org_accreditation_process
+                    INNER JOIN t_org_for_compliance ON OrgForCompliance_ORG_CODE = OrgAccrProcess_ORG_CODE
+					INNER JOIN r_org_applicant_profile ON OrgAppProfile_APPL_CODE = OrgForCompliance_OrgApplProfile_APPL_CODE
             		WHERE OrgAccrProcess_DISPLAY_STAT = 'Active' AND OrgForCompliance_DISPAY_STAT = 'Active' AND OrgAppProfile_DISPLAY_STAT = 'Active'
 
                                         ");
@@ -119,10 +119,10 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
                                                 </td>
                                             </tr>
                                                     ";
-                                        }	
+                                        }
 
-											
-										
+
+
 									?>
 
                                         </tbody>
@@ -174,7 +174,7 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
                                     <div class="row" id="profile">
                                         <div class="col-lg-6 form-group">
                                             Organization Name
-                                            <select class="form-control input-sm m-bot15 selectAppCode" style="width:100%" id="drpappcode"> 
+                                            <select class="form-control input-sm m-bot15 selectAppCode" style="width:100%" id="drpappcode">
                                                 <option selected disabled>Choose Organization...</option>
                                                 <?php
 
@@ -188,11 +188,11 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
                                                         echo "
                                                             <option value='$code'>$name</option>
                                                                 ";
-                                                    }	
+                                                    }
 
 
 
-                                                ?>  
+                                                ?>
                                             </select>
                                         </div>
                                         <form method="post" id="form-data4">
@@ -208,7 +208,7 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
                                                 </thead>
                                                 <tbody id="accreqlist">
                                                     <?php
-                                                                            
+
                                                         $view_query = mysqli_query($connection,"SELECT OrgAccrDetail_DESC as des,OrgAccrDetail_CODE as code FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active' ");
                                                         $i = 0;
                                                         while($row = mysqli_fetch_assoc($view_query))
@@ -225,7 +225,7 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
                                                                 <td id='code$i' class='hidden'>$code</td>
                                                             </tr>
                                                                     ";
-                                                        }			
+                                                        }
 
 
                                                    ?>
@@ -277,7 +277,7 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
                                                 </thead>
                                                 <tbody id="updaccreqlist">
                                                     <?php
-                                                                            
+
                                                         $view_query = mysqli_query($connection,"SELECT OrgAccrDetail_DESC as des,OrgAccrDetail_CODE as code FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active' ");
                                                         $i = 0;
                                                         while($row = mysqli_fetch_assoc($view_query))
@@ -294,7 +294,7 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
                                                                 <td id='updcode$i' class='hidden'>$code</td>
                                                             </tr>
                                                                     ";
-                                                        }			
+                                                        }
 
 
                                                    ?>

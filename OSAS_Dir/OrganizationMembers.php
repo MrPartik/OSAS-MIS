@@ -2,8 +2,8 @@
 <html>
 
 <head>
-    <?php include('../header.php');    
-    $currentPage ='OSAS_OrgMembers'; 
+    <?php include('../header.php');
+    $currentPage ='OSAS_OrgMembers';
    include('../connection.php');
 ?>
     <link href="../../../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
@@ -26,9 +26,9 @@
             <div id="sidebar" class="nav-collapse">
                 <!-- sidebar menu start-->
                 <?php
-                
+
                 include('../../sidenav.php')
-            
+
                 ?>
                     <!-- sidebar menu end-->
             </div>
@@ -75,11 +75,11 @@
                                         </thead>
                                         <tbody>
                                             <?php
-							
+
 										include('../connection.php');
-                
+
                                         $view_query = mysqli_query($connection,"SELECT OrgForCompliance_OrgApplProfile_APPL_CODE,OrgAppProfile_NAME,OrgForCompliance_ADVISER,OrgAppProfile_STATUS,OC.OrgCat_NAME,(SELECT COUNT(*) FROM t_assign_org_members WHERE AssOrgMem_DISPLAY_STAT = 'Active' AND AssOrgMem_APPL_ORG_CODE = OAP.OrgAppProfile_APPL_CODE) AS COU
-FROM `r_org_applicant_profile` AS OAP INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE INNER JOIN t_assign_org_category AOC ON AOC.AssOrgCategory_ORG_CODE = OFC.OrgForCompliance_ORG_CODE INNER JOIN r_org_category OC ON OC.OrgCat_CODE = AOC.AssOrgCategory_ORGCAT_CODE 
+FROM `r_org_applicant_profile` AS OAP INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE INNER JOIN t_assign_org_category AOC ON AOC.AssOrgCategory_ORG_CODE = OFC.OrgForCompliance_ORG_CODE INNER JOIN r_org_category OC ON OC.OrgCat_CODE = AOC.AssOrgCategory_ORGCAT_CODE
 WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active'");
                                         while($row = mysqli_fetch_assoc($view_query))
                                         {
@@ -88,8 +88,8 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                                             $cat = $row["OrgCat_NAME"];
                                             $cou = $row["COU"];
                                             $i = 0;
-                                             
-                                            
+
+
                                             echo "
                                             <tr class=''>
                                                 <td class='hidden'>$code</td>
@@ -102,10 +102,10 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                                                 </td>
                                             </tr>
                                                     ";
-                                        }	
+                                        }
 
-											
-										
+
+
 									?>
 
                                         </tbody>
@@ -181,7 +181,7 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                                             <div class="row" style="padding-top:10px">
                                                 <div class="col-lg-6">
                                                     Student Name
-                                                    <select class="form-control input-sm m-bot15 selectAppCode" style="width:100%" id="drpstud"> 
+                                                    <select class="form-control input-sm m-bot15 selectAppCode" style="width:100%" id="drpstud">
                                                         <option selected disabled>Choose Student...</option>
                                                         <?php
 
@@ -195,16 +195,16 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                                                                 echo "
                                                                     <option value='$code'>$name</option>
                                                                         ";
-                                                            }	
+                                                            }
 
 
-                                                        
-                                                        ?>  
+
+                                                        ?>
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     Position
-                                                    <select class="form-control input-sm m-bot15 " style="width:100%" id="drppos"> 
+                                                    <select class="form-control input-sm m-bot15 " style="width:100%" id="drppos">
                                                     <option selected disabled>Choose Position...</option>
 
                                                     </select>
@@ -325,15 +325,15 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
 
 
             $('#upload_csv').on("submit", function(e) {
-                e.preventDefault(); //form will not submitted  
+                e.preventDefault(); //form will not submitted
 
                 $.ajax({
                     url: "OrganizationMembers/Export_Members.php",
                     method: "POST",
                     data: new FormData(this),
-                    contentType: false, // The content type used when sending data to the server.  
-                    cache: false, // To unable request pages to be cached  
-                    processData: false, // To send DOMDocument or non processed data file it is set to false  
+                    contentType: false, // The content type used when sending data to the server.
+                    cache: false, // To unable request pages to be cached
+                    processData: false, // To send DOMDocument or non processed data file it is set to false
                     success: function(data) {
                         if (data == 'Error1') {
                             swal("Invalid File");
@@ -351,15 +351,15 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
 
             });
             $('#upload_csv2').on("submit", function(e) {
-                e.preventDefault(); //form will not submitted  
+                e.preventDefault(); //form will not submitted
 
                 $.ajax({
                     url: "OrganizationMembers/Export_Officers.php",
                     method: "POST",
                     data: new FormData(this),
-                    contentType: false, // The content type used when sending data to the server.  
-                    cache: false, // To unable request pages to be cached  
-                    processData: false, // To send DOMDocument or non processed data file it is set to false  
+                    contentType: false, // The content type used when sending data to the server.
+                    cache: false, // To unable request pages to be cached
+                    processData: false, // To send DOMDocument or non processed data file it is set to false
                     success: function(data) {
                         if (data == 'Error1') {
                             swal("Invalid File");
