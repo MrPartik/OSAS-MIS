@@ -13,7 +13,70 @@ $currentPage ='OSAS_OrgApplication';
     <!-- Custom styles for this template -->
     <link href="../../../css/style.css" rel="stylesheet">
     <link href="../../../css/style-responsive.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../../../js/select2/select2.css" />
+    <link rel="stylesheet" type="text/css" href="../../../js/jquery-multi-select/css/multi-select.css" />
+
 </head>
+<style>
+    body {
+        margin-top: 30px;
+    }
+
+    .stepwizard-step p {
+        margin-top: 0px;
+        color: #666;
+    }
+
+    .stepwizard-row {
+        display: table-row;
+    }
+
+    .stepwizard {
+        display: table;
+        width: 100%;
+        position: relative;
+    }
+
+    .stepwizard-step button[disabled] {
+        /*opacity: 1 !important;
+    filter: alpha(opacity=100) !important;*/
+    }
+
+    .stepwizard .btn.disabled,
+    .stepwizard .btn[disabled],
+    .stepwizard fieldset[disabled] .btn {
+        opacity: 1 !important;
+        color: #bbb;
+    }
+
+    .stepwizard-row:before {
+        top: 14px;
+        bottom: 0;
+        position: absolute;
+        content: " ";
+        width: 100%;
+        height: 1px;
+        background-color: #ccc;
+        z-index: 0;
+    }
+
+    .stepwizard-step {
+        display: table-cell;
+        text-align: center;
+        position: relative;
+    }
+
+    .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.428571429;
+        border-radius: 15px;
+    }
+
+</style>
 
 <body>
 
@@ -34,26 +97,7 @@ $currentPage ='OSAS_OrgApplication';
         <!--main content start-->
         <section id="main-content">
             <section class="wrapper">
-                <!-- page start-->
-                <div class="row" style="float:right;">
-                    <div class="col-md-12  ">
-                        <!--breadcrumbs start -->
-                        <ul class="breadcrumbs-alt ">
-                            <li>
-                                <a class="current" href="#">Accreditation Requirement</a>
-                            </li>
-                            <li>
-                                <a href="#">Sanction Setup</a>
-                            </li>
-                            <!-- <li> -->
-                            <!-- <a class="active-trail active" href="#">Pages</a> -->
-                            <!-- </li> -->
-
-                        </ul>
-                        <!--breadcrumbs end -->
-                    </div>
-                </div>
-                <div class="row">
+                <div class="row" id="tableForm">
                     <div class="col-sm-12">
                         <section class="panel">
                             <div class="panel-body">
@@ -109,8 +153,9 @@ $currentPage ='OSAS_OrgApplication';
                                                 <td style='width:200px'>
                                                     <center>
                                                         <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-edit'></i></a>      
-                                                        <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-trash-o'></i></a>	
-                                                    </center>
+                                                         <a class='btn btn-info wizardOpen' href='javascript:;'><i class='fa fa-flag'></i></a>	
+                                                        <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>	
+                                                    </center> 
                                                 </td>
                                             </tr>
                                                     ";
@@ -127,6 +172,213 @@ $currentPage ='OSAS_OrgApplication';
                         </section>
                     </div>
                 </div>
+
+
+                <div class="row" id="wizardForm">
+                    <div class="col-sm-12">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                Form Wizard
+                                <span class=" pull-right">
+                                    <a id="closewizardForm" class="fa fa-times"></a>
+                                 </span>
+                            </header>
+                            <div class="panel-body">
+
+
+                                <div class="stepwizard">
+                                    <div class="stepwizard-row setup-panel">
+                                        <div class="stepwizard-step col-xs-2" style="width:400px">
+                                            <a href="#step-1" type="button" class="btn btn-success btn-circle">1</a>
+                                            <p><small>Academic Year</small></p>
+                                        </div>
+                                        <div class="stepwizard-step col-xs-2">
+                                            <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+                                            <p><small>Category</small></p>
+                                        </div>
+                                        <div class="stepwizard-step col-xs-2">
+                                            <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
+                                            <p><small>Adviser</small></p>
+                                        </div>
+                                        <div class="stepwizard-step col-xs-2">
+                                            <a href="#step-4" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
+                                            <p><small>Mission & Vision</small></p>
+                                        </div>
+                                        <div class="stepwizard-step col-xs-2">
+                                            <a href="#step-5" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
+                                            <p><small>Accreditation</small></p>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <form role="form">
+                                    <div class="panel panel-primary setup-content" id="step-1">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title" style="color:white">For what academic year? </h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label class="control-label">Academic Year</label>
+                                                <select class="form-control input-sm m-bot15 selectYear" style="width:100%" id="drpyear"> 
+                                                        <?php
+
+                                                            $view_query = mysqli_query($connection,"SELECT Batch_YEAR AS YEAR FROM `r_batch_details` WHERE Batch_DISPLAY_STAT = 'Active' ORDER BY Batch_YEAR DESC ");
+                                                            while($row = mysqli_fetch_assoc($view_query))
+                                                            {
+                                                                $year = $row["YEAR"];
+
+                                                                echo "
+                                                                    <option value='$year'>$year</option>
+                                                                        ";
+                                                            }	
+
+
+
+                                                        ?>  
+                                                 </select>
+                                            </div>
+                                            <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel panel-primary setup-content" id="step-2">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title" style="color:white">What category the organization belong?</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="col-lg-6 form-group">
+                                                <label class="control-label">Organization Category</label>
+                                                <select class="form-control input-sm m-bot15 selectYear" id="drpcat"> 
+                                                        <?php
+
+                                                            $view_query = mysqli_query($connection,"SELECT OrgCat_CODE AS CODE , OrgCat_NAME AS NAME FROM `r_org_category` WHERE OrgCat_DISPLAY_STAT = 'Active'");
+                                                            while($row = mysqli_fetch_assoc($view_query))
+                                                            {
+                                                                $catcode = $row["CODE"];
+                                                                $catname = $row["NAME"];
+
+                                                                echo "
+                                                                    <option value='$catcode'>$catname</option>
+                                                                        ";
+                                                            }	
+
+
+
+                                                        ?>  
+                                                    </select>
+                                            </div>
+
+                                            <div class="col-lg-6 form-group" id="course">
+
+                                                <label class="control-label">Course</label>
+                                                <select multiple name="e9" id="e9" style="width:100%" class="populate">                                        
+                                                        <?php
+
+                                                            $view_query = mysqli_query($connection,"SELECT Course_CODE as CODE FROM `r_courses` WHERE Course_DISPLAY_STAT = 'Active'");
+                                                            while($row = mysqli_fetch_assoc($view_query))
+                                                            {
+                                                                $coucode = $row["CODE"];
+
+                                                                echo "
+                                                                    <option value='$coucode'>$coucode</option>
+                                                                        ";
+                                                            }	
+
+                                                        ?>   
+                                                    </select>
+                                            </div>
+                                            <button class="btn btn-primary nextBtn pull-right" id="btnStep2" type="button">Next</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel panel-primary setup-content" id="step-3">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title" style="color:white">Who is the Adviser?</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label class="control-label">Adviser Name</label>
+                                                <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Adviser Name" id="txtadvname" />
+                                            </div>
+                                            <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel panel-primary setup-content" id="step-4">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title" style="color:white">What do they Visualize?</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label class="control-label">Mission</label>
+                                                <textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtmission" style="roverflow:auto;resize:none"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">Vision</label>
+                                                <textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtvision" style="roverflow:auto;resize:none"></textarea>
+                                            </div>
+                                            <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-primary setup-content" id="step-5">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title" style="color:white">What requirement do they have?</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="row" id="profile">
+                                                <form method="post" id="form-data4">
+                                                    <table class="table table-striped table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class='hidden'>code</th>
+                                                                <th>#</th>
+                                                                <th>Accreditation Name</th>
+                                                                <th>Status</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="updaccreqlist">
+                                                            <?php
+                                                                            
+                                                        $view_query = mysqli_query($connection,"SELECT OrgAccrDetail_DESC as des,OrgAccrDetail_CODE as code FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active' ");
+                                                        $i = 0;
+                                                        while($row = mysqli_fetch_assoc($view_query))
+                                                        {
+                                                            $i++;
+                                                            $desc = $row["des"];
+                                                            $code = $row["code"];
+                                                            echo "
+                                                            <tr class=''>
+                                                                <td>$i</td>
+                                                                <td >$desc</td>
+                                                                <td><input type='checkbox' id='chkupdstat$i' name='chkacc' class='checkbox form-control' style='width: 20px'></td>
+
+                                                                <td id='updcode$i' class='hidden'>$code</td>
+                                                            </tr>
+                                                                    ";
+                                                        }			
+
+
+                                                   ?>
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+                                            </div>
+                                            <button class="btn btn-success pull-right" type="submit">Finish!</button>
+                                            <h4 id="orgcode" style="display:none">asd</h4>
+
+                                        </div>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+
                 <a class='btn btn-cancel tar edit hidden' style='color:white' data-toggle='modal' id="openModalupd" href='#Edit' href='javascript:;'>Profile</a>
                 <!-- page end-->
             </section>
@@ -250,6 +502,8 @@ $currentPage ='OSAS_OrgApplication';
     <script type="text/javascript" src="../../../js/data-tables/jquery.dataTables.js"></script>
     <script type="text/javascript" src="../../../js/data-tables/DT_bootstrap.js"></script>
     <script type="text/javascript" src="../sweetalert/sweetalert.min.js"></script>
+    <script src="../../../js/select2/select2.js"></script>
+    <script src="../../../js/select-init.js"></script>
 
     <!--common script init for all pages-->
     <script src="../../../js/scripts.js"></script>
@@ -260,6 +514,7 @@ $currentPage ='OSAS_OrgApplication';
     <!-- END JAVASCRIPTS -->
     <script>
         $(document).ready(function() {
+            $('#wizardForm').hide();
             $('.hidethis').hide();
             $('#drpcat').change(function() {
                 var e = document.getElementById("drpcat");
@@ -281,11 +536,80 @@ $currentPage ='OSAS_OrgApplication';
 
 
             });
-            $('.edit').click(function() {
+
+
+
+            wizardOpen = $('.wizardOpen');
+            wizardOpen.click(function() {
+                $('#tableForm').hide(500);
+                $('#wizardForm').show(500);
+
+            });
+
+            $('#closewizardForm').click(function() {
+                $('#tableForm').show(500);
+                $('#wizardForm').hide(500);
+
+            });
+
+            var navListItems = $('div.setup-panel div a'),
+                allWells = $('.setup-content'),
+                allNextBtn = $('.nextBtn');
+
+            allWells.hide();
+
+            navListItems.click(function(e) {
+                e.preventDefault();
+                var $target = $($(this).attr('href')),
+                    $item = $(this);
+
+                if (!$item.hasClass('disabled')) {
+                    navListItems.removeClass('btn-success').addClass('btn-default');
+                    $item.addClass('btn-success');
+                    allWells.hide();
+                    $target.show();
+                    $target.find('input:eq(0)').focus();
+                }
+            });
+
+            allNextBtn.click(function() {
+                var curStep = $(this).closest(".setup-content"),
+                    curStepBtn = curStep.attr("id"),
+                    nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
+                    curInputs = curStep.find("input[type='text'],input[type='url']"),
+                    isValid = true;
+
+                $(".form-group").removeClass("has-error");
+                for (var i = 0; i < curInputs.length; i++) {
+                    if (!curInputs[i].validity.valid) {
+                        isValid = false;
+                        $(curInputs[i]).closest(".form-group").addClass("has-error");
+                    }
+                }
+
+                if (isValid) nextStepWizard.removeAttr('disabled').trigger('click');
+            });
+
+            $('#btnStep2').click(function() {
+                var drpcate = document.getElementById('drpcat');
+                var drpcatname = drpcate.options[drpcate.selectedIndex].text;
+                var drpcatcode = drpcate.options[drpcate.selectedIndex].value;
+                if (drpcatname == 'Academic Organization') {
+                    $('#e9 option:selected').each(function(index, brand) {
+                        alert(brand.value);
+                    });
+
+                }
+
+
 
 
             });
-            // // $('#submit-data').click(function() { // // // });
+
+
+
+            $('div.setup-panel div a.btn-success').trigger('click');
+
 
         });
         jQuery(document).ready(function() {
