@@ -48,7 +48,7 @@ $user_check = $_SESSION['logged_user']['username']; ?>
                     <li>
                         <input type="text" class="form-control search" placeholder=" Search"> </li>
                     <!-- user login dropdown start-->
-                    <li class="dropdown">
+                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <img alt="" src="../images/OSAS/MAAM%20DEM.jpg"> <span class="username"><?php echo $user_check; ?> </span> <b class="caret"></b> </a>
                         <ul class="dropdown-menu extended logout">
                             <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
