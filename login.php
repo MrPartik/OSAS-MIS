@@ -26,8 +26,16 @@
                         <?php
 				    session_start();
                     if(isset($_SESSION['logged_in']))
-                    {
-                        header('location: ../osas_dir/dashboard.php');  
+                    {   if($_SESSION['logged_user']['role']=="Organization")
+                        { }
+                        if($_SESSION['logged_user']['role']=="OSAS Head")
+                        { header('location: ../osas_dir/dashboard.php'); }
+                        else if($_SESSION['logged_user']['role']=="Administrator")
+                        { header("location:../admin_dir/dashboard.php"); }
+                        else if($_SESSION['logged_user']['role']=="Student")
+                        { }  
+                        else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
+                        { header("location:../");}
                     }
                     else{
 								if (isset($_POST['login'])){
@@ -44,18 +52,16 @@
                                             'role'=>$row['Users_ROLES'],
                                             'ppath'=>$row['Users_PROFILE_PATH'],
                                             'ref'=>$row['Users_REFERENCED']);
-                                        $role = $_SESSION['logged_user']['role'];
-                                            switch($role){
-                                               case 'OSAS HEAD':
-                                               header('location: ../osas_dir/dashboard.php');  
-                                               break;
-                                               case 'moderator':
-                                               header('location:moderator.php');
-                                               break;
-                                               case 'admin':
-                                               header('location:admin.php');
-                                               break;
-                                              }
+                                            if($_SESSION['logged_user']['role']=="Organization")
+                                            { }
+                                            if($_SESSION['logged_user']['role']=="OSAS Head")
+                                            { header('location: ../osas_dir/dashboard.php'); }
+                                            else if($_SESSION['logged_user']['role']=="Administrator")
+                                            { header("location:../admin_dir/dashboard.php"); }
+                                            else if($_SESSION['logged_user']['role']=="Student")
+                                            { }  
+                                            else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
+                                            { header("location:../");}
 									}
 									else{ ?>
                             <div class="alert alert-danger">Access Denied</div>
