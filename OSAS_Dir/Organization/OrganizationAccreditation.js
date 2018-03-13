@@ -82,7 +82,7 @@ var EditableTable = function () {
                 e.preventDefault();
             });
 
-            $('#editable-sample a.edit').live('click', function (e) {
+            $('#editable-sample a.edit').on('click', function (e) {
                 e.preventDefault();
 
                 var nRow = $(this).parents('tr')[0];
@@ -93,7 +93,7 @@ var EditableTable = function () {
 
                 $.ajax({
                     type: "GET",
-                    url: 'OrganizationAccreditation/UpdGetData-ajax.php',
+                    url: 'Organization/OrganizationAccreditation/UpdGetData-ajax.php',
                     dataType: 'json',
                     data: {
                         _code: getcode
@@ -111,7 +111,7 @@ var EditableTable = function () {
 
             });
 
-            $('#editable-sample a.i.cancel').live('click', function (e) {
+            $('#editable-sample a.i.cancel').on('click', function (e) {
                 e.preventDefault();
                 if ($(this).attr("data-mode") == "new") {
                     var nRow = $(this).parents('tr')[0];

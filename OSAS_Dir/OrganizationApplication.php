@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <?php include('../header.php');
+<?php
+$breadcrumbs  ="<div class='col-md-12'>
+<ul class='breadcrumbs-alt'>
+     <li> <a class='current'' href='#'>Accreditation Requirement</a>  </li>
+<li><a href='#'>Sanction Setup</a></li> </ul></div>";
 $currentPage ='OSAS_OrgApplication';
-       include('../connection.php');
+include('header.php');
+include('../config/connection.php');
+     if($_SESSION['logged_user']['role']=="Organization")
+    { }
+    else if($_SESSION['logged_user']['role']=="Administrator")
+    { header("location:../admin_dir/dashboard.php"); }
+    else if($_SESSION['logged_user']['role']=="Student")
+    { }
+    else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
+    { header("location:../");}
 ?>
-    <link href="../../../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-    <link href="../../../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../js/data-tables/DT_bootstrap.css" />
 
-    <!-- Custom styles for this template -->
-    <link href="../../../css/style.css" rel="stylesheet">
-    <link href="../../../css/style-responsive.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="../../../js/select2/select2.css" />
-    <link rel="stylesheet" type="text/css" href="../../../js/jquery-multi-select/css/multi-select.css" />
-
-</head>
 <style>
     body {
         margin-top: 30px;
@@ -87,7 +89,7 @@ $currentPage ='OSAS_OrgApplication';
                 <!-- sidebar menu start-->
                 <?php
 
-                include('../../sidenav.php')
+                include('sidenav.php')
 
                 ?>
                     <!-- sidebar menu end-->
@@ -133,9 +135,7 @@ $currentPage ='OSAS_OrgApplication';
                                         <tbody>
                                             <?php
 
-										include('../connection.php');
-
-                                        $view_query = mysqli_query($connection,"SELECT * FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active'");
+                                        $view_query = mysqli_query($con,"SELECT * FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active'");
                                         while($row = mysqli_fetch_assoc($view_query))
                                         {
                                             $code = $row["OrgAppProfile_APPL_CODE"];
@@ -223,7 +223,7 @@ $currentPage ='OSAS_OrgApplication';
                                                 <select class="form-control input-sm m-bot15 selectYear" style="width:100%" id="drpyear">
                                                         <?php
 
-                                                            $view_query = mysqli_query($connection,"SELECT Batch_YEAR AS YEAR FROM `r_batch_details` WHERE Batch_DISPLAY_STAT = 'Active' ORDER BY Batch_YEAR DESC ");
+                                                            $view_query = mysqli_query($con,"SELECT Batch_YEAR AS YEAR FROM `r_batch_details` WHERE Batch_DISPLAY_STAT = 'Active' ORDER BY Batch_YEAR DESC ");
                                                             while($row = mysqli_fetch_assoc($view_query))
                                                             {
                                                                 $year = $row["YEAR"];
@@ -252,7 +252,7 @@ $currentPage ='OSAS_OrgApplication';
                                                 <select class="form-control input-sm m-bot15 selectYear" id="drpcat">
                                                         <?php
 
-                                                            $view_query = mysqli_query($connection,"SELECT OrgCat_CODE AS CODE , OrgCat_NAME AS NAME FROM `r_org_category` WHERE OrgCat_DISPLAY_STAT = 'Active'");
+                                                            $view_query = mysqli_query($con,"SELECT OrgCat_CODE AS CODE , OrgCat_NAME AS NAME FROM `r_org_category` WHERE OrgCat_DISPLAY_STAT = 'Active'");
                                                             while($row = mysqli_fetch_assoc($view_query))
                                                             {
                                                                 $catcode = $row["CODE"];
@@ -275,7 +275,7 @@ $currentPage ='OSAS_OrgApplication';
                                                 <select multiple name="e9" id="e9" style="width:100%" class="populate">
                                                         <?php
 
-                                                            $view_query = mysqli_query($connection,"SELECT Course_CODE as CODE FROM `r_courses` WHERE Course_DISPLAY_STAT = 'Active'");
+                                                            $view_query = mysqli_query($con,"SELECT Course_CODE as CODE FROM `r_courses` WHERE Course_DISPLAY_STAT = 'Active'");
                                                             while($row = mysqli_fetch_assoc($view_query))
                                                             {
                                                                 $coucode = $row["CODE"];
@@ -341,7 +341,7 @@ $currentPage ='OSAS_OrgApplication';
                                                         <tbody id="updaccreqlist">
                                                             <?php
 
-                                                        $view_query = mysqli_query($connection,"SELECT OrgAccrDetail_DESC as des,OrgAccrDetail_CODE as code FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active' ");
+                                                        $view_query = mysqli_query($con,"SELECT OrgAccrDetail_DESC as des,OrgAccrDetail_CODE as code FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active' ");
                                                         $i = 0;
                                                         while($row = mysqli_fetch_assoc($view_query))
                                                         {
@@ -480,36 +480,8 @@ $currentPage ='OSAS_OrgApplication';
         </div>
     </div>
     <!-- modal -->
-    <!-- Placed js at the end of the document so the pages load faster -->
-
-    <!--Core js-->
-    <script src="../../../js/jquery-1.8.3.min.js"></script>
-    <script src="../../../bs3/js/bootstrap.min.js"></script>
-    <script class="include" type="text/javascript" src="../../../js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="../../../js/jquery.scrollTo.min.js"></script>
-    <script src="../../../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-    <script src="../../../js/jquery.nicescroll.js"></script>
-    <!--Easy Pie Chart-->
-    <script src="../../../js/easypiechart/jquery.easypiechart.js"></script>
-    <!--Sparkline Chart-->
-    <script src="../../../js/sparkline/jquery.sparkline.js"></script>
-    <!--jQuery Flot Chart-->
-    <script src="../js/flot-chart/jquery.flot.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.tooltip.min.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.resize.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.pie.resize.js"></script>
-
-    <script type="text/javascript" src="../../../js/data-tables/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="../../../js/data-tables/DT_bootstrap.js"></script>
-    <script type="text/javascript" src="../sweetalert/sweetalert.min.js"></script>
-    <script src="../../../js/select2/select2.js"></script>
-    <script src="../../../js/select-init.js"></script>
-
-    <!--common script init for all pages-->
-    <script src="../../../js/scripts.js"></script>
-
-    <!--script for this page only-->
-    <script src="OrganizationApplication.js"></script>
+    <?php include('footer.php'); ?>
+    <script src="Organization/OrganizationApplication.js"></script>
 
     <!-- END JAVASCRIPTS -->
     <script>
@@ -541,14 +513,14 @@ $currentPage ='OSAS_OrgApplication';
 
             wizardOpen = $('.wizardOpen');
             wizardOpen.click(function() {
-                $('#tableForm').hide(500);
-                $('#wizardForm').show(500);
+                $('#tableForm').slideToggle(500);
+                $('#wizardForm').slideToggle(500);
 
             });
 
             $('#closewizardForm').click(function() {
-                $('#tableForm').show(500);
-                $('#wizardForm').hide(500);
+                $('#tableForm').slideToggle(500);
+                $('#wizardForm').slideToggle(500);
 
             });
 
@@ -618,6 +590,8 @@ $currentPage ='OSAS_OrgApplication';
 
     </script>
 
+    <script type="text/javascript" src="../js/data-tables/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="../js/data-tables/DT_bootstrap.js"></script>
 </body>
 
 </html>

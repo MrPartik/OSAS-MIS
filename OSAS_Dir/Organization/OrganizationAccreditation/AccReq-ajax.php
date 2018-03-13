@@ -1,6 +1,6 @@
 <?php
 	
-	include('../../connection.php');
+	include('../../../config/connection.php');
 	if(isset($_POST['_drpcode']))
 	{
 
@@ -8,7 +8,7 @@
 		$reccode = $_POST['_reccode'];
 		$stat = $_POST['_stat'];
 
-        $query = mysqli_query($connection,"INSERT INTO t_org_accreditation_process (OrgAccrProcess_ORG_CODE,OrgAccrProcess_OrgAccrDetail_CODE,OrgAccrProcess_IS_ACCREDITED)  VALUES ('$compcode','$reccode','$stat')");
+        $query = mysqli_query($con,"INSERT INTO t_org_accreditation_process (OrgAccrProcess_ORG_CODE,OrgAccrProcess_OrgAccrDetail_CODE,OrgAccrProcess_IS_ACCREDITED)  VALUES ('$compcode','$reccode','$stat')");
 
         
 	}

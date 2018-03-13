@@ -1,17 +1,17 @@
 <?php
 	
-	include('../../connection.php');
+	include('../../../config/connection.php');
     $compcode = $_GET['_code'];
 
 
-    $view_query = mysqli_query($connection," SELECT COUNT(*) AS COU FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active'  ");
+    $view_query = mysqli_query($con," SELECT COUNT(*) AS COU FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active'  ");
     while($row = mysqli_fetch_assoc($view_query))
     {   
         $countlist = $row["COU"];
 
     }
 
-    $view_query = mysqli_query($connection," SELECT COUNT(*) AS COU FROM `t_org_accreditation_process` WHERE OrgAccrProcess_ORG_CODE = '$compcode' AND OrgAccrProcess_DISPLAY_STAT = 'Active'");
+    $view_query = mysqli_query($con," SELECT COUNT(*) AS COU FROM `t_org_accreditation_process` WHERE OrgAccrProcess_ORG_CODE = '$compcode' AND OrgAccrProcess_DISPLAY_STAT = 'Active'");
     while($row = mysqli_fetch_assoc($view_query))
     {   
         $count = $row["COU"];
@@ -21,7 +21,7 @@
     if($count == '0')
     {
         
-        $view_query = mysqli_query($connection,"SELECT OrgAccrDetail_DESC as des,OrgAccrDetail_CODE as code FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active' ");
+        $view_query = mysqli_query($con,"SELECT OrgAccrDetail_DESC as des,OrgAccrDetail_CODE as code FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active' ");
         $i = 0;
         while($row = mysqli_fetch_assoc($view_query))
         {
@@ -43,14 +43,14 @@
     else
     {
      
-        $view_query = mysqli_query($connection," SELECT COUNT(*) AS COU FROM t_org_accreditation_process WHERE OrgAccrProcess_DISPLAY_STAT = 'Active' AND OrgAccrProcess_ORG_CODE = '$compcode' ");
+        $view_query = mysqli_query($con," SELECT COUNT(*) AS COU FROM t_org_accreditation_process WHERE OrgAccrProcess_DISPLAY_STAT = 'Active' AND OrgAccrProcess_ORG_CODE = '$compcode' ");
         while($row = mysqli_fetch_assoc($view_query))
         {   
             $count2 = $row["COU"];
 
         }
         
-        $view_query = mysqli_query($connection,"
+        $view_query = mysqli_query($con,"
         SELECT OrgAccrDetail_DESC as des,OrgAccrDetail_CODE as code,IFNULL((SELECT OrgAccrProcess_IS_ACCREDITED FROM `t_org_accreditation_process` WHERE OrgAccrDetail_CODE = OrgAccrProcess_OrgAccrDetail_CODE AND OrgAccrProcess_ORG_CODE = '$compcode' ),0) AS STAT  FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active'
         ");
 //                SELECT OrgAccrDetail_DESC as des,OrgAccrProcess_OrgAccrDetail_CODE as code,OrgAccrProcess_IS_ACCREDITED AS STAT FROM `t_org_accreditation_process` INNER JOIN r_org_accreditation_details ON OrgAccrDetail_CODE = OrgAccrProcess_OrgAccrDetail_CODE WHERE OrgAccrDetail_DISPLAY_STAT = 'Active' AND OrgAccrProcess_DISPLAY_STAT = 'Active' AND OrgAccrProcess_ORG_CODE = '$compcode' 

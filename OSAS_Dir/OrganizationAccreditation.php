@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <?php include('../header.php');
-$currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
+<?php
+$breadcrumbs  ="<div class='col-md-12'>
+<ul class='breadcrumbs-alt'>
+     <li> <a class='current'' href='#'>Accreditation Requirement</a>  </li>
+<li><a href='#'>Sanction Setup</a></li> </ul></div>";
+$currentPage ='OSAS_OrgApplication';
+include('header.php');
+include('../config/connection.php');
+     if($_SESSION['logged_user']['role']=="Organization")
+    { }
+    else if($_SESSION['logged_user']['role']=="Administrator")
+    { header("location:../admin_dir/dashboard.php"); }
+    else if($_SESSION['logged_user']['role']=="Student")
+    { }
+    else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
+    { header("location:../");}
 ?>
-    <link href="../../../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-    <link href="../../../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../js/data-tables/DT_bootstrap.css" />
-
-    <!-- Custom styles for this template -->
-    <link href="../../../css/style.css" rel="stylesheet">
-    <link href="../../../css/style-responsive.css" rel="stylesheet" />
-</head>
-
 <body>
 
     <section id="container">
@@ -24,7 +27,7 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
                 <!-- sidebar menu start-->
                 <?php
 
-                include('../../sidenav.php')
+                include('sidenav.php')
 
                 ?>
                     <!-- sidebar menu end-->
@@ -36,22 +39,7 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
             <section class="wrapper">
                 <!-- page start-->
                 <div class="row" style="float:right;">
-                    <div class="col-md-12  ">
-                        <!--breadcrumbs start -->
-                        <ul class="breadcrumbs-alt ">
-                            <li>
-                                <a class="current" href="#">Accreditation Requirement</a>
-                            </li>
-                            <li>
-                                <a href="#">Sanction Setup</a>
-                            </li>
-                            <!-- <li> -->
-                            <!-- <a class="active-trail active" href="#">Pages</a> -->
-                            <!-- </li> -->
 
-                        </ul>
-                        <!--breadcrumbs end -->
-                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
@@ -73,10 +61,7 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
                                         </thead>
                                         <tbody>
                                             <?php
-
-										include('../connection.php');
-
-                                        $view_query = mysqli_query($connection,"SELECT DISTINCT
+                                        $view_query = mysqli_query($con ,"SELECT DISTINCT
 
                 OrgAccrProcess_ORG_CODE AS CODE ,OrgAppProfile_NAME AS NAME,
                 (SELECT COUNT(*) AS COU FROM `t_org_accreditation_process` WHERE OrgAccrProcess_ORG_CODE = OrgForCompliance_ORG_CODE AND 									OrgAccrProcess_DISPLAY_STAT = 'Active' AND OrgAccrProcess_IS_ACCREDITED = '1')
@@ -178,7 +163,7 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
                                                 <option selected disabled>Choose Organization...</option>
                                                 <?php
 
-                                                    $view_query = mysqli_query($connection,"SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME FROM `t_org_for_compliance` INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_ORG_CODE NOT IN (SELECT DISTINCT OrgAccrProcess_ORG_CODE FROM `t_org_accreditation_process` WHERE OrgAccrProcess_DISPLAY_STAT = 'Active' )
+                                                    $view_query = mysqli_query($con,"SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME FROM `t_org_for_compliance` INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_ORG_CODE NOT IN (SELECT DISTINCT OrgAccrProcess_ORG_CODE FROM `t_org_accreditation_process` WHERE OrgAccrProcess_DISPLAY_STAT = 'Active' )
 ");
                                                     while($row = mysqli_fetch_assoc($view_query))
                                                     {
@@ -209,7 +194,7 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
                                                 <tbody id="accreqlist">
                                                     <?php
 
-                                                        $view_query = mysqli_query($connection,"SELECT OrgAccrDetail_DESC as des,OrgAccrDetail_CODE as code FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active' ");
+                                                        $view_query = mysqli_query($con,"SELECT OrgAccrDetail_DESC as des,OrgAccrDetail_CODE as code FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active' ");
                                                         $i = 0;
                                                         while($row = mysqli_fetch_assoc($view_query))
                                                         {
@@ -278,7 +263,7 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
                                                 <tbody id="updaccreqlist">
                                                     <?php
 
-                                                        $view_query = mysqli_query($connection,"SELECT OrgAccrDetail_DESC as des,OrgAccrDetail_CODE as code FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active' ");
+                                                        $view_query = mysqli_query($con,"SELECT OrgAccrDetail_DESC as des,OrgAccrDetail_CODE as code FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active' ");
                                                         $i = 0;
                                                         while($row = mysqli_fetch_assoc($view_query))
                                                         {
@@ -315,34 +300,9 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
         </div>
     </div>
     <!-- modal -->
-    <!-- Placed js at the end of the document so the pages load faster -->
-
-    <!--Core js-->
-    <script src="../../../js/jquery-1.8.3.min.js"></script>
-    <script src="../../../bs3/js/bootstrap.min.js"></script>
-    <script class="include" type="text/javascript" src="../../../js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="../../../js/jquery.scrollTo.min.js"></script>
-    <script src="../../../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-    <script src="../../../js/jquery.nicescroll.js"></script>
-    <!--Easy Pie Chart-->
-    <script src="../../../js/easypiechart/jquery.easypiechart.js"></script>
-    <!--Sparkline Chart-->
-    <script src="../../../js/sparkline/jquery.sparkline.js"></script>
-    <!--jQuery Flot Chart-->
-    <script src="../js/flot-chart/jquery.flot.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.tooltip.min.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.resize.js"></script>
-    <script src="../../../js/flot-chart/jquery.flot.pie.resize.js"></script>
-
-    <script type="text/javascript" src="../../../js/data-tables/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="../../../js/data-tables/DT_bootstrap.js"></script>
-    <script type="text/javascript" src="../sweetalert/sweetalert.min.js"></script>
-
-    <!--common script init for all pages-->
-    <script src="../../../js/scripts.js"></script>
-
+    <?php include('footer.php'); ?>
     <!--script for this page only-->
-    <script src="OrganizationAccreditation.js"></script>
+    <script src="Organization/OrganizationAccreditation.js"></script>
 
     <!-- END JAVASCRIPTS -->
     <script>
@@ -356,7 +316,7 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
                 var drpcode = _drpappcode.options[_drpappcode.selectedIndex].value;
                 $.ajax({
                     type: "GET",
-                    url: 'OrganizationAccreditation/GetData-ajax.php',
+                    url: 'Organization/OrganizationAccreditation/GetData-ajax.php',
                     dataType: 'json',
                     data: {
                         _code: drpcode
@@ -411,7 +371,7 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
 
                             $.ajax({
                                 type: 'post',
-                                url: 'OrganizationAccreditation/AccReq-ajax.php',
+                                url: 'Organization/OrganizationAccreditation/AccReq-ajax.php',
                                 data: {
                                     _drpcode: drpcode,
                                     _reccode: reccode,
@@ -465,7 +425,7 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
 
                             $.ajax({
                                 type: 'post',
-                                url: 'OrganizationAccreditation/UpdAccReq-ajax.php',
+                                url: 'Organization/OrganizationAccreditation/UpdAccReq-ajax.php',
                                 data: {
                                     _compcode: compcode,
                                     _reccode: reccode,
@@ -491,7 +451,9 @@ $currentPage ='OSAS_OrgAccreditation';    include('../connection.php');
             EditableTable.init();
         });
 
-    </script>
+        </script>
+        <script type="text/javascript" src="../js/data-tables/jquery.dataTables.js"></script>
+        <script type="text/javascript" src="../js/data-tables/DT_bootstrap.js"></script>
 
 </body>
 
