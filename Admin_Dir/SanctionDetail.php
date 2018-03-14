@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>OSAS - Sanction Detail</title>
+    <title>Admin - Sanction Detail</title>
   <?php   
 $currentPage ='Admin_SancDet'; 
 include('header.php');  

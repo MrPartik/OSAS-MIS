@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>OSAS - Organization Category</title>    
+    <title>Admin - Organization Category</title>
 <?php 
 $currentPage ='Admin_OfficerPos'; 
 include('header.php');  

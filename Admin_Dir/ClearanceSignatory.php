@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>OSAS - Clearance Signatory</title>
+    <title>Admin - Clearance Signatory</title>
     <?php 
 $currentPage ='Admin_ClearanceSig'; 
 include('header.php');  

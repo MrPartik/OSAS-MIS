@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>OSAS - Financial Assistance Title</title>
+    <title>Admin - Financial Assistance Title</title>
     <?php  
 $currentPage ='Admin_Title'; 
 include('header.php');  

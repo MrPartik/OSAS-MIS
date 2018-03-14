@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>OSAS - Semester</title>
+    <title>Admin - Semester</title>
     <?php    
 $currentPage ='Admin_Semester'; 
 include('header.php');  

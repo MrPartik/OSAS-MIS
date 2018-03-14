@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>OSAS - Designated Office</title>
+    <title>Admin - Designated Office</title>
     <?php   
 $currentPage ='Admin_Designated'; 
 include('header.php');  

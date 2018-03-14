@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>OSAS - Dashboard</title>
+    <title>Admin - Dashboard</title>
     <?php 
 $currentPage ='Admin_Dashboard'; 
 include('header.php');  
@@ -210,16 +209,7 @@ else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
                                                             </div>
                                                         </div>
                                                     </div>
-
-
-
-
-
-
-
                                                 </div>
-
-
                                             </section>
                                         </div>
 

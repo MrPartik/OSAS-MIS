@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>OSAS - Course</title>
+    <title>Admin - Course</title>
     <?php 
 $currentPage ='Admin_Course'; 
 include('header.php');  
