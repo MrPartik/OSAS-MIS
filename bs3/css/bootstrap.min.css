@@ -6214,7 +6214,7 @@ button.close {
 
 @media (min-width:768px) {
     .modal-dialog {
-        width: 900px;
+        width: 1200px;
         margin: 30px auto;
     }
     .modal-content {
