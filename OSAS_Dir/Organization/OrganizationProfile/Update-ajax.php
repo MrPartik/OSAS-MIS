@@ -1,6 +1,7 @@
 <?php
 	
-	include('../../connection.php');
+	include('../../../config/connection.php');     
+
 	if(isset($_POST['_name']) )
 	{
         $id = $_POST['_id'];
@@ -13,7 +14,7 @@
         
 
 
-        $query = mysqli_query($connection,"UPDATE r_org_applicant_profile SET OrgAppProfile_NAME = '$name',OrgAppProfile_DESCRIPTION = '$desc',OrgAppProfile_STATUS = '$accstat' WHERE OrgAppProfile_APPL_CODE  = '$id' ");
+        $query = mysqli_query($con,"UPDATE r_org_applicant_profile SET OrgAppProfile_NAME = '$name',OrgAppProfile_DESCRIPTION = '$desc',OrgAppProfile_STATUS = '$accstat' WHERE OrgAppProfile_APPL_CODE  = '$id' ");
                 
 
         

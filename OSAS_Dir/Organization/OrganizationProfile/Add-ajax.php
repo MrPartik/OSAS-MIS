@@ -1,6 +1,7 @@
 <?php
 	
-	include('../../connection.php');
+include('../../../config/connection.php');     
+
 	if(isset($_POST['_name']))
 	{
 		
@@ -25,7 +26,7 @@
 
         }
         $acr = strtoupper($acr);
-        $query = mysqli_query($connection,"INSERT INTO r_org_applicant_profile (OrgAppProfile_APPL_CODE,OrgAppProfile_NAME,OrgAppProfile_DESCRIPTION,OrgAppProfile_STATUS)  VALUES (CONCAT('$acr',YEAR(CURRENT_DATE)),'$name','$desc','$accstat')");
+        $query = mysqli_query($con,"INSERT INTO r_org_applicant_profile (OrgAppProfile_APPL_CODE,OrgAppProfile_NAME,OrgAppProfile_DESCRIPTION,OrgAppProfile_STATUS)  VALUES (CONCAT('$acr',YEAR(CURRENT_DATE)),'$name','$desc','$accstat')");
         
     
 	}
