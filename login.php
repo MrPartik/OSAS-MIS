@@ -28,6 +28,8 @@
                     if(isset($_SESSION['logged_in']))
                     {   if($_SESSION['logged_user']['role']=="Organization")
                         { }
+                        else if($_SESSION['logged_user']['role']=="OSAS HEAD")
+                         { header("location:../osas_dir/dashboard.php"); }
                         else if($_SESSION['logged_user']['role']=="Administrator")
                         { header("location:../admin_dir/dashboard.php"); }
                         else if($_SESSION['logged_user']['role']=="Student")
@@ -53,6 +55,8 @@
                                         $role = $_SESSION['logged_user']['role'];
                                            if($_SESSION['logged_user']['role']=="Organization")
                                             { }
+                                            else if($_SESSION['logged_user']['role']=="OSAS HEAD")
+                                            { header("location:../osas_dir/dashboard.php"); }
                                             else if($_SESSION['logged_user']['role']=="Administrator")
                                             { header("location:../admin_dir/dashboard.php"); }
                                             else if($_SESSION['logged_user']['role']=="Student")
