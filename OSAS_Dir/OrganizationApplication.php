@@ -572,13 +572,7 @@ include('../config/connection.php');
                     });
 
                 }
-
-
-
-
             });
-
-
 
             $('div.setup-panel div a.btn-success').trigger('click');
 

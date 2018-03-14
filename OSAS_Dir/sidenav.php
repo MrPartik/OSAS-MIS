@@ -17,7 +17,7 @@
                     </ul>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;" <?php if( $currentPage==='OSAS_OrgAccreditation' || $currentPage==='' ) { echo 'class="active"';} ?> > <i class="fa fa-users"></i> <span>Organization Management</span> </a>
+                    <a href="javascript:;" <?php if( $currentPage==='OSAS_OrgAccreditation' || $currentPage==='OSAS_OrgApplication' ) { echo 'class="active"';} ?> > <i class="fa fa-users"></i> <span>Organization Management</span> </a>
                     <ul class="sub">
                         <li <?php if( $currentPage==='OSAS_OrgApplication' ) { echo 'class="active"';} ?>  ><a href="OrganizationApplication.php">Applicants</a></li>
                         <li><a href="#">Organization Profile</a></li>

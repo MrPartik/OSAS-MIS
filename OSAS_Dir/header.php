@@ -30,7 +30,6 @@ $user_check = $_SESSION['logged_user']['username'];
         
     <link href="../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
     <link href="../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../js/data-tables/DT_bootstrap.css" />
 </head>
     
 
