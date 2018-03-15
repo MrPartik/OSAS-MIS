@@ -90,7 +90,7 @@ var EditableTable = function () {
 
                 $.ajax({
                     type: 'post',
-                    url: 'OrganizationProfile/Step1.php',
+                    url: 'Organization/OrganizationProfile/Step1.php',
                     data: {
                         _year: year,
                         _appcode: latcode,
@@ -117,7 +117,7 @@ var EditableTable = function () {
                 if (drpcatname == 'Academic Organization') {
                     $.ajax({
                         type: 'post',
-                        url: 'OrganizationProfile/pre_Step2.php',
+                        url: 'Organization/OrganizationProfile/pre_Step2.php',
                         data: {
                             _appcode: latcode
 
@@ -130,7 +130,7 @@ var EditableTable = function () {
                     $('#e9 option:selected').each(function (index, brand) {
                         $.ajax({
                             type: 'post',
-                            url: 'OrganizationProfile/Step2.php',
+                            url: 'Organization/OrganizationProfile/Step2.php',
                             async: true,
                             data: {
                                 _appcode: latcode,
@@ -152,7 +152,7 @@ var EditableTable = function () {
                 } else {
                     $.ajax({
                         type: 'post',
-                        url: 'OrganizationProfile/pre_Step2.php',
+                        url: 'Organization/OrganizationProfile/pre_Step2.php',
                         data: {
                             _appcode: latcode
 
@@ -164,7 +164,7 @@ var EditableTable = function () {
                     });
                     $.ajax({
                         type: 'post',
-                        url: 'OrganizationProfile/Step2-b.php',
+                        url: 'Organization/OrganizationProfile/Step2-b.php',
                         async: true,
                         data: {
                             _appcode: latcode,
@@ -193,7 +193,7 @@ var EditableTable = function () {
 
                 $.ajax({
                     type: 'post',
-                    url: 'OrganizationProfile/Step3.php',
+                    url: 'Organization/OrganizationProfile/Step3.php',
                     data: {
                         _appcode: latcode,
                         _advname: advname
@@ -218,7 +218,7 @@ var EditableTable = function () {
 
                 $.ajax({
                     type: 'post',
-                    url: 'OrganizationProfile/Step4.php',
+                    url: 'Organization/OrganizationProfile/Step4.php',
                     data: {
                         _appcode: latcode,
                         _mission: mission,
@@ -258,7 +258,7 @@ var EditableTable = function () {
 
                     $.ajax({
                         type: 'post',
-                        url: 'OrganizationProfile/Step5.php',
+                        url: 'Organization/OrganizationProfile/Step5.php',
                         async: true,
                         data: {
                             _drpcode: latcode,
@@ -339,7 +339,7 @@ var EditableTable = function () {
 
                         $.ajax({
                             type: 'post',
-                            url: 'OrganizationProfile/Add-ajax.php',
+                            url: 'Organization/OrganizationProfile/Add-ajax.php',
                             data: {
                                 _name: name,
                                 _desc: desc,
@@ -401,7 +401,7 @@ var EditableTable = function () {
                     if (isConfirm) {
                         $.ajax({
                             type: 'post',
-                            url: 'OrganizationProfile/Update-ajax.php',
+                            url: 'Organization/OrganizationProfile/Update-ajax.php',
                             data: {
                                 _id: getid,
                                 _code: code,
@@ -440,7 +440,7 @@ var EditableTable = function () {
 
 
             });
-            $('#editable-sample a.wizardOpen').live('click', function (e) {
+            $('#editable-sample a.wizardOpen').on('click', function (e) {
                 e.preventDefault();
                 if (initFlag == 0) {
                     initFlag = 1;
@@ -456,7 +456,7 @@ var EditableTable = function () {
 
                 $.ajax({
                     type: 'GET',
-                    url: 'OrganizationProfile/GetCurrentStep.php',
+                    url: 'Organization/OrganizationProfile/GetCurrentStep.php',
                     sync: true,
                     data: {
                         _appcode: latcode
@@ -467,7 +467,7 @@ var EditableTable = function () {
 
                             $.ajax({
                                 type: 'GET',
-                                url: 'OrganizationProfile/FillStep1.php',
+                                url: 'Organization/OrganizationProfile/FillStep1.php',
                                 dataType: 'json',
                                 data: {
                                     _appcode: latcode
@@ -509,7 +509,7 @@ var EditableTable = function () {
 
                             $.ajax({
                                 type: 'GET',
-                                url: 'OrganizationProfile/FillStep2.php',
+                                url: 'Organization/OrganizationProfile/FillStep2.php',
                                 dataType: 'json',
                                 data: {
                                     _appcode: latcode
@@ -534,7 +534,7 @@ var EditableTable = function () {
                                     var i = 0;
                                     $.ajax({
                                         type: 'GET',
-                                        url: 'OrganizationProfile/FillCourse.php',
+                                        url: 'Organization/OrganizationProfile/FillCourse.php',
                                         dataType: 'json',
                                         async: true,
                                         data: {
@@ -582,7 +582,7 @@ var EditableTable = function () {
 
                             $.ajax({
                                 type: 'GET',
-                                url: 'OrganizationProfile/FillStep3.php',
+                                url: 'Organization/OrganizationProfile/FillStep3.php',
                                 dataType: 'json',
                                 async: true,
                                 data: {
@@ -620,7 +620,7 @@ var EditableTable = function () {
 
                             $.ajax({
                                 type: 'GET',
-                                url: 'OrganizationProfile/FillStep4.php',
+                                url: 'Organization/OrganizationProfile/FillStep4.php',
                                 dataType: 'json',
                                 async: true,
                                 data: {
@@ -664,7 +664,7 @@ var EditableTable = function () {
                                 var reqcode = document.getElementById('updcode' + index).innerText;
                                 $.ajax({
                                     type: 'GET',
-                                    url: 'OrganizationProfile/FillAccreditationTable.php',
+                                    url: 'Organization/OrganizationProfile/FillAccreditationTable.php',
                                     async: true,
                                     data: {
                                         _appcode: latcode,
@@ -703,7 +703,7 @@ var EditableTable = function () {
 
 
             });
-            $('#editable-sample a.delete').live('click', function (e) {
+            $('#editable-sample a.delete').on('click', function (e) {
                 e.preventDefault();
 
                 var nRow = $(this).parents('tr')[0];
@@ -725,7 +725,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'OrganizationProfile/Delete-ajax.php',
+                                url: 'Organization/OrganizationProfile/Delete-ajax.php',
                                 data: {
                                     _code: getval
                                 },
@@ -746,7 +746,7 @@ var EditableTable = function () {
                     });
             });
 
-            $('#editable-sample a.cancel').live('click', function (e) {
+            $('#editable-sample a.cancel').on('click', function (e) {
                 e.preventDefault();
                 if ($(this).attr("data-mode") == "new") {
                     var nRow = $(this).parents('tr')[0];
@@ -759,14 +759,14 @@ var EditableTable = function () {
 
 
 
-            $('#editable-sample a.edit').live('click', function (e) {
+            $('#editable-sample a.edit').on('click', function (e) {
                 e.preventDefault();
 
                 var id = $(this).closest('tr').children('td:first').text();
                 document.getElementById('txtgetid').value = $(this).closest('tr').children('td:first').text();
                 $.ajax({
                     type: "GET",
-                    url: 'OrganizationProfile/GetData-ajax.php',
+                    url: 'Organization/OrganizationProfile/GetData-ajax.php',
                     dataType: 'json',
                     data: {
                         _id: id

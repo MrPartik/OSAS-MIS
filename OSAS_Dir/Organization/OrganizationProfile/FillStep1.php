@@ -16,8 +16,6 @@ include('../../../config/connection.php');
         $year = $row["BATYEAR"];
 
     }
-   
-
 
     echo json_encode(
           array("year" => $year)

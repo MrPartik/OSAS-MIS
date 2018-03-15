@@ -1,33 +1,15 @@
+
 <!DOCTYPE html>
 <html>
-
-<head>
-    <?php
+<?php
+$breadcrumbs  ="<div class='col-md-12'>
+<ul class='breadcrumbs-alt'>
+     <li> <a  href='#'>Organization Management</a>  </li>
+<li><a class='current'' href='#'>Accreditation</a></li> </ul></div>";
 $currentPage ='OSAS_OrgApplication';
-include('../../config/connection.php');
+include('header.php');
+include('../config/connection.php');
 ?>
-        <link href="../../bs3/css/bootstrap.min.css" rel="stylesheet">
-        <link href="../../js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet">
-        <link href="../../css/bootstrap-reset.css" rel="stylesheet">
-        <link href="../../font-awesome/css/font-awesome.css" rel="stylesheet">
-        <link href="../../js/jvector-map/jquery-jvectormap-1.2.2.css" rel="stylesheet">
-        <link href="../../css/clndr.css" rel="stylesheet">
-        <link href="../../js/css3clock/css/style.css" rel="stylesheet">
-        <link rel="stylesheet" href="../../js/morris-chart/morris.css">
-        <link href="../../css/style.css" rel="stylesheet">
-        <link href="../../css/style-responsive.css" rel="stylesheet" />
-        <link href="../../js/sweetalert/sweetalert.css" rel="stylesheet">
-        <link href="../../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-        <link href="../../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
-        <link rel="stylesheet" href="../../js/data-tables/DT_bootstrap.css" />
-
-        <!-- Custom styles for this template -->
-        <link href="../../css/style.css" rel="stylesheet">
-        <link href="../../css/style-responsive.css" rel="stylesheet" />
-        <link rel="stylesheet" type="text/css" href="../../js/select2/select2.css" />
-        <link rel="stylesheet" type="text/css" href="../../js/jquery-multi-select/css/multi-select.css" />
-
-</head>
 <style>
     body {
         margin-top: 30px;
@@ -98,7 +80,7 @@ include('../../config/connection.php');
                 <!-- sidebar menu start-->
                 <?php
 
-                include('../sidenav.php')
+                include('sidenav.php')
 
                 ?>
                     <!-- sidebar menu end-->
@@ -512,41 +494,15 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
     <!-- Placed js at the end of the document so the pages load faster -->
 
     <!--Core js-->
-    <script src="../../js/jquery-1.8.3.min.js"></script>
-    <script src="../../bs3/js/bootstrap.min.js"></script>
-    <script class="include" type="text/javascript" src="../../js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="../../js/jquery.scrollTo.min.js"></script>
-    <script src="../../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-    <script src="../../js/jquery.nicescroll.js"></script>
-    <!--Easy Pie Chart-->
-    <script src="../../js/easypiechart/jquery.easypiechart.js"></script>
-    <!--Sparkline Chart-->
-    <script src="../../js/sparkline/jquery.sparkline.js"></script>
-    <!--jQuery Flot Chart-->
-    <script src="../../js/flot-chart/jquery.flot.js"></script>
-    <script src="../../js/flot-chart/jquery.flot.tooltip.min.js"></script>
-    <script src="../../js/flot-chart/jquery.flot.resize.js"></script>
-    <script src="../../js/flot-chart/jquery.flot.pie.resize.js"></script>
-
-    <script type="text/javascript" src="../../js/data-tables/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="../../js/data-tables/DT_bootstrap.js"></script>
-    <script type="text/javascript" src="../../js/sweetalert/sweetalert.min.js"></script>
-    <script src="../../js/select2/select2.js"></script>
-    <script src="../../js/select-init.js"></script>
-
-    <!--common script init for all pages-->
-    <script src="../../js/scripts.js"></script>
-
+    <?php include('footer.php') ?>
     <!--script for this page only-->
-    <script src="OrganizationApplication.js"></script>
+    <script src="Organization/OrganizationApplication.js"></script>
 
     <!-- END JAVASCRIPTS -->
     <script>
         $(document).ready(function() {
             $('#wizardForm').hide();
             $('.hidethis').hide();
-
-
 
 
             wizardOpen = $('.wizardOpen');
