@@ -11446,8 +11446,8 @@
 		"sPageLast": "last",
 		
 		/* Striping classes */
-		"sStripeOdd": "odd",
-		"sStripeEven": "even",
+		"sStripeOdd": "",
+		"sStripeEven": "",
 		
 		/* Empty row */
 		"sRowEmpty": "dataTables_empty",

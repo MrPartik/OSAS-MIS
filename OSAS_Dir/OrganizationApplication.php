@@ -1,16 +1,33 @@
 <!DOCTYPE html>
 <html>
 
-<?php
-$breadcrumbs  ="<div class='col-md-12'>
-<ul class='breadcrumbs-alt'>
-     <li> <a  href='#'>Organization Management</a>  </li>
-<li><a class='current'' href='#'>Application and Compliance</a></li> </ul></div>";
+<head>
+    <?php
 $currentPage ='OSAS_OrgApplication';
-include('header.php');
-include('../config/connection.php');
+include('../../config/connection.php');
 ?>
+        <link href="../../bs3/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet">
+        <link href="../../css/bootstrap-reset.css" rel="stylesheet">
+        <link href="../../font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="../../js/jvector-map/jquery-jvectormap-1.2.2.css" rel="stylesheet">
+        <link href="../../css/clndr.css" rel="stylesheet">
+        <link href="../../js/css3clock/css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../js/morris-chart/morris.css">
+        <link href="../../css/style.css" rel="stylesheet">
+        <link href="../../css/style-responsive.css" rel="stylesheet" />
+        <link href="../../js/sweetalert/sweetalert.css" rel="stylesheet">
+        <link href="../../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
+        <link href="../../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+        <link rel="stylesheet" href="../../js/data-tables/DT_bootstrap.css" />
 
+        <!-- Custom styles for this template -->
+        <link href="../../css/style.css" rel="stylesheet">
+        <link href="../../css/style-responsive.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../../js/select2/select2.css" />
+        <link rel="stylesheet" type="text/css" href="../../js/jquery-multi-select/css/multi-select.css" />
+
+</head>
 <style>
     body {
         margin-top: 30px;
@@ -81,7 +98,7 @@ include('../config/connection.php');
                 <!-- sidebar menu start-->
                 <?php
 
-                include('sidenav.php')
+                include('../sidenav.php')
 
                 ?>
                     <!-- sidebar menu end-->
@@ -99,7 +116,7 @@ include('../config/connection.php');
                                     <div class="clearfix">
                                         <div class="btn-group">
                                             <button id="editable-sample_new" data-toggle="modal" id="openAddmodal" href="#Add" class="btn btn-success">
-                                        Add New <i class="fa fa-plus"></i>
+                                        Add <i class="fa fa-plus"></i>
                                     </button>
                                         </div>
                                         <div class="btn-group pull-right">
@@ -119,7 +136,7 @@ include('../config/connection.php');
                                                 <th>Application Code</th>
                                                 <th>Organization Name</th>
                                                 <th>Organization Description</th>
-                                                <th>Remarks</th>
+                                                <th style="width:100px">Status</th>
                                                 <th>Action</th>
 
                                             </tr>
@@ -127,21 +144,42 @@ include('../config/connection.php');
                                         <tbody>
                                             <?php
 
-                                        $view_query = mysqli_query($con,"SELECT * FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active'");
+
+                                        $view_query = mysqli_query($con," SELECT OrgAppProfile_APPL_CODE,OrgAppProfile_NAME,OrgAppProfile_DESCRIPTION, (SELECT IFNULL((SELECT WIZARD_CURRENT_STEP FROM r_application_wizard WHERE WIZARD_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE )),'1') ) AS STEP, (SELECT COUNT(*) FROM r_org_accreditation_details WHERE OrgAccrDetail_DISPLAY_STAT = 'Active') AS A1, (SELECT COUNT(*) FROM t_org_accreditation_process WHERE OrgAccrProcess_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE) AND OrgAccrProcess_DISPLAY_STAT = 'Active' ) as A2 ,
+(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process WHERE OrgAccrProcess_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE) AND OrgAccrProcess_IS_ACCREDITED = 1 ) = (SELECT COUNT(*) FROM r_org_accreditation_details WHERE OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE' ) ) AS TR
+
+
+FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
                                         while($row = mysqli_fetch_assoc($view_query))
                                         {
                                             $code = $row["OrgAppProfile_APPL_CODE"];
                                             $name = $row["OrgAppProfile_NAME"];
                                             $desc = $row["OrgAppProfile_DESCRIPTION"];
-                                            $stat = $row["OrgAppProfile_STATUS"];
-                                            $id = $row["OrgAppProfile_ID"];
+                                            $accstat = $row["TR"];
+                                            $step = $row["STEP"];
+                                            $curstep = '';
+                                            if($step == 1)
+                                                $curstep = '<span class="label label-primary">Newly Applicant</span>';
+                                            else if($step == 2)
+                                                $curstep = '<span class="label label-info">Setting Organization Category</span>';
+                                            else if($step == 3)
+                                                $curstep = '<span class="label label-warning">Setting Adviser</span>';
+                                            else if($step == 4)
+                                                $curstep = '<span class="label label-default">Setting Mission and Vision</span>';
+                                            else if($step == 5)
+                                            {
+                                                if($accstat == 'TRUE' )
+                                                    $curstep = '<span class="label label-success">Accredited</span>';
+                                                else
+                                                    $curstep = '<span class="label " style="background-color:#41CAC0">Completing Accreditation</span>';
+                                            }
 
                                             echo "
                                             <tr class=''>
                                                 <td>$code</td>
                                                 <td>$name</td>
                                                 <td>$desc</td>
-                                                <td >Remarks</td>
+                                                <td><center style='padding-top:10px'>$curstep</center></td>
                                                 <td style='width:200px'>
                                                     <center>
                                                         <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-edit'></i></a>
@@ -165,12 +203,11 @@ include('../config/connection.php');
                     </div>
                 </div>
 
-
                 <div class="row" id="wizardForm">
                     <div class="col-sm-12">
                         <section class="panel">
                             <header class="panel-heading">
-                                Form Wizard
+                                <lbl id="lblname">Form Wizard</lbl>
                                 <span class=" pull-right">
                                     <a id="closewizardForm" class="fa fa-times"></a>
                                  </span>
@@ -178,26 +215,26 @@ include('../config/connection.php');
                             <div class="panel-body">
 
 
-                                <div class="stepwizard">
+                                <div class="stepwizard" id="asteps">
                                     <div class="stepwizard-row setup-panel">
                                         <div class="stepwizard-step col-xs-2" style="width:400px">
-                                            <a href="#step-1" type="button" class="btn btn-success btn-circle">1</a>
+                                            <a href="#step-1" id="aStep1" type="button" class="btn btn-success btn-circle">1</a>
                                             <p><small>Academic Year</small></p>
                                         </div>
                                         <div class="stepwizard-step col-xs-2">
-                                            <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+                                            <a href="#step-2" id="aStep2" type="button" class="btn btn-default btn-circle" disabled>2</a>
                                             <p><small>Category</small></p>
                                         </div>
                                         <div class="stepwizard-step col-xs-2">
-                                            <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
+                                            <a href="#step-3" id="aStep3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
                                             <p><small>Adviser</small></p>
                                         </div>
                                         <div class="stepwizard-step col-xs-2">
-                                            <a href="#step-4" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
+                                            <a href="#step-4" id="aStep4" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
                                             <p><small>Mission & Vision</small></p>
                                         </div>
                                         <div class="stepwizard-step col-xs-2">
-                                            <a href="#step-5" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
+                                            <a href="#step-5" id="aStep5" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
                                             <p><small>Accreditation</small></p>
                                         </div>
 
@@ -230,7 +267,7 @@ include('../config/connection.php');
                                                         ?>
                                                  </select>
                                             </div>
-                                            <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
+                                            <button class="btn btn-primary nextBtn pull-right" type="button" id="btnStep1">Next</button>
                                         </div>
                                     </div>
 
@@ -293,7 +330,7 @@ include('../config/connection.php');
                                                 <label class="control-label">Adviser Name</label>
                                                 <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Adviser Name" id="txtadvname" />
                                             </div>
-                                            <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
+                                            <button class="btn btn-primary nextBtn pull-right" type="button" id="btnStep3">Next</button>
                                         </div>
                                     </div>
 
@@ -310,7 +347,7 @@ include('../config/connection.php');
                                                 <label class="control-label">Vision</label>
                                                 <textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtvision" style="roverflow:auto;resize:none"></textarea>
                                             </div>
-                                            <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
+                                            <button class="btn btn-primary nextBtn pull-right" type="button" id="btnStep4">Next</button>
                                         </div>
                                     </div>
                                     <div class="panel panel-primary setup-content" id="step-5">
@@ -357,7 +394,7 @@ include('../config/connection.php');
                                                     </table>
                                                 </form>
                                             </div>
-                                            <button class="btn btn-success pull-right" type="submit">Finish!</button>
+                                            <button class="btn btn-success pull-right" type="button" id="btnFinish">Finish!</button>
                                             <h4 id="orgcode" style="display:none">asd</h4>
 
                                         </div>
@@ -472,49 +509,60 @@ include('../config/connection.php');
         </div>
     </div>
     <!-- modal -->
-    <?php include('footer.php'); ?>
-    <script src="Organization/OrganizationApplication.js"></script>
+    <!-- Placed js at the end of the document so the pages load faster -->
+
+    <!--Core js-->
+    <script src="../../js/jquery-1.8.3.min.js"></script>
+    <script src="../../bs3/js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="../../js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="../../js/jquery.scrollTo.min.js"></script>
+    <script src="../../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
+    <script src="../../js/jquery.nicescroll.js"></script>
+    <!--Easy Pie Chart-->
+    <script src="../../js/easypiechart/jquery.easypiechart.js"></script>
+    <!--Sparkline Chart-->
+    <script src="../../js/sparkline/jquery.sparkline.js"></script>
+    <!--jQuery Flot Chart-->
+    <script src="../../js/flot-chart/jquery.flot.js"></script>
+    <script src="../../js/flot-chart/jquery.flot.tooltip.min.js"></script>
+    <script src="../../js/flot-chart/jquery.flot.resize.js"></script>
+    <script src="../../js/flot-chart/jquery.flot.pie.resize.js"></script>
+
+    <script type="text/javascript" src="../../js/data-tables/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="../../js/data-tables/DT_bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/sweetalert/sweetalert.min.js"></script>
+    <script src="../../js/select2/select2.js"></script>
+    <script src="../../js/select-init.js"></script>
+
+    <!--common script init for all pages-->
+    <script src="../../js/scripts.js"></script>
+
+    <!--script for this page only-->
+    <script src="OrganizationApplication.js"></script>
 
     <!-- END JAVASCRIPTS -->
     <script>
         $(document).ready(function() {
             $('#wizardForm').hide();
             $('.hidethis').hide();
-            $('#drpcat').change(function() {
-                var e = document.getElementById("drpcat");
-                var getcat = e.options[e.selectedIndex].text;
-                if (getcat == 'Academic Organization')
-                    $('#course').removeClass('hidden');
-                else
-                    $('#course').addClass('hidden');
 
-
-            });
-            $('#drpupdcat').change(function() {
-                var e = document.getElementById("drpupdcat");
-                var getcat = e.options[e.selectedIndex].text;
-                if (getcat == 'Academic Organization')
-                    $('#updcourse').removeClass('hidden');
-                else
-                    $('#updcourse').addClass('hidden');
-
-
-            });
 
 
 
             wizardOpen = $('.wizardOpen');
             wizardOpen.click(function() {
-                $('#tableForm').slideToggle(500);
-                $('#wizardForm').slideToggle(500);
+                $('#tableForm').hide(500);
+                $('#wizardForm').show(500);
 
             });
+
 
             $('#closewizardForm').click(function() {
-                $('#tableForm').slideToggle(500);
-                $('#wizardForm').slideToggle(500);
-
+                $('#tableForm').show(500);
+                $('#wizardForm').hide(500);
+                window.location.reload();
             });
+
 
             var navListItems = $('div.setup-panel div a'),
                 allWells = $('.setup-content'),
@@ -554,17 +602,9 @@ include('../config/connection.php');
                 if (isValid) nextStepWizard.removeAttr('disabled').trigger('click');
             });
 
-            $('#btnStep2').click(function() {
-                var drpcate = document.getElementById('drpcat');
-                var drpcatname = drpcate.options[drpcate.selectedIndex].text;
-                var drpcatcode = drpcate.options[drpcate.selectedIndex].value;
-                if (drpcatname == 'Academic Organization') {
-                    $('#e9 option:selected').each(function(index, brand) {
-                        alert(brand.value);
-                    });
 
-                }
-            });
+
+
 
             $('div.setup-panel div a.btn-success').trigger('click');
 
@@ -576,8 +616,6 @@ include('../config/connection.php');
 
     </script>
 
-    <script type="text/javascript" src="../js/data-tables/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="../js/data-tables/DT_bootstrap.js"></script>
 </body>
 
 </html>
