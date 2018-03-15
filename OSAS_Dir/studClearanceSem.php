@@ -91,7 +91,7 @@ include('../config/connection.php');
                                                             </td>
                                                             <td>
                                                                 <center>
-                                                                    <button id="StudSanctionModalClick" value="<?php echo $stud_row['Stud_NO']; ?>" class="btn btn-info " data-toggle="modal" href="#studSanction"> <i class="fa  fa-ellipsis-h"></i> </button>
+                                                                    <button id="StudSanctionModalClick" value="<?php echo $stud_row['Stud_NO']; ?>" class="btn btn-info " data-toggle="modal" href="#studSanction"> <i class="fa  fa-info-circle"></i> </button>
                                                                 </center>
                                                             </td>
                                                         </tr>
