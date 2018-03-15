@@ -457,7 +457,7 @@ var EditableTable = function () {
                 $.ajax({
                     type: 'GET',
                     url: 'Organization/OrganizationProfile/GetCurrentStep.php',
-                    sync: true,
+                    async: true,
                     data: {
                         _appcode: latcode
                     },
@@ -685,12 +685,7 @@ var EditableTable = function () {
                                     }
 
                                 });
-
-
                             });
-
-
-
                         }
                         //END NG FILL NG STEP5
 

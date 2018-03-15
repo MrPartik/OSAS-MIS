@@ -93,12 +93,20 @@ include('../config/connection.php');
                 <div class="row" id="tableForm">
                     <div class="col-sm-12">
                         <section class="panel">
+                            <header class="panel-heading"> Organization Management <span class="tools pull-right">
+                            <a href="javascript:;" class="fa fa-chevron-down"></a>
+                            <a href="javascript:;" class="fa fa-times"></a>
+                         </span> </header>
                             <div class="panel-body">
                                 <div class="adv-table editable-table ">
                                     <div class="clearfix">
                                         <div class="btn-group">
                                             <button id="editable-sample_new" data-toggle="modal" id="openAddmodal" href="#Add" class="btn btn-success">
-                                        Add <i class="fa fa-plus"></i>
+                                        Application <i class="fa fa-plus"></i>
+                                    </button>
+                                        </div>
+                                        <div class="btn-group">
+                                         <button id="editable-sample_new" data-toggle="modal" id="openAddmodal" href="#Add" class="btn btn-success">Renew organization <i class="fa fa-plus"></i>
                                     </button>
                                         </div>
                                         <div class="btn-group pull-right">
@@ -321,15 +329,18 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
                                             <h3 class="panel-title" style="color:white">What do they Visualize?</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <div class="form-group">
+
+                                            <div class="row">
+                                            <div class="form-group col-md-6">
                                                 <label class="control-label">Mission</label>
                                                 <textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtmission" style="roverflow:auto;resize:none"></textarea>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group col-md-6">
                                                 <label class="control-label">Vision</label>
                                                 <textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtvision" style="roverflow:auto;resize:none"></textarea>
                                             </div>
                                             <button class="btn btn-primary nextBtn pull-right" type="button" id="btnStep4">Next</button>
+                                        </div>
                                         </div>
                                     </div>
                                     <div class="panel panel-primary setup-content" id="step-5">
@@ -507,16 +518,17 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
 
             wizardOpen = $('.wizardOpen');
             wizardOpen.click(function() {
-                $('#tableForm').hide(500);
-                $('#wizardForm').show(500);
+                $('#tableForm').slideToggle();
+                $('#wizardForm').slideToggle();
 
             });
 
 
             $('#closewizardForm').click(function() {
-                $('#tableForm').show(500);
-                $('#wizardForm').hide(500);
+                $('#tableForm').slideToggle();
+                $('#wizardForm').slideToggle();
                 window.location.reload();
+                window.preventDefault();
             });
 
 
@@ -558,13 +570,7 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
                 if (isValid) nextStepWizard.removeAttr('disabled').trigger('click');
             });
 
-
-
-
-
             $('div.setup-panel div a.btn-success').trigger('click');
-
-
         });
         jQuery(document).ready(function() {
             EditableTable.init();
