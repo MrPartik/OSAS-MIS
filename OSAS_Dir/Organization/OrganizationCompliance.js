@@ -73,9 +73,7 @@ var EditableTable = function () {
                 ]
             });
 
-            var oTable2 = $('#proftable').dataTable({
-
-            });
+            var oTable2 = $('#proftable').dataTable();
 
             jQuery('#editable-sample_wrapper .dataTables_filter input').addClass("form-control medium"); // modify table search input
             jQuery('#editable-sample_wrapper .dataTables_length select').addClass("form-control xsmall"); // modify table per page dropdown
@@ -86,7 +84,7 @@ var EditableTable = function () {
                 e.preventDefault();
             });
 
-            $('#editable-sample a.delete').live('click', function (e) {
+            $('#editable-sample a.delete').on('click', function (e) {
                 e.preventDefault();
 
                 var nRow = $(this).parents('tr')[0];
@@ -108,7 +106,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'OrganizationCompliance/Delete-ajax.php',
+                                url: 'Organization/Organization/OrganizationCompliance/Delete-ajax.php',
                                 data: {
                                     _code: getval
                                 },
@@ -117,7 +115,7 @@ var EditableTable = function () {
                                     oTable.fnDeleteRow(nRow);
                                 },
                                 error: function (response) {
-                                    swal("Error encountered while adding data", "Please try again", "error");
+                                    swal(response+"Error encountered while adding data", "Please try again", "error");
                                     oTable.fnDeleteRow(nRow);
                                 }
 
@@ -129,7 +127,7 @@ var EditableTable = function () {
                     });
             });
 
-            $('#editable-sample a.cancel').live('click', function (e) {
+            $('#editable-sample a.cancel').on('click', function (e) {
                 e.preventDefault();
                 if ($(this).attr("data-mode") == "new") {
                     var nRow = $(this).parents('tr')[0];
@@ -139,7 +137,7 @@ var EditableTable = function () {
                     nEditing = null;
                 }
             });
-            $('#editable-sample a.view').live('click', function (e) {
+            $('#editable-sample a.view').on('click', function (e) {
                 e.preventDefault();
                 var code = $(this).closest('tr').children('td:first').text();
                 var name = $(this).closest('tr').children('td:first').next().text();
@@ -151,7 +149,7 @@ var EditableTable = function () {
 
                 $.ajax({
                     type: "GET",
-                    url: 'OrganizationCompliance/GetOrgMem.php',
+                    url: 'Organization/OrganizationCompliance/GetOrgMem.php',
                     dataType: 'json',
                     data: {
                         _code: code
@@ -161,10 +159,7 @@ var EditableTable = function () {
                             //                            alert(val.name);
                             var aiNew = oTable2.fnAddData([val.num, val.name, val.cas]);
                             var nRow = oTable2.fnGetNodes(aiNew[0]);
-                        });
-
-
-                    },
+                        }); },
                     error: function (response) {
                         swal("Error encountered while adding data", "Please try again", "error");
                     }
@@ -172,7 +167,7 @@ var EditableTable = function () {
                 });
                 $.ajax({
                     type: "GET",
-                    url: 'OrganizationCompliance/GetOrgProf.php',
+                    url: 'Organization/OrganizationCompliance/GetOrgProf.php',
                     dataType: 'json',
                     data: {
                         _id: code
@@ -197,7 +192,7 @@ var EditableTable = function () {
 
                 $.ajax({
                     type: "GET",
-                    url: 'OrganizationCompliance/GetOrgAccStat.php',
+                    url: 'Organization/OrganizationCompliance/GetOrgAccStat.php',
                     dataType: 'json',
                     data: {
                         _code: code
@@ -209,7 +204,7 @@ var EditableTable = function () {
 
                     },
                     error: function (response) {
-                        swal("Error encountered while adding data", "Please try again", "error");
+                        swal("Error encountered while adssding data", "Please try again", "error");
                     }
 
                 });
@@ -218,7 +213,7 @@ var EditableTable = function () {
             });
 
 
-            $('#lblprof').live('click', function (e) {
+            $('#lblprof').on('click', function (e) {
                 e.preventDefault();
                 $('#bodyprof').show(500);
                 $('#bodymem').hide(500);
@@ -229,7 +224,7 @@ var EditableTable = function () {
 
 
             });
-            $('#lblmem').live('click', function (e) {
+            $('#lblmem').on('click', function (e) {
                 e.preventDefault();
                 $('#bodyprof').hide(500);
                 $('#bodystat').hide(500);
@@ -238,7 +233,7 @@ var EditableTable = function () {
                 $('#prof').css("color", "#BDBDC3");
                 $('#mem').css("color", "black");
             });
-            $('#lblstat').live('click', function (e) {
+            $('#lblstat').on('click', function (e) {
                 e.preventDefault();
                 $('#bodyprof').hide(500);
                 $('#bodystat').show(500);
@@ -251,14 +246,14 @@ var EditableTable = function () {
             $('#bodymem').hide();
             $('#bodystat').hide();
 
-            $('#editable-sample a.edit').live('click', function (e) {
+            $('#editable-sample a.edit').on('click', function (e) {
                 e.preventDefault();
                 var id = $(this).closest('tr').children('td:first').text();
                 document.getElementById('updappcode').innerText = id;
                 //alert(id);
                 $.ajax({
                     type: "GET",
-                    url: 'OrganizationCompliance/GetData-ajax.php',
+                    url: 'Organization/OrganizationCompliance/GetData-ajax.php',
                     dataType: 'json',
                     data: {
                         _id: id
@@ -286,7 +281,7 @@ var EditableTable = function () {
 
             });
 
-            $('#updsubmit-data').live('click', function (e) {
+            $('#updsubmit-data').on('click', function (e) {
                 e.preventDefault();
 
                 var accstat = '';
@@ -318,7 +313,7 @@ var EditableTable = function () {
                     if (isConfirm) {
                         $.ajax({
                             type: 'post',
-                            url: 'OrganizationCompliance/Update-ajax.php',
+                            url: 'Organization/OrganizationCompliance/Update-ajax.php',
                             data: {
                                 _accstat: accstat,
                                 _compcode: compcode,
@@ -352,7 +347,7 @@ var EditableTable = function () {
 
             });
 
-            $('#editable-sample a.edit').live('click', function (e) {
+            $('#editable-sample a.edit').on('click', function (e) {
                 e.preventDefault();
                 //                alert('1zxxzcx');
 
@@ -398,7 +393,7 @@ var EditableTable = function () {
                                             nEditing = null;
                                         },
                                         error: function (response) {
-                                            swal("Error encountered while adding data", "Please try again", "error");
+                                            swal(response+"Error encountered while adding data", "Please try again", "error");
                                             saveRow(oTable, nEditing);
                                             nEditing = null;
                                         }
@@ -509,6 +504,7 @@ var initproftable = function () {
                 "aoColumnDefs": [{
                         'bSortable': false,
                         'aTargets': [0]
+
                     }
                 ]
             });

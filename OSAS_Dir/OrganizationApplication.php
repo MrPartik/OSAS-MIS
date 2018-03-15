@@ -4,8 +4,8 @@
 <?php
 $breadcrumbs  ="<div class='col-md-12'>
 <ul class='breadcrumbs-alt'>
-     <li> <a class='current'' href='#'>Accreditation Requirement</a>  </li>
-<li><a href='#'>Sanction Setup</a></li> </ul></div>";
+     <li> <a  href='#'>Organization Management</a>  </li>
+<li><a class='current'' href='#'>Application and Compliance</a></li> </ul></div>";
 $currentPage ='OSAS_OrgApplication';
 include('header.php');
 include('../config/connection.php');

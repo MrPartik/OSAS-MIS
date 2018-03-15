@@ -3,9 +3,9 @@
 <?php
 $breadcrumbs  ="<div class='col-md-12'>
 <ul class='breadcrumbs-alt'>
-     <li> <a class='current'' href='#'>Accreditation Requirement</a>  </li>
-<li><a href='#'>Sanction Setup</a></li> </ul></div>";
-$currentPage ='OSAS_OrgApplication';
+     <li> <a  href='#'>Organization Management</a>  </li>
+<li><a class='current'' href='#'>Accreditation</a></li> </ul></div>";
+$currentPage ='OSAS_OrgAccreditation';
 include('header.php');
 include('../config/connection.php');
 ?>

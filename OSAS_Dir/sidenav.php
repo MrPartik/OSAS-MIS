@@ -17,10 +17,10 @@
                     </ul>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;" <?php if( $currentPage==='OSAS_OrgAccreditation' || $currentPage==='OSAS_OrgApplication' ) { echo 'class="active"';} ?> > <i class="fa fa-users"></i> <span>Organization Management</span> </a>
+                    <a href="javascript:;" <?php if( $currentPage==='OSAS_OrgAccreditation' || $currentPage==='OSAS_OrgApplication' || $currentPage==='OSAS_OrgCompliance' ) { echo 'class="active"';} ?> > <i class="fa fa-users"></i> <span>Organization Management</span> </a>
                     <ul class="sub">
                         <li <?php if( $currentPage==='OSAS_OrgApplication' ) { echo 'class="active"';} ?>  ><a href="OrganizationApplication.php">Applicants</a></li>
-                        <li><a href="#">Organization Profile</a></li>
+                        <li <?php if( $currentPage==='OSAS_OrgCompliance' ) { echo 'class="active"';} ?> ><a  href="OrganizationCompliance.php">Organization Profile</a></li>
                         <li  <?php if( $currentPage==='OSAS_OrgAccreditation' ) { echo 'class="active"';} ?>  ><a href="OrganizationAccreditation.php">Accreditation</a></li>
                         <li><a href="#">Financial Statement</a></li>
                         <li><a href="#">Voucher</a></li>

@@ -77,8 +77,6 @@
 	 */
 	var DataTable = function( oInit )
 	{
-		
-		
 		/**
 		 * Add a column to the list used for the table with default values
 		 *  @param {object} oSettings dataTables settings object
@@ -96,6 +94,7 @@
 				"sTitle":    oDefaults.sTitle    ? oDefaults.sTitle    : nTh ? nTh.innerHTML : '',
 				"aDataSort": oDefaults.aDataSort ? oDefaults.aDataSort : [iCol],
 				"mData": oDefaults.mData ? oDefaults.oDefaults : iCol
+
 			} );
 			oSettings.aoColumns.push( oCol );
 			
@@ -1489,7 +1488,7 @@
 			{
 				/* Table is empty - create a row with an empty message in it */
 				anRows[ 0 ] = document.createElement( 'tr' );
-				
+
 				if ( oSettings.asStripeClasses[0] )
 				{
 					anRows[ 0 ].className = oSettings.asStripeClasses[0];

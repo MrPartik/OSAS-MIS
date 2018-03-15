@@ -2,17 +2,15 @@
 <html>
 
 <head>
-    <?php include('../header.php');
-$currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
+<?php
+$breadcrumbs  ="<div class='col-md-12'>
+<ul class='breadcrumbs-alt'>
+     <li> <a  href='#'>Organization Management</a>  </li>
+<li><a class='current'' href='#'>Organization profile</a></li> </ul></div>";
+$currentPage ='OSAS_OrgCompliance';
+include('header.php');
+include('../config/connection.php');
 ?>
-    <link href="../../../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-    <link href="../../../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../js/data-tables/DT_bootstrap.css" />
-
-    <!-- Custom styles for this template -->
-    <link href="../../../css/style.css" rel="stylesheet">
-    <link href="../../../css/style-responsive.css" rel="stylesheet" />
-</head>
 
 <body>
 
@@ -24,7 +22,7 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                 <!-- sidebar menu start-->
                 <?php
 
-                include('../../sidenav.php')
+                include('sidenav.php')
 
                 ?>
                     <!-- sidebar menu end-->
@@ -36,22 +34,6 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
             <section class="wrapper">
                 <!-- page start-->
                 <div class="row" style="float:right;">
-                    <div class="col-md-12  ">
-                        <!--breadcrumbs start -->
-                        <ul class="breadcrumbs-alt ">
-                            <li>
-                                <a class="current" href="#">Accreditation Requirement</a>
-                            </li>
-                            <li>
-                                <a href="#">Sanction Setup</a>
-                            </li>
-                            <!-- <li> -->
-                            <!-- <a class="active-trail active" href="#">Pages</a> -->
-                            <!-- </li> -->
-
-                        </ul>
-                        <!--breadcrumbs end -->
-                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
@@ -83,15 +65,13 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                                 <th>Organization Adviser</th>
                                                 <th>Organization Category</th>
                                                 <th>Action</th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
 
-										include('../connection.php');
 
-                                        $view_query = mysqli_query($connection,"SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME,OrgForCompliance_ADVISER,OrgAppProfile_STATUS,OC.OrgCat_NAME FROM `r_org_applicant_profile` AS OAP INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE INNER JOIN t_assign_org_category AOC ON AOC.AssOrgCategory_ORG_CODE = OFC.OrgForCompliance_ORG_CODE INNER JOIN r_org_category OC ON OC.OrgCat_CODE = AOC.AssOrgCategory_ORGCAT_CODE WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active'");
+                                        $view_query = mysqli_query($con,"SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME,OrgForCompliance_ADVISER,OrgAppProfile_STATUS,OC.OrgCat_NAME FROM `r_org_applicant_profile` AS OAP INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE INNER JOIN t_assign_org_category AOC ON AOC.AssOrgCategory_ORG_CODE = OFC.OrgForCompliance_ORG_CODE INNER JOIN r_org_category OC ON OC.OrgCat_CODE = AOC.AssOrgCategory_ORGCAT_CODE WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active'");
                                         while($row = mysqli_fetch_assoc($view_query))
                                         {
                                             $code = $row["OrgForCompliance_ORG_CODE"];
@@ -121,6 +101,15 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
 									?>
 
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Organization Code</th>
+                                                <th>Organization Name</th>
+                                                <th>Organization Adviser</th>
+                                                <th>Organization Category</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -171,7 +160,7 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                         <select class="form-control input-sm m-bot15 selectAppCode" style="width:100%" id="drpappcode">
                                             <?php
 
-                                                $view_query = mysqli_query($connection,"SELECT * FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgAppProfile_APPL_CODE NOT IN (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_DISPAY_STAT = 'Active')");
+                                                $view_query = mysqli_query($con,"SELECT * FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgAppProfile_APPL_CODE NOT IN (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_DISPAY_STAT = 'Active')");
                                                 while($row = mysqli_fetch_assoc($view_query))
                                                 {
                                                     $name = $row["OrgAppProfile_NAME"];
@@ -194,7 +183,7 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                                 <select class="form-control input-sm m-bot15 selectYear" style="width:100%" id="drpyear">
                                                                         <?php
 
-                                                                            $view_query = mysqli_query($connection,"SELECT Batch_YEAR AS YEAR FROM `r_batch_details` WHERE Batch_DISPLAY_STAT = 'Active'");
+                                                                            $view_query = mysqli_query($con,"SELECT Batch_YEAR AS YEAR FROM `r_batch_details` WHERE Batch_DISPLAY_STAT = 'Active'");
                                                                             while($row = mysqli_fetch_assoc($view_query))
                                                                             {
                                                                                 $year = $row["YEAR"];
@@ -221,7 +210,7 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                                 <select class="form-control input-sm m-bot15 selectYear" id="drpcat">
                                                                 <?php
 
-                                                                    $view_query = mysqli_query($connection,"SELECT OrgCat_CODE AS CODE , OrgCat_NAME AS NAME FROM `r_org_category` WHERE OrgCat_DISPLAY_STAT = 'Active'");
+                                                                    $view_query = mysqli_query($con,"SELECT OrgCat_CODE AS CODE , OrgCat_NAME AS NAME FROM `r_org_category` WHERE OrgCat_DISPLAY_STAT = 'Active'");
                                                                     while($row = mysqli_fetch_assoc($view_query))
                                                                     {
                                                                         $catcode = $row["CODE"];
@@ -242,7 +231,7 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                                                 <select class="form-control input-sm m-bot15 selectYear" id="drpcourse">
                                                                 <?php
 
-                                                                    $view_query = mysqli_query($connection,"SELECT Course_CODE as CODE FROM `r_courses` WHERE Course_DISPLAY_STAT = 'Active'");
+                                                                    $view_query = mysqli_query($con,"SELECT Course_CODE as CODE FROM `r_courses` WHERE Course_DISPLAY_STAT = 'Active'");
                                                                     while($row = mysqli_fetch_assoc($view_query))
                                                                     {
                                                                         $coucode = $row["CODE"];
@@ -359,6 +348,12 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
     <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="View" class="modal fade">
         <div class="modal-dialog" style="width:55%">
             <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Organization Details</h4> </div>
+            <div class="modal-body">
+
+
                 <div class="twt-feed blue-bg">
                     <div class="corner-ribon black-ribon">
                         <i class="fa fa-group"></i>
@@ -484,6 +479,9 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
                             </tbody>
                         </table>
                     </div>
+
+</div>
+
                 </div>
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
@@ -497,48 +495,16 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
         $codelist = array();
         $j = 1;
 
-        $view_query = mysqli_query($connection,"SELECT OrgAccrDetail_CODE as CODE FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active' ");
+        $view_query = mysqli_query($con,"SELECT OrgAccrDetail_CODE as CODE FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active' ");
         while($row = mysqli_fetch_array($view_query))
         {
             $codelist = $row['CODE'];
 
         }
-
-
-
     ?>
-        <!-- modal -->
-        <!-- Placed js at the end of the document so the pages load faster -->
-
-        <!--Core js-->
-        <script src="../../../js/jquery-1.8.3.min.js"></script>
-        <script src="../../../bs3/js/bootstrap.min.js"></script>
-        <script class="include" type="text/javascript" src="../../../js/jquery.dcjqaccordion.2.7.js"></script>
-        <script src="../../../js/jquery.scrollTo.min.js"></script>
-        <script src="../../../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-        <script src="../../../js/jquery.nicescroll.js"></script>1
-        <!--Easy Pie Chart-->
-        <script src="../../../js/easypiechart/jquery.easypiechart.js"></script>
-        <!--Sparkline Chart-->
-        <script src="../../../js/sparkline/jquery.sparkline.js"></script>
-        <!--jQuery Flot Chart-->
-        <script src="../js/flot-chart/jquery.flot.js"></script>
-        <script src="../../../js/flot-chart/jquery.flot.tooltip.min.js"></script>
-        <script src="../../../js/flot-chart/jquery.flot.resize.js"></script>
-        <script src="../../../js/flot-chart/jquery.flot.pie.resize.js"></script>
-
-        <script type="text/javascript" src="../../../js/data-tables/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="../../../js/data-tables/DT_bootstrap.js"></script>
-        <script type="text/javascript" src="../sweetalert/sweetalert.min.js"></script>
-
-        <script src="../../../js/dynamic_table_init.js"></script>
-
-
-        <!--common script init for all pages-->
-        <script src="../../../js/scripts.js"></script>
-
+    <?php include("footer.php") ?>
         <!--script for this page only-->
-        <script src="OrganizationCompliance.js"></script>
+        <script src="Organization/OrganizationCompliance.js"></script>
 
         <!-- END JAVASCRIPTS -->
         <script>
@@ -601,7 +567,7 @@ $currentPage ='OSAS_OrgProfile'; include('../../../config/connection.php');
 
                             $.ajax({
                                 type: 'post',
-                                url: 'OrganizationCompliance/Add-ajax.php',
+                                url: 'Organization/OrganizationCompliance/Add-ajax.php',
                                 data: {
                                     _code: code,
                                     _compcode: compcode,

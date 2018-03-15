@@ -1,7 +1,6 @@
 <?php
 	
-	include('../../connection.php');
-
+	include('../../../config/connection.php');
  
     $id = $_GET['_id'];
     $selcat = '';
@@ -9,7 +8,7 @@
     $selyear = '';
     $selstat = 0;
     $tblstat = '';
-    $view_query = mysqli_query($connection,"SELECT *,(SELECT AOAC.AssOrgAcademic_COURSE_CODE FROM `t_assign_org_academic_course` AOAC WHERE AOAC.AssOrgAcademic_ORG_CODE = OFC.OrgForCompliance_ORG_CODE) AS COUCODE,AOC.AssOrgCategory_ORGCAT_CODE AS CATCODE,OC.OrgCat_NAME AS CATNAME,OS.OrgEssentials_MISSION AS ORGMIS,OS.OrgEssentials_VISION AS ORGVIS FROM `t_org_for_compliance` AS OFC INNER JOIN t_assign_org_category AS AOC ON AOC.AssOrgCategory_ORG_CODE = OFC.OrgForCompliance_ORG_CODE INNER JOIN r_org_category AS OC ON OC.OrgCat_CODE = AOC.AssOrgCategory_ORGCAT_CODE INNER JOIN r_org_essentials AS OS ON OS.OrgEssentials_ORG_CODE = OFC.OrgForCompliance_ORG_CODE WHERE OFC.OrgForCompliance_ORG_CODE = '$id'");
+    $view_query = mysqli_query($con,"SELECT *,(SELECT AOAC.AssOrgAcademic_COURSE_CODE FROM `t_assign_org_academic_course` AOAC WHERE AOAC.AssOrgAcademic_ORG_CODE = OFC.OrgForCompliance_ORG_CODE) AS COUCODE,AOC.AssOrgCategory_ORGCAT_CODE AS CATCODE,OC.OrgCat_NAME AS CATNAME,OS.OrgEssentials_MISSION AS ORGMIS,OS.OrgEssentials_VISION AS ORGVIS FROM `t_org_for_compliance` AS OFC INNER JOIN t_assign_org_category AS AOC ON AOC.AssOrgCategory_ORG_CODE = OFC.OrgForCompliance_ORG_CODE INNER JOIN r_org_category AS OC ON OC.OrgCat_CODE = AOC.AssOrgCategory_ORGCAT_CODE INNER JOIN r_org_essentials AS OS ON OS.OrgEssentials_ORG_CODE = OFC.OrgForCompliance_ORG_CODE WHERE OFC.OrgForCompliance_ORG_CODE = '$id'");
     while($row = mysqli_fetch_assoc($view_query))
     {
         $compcode = $row["OrgForCompliance_ORG_CODE"];
@@ -26,7 +25,7 @@
 
     }
 
-    $view_query = mysqli_query($connection,"SELECT OrgCat_CODE AS CODE,OrgCat_NAME AS NAME FROM `r_org_category` WHERE OrgCat_DISPLAY_STAT = 'Active' ");
+    $view_query = mysqli_query($con,"SELECT OrgCat_CODE AS CODE,OrgCat_NAME AS NAME FROM `r_org_category` WHERE OrgCat_DISPLAY_STAT = 'Active' ");
     while($row = mysqli_fetch_assoc($view_query))
     {   
         $fillcode = $row["CODE"];
@@ -40,7 +39,7 @@
     }
 
 
-    $view_query = mysqli_query($connection,"SELECT Course_CODE as CODE FROM `r_courses` WHERE Course_DISPLAY_STAT = 'Active'");
+    $view_query = mysqli_query($con,"SELECT Course_CODE as CODE FROM `r_courses` WHERE Course_DISPLAY_STAT = 'Active'");
     while($row = mysqli_fetch_assoc($view_query))
     {
         $curcode = $row["CODE"];
@@ -56,7 +55,7 @@
         $selstat = '1';
     else   
         $selstat = '0';
-    $view_query = mysqli_query($connection,"SELECT Batch_YEAR as YEAR FROM `r_batch_details` WHERE Batch_DISPLAY_STAT = 'Active' ");
+    $view_query = mysqli_query($con,"SELECT Batch_YEAR as YEAR FROM `r_batch_details` WHERE Batch_DISPLAY_STAT = 'Active' ");
     while($row = mysqli_fetch_assoc($view_query))
     {   
         $fillyear = $row["YEAR"];
