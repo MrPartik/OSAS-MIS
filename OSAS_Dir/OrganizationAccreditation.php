@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<title>OSAS - Accreditaion</title>
 <?php
 $breadcrumbs  ="<div class='col-md-12'>
 <ul class='breadcrumbs-alt'>

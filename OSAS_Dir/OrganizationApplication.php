@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html>
+<title>OSAS - Application and Compliance</title>
 <?php
 $breadcrumbs  ="<div class='col-md-12'>
 <ul class='breadcrumbs-alt'>
@@ -128,7 +129,6 @@ include('../config/connection.php');
                                                 <th>Organization Description</th>
                                                 <th style="width:100px">Status</th>
                                                 <th>Action</th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -185,7 +185,15 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
 
 									?>
 
-                                        </tbody>
+                                        </tbody>  <tfoot>
+                                            <tr>
+                                                <th>Application Code</th>
+                                                <th>Organization Name</th>
+                                                <th>Organization Description</th>
+                                                <th style="width:100px">Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </tfoot >
                                     </table>
                                 </div>
                             </div>
@@ -206,8 +214,10 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
 
 
                                 <div class="stepwizard" id="asteps">
+
                                     <div class="stepwizard-row setup-panel">
-                                        <div class="stepwizard-step col-xs-2" style="width:400px">
+                                          <center>
+                                        <div class="stepwizard-step col-xs-2" >
                                             <a href="#step-1" id="aStep1" type="button" class="btn btn-success btn-circle">1</a>
                                             <p><small>Academic Year</small></p>
                                         </div>
@@ -227,10 +237,9 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
                                             <a href="#step-5" id="aStep5" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
                                             <p><small>Accreditation</small></p>
                                         </div>
-
+                                </center>
                                     </div>
                                 </div>
-
                                 <form role="form">
                                     <div class="panel panel-primary setup-content" id="step-1">
                                         <div class="panel-heading">
@@ -247,13 +256,8 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
                                                             {
                                                                 $year = $row["YEAR"];
 
-                                                                echo "
-                                                                    <option value='$year'>$year</option>
-                                                                        ";
+                                                                echo "<option value='$year'>$year</option>";
                                                             }
-
-
-
                                                         ?>
                                                  </select>
                                             </div>
@@ -281,9 +285,6 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
                                                                     <option value='$catcode'>$catname</option>
                                                                         ";
                                                             }
-
-
-
                                                         ?>
                                                     </select>
                                             </div>
@@ -357,7 +358,6 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
                                                                 <th>#</th>
                                                                 <th>Accreditation Name</th>
                                                                 <th>Status</th>
-
                                                             </tr>
                                                         </thead>
                                                         <tbody id="updaccreqlist">
@@ -379,10 +379,7 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
                                                                 <td id='updcode$i' class='hidden'>$code</td>
                                                             </tr>
                                                                     ";
-                                                        }
-
-
-                                                   ?>
+                                                        } ?>
                                                         </tbody>
                                                     </table>
                                                 </form>
@@ -527,8 +524,6 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
             $('#closewizardForm').click(function() {
                 $('#tableForm').slideToggle();
                 $('#wizardForm').slideToggle();
-                window.location.reload();
-                window.preventDefault();
             });
 
 
