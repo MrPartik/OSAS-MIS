@@ -24,9 +24,8 @@ __System Features__
 - [ ] Clearance Management
 - [ ] Semestral Clearance
 - [ ] General Clearance
-- [ ] Document Archiving 
-
-- [x ] System Setup
+- [ ] Document Archiving  
+- [x] System Setup
 
 ***
 
