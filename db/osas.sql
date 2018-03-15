@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2018 at 05:00 PM
+-- Generation Time: Mar 15, 2018 at 11:24 PM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -19,46 +19,57 @@ SET time_zone = "+00:00";
 --
 -- Database: `osas`
 --
+CREATE DATABASE IF NOT EXISTS `osas` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `osas`;
 
 DELIMITER $$
 --
 -- Procedures
 --
+DROP PROCEDURE IF EXISTS `Archive_AssignSanction`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Archive_AssignSanction` (IN `ID` INT)  NO SQL
 UPDATE `t_assign_stud_saction` SET `AssSancStudStudent_DISPLAY_STAT`='Inactive' 
 ,`AssSancStudStudent_DATE_MOD` = CURRENT_TIMESTAMP
 WHERE
 `AssSancStudStudent_ID` =ID$$
 
+DROP PROCEDURE IF EXISTS `Archive_FinancialAss`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Archive_FinancialAss` (IN `ID` INT(100))  NO SQL
 delete from `t_assign_stud_finan_assistance`  
 where AssStudFinanAssistance_ID = ID$$
 
+DROP PROCEDURE IF EXISTS `Archive_LossIDRegi`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Archive_LossIDRegi` (IN `ID` INT)  NO SQL
 update t_assign_stud_loss_id_regicard 
 set AssLoss_DISPLAY_STAT ='Inactive'
 where AssLoss_ID =ID$$
 
+DROP PROCEDURE IF EXISTS `FinishSanction`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `FinishSanction` (IN `ID` INT)  NO SQL
 UPDATE t_assign_stud_saction 
 set AssSancStudStudent_IS_FINISH ='Finished'
 where AssSancStudStudent_ID =ID$$
 
+DROP PROCEDURE IF EXISTS `Insert_AssignFinancialAss`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_AssignFinancialAss` (IN `StudNo` VARCHAR(15), IN `FinanAssTitle` VARCHAR(100), IN `FinanAssStatus` ENUM('Active','Inactive','Void','Cancelled'), IN `FinanAssRemarks` VARCHAR(500))  NO SQL
 INSERT INTO `t_assign_stud_finan_assistance` (`AssStudFinanAssistance_STUD_NO`, `AssStudFinanAssistance_FINAN_NAME`, `AssStudFinanAssistance_STATUS`, `AssStudFinanAssistance_REMARKS`, `AssStudFinanAssistance_DATE_ADD`) VALUES (StudNo,FinanAssTitle , FinanAssStatus, FinanAssRemarks, CURRENT_TIMESTAMP)$$
 
+DROP PROCEDURE IF EXISTS `Insert_AssignSanction`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_AssignSanction` (IN `StudNo` VARCHAR(15), IN `SancCode` VARCHAR(100), IN `DesOffCode` VARCHAR(15), IN `Cons` INT, IN `Finish` ENUM('Finished','Processing'), IN `remarks` VARCHAR(100))  NO SQL
 INSERT INTO `t_assign_stud_saction`(`AssSancStudStudent_STUD_NO`, `AssSancStudStudent_SancDetails_CODE`, `AssSancStudStudent_DesOffDetails_CODE`,
 `AssSancStudStudent_CONSUMED_HOURS`,
 `AssSancStudStudent_IS_FINISH`,
 `AssSancStudStudent_REMARKS`) VALUES (StudNo,SancCode,DesOffCode,Cons,Finish,remarks)$$
 
+DROP PROCEDURE IF EXISTS `Insert_DesignatedOffice`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_DesignatedOffice` (IN `DesiCode` VARCHAR(15), IN `DesiName` VARCHAR(100), IN `DesiDesc` VARCHAR(100))  NO SQL
 INSERT INTO `r_designated_offices_details` (  `DesOffDetails_CODE`, `DesOffDetails_NAME`, `DesOffDetails_DESC`) VALUES (DesiCode,DesiName,DesiDesc)$$
 
+DROP PROCEDURE IF EXISTS `Insert_LossIDRegi`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_LossIDRegi` (IN `StudNo` VARCHAR(15), IN `Type` ENUM('Identification Card','Registration Card'), IN `Claim` DATETIME, IN `Remarks` VARCHAR(500))  NO SQL
 INSERT INTO `t_assign_stud_loss_id_regicard` ( `AssLoss_STUD_NO`, `AssLoss_TYPE`, `AssLoss_REMARKS`, `AssLoss_DATE_CLAIM`) VALUES (StudNo,Type,Remarks,Claim)$$
 
+DROP PROCEDURE IF EXISTS `Insert_SanctionDetails`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_SanctionDetails` (IN `SancCode` VARCHAR(100), IN `SancName` VARCHAR(100), IN `SancDesc` VARCHAR(1000), IN `TimeVal` INT(11))  NO SQL
 INSERT INTO `r_sanction_details` 
 (`SancDetails_CODE`
@@ -71,6 +82,7 @@ INSERT INTO `r_sanction_details`
   ,SancDesc
   ,TimeVal)$$
 
+DROP PROCEDURE IF EXISTS `Insert_StudProfile`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_StudProfile` (IN `StudNO` VARCHAR(15), IN `FNAME` VARCHAR(100), IN `MNAME` VARCHAR(100), IN `LNAME` VARCHAR(100), IN `COUSRE` VARCHAR(15), IN `SECTION` VARCHAR(5), IN `GENDER` VARCHAR(10), IN `EMAIL` VARCHAR(100), IN `CONTACT` VARCHAR(20), IN `BDAY` DATE, IN `BPLACE` VARCHAR(500), IN `ADDRESS` VARCHAR(500), IN `STATUS` VARCHAR(50))  NO SQL
 INSERT INTO R_STUD_PROFILE
 (
@@ -104,9 +116,11 @@ VALUES
 	,STATUS
 )$$
 
+DROP PROCEDURE IF EXISTS `Insert_Users`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_Users` (IN `Username` VARCHAR(15), IN `referencedUser` VARCHAR(15), IN `userRole` ENUM('Administrator','OSAS HEAD','Organization','Student'), IN `UPassword` VARCHAR(500))  NO SQL
 INSERT INTO `r_users` (`Users_USERNAME`, `Users_REFERENCED`, `Users_ROLES`,`Users_PASSWORD`) VALUES (Username,referencedUser,userRole,AES_Encrypt(UPassword,PASSWORD('OSASMIS')))$$
 
+DROP PROCEDURE IF EXISTS `Login_User`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Login_User` (IN `username` VARCHAR(100), IN `password` VARCHAR(100))  NO SQL
 SELECT * 
 FROM osas.r_users 
@@ -114,6 +128,7 @@ WHERE Users_USERNAME = username
 AND AES_DECRYPT(Users_PASSWORD , Password('OSASMIS')) =password
 AND Users_DISPLAY_STAT = 'Active'$$
 
+DROP PROCEDURE IF EXISTS `Update_AssignFinancialAss`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Update_AssignFinancialAss` (IN `ID` INT, IN `FinanAssStat` ENUM('Active','Inactive','Void','Cancelled'), IN `Remarks` VARCHAR(500))  NO SQL
 UPDATE `t_assign_stud_finan_assistance` 
 SET `AssStudFinanAssistance_STATUS` = FinanAssStat 
@@ -121,6 +136,7 @@ SET `AssStudFinanAssistance_STATUS` = FinanAssStat
 ,`AssStudFinanAssistance_DATE_MOD` = CURRENT_TIMESTAMP
 WHERE `AssStudFinanAssistance_ID` = ID$$
 
+DROP PROCEDURE IF EXISTS `Update_AssignSanction`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Update_AssignSanction` (IN `ID` INT, IN `Consume` INT, IN `Finish` ENUM('Finished','Processing'), IN `remarks` VARCHAR(100))  NO SQL
 UPDATE `t_assign_stud_saction` SET 
 `AssSancStudStudent_CONSUMED_HOURS` =Consume
@@ -130,12 +146,14 @@ UPDATE `t_assign_stud_saction` SET
 WHERE
 `AssSancStudStudent_ID` =ID$$
 
+DROP PROCEDURE IF EXISTS `Update_LossIDRegi`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Update_LossIDRegi` (IN `ID` INT, IN `Claim` DATETIME, IN `Remarks` VARCHAR(500))  NO SQL
 update t_assign_stud_loss_id_regicard 
 set AssLoss_DATE_CLAIM = Claim
 ,AssLoss_REMARKS = Remarks
 where AssLoss_ID =ID$$
 
+DROP PROCEDURE IF EXISTS `Update_StudProfile`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Update_StudProfile` (IN `ID` INT(100), IN `StudNO` VARCHAR(15), IN `FNAME` VARCHAR(100), IN `MNAME` VARCHAR(100), IN `LNAME` VARCHAR(100), IN `COURSE` VARCHAR(15), IN `SECTION` VARCHAR(5), IN `GENDER` VARCHAR(10), IN `EMAIL` VARCHAR(100), IN `CONTACT` VARCHAR(20), IN `BDAY` DATE, IN `BPLACE` VARCHAR(500), IN `ADDRESS` VARCHAR(500), IN `STATUS` VARCHAR(50))  NO SQL
 UPDATE `r_stud_profile`
 SET 
@@ -155,9 +173,11 @@ SET
 ,`Stud_DATE_MOD`= CURRENT_TIMESTAMP
 WHERE `Stud_ID` = ID$$
 
+DROP PROCEDURE IF EXISTS `View_Courses`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `View_Courses` ()  NO SQL
 select * from r_courses where course_display_stat ='active'$$
 
+DROP PROCEDURE IF EXISTS `View_StudProfile`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `View_StudProfile` ()  NO SQL
 select 
 	Stud_NO
@@ -172,6 +192,7 @@ select
 	,Stud_ADDRESS
 FROM osas.r_stud_profile$$
 
+DROP PROCEDURE IF EXISTS `View_StudSanction`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `View_StudSanction` ()  NO SQL
     DETERMINISTIC
 SELECT B.AssSancStudStudent_ID AssSancID
@@ -203,6 +224,7 @@ DELIMITER ;
 -- Table structure for table `r_application_wizard`
 --
 
+DROP TABLE IF EXISTS `r_application_wizard`;
 CREATE TABLE IF NOT EXISTS `r_application_wizard` (
   `WIZARD_ID` int(11) NOT NULL AUTO_INCREMENT,
   `WIZARD_ORG_CODE` varchar(15) NOT NULL,
@@ -217,6 +239,7 @@ CREATE TABLE IF NOT EXISTS `r_application_wizard` (
 -- Table structure for table `r_archiving_documents`
 --
 
+DROP TABLE IF EXISTS `r_archiving_documents`;
 CREATE TABLE IF NOT EXISTS `r_archiving_documents` (
   `ArchDocuments_ID` int(11) NOT NULL AUTO_INCREMENT,
   `ArchDocuments_ORDER_NO` int(11) NOT NULL,
@@ -236,6 +259,7 @@ CREATE TABLE IF NOT EXISTS `r_archiving_documents` (
 -- Table structure for table `r_batch_details`
 --
 
+DROP TABLE IF EXISTS `r_batch_details`;
 CREATE TABLE IF NOT EXISTS `r_batch_details` (
   `Batch_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Batch_CODE` varchar(15) NOT NULL,
@@ -252,6 +276,7 @@ CREATE TABLE IF NOT EXISTS `r_batch_details` (
 -- Table structure for table `r_clearance_signatories`
 --
 
+DROP TABLE IF EXISTS `r_clearance_signatories`;
 CREATE TABLE IF NOT EXISTS `r_clearance_signatories` (
   `ClearSignatories_ID` int(11) NOT NULL AUTO_INCREMENT,
   `ClearSignatories_CODE` varchar(15) NOT NULL,
@@ -270,6 +295,7 @@ CREATE TABLE IF NOT EXISTS `r_clearance_signatories` (
 -- Table structure for table `r_courses`
 --
 
+DROP TABLE IF EXISTS `r_courses`;
 CREATE TABLE IF NOT EXISTS `r_courses` (
   `Course_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Course_CODE` varchar(15) NOT NULL,
@@ -290,6 +316,7 @@ CREATE TABLE IF NOT EXISTS `r_courses` (
 -- Table structure for table `r_designated_offices_details`
 --
 
+DROP TABLE IF EXISTS `r_designated_offices_details`;
 CREATE TABLE IF NOT EXISTS `r_designated_offices_details` (
   `DesOffDetails_ID` int(11) NOT NULL AUTO_INCREMENT,
   `DesOffDetails_CODE` varchar(15) NOT NULL,
@@ -308,6 +335,7 @@ CREATE TABLE IF NOT EXISTS `r_designated_offices_details` (
 -- Table structure for table `r_financial_assistance_title`
 --
 
+DROP TABLE IF EXISTS `r_financial_assistance_title`;
 CREATE TABLE IF NOT EXISTS `r_financial_assistance_title` (
   `FinAssiTitle_ID` int(11) NOT NULL AUTO_INCREMENT,
   `FinAssiTitle_CODE` varchar(15) NOT NULL,
@@ -326,6 +354,7 @@ CREATE TABLE IF NOT EXISTS `r_financial_assistance_title` (
 -- Table structure for table `r_org_accreditation_details`
 --
 
+DROP TABLE IF EXISTS `r_org_accreditation_details`;
 CREATE TABLE IF NOT EXISTS `r_org_accreditation_details` (
   `OrgAccrDetail_ID` int(11) NOT NULL AUTO_INCREMENT,
   `OrgAccrDetail_CODE` varchar(15) NOT NULL,
@@ -344,6 +373,7 @@ CREATE TABLE IF NOT EXISTS `r_org_accreditation_details` (
 -- Table structure for table `r_org_applicant_profile`
 --
 
+DROP TABLE IF EXISTS `r_org_applicant_profile`;
 CREATE TABLE IF NOT EXISTS `r_org_applicant_profile` (
   `OrgAppProfile_ID` int(11) NOT NULL AUTO_INCREMENT,
   `OrgAppProfile_APPL_CODE` varchar(15) NOT NULL,
@@ -363,6 +393,7 @@ CREATE TABLE IF NOT EXISTS `r_org_applicant_profile` (
 -- Table structure for table `r_org_category`
 --
 
+DROP TABLE IF EXISTS `r_org_category`;
 CREATE TABLE IF NOT EXISTS `r_org_category` (
   `OrgCat_ID` int(11) NOT NULL AUTO_INCREMENT,
   `OrgCat_CODE` varchar(15) NOT NULL,
@@ -381,6 +412,7 @@ CREATE TABLE IF NOT EXISTS `r_org_category` (
 -- Table structure for table `r_org_essentials`
 --
 
+DROP TABLE IF EXISTS `r_org_essentials`;
 CREATE TABLE IF NOT EXISTS `r_org_essentials` (
   `OrgEssentials_ID` int(11) NOT NULL AUTO_INCREMENT,
   `OrgEssentials_ORG_CODE` varchar(15) NOT NULL,
@@ -400,6 +432,7 @@ CREATE TABLE IF NOT EXISTS `r_org_essentials` (
 -- Table structure for table `r_org_officer_position_details`
 --
 
+DROP TABLE IF EXISTS `r_org_officer_position_details`;
 CREATE TABLE IF NOT EXISTS `r_org_officer_position_details` (
   `OrgOffiPosDetails_ID` int(11) NOT NULL AUTO_INCREMENT,
   `OrgOffiPosDetails_ORG_CODE` varchar(15) NOT NULL,
@@ -418,6 +451,7 @@ CREATE TABLE IF NOT EXISTS `r_org_officer_position_details` (
 -- Table structure for table `r_osas_head`
 --
 
+DROP TABLE IF EXISTS `r_osas_head`;
 CREATE TABLE IF NOT EXISTS `r_osas_head` (
   `OSASHead_ID` int(11) NOT NULL AUTO_INCREMENT,
   `OSASHead_CODE` varchar(15) NOT NULL,
@@ -437,6 +471,7 @@ CREATE TABLE IF NOT EXISTS `r_osas_head` (
 -- Table structure for table `r_sanction_details`
 --
 
+DROP TABLE IF EXISTS `r_sanction_details`;
 CREATE TABLE IF NOT EXISTS `r_sanction_details` (
   `SancDetails_ID` int(11) NOT NULL AUTO_INCREMENT,
   `SancDetails_CODE` varchar(100) NOT NULL,
@@ -456,6 +491,7 @@ CREATE TABLE IF NOT EXISTS `r_sanction_details` (
 -- Table structure for table `r_semester`
 --
 
+DROP TABLE IF EXISTS `r_semester`;
 CREATE TABLE IF NOT EXISTS `r_semester` (
   `Semestral_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Semestral_CODE` varchar(15) NOT NULL,
@@ -474,6 +510,7 @@ CREATE TABLE IF NOT EXISTS `r_semester` (
 -- Table structure for table `r_stud_profile`
 --
 
+DROP TABLE IF EXISTS `r_stud_profile`;
 CREATE TABLE IF NOT EXISTS `r_stud_profile` (
   `Stud_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Stud_NO` varchar(15) NOT NULL,
@@ -505,6 +542,7 @@ CREATE TABLE IF NOT EXISTS `r_stud_profile` (
 -- Table structure for table `r_users`
 --
 
+DROP TABLE IF EXISTS `r_users`;
 CREATE TABLE IF NOT EXISTS `r_users` (
   `Users_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Users_USERNAME` varchar(50) NOT NULL,
@@ -517,7 +555,7 @@ CREATE TABLE IF NOT EXISTS `r_users` (
   `Users_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active',
   PRIMARY KEY (`Users_ID`),
   UNIQUE KEY `UNQ_Users_USERNAME` (`Users_USERNAME`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -525,6 +563,7 @@ CREATE TABLE IF NOT EXISTS `r_users` (
 -- Table structure for table `t_assign_org_academic_course`
 --
 
+DROP TABLE IF EXISTS `t_assign_org_academic_course`;
 CREATE TABLE IF NOT EXISTS `t_assign_org_academic_course` (
   `AssOrgAcademic_ID` int(11) NOT NULL AUTO_INCREMENT,
   `AssOrgAcademic_ORG_CODE` varchar(15) NOT NULL,
@@ -543,6 +582,7 @@ CREATE TABLE IF NOT EXISTS `t_assign_org_academic_course` (
 -- Table structure for table `t_assign_org_category`
 --
 
+DROP TABLE IF EXISTS `t_assign_org_category`;
 CREATE TABLE IF NOT EXISTS `t_assign_org_category` (
   `AssOrgCategory_ID` int(11) NOT NULL AUTO_INCREMENT,
   `AssOrgCategory_ORG_CODE` varchar(15) NOT NULL,
@@ -561,6 +601,7 @@ CREATE TABLE IF NOT EXISTS `t_assign_org_category` (
 -- Table structure for table `t_assign_org_sanction`
 --
 
+DROP TABLE IF EXISTS `t_assign_org_sanction`;
 CREATE TABLE IF NOT EXISTS `t_assign_org_sanction` (
   `AssSancOrgStudent_ID` int(11) NOT NULL AUTO_INCREMENT,
   `AssSancOrgStudent_REG_ORG` varchar(15) NOT NULL,
@@ -580,6 +621,7 @@ CREATE TABLE IF NOT EXISTS `t_assign_org_sanction` (
 -- Table structure for table `t_assign_student_clearance`
 --
 
+DROP TABLE IF EXISTS `t_assign_student_clearance`;
 CREATE TABLE IF NOT EXISTS `t_assign_student_clearance` (
   `AssStudClearance_ID` int(11) NOT NULL AUTO_INCREMENT,
   `AssStudClearance_STUD_NO` varchar(15) NOT NULL,
@@ -592,7 +634,8 @@ CREATE TABLE IF NOT EXISTS `t_assign_student_clearance` (
   PRIMARY KEY (`AssStudClearance_STUD_NO`,`AssStudClearance_BATCH`,`AssStudClearance_SEMESTER`,`AssStudClearance_SIGNATORIES_CODE`),
   UNIQUE KEY `UNQ_AssStudClearance_ID` (`AssStudClearance_ID`),
   KEY `FK_AssStudClearance_SEMESTER` (`AssStudClearance_SEMESTER`),
-  KEY `FK_AssStudClearance_SIGNATORIES_CODE` (`AssStudClearance_SIGNATORIES_CODE`)
+  KEY `FK_AssStudClearance_SIGNATORIES_CODE` (`AssStudClearance_SIGNATORIES_CODE`),
+  KEY `FK_AssStudClearance_BATCH` (`AssStudClearance_BATCH`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -601,6 +644,7 @@ CREATE TABLE IF NOT EXISTS `t_assign_student_clearance` (
 -- Table structure for table `t_assign_stud_finan_assistance`
 --
 
+DROP TABLE IF EXISTS `t_assign_stud_finan_assistance`;
 CREATE TABLE IF NOT EXISTS `t_assign_stud_finan_assistance` (
   `AssStudFinanAssistance_ID` int(11) NOT NULL AUTO_INCREMENT,
   `AssStudFinanAssistance_STUD_NO` varchar(15) NOT NULL,
@@ -621,6 +665,7 @@ CREATE TABLE IF NOT EXISTS `t_assign_stud_finan_assistance` (
 -- Table structure for table `t_assign_stud_loss_id_regicard`
 --
 
+DROP TABLE IF EXISTS `t_assign_stud_loss_id_regicard`;
 CREATE TABLE IF NOT EXISTS `t_assign_stud_loss_id_regicard` (
   `AssLoss_ID` int(11) NOT NULL AUTO_INCREMENT,
   `AssLoss_STUD_NO` varchar(15) NOT NULL,
@@ -640,6 +685,7 @@ CREATE TABLE IF NOT EXISTS `t_assign_stud_loss_id_regicard` (
 -- Table structure for table `t_assign_stud_saction`
 --
 
+DROP TABLE IF EXISTS `t_assign_stud_saction`;
 CREATE TABLE IF NOT EXISTS `t_assign_stud_saction` (
   `AssSancStudStudent_ID` int(11) NOT NULL AUTO_INCREMENT,
   `AssSancStudStudent_STUD_NO` varchar(15) NOT NULL,
@@ -663,6 +709,7 @@ CREATE TABLE IF NOT EXISTS `t_assign_stud_saction` (
 -- Table structure for table `t_org_accreditation_process`
 --
 
+DROP TABLE IF EXISTS `t_org_accreditation_process`;
 CREATE TABLE IF NOT EXISTS `t_org_accreditation_process` (
   `OrgAccrProcess_ID` int(11) NOT NULL AUTO_INCREMENT,
   `OrgAccrProcess_ORG_CODE` varchar(15) NOT NULL,
@@ -682,6 +729,7 @@ CREATE TABLE IF NOT EXISTS `t_org_accreditation_process` (
 -- Table structure for table `t_org_cash_flow_statement`
 --
 
+DROP TABLE IF EXISTS `t_org_cash_flow_statement`;
 CREATE TABLE IF NOT EXISTS `t_org_cash_flow_statement` (
   `OrgCashFlowStatement_ID` int(11) NOT NULL AUTO_INCREMENT,
   `OrgCashFlowStatement_ORG_CODE` varchar(15) NOT NULL,
@@ -702,6 +750,7 @@ CREATE TABLE IF NOT EXISTS `t_org_cash_flow_statement` (
 -- Table structure for table `t_org_financial_statement`
 --
 
+DROP TABLE IF EXISTS `t_org_financial_statement`;
 CREATE TABLE IF NOT EXISTS `t_org_financial_statement` (
   `OrgFinStatement_ID` int(11) NOT NULL AUTO_INCREMENT,
   `OrgFinStatement_ORG_CODE` varchar(15) NOT NULL,
@@ -720,6 +769,7 @@ CREATE TABLE IF NOT EXISTS `t_org_financial_statement` (
 -- Table structure for table `t_org_financial_statement_items`
 --
 
+DROP TABLE IF EXISTS `t_org_financial_statement_items`;
 CREATE TABLE IF NOT EXISTS `t_org_financial_statement_items` (
   `OrgFinStatExpenses_ID` int(11) NOT NULL AUTO_INCREMENT,
   `OrgFinStatExpenses_OrgFinStatement_ID` int(11) NOT NULL,
@@ -738,6 +788,7 @@ CREATE TABLE IF NOT EXISTS `t_org_financial_statement_items` (
 -- Table structure for table `t_org_for_compliance`
 --
 
+DROP TABLE IF EXISTS `t_org_for_compliance`;
 CREATE TABLE IF NOT EXISTS `t_org_for_compliance` (
   `OrgForCompliance_ID` int(11) NOT NULL AUTO_INCREMENT,
   `OrgForCompliance_ORG_CODE` varchar(15) NOT NULL,
@@ -760,6 +811,7 @@ CREATE TABLE IF NOT EXISTS `t_org_for_compliance` (
 -- Table structure for table `t_org_officers`
 --
 
+DROP TABLE IF EXISTS `t_org_officers`;
 CREATE TABLE IF NOT EXISTS `t_org_officers` (
   `OrgOffi_ID` int(11) NOT NULL AUTO_INCREMENT,
   `OrgOffi_OrgOffiPosDetails_ID` int(11) NOT NULL,
@@ -780,6 +832,7 @@ CREATE TABLE IF NOT EXISTS `t_org_officers` (
 -- Table structure for table `t_org_remittance`
 --
 
+DROP TABLE IF EXISTS `t_org_remittance`;
 CREATE TABLE IF NOT EXISTS `t_org_remittance` (
   `OrgRemittance_ID` int(11) NOT NULL AUTO_INCREMENT,
   `OrgRemittance_ORG_CODE` varchar(15) NOT NULL,
@@ -800,6 +853,7 @@ CREATE TABLE IF NOT EXISTS `t_org_remittance` (
 -- Table structure for table `t_org_voucher`
 --
 
+DROP TABLE IF EXISTS `t_org_voucher`;
 CREATE TABLE IF NOT EXISTS `t_org_voucher` (
   `OrgVoucher_ID` int(11) NOT NULL AUTO_INCREMENT,
   `OrgVoucher_CASH_VOUCHER_NO` int(11) NOT NULL,
@@ -818,6 +872,7 @@ CREATE TABLE IF NOT EXISTS `t_org_voucher` (
 -- Table structure for table `t_org_voucher_items`
 --
 
+DROP TABLE IF EXISTS `t_org_voucher_items`;
 CREATE TABLE IF NOT EXISTS `t_org_voucher_items` (
   `OrgVouchItems_ID` int(11) NOT NULL AUTO_INCREMENT,
   `OrgVouchItems_VOUCHER_NO` int(11) NOT NULL,
@@ -837,6 +892,7 @@ CREATE TABLE IF NOT EXISTS `t_org_voucher_items` (
 -- Table structure for table `t_qrval_student_clearance`
 --
 
+DROP TABLE IF EXISTS `t_qrval_student_clearance`;
 CREATE TABLE IF NOT EXISTS `t_qrval_student_clearance` (
   `QRValStudClearance_ID` int(11) NOT NULL AUTO_INCREMENT,
   `QRValStudClearance_STUD_NO` varchar(15) NOT NULL,
@@ -911,9 +967,10 @@ ALTER TABLE `t_assign_org_sanction`
 -- Constraints for table `t_assign_student_clearance`
 --
 ALTER TABLE `t_assign_student_clearance`
-  ADD CONSTRAINT `FK_AssStudClearance_BATCH` FOREIGN KEY (`AssStudClearance_STUD_NO`) REFERENCES `r_batch_details` (`Batch_YEAR`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_AssStudClearance_BATCH` FOREIGN KEY (`AssStudClearance_BATCH`) REFERENCES `r_batch_details` (`Batch_YEAR`),
   ADD CONSTRAINT `FK_AssStudClearance_SEMESTER` FOREIGN KEY (`AssStudClearance_SEMESTER`) REFERENCES `r_semester` (`Semestral_NAME`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_AssStudClearance_SIGNATORIES_CODE` FOREIGN KEY (`AssStudClearance_SIGNATORIES_CODE`) REFERENCES `r_clearance_signatories` (`ClearSignatories_CODE`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK_AssStudClearance_SIGNATORIES_CODE` FOREIGN KEY (`AssStudClearance_SIGNATORIES_CODE`) REFERENCES `r_clearance_signatories` (`ClearSignatories_CODE`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_AssStudClearance_STUD_NO` FOREIGN KEY (`AssStudClearance_STUD_NO`) REFERENCES `r_stud_profile` (`Stud_NO`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `t_assign_stud_finan_assistance`
