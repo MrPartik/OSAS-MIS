@@ -181,6 +181,7 @@
                 ,Type = $("#lossDesc option:selected").text()
                 ,LossDesc =Type + "<br/><br/><i style='font-size:10px'>Date Added:"+currDate+"</i>" 
                 ,LossRemarks=$("#lossRemarks").val(); 
+                $("#tbodyLosscial").find(".dataTables_empty").closest("tr ").remove();
                 $("#tbodyLosscial").append("<tr id='newLosscialAss' > <td class='hidden'></td><td id='losscAssDet' lossType='"+Type+"'><span class='label label-success'>NEW</span><br> "+LossDesc+"</td><td>        <input id='DateClaim'   type ='datetime-local' class='form-control' ></td><td><textarea id='lossRemarks' style='resize:vertical'>"+LossRemarks+"</textarea></td><td> <center> <i style='cursor:pointer;font-size: 20px' id='deletemoto' class='fa fa-minus-circle'></i> </center></td></tr>");
             });
             $("#tbodyLosscial").on("click", "i[id='deletemoto']", function (e) {
@@ -274,4 +275,3 @@
                 });
             });
         </script>
-        

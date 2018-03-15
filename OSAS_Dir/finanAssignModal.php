@@ -198,6 +198,8 @@
                 ,FinanDesc =FinanTitle + ": "+$("#finanDesc option:selected").attr("Desc")+"<br/><br/><i style='font-size:10px'>Date Added:"+currDate+"</i>"
                 ,FinanStatus = $("#finanStatus option:selected").text()
                 ,FinanRemarks=$("#finanRemarks").val(); 
+
+                $("#tbodyFinancial").find(".dataTables_empty").closest("tr ").remove();
                 $("#tbodyFinancial").append("<tr id='newFinancialAss' ><td id='financAssDet' finanTitle='"+FinanTitle+"'><span class='label label-success'>NEW</span>"+FinanDesc+"</td><td>"+FinanStatus+"</td><td><textarea id='finanRemarks' style='resize:vertical'>"+FinanRemarks+"</textarea></td><td> <center> <i style='cursor:pointer;font-size: 20px' id='deletemoto' class='fa fa-minus-circle'></i> </center></td></tr>");
             });
             $("#tbodyFinancial").on("click", "i[id='deletemoto']", function (e) {
