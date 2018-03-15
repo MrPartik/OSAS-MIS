@@ -26,6 +26,8 @@ __System Features__
 - [ ] General Clearance
 - [ ] Document Archiving 
 
+- [x ] System Setup
+
 ***
 
 | Members        | Role           | Initials  |
