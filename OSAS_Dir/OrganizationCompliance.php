@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-
+<title>OSAS - Compliance</title>
 <head>
     <?php
 $breadcrumbs  ="<div class='col-md-12'>
@@ -425,9 +425,6 @@ include('../config/connection.php');
                                     </table>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
                         </div>
                     </div>
                 </div>

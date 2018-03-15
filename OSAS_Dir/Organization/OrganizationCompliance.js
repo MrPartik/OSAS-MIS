@@ -106,7 +106,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'Organization/Organization/OrganizationCompliance/Delete-ajax.php',
+                                url: 'Organization/OrganizationCompliance/Delete-ajax.php',
                                 data: {
                                     _code: getval
                                 },
@@ -211,13 +211,11 @@ var EditableTable = function () {
 
 
             });
-
-
             $('#lblprof').on('click', function (e) {
                 e.preventDefault();
-                $('#bodyprof').show(500);
-                $('#bodymem').hide(500);
-                $('#bodystat').hide(500);
+                $('#bodyprof').show();
+                $('#bodymem').hide();
+                $('#bodystat').hide();
                 $('#stat').css("color", "#BDBDC3");
                 $('#prof').css("color", "black");
                 $('#mem').css("color", "#BDBDC3");
@@ -226,18 +224,18 @@ var EditableTable = function () {
             });
             $('#lblmem').on('click', function (e) {
                 e.preventDefault();
-                $('#bodyprof').hide(500);
-                $('#bodystat').hide(500);
-                $('#bodymem').show(500);
+                $('#bodyprof').hide();
+                $('#bodystat').hide();
+                $('#bodymem').show();
                 $('#stat').css("color", "#BDBDC3");
                 $('#prof').css("color", "#BDBDC3");
                 $('#mem').css("color", "black");
             });
             $('#lblstat').on('click', function (e) {
                 e.preventDefault();
-                $('#bodyprof').hide(500);
-                $('#bodystat').show(500);
-                $('#bodymem').hide(500);
+                $('#bodyprof').hide();
+                $('#bodystat').show();
+                $('#bodymem').hide();
                 $('#stat').css("color", "black");
                 $('#prof').css("color", "#BDBDC3");
                 $('#mem').css("color", "#BDBDC3");
@@ -254,11 +252,12 @@ var EditableTable = function () {
                 $.ajax({
                     type: "GET",
                     url: 'Organization/OrganizationCompliance/GetData-ajax.php',
-                    dataType: 'json',
                     data: {
                         _id: id
                     },
+                     dataType: 'json',
                     success: function (data) {
+                        alert(data);
                         document.getElementById('updtxtadvname').value = data.adv;
                         document.getElementById('upddrpyear').innerHTML = data.year;
                         document.getElementById('upddrpcat').innerHTML = data.selcat;
@@ -269,8 +268,6 @@ var EditableTable = function () {
                             $('#updcourse').removeClass('hidden');
                         else
                             $('#updcourse').addClass('hidden');
-
-
                     },
                     error: function (response) {
                         swal("Error encountered while adding data", "Please try again", "error");
