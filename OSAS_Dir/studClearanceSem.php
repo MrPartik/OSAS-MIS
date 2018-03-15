@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html>
 <title>OSAS - Student Sanction</title>
-<?php include('header.php');    
+    <?php
+$breadcrumbs =" <div class='col-md-12'>
+<ul class='breadcrumbs-alt'>
+    <li> <a href='dashboard.php'>Home</a> </li>
+    <li> <a href='#'>Clearance Management</a> </li>
+    <li> <a class='current' href='studClearanceSem.php'>Semester Clearance</a> </li>
+</ul>
+</div>";
+include('header.php');
 $currentPage ='OSAS_StudClearance';
-?>
-    <link href="../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-    <link href="../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../js/data-tables/DT_bootstrap.css" />
+include('../config/connection.php');
 
+?>
     <body>
         <!--sidebar start-->
         <?php include('sidenav.php')?>
@@ -16,13 +22,6 @@ $currentPage ='OSAS_StudClearance';
             <section id="main-content">
                 <section class="wrapper">
                     <div class="row ">
-                        <div class="col-md-12">
-                            <ul class="breadcrumbs-alt">
-                                <li> <a href="dashboard.php">Home</a> </li>
-                                <li> <a href="#">Clearance Management</a> </li>
-                                <li> <a class="current" href="studClearanceSem.php">Semestral Clearance</a> </li>
-                            </ul>
-                        </div>
                         <div class="col-md-3">
                             <div class="mini-stat clearfix"> <span class="mini-stat-icon orange"><i class="fa fa-tag"></i></span>
                                 <div class="mini-stat-info"> <span><?php echo $count_stud_sanction?></span> Number of Students who has Cleared their clearance </div>
