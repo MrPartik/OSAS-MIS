@@ -7,7 +7,7 @@
 $currentPage ='Admin_Designated'; 
 include('header.php');  
 include('../config/connection.php');
-?> 
+?>
 </head>
 
 <body>
@@ -187,7 +187,7 @@ include('../config/connection.php');
     </div>
 
     <!-- Placed js at the end of the document so the pages load faster -->
- 
+
     <!--script for this page only-->
     <?php include("footer.php") ?>
     <script src="SanctionSetup/DesignatedOffice.js"></script>
