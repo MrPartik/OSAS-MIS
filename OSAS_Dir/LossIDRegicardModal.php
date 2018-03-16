@@ -126,6 +126,7 @@
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
             <script>
                 $(document).ready(function () {
                     var dataSrc = [];
@@ -145,6 +146,109 @@
                                     api.search(value).draw();
                                 }
                             });
+=======
+        </div>
+        
+                <script src="../js/advanced-datatable/js/autocomplete.js"></script>
+        <script> 
+            
+            $(document).ready(function () {
+                var dataSrc = [];
+                var table = $('#dynamic-table-modal').DataTable({
+                    'initComplete': function () {
+                        var api = this.api(); 
+                        api.cells('tr', [1]).every(function () { 
+                            var data = $('<div>').html(this.data()).text();
+                            if (dataSrc.indexOf(data) === -1) {
+                                dataSrc.push(data);
+                            }
+                        }); 
+                        dataSrc.sort(); 
+                        $('.dataTables_filter input[type="search"]', api.table().container()).typeahead({
+                            source: dataSrc
+                            , afterSelect: function (value) {
+                                api.search(value).draw();
+                            }
+                        });
+                    }
+                    , bDestroy: true
+                    , aaSorting: [[1, "desc"]]
+                });
+            });
+            $('#addStudLoss').on("click", function () {
+                if ($('#LossDiv:visible').length) {
+                    $("#LossDiv").slideToggle(500);
+                    $("#addStudLoss").html("<i class='fa  fa-plus'></i>  Add");
+                }
+                else {
+                    $("#LossDiv").slideToggle(500);
+                    $("#addStudLoss").html("<i class='fa  fa-arrow-circle-o-left'></i>  Back");
+                }
+            });
+            $("#tbodyLosscial").on("input","textarea[id='lossRemarks']",function(){
+                if($(this).attr("value") == $(this).val())
+                        $(this).closest("tr").removeClass("updatingRow");
+                else
+                     $(this).closest("tr").addClass("updatingRow");
+            });
+            
+            $("#tbodyLosscial").on("change","input[id='DateClaim']",function(){ 
+                if($(this).attr("value")==$(this).val())
+                    $(this).closest("tr").removeClass("updatingRow");
+                else
+                    $(this).closest("tr").addClass("updatingRow");
+            });
+            $("#assLossStud").on("click",function(){
+                var currDate ="<?php echo dateNow(); ?>"
+                ,Type = $("#lossDesc option:selected").text()
+                ,LossDesc =Type + "<br/><br/><i style='font-size:10px'>Date Added:"+currDate+"</i>" 
+                ,LossRemarks=$("#lossRemarks").val(); 
+                $("#tbodyLosscial").find(".dataTables_empty").closest("tr ").remove();
+                $("#tbodyLosscial").append("<tr id='newLosscialAss' > <td class='hidden'></td><td id='losscAssDet' lossType='"+Type+"'><span class='label label-success'>NEW</span><br> "+LossDesc+"</td><td>        <input id='DateClaim'   type ='datetime-local' class='form-control' ></td><td><textarea id='lossRemarks' style='resize:vertical'>"+LossRemarks+"</textarea></td><td> <center> <i style='cursor:pointer;font-size: 20px' id='deletemoto' class='fa fa-minus-circle'></i> </center></td></tr>");
+            });
+            $("#tbodyLosscial").on("click", "i[id='deletemoto']", function (e) {
+                $(this).closest('tr').remove();
+            }); 
+            $("#tbodyLosscial").on("click", "i[id='deletemotoInside']", function (e) {
+                $(this).closest('tr').addClass("tobeRemoved");
+                $(this).closest('tr').find(".TDLossDesc").html("<span class='label label-danger'>Delete!</span><span class='spanSancName'>  " + $(this).closest('tr').find(".spanSancName").html() + "</span>");
+                $(this).closest('tr').find(".actionDes").html(" <center> <i style='cursor:pointer;font-size: 20px' id='returnmotoInside' class='fa fa-undo'></i> </center>");
+            });
+            $("#tbodyLosscial").on("click", "i[id='returnmotoInside']", function (e) {
+                $(this).closest('tr').removeClass("tobeRemoved");
+                $(this).closest('tr').find(".TDLossDesc").html("<span class='spanSancName'>" + $(this).closest('tr').find(".spanSancName").html() + "</span>");
+                $(this).closest('tr').find(".actionDes").html("  <center> <i style='cursor:pointer;font-size: 20px' id='deletemotoInside' class='fa fa-minus-circle'></i> </center>");
+            });
+            
+            $("#saveLossSet").on("click", function () {
+                
+                $("input[id='DateClaim']").defaultValue = null;
+                
+                $("tbody").find("tr[id='newLosscialAss']").each(function (i) {
+                    var $tds = $(this).find('td')
+                        , LossType = $tds.eq(1).attr("losstype")
+                        , LossClaim = $tds.eq(2).find("#DateClaim").val()
+                        , LossRemarks = $tds.eq(3).find("#lossRemarks").val()
+                        , StudNumber = "<?php echo $_GET['StudNo']?>" 
+                    
+                    $.ajax({
+                        type: 'post'
+                        , url: 'LossIDRegicardSave.php'
+                        , data: {
+                            insertLossAss: 'LossAssAdd'
+                            , LossType: LossType
+                            , LossClaim: LossClaim
+                            , StudNumber: StudNumber
+                            ,LossRemarks:LossRemarks  
+                        }
+                        , success: function (result) {
+                            alert(LossType+LossClaim+StudNumber+LossRemarks ); 
+                            alert(result);
+                            window.location.reload();
+                        }
+                        , error: function (result) {
+                            alert('Error')
+>>>>>>> origin/master
                         }
                         , bDestroy: true
                         , aaSorting: [[1, "desc"]]

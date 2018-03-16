@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Admin - Dashboard</title>
     <?php 
@@ -11,7 +12,7 @@ include('../config/connection.php');
 
 <body>
     <!--header start-->
-     
+
     <?php
  
             $view_query = mysqli_query($con,"SELECT (SELECT COUNT(*) FROM `r_batch_details` WHERE Batch_DISPLAY_STAT = 'Active') AS BATCH, (SELECT COUNT(*) FROM `r_clearance_signatories` WHERE ClearSignatories_DISPLAY_STAT = 'Active') AS SIGNATORY, (SELECT COUNT(*) FROM `r_courses` WHERE Course_DISPLAY_STAT = 'Active') AS COURSE, (SELECT COUNT(*) FROM `r_designated_offices_details` WHERE DesOffDetails_DISPLAY_STAT = 'Active') AS OFFICE,(SELECT COUNT(*) FROM `r_financial_assistance_title` WHERE FinAssiTitle_DISPLAY_STAT = 'Active') AS TITLE,(SELECT COUNT(*) FROM `r_org_accreditation_details` WHERE OrgAccrDetail_DISPLAY_STAT = 'Active') AS ACCDET,(SELECT COUNT(*) FROM `r_sanction_details` WHERE SancDetails_DISPLAY_STAT = 'Active') AS SANCDET,(SELECT COUNT(*) FROM `r_org_category` WHERE OrgCat_DISPLAY_STAT = 'Active') AS CAT,(SELECT COUNT(*) FROM `r_semester` WHERE Semestral_DISPLAY_STAT = 'Active') AS SEM");
@@ -34,7 +35,7 @@ include('../config/connection.php');
         ?>
         <!--header end-->
         <section id="container">
-             <?php include("sidenav.php")?>
+            <?php include("sidenav.php")?>
             <!--main content start-->
             <section id="main-content">
                 <section class="wrapper">
@@ -238,30 +239,8 @@ include('../config/connection.php');
         </section>
 
         <!-- Placed js at the end of the document so the pages load faster -->
+        <?php include("footer.php") ?>
 
-        <!--Core js-->
-        <script src="../../js/jquery-1.8.3.min.js"></script>
-        <script src="../../bs3/js/bootstrap.min.js"></script>
-        <script class="include" type="text/javascript" src="../../js/jquery.dcjqaccordion.2.7.js"></script>
-        <script src="../../js/jquery.scrollTo.min.js"></script>
-        <script src="../../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-        <script src="../../js/jquery.nicescroll.js"></script>
-        <!--Easy Pie Chart-->
-        <script src="../../js/easypiechart/jquery.easypiechart.js"></script>
-        <!--Sparkline Chart-->
-        <script src="../../js/sparkline/jquery.sparkline.js"></script>
-        <!--jQuery Flot Chart-->
-        <script src="../../js/flot-chart/jquery.flot.js"></script>
-        <script src="../../js/flot-chart/jquery.flot.tooltip.min.js"></script>
-        <script src="../../js/flot-chart/jquery.flot.resize.js"></script>
-        <script src="../../js/flot-chart/jquery.flot.pie.resize.js"></script>
-
-        <script type="text/javascript" src="../../js/data-tables/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="../../js/data-tables/DT_bootstrap.js"></script>
-        <script type="text/javascript" src="sweetalert/sweetalert.min.js"></script>
-
-        <!--common script init for all pages-->
-        <script src="../../js/scripts.js"></script>
 
 </body>
 

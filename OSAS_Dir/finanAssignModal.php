@@ -269,6 +269,7 @@
                             }
                         });
                     }
+<<<<<<< HEAD
                     if (tobeRemoved != 0) {
                         swal({
                             title: "Are you sure?"
@@ -370,5 +371,131 @@
                     }else{
                                 swal("Error", "no transaction has been made", "error");
                     }
+=======
+                    , bDestroy: true 
+                    ,iDisplayLength: 3
+                });
+            });
+            $('#addFinanStud').on("click", function () {
+                if ($('#FinanDiv:visible').length) {
+                    $("#FinanDiv").slideToggle(500);
+                    $("#addFinanStud").html("<i class='fa  fa-plus'></i>  Add");
+                }
+                else {
+                    $("#FinanDiv").slideToggle(500);
+                    $("#addFinanStud").html("<i class='fa  fa-arrow-circle-o-left'></i>  Back");
+                }
+            });
+            $("#tbodyFinancial").on("input","textarea[id='efinanRemarks']",function(){
+                if($(this).attr("value") == $(this).val())
+                        $(this).closest("tr").removeClass("updatingRow");
+                else
+                     $(this).closest("tr").addClass("updatingRow");
+            });
+            
+            $("#tbodyFinancial").on("change","select[id='finanStatSelection']",function(){
+                
+                if($(this).attr("value")==$(this,"option:selected").val())
+                    $(this).closest("tr").removeClass("updatingRow");
+                else
+                    $(this).closest("tr").addClass("updatingRow");
+            });
+            $("#assFinanStud").on("click",function(){
+                var FinanID = $("#finanDesc option:selected").text()
+                ,currDate ="<?php echo dateNow(); ?>"
+                ,FinanTitle = $("#finanDesc option:selected").text()
+                ,FinanDesc =FinanTitle + ": "+$("#finanDesc option:selected").attr("Desc")+"<br/><br/><i style='font-size:10px'>Date Added:"+currDate+"</i>"
+                ,FinanStatus = $("#finanStatus option:selected").text()
+                ,FinanRemarks=$("#finanRemarks").val(); 
+
+                $("#tbodyFinancial").find(".dataTables_empty").closest("tr ").remove();
+                $("#tbodyFinancial").append("<tr id='newFinancialAss' ><td id='financAssDet' finanTitle='"+FinanTitle+"'><span class='label label-success'>NEW</span>"+FinanDesc+"</td><td>"+FinanStatus+"</td><td><textarea id='finanRemarks' style='resize:vertical'>"+FinanRemarks+"</textarea></td><td> <center> <i style='cursor:pointer;font-size: 20px' id='deletemoto' class='fa fa-minus-circle'></i> </center></td></tr>");
+            });
+            $("#tbodyFinancial").on("click", "i[id='deletemoto']", function (e) {
+                $(this).closest('tr').remove();
+            }); 
+            $("#tbodyFinancial").on("click", "i[id='deletemotoInside']", function (e) {
+                $(this).closest('tr').addClass("tobeRemoved");
+                $(this).closest('tr').find(".TDFinanDesc").html("<span class='label label-danger'>Delete!</span><span class='spanSancName'>  " + $(this).closest('tr').find(".spanSancName").html() + "</span>");
+                $(this).closest('tr').find(".actionDes").html(" <center> <i style='cursor:pointer;font-size: 20px' id='returnmotoInside' class='fa fa-undo'></i> </center>");
+            });
+            $("#tbodyFinancial").on("click", "i[id='returnmotoInside']", function (e) {
+                $(this).closest('tr').removeClass("tobeRemoved");
+                $(this).closest('tr').find(".TDFinanDesc").html("<span class='spanSancName'>" + $(this).closest('tr').find(".spanSancName").html() + "</span>");
+                $(this).closest('tr').find(".actionDes").html("  <center> <i style='cursor:pointer;font-size: 20px' id='deletemotoInside' class='fa fa-minus-circle'></i> </center>");
+            });
+            
+            $("#saveFinanSet").on("click", function () {
+                $("tbody").find("tr[id='newFinancialAss']").each(function (i) {
+                    var $tds = $(this).find('td')
+                        , FinanTitle = $tds.eq(0).attr("finantitle")
+                        , FinanStat = $tds.eq(1).text()
+                        , StudNumber = "<?php echo $_GET['StudNo']?>"
+                        , Remarks = $tds.eq(2).find("#finanRemarks").val();
+                    $.ajax({
+                        type: 'post'
+                        , url: 'finanAssignSave.php'
+                        , data: {
+                            insertFinanAss: 'FinanAssAdd'
+                            , FinanAssTitle: FinanTitle
+                            , FinanAssStat: FinanStat
+                            , StudNumber: StudNumber
+                            ,FinanAssRemarks:Remarks 
+                            
+                        }
+                        , success: function (result) {
+                            alert(FinanTitle+FinanStat+StudNumber+Remarks ); 
+                            alert(result);
+                            window.location.reload();
+                        }
+                        , error: function (result) {
+                            alert('Error')
+                        }
+                    });
+                });
+                $("tbody").find("tr[class='tobeRemoved']").each(function (i) {
+                    var $tds = $(this).find('td')
+                        , ID = $tds.eq(0).text();
+                    $.ajax({
+                        type: 'post'
+                        , url: 'finanAssignSave.php'
+                        , data: {
+                            archiveFinanAss: 'archive'
+                            , ID: ID
+                        }
+                        , success: function (result) {
+                            alert('');
+                            alert(result);
+                            window.location.reload();
+                        }
+                        , error: function (result) {
+                            alert('Error')
+                        }
+                    });
+                });
+                $("tbody").find("tr[class='updatingRow']").each(function (i) {
+                    var $tds = $(this).find('td')
+                        , ID = $tds.eq(0).text()
+                        , FinanStat = $tds.eq(2).find("#finanStatSelection option:selected").val() 
+                        , Remarks = $tds.eq(3).find("#efinanRemarks").val(); 
+                    $.ajax({
+                        type: 'post'
+                        , url: 'finanAssignSave.php'
+                        , data: {
+                            updateFinanAss: 'FinanAssUpdate'
+                            , ID: ID 
+                            , FinanAssStat: FinanStat 
+                            ,FinanAssRemarks:Remarks 
+                        }
+                        , success: function (result) {
+                            alert(ID+FinanStat+Remarks);
+                            alert(result);
+                            window.location.reload();
+                        }
+                        , error: function (result) {
+                            alert('Error')
+                        }
+                    });
+>>>>>>> origin/master
                 });
             </script>
