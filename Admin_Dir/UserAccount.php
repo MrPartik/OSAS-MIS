@@ -340,8 +340,6 @@ else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
     <!-- END JAVASCRIPTS -->
     <script>
         $(document).ready(function() {
-
-
         });
         jQuery(document).ready(function() {
             EditableTable.init();

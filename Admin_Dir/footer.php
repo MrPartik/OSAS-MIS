@@ -36,8 +36,6 @@
 <!--script for this page-->
 <script src="../js/advanced-form.js"></script>
 <script type="text/javascript" src="../js/fuelux/js/spinner.min.js"></script>
-<script src="../js/advanced-datatable/js/autocomplete.js"></script>
 
     <script type="text/javascript" src="../js/data-tables/jquery.dataTables.js"></script>
     <script type="text/javascript" src="../js/data-tables/DT_bootstrap.js"></script>
-  

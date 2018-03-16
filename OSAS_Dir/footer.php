@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
 <script src="../js/jquery-tags-input/jquery.tagsinput.js"></script>
 <script src="../js/calendar/clndr.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+<script src="../js/underscore-min.js"></script>
 <script src="../js/calendar/moment-2.2.1.js"></script>
 <script src="../js/evnt.calendar.init.js"></script>
 <script src="../js/jvector-map/jquery-jvectormap-1.2.2.min.js"></script>
