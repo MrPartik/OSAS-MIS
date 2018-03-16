@@ -604,17 +604,13 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
         <script>
             $(document).ready(function() {
                 $('#wizardForm').hide();
-                $('.hidethis').hide();
-
-
+                $('.hidethis').hide
                 wizardOpen = $('.wizardOpen');
                 wizardOpen.click(function() {
                     $('#tableForm').slideToggle();
                     $('#wizardForm').slideToggle();
 
                 });
-
-
                 $('#closewizardForm').click(function() {
                     $('#tableForm').slideToggle();
                     $('#wizardForm').slideToggle();
@@ -624,8 +620,7 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
                 var navListItems = $('div.setup-panel div a'),
                     allWells = $('.setup-content'),
                     allNextBtn = $('.nextBtn');
-
-                allWells.hide();
+                allWells.hide(100);
 
                 navListItems.click(function(e) {
                     e.preventDefault();
