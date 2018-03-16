@@ -1,11 +1,10 @@
 <?php  
  if(!empty($_FILES["employee_file2"]["name"]))  
  {  
-    include('../../../config/connection.php');
+      include('../../connection.php');
       $output = '';  
       $allowed_ext = array("csv");  
      $container_arr = array();
-          $org = $_GET['Orgcode'];
 
       $extension = end(explode(".", $_FILES["employee_file2"]["name"]));  
       if(in_array($extension, $allowed_ext))  
@@ -14,11 +13,12 @@
            fgetcsv($file_data);  
            while($row = fgetcsv($file_data))  
            {  
-                $studnum = mysqli_real_escape_string($con, $row[0]);
-                $pos = mysqli_real_escape_string($con, $row[1]);
+                $studnum = mysqli_real_escape_string($connection, $row[0]);
+                $pos = mysqli_real_escape_string($connection, $row[1]);
+                $org = mysqli_real_escape_string($connection, $row[2]);
                
                
-                $queryy = mysqli_query($con,"INSERT INTO r_org_officer_position_details
+                $queryy = mysqli_query($connection,"INSERT INTO r_org_officer_position_details
                      (OrgOffiPosDetails_NAME, OrgOffiPosDetails_ORG_CODE)  
                      VALUES ('$studnum', ,(SELECT OrgForCompliance_ORG_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_OrgApplProfile_APPL_CODE = '$org' AND OrgForCompliance_DISPAY_STAT = 'Active'))");
                

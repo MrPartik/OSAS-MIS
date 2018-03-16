@@ -1,7 +1,6 @@
 <?php
 	
-    include('../../../config/connection.php');
-
+	include('../../connection.php');
     $compcode = $_GET['_code'];
     $stat = $_GET['_stat'];
     

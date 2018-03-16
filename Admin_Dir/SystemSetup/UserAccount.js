@@ -161,190 +161,73 @@ var EditableTable = function () {
 
 
             });
-            $('#form-data').on('submit', function (e) {
+            $('#submit-data').click(function (e) {
                 e.preventDefault();
                 var username = document.getElementById("txtusername").value;
                 var role = document.getElementById("selRole").value;
                 var password = document.getElementById("txtpassword").value;
-                var reference = document.getElementById("selRef").value;
+                var reference = document.getElementById("selRef").value;;
+                if (username.length)
+                    if (role != '-1')
+                        if (password.length) {
+                            $("#close").click();
 
 
-                $.ajax({
-                    url: "SystemSetup/UserAccount/Retrieve_Username.php",
-                    type: "GET",
-                    async: false,
-                    data: {
-                        _username: username
-                    },
-                    success: function (getcount) {
-                        document.getElementById('getstat2').value = getcount;
+                            swal({
+                                    title: "Are you sure?",
+                                    text: "The record will be save and will be use for further transaction",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#DD6B55',
+                                    confirmButtonText: 'Yes, do it!',
+                                    cancelButtonText: "No, cancel it!",
+                                    closeOnConfirm: false,
+                                    closeOnCancel: false
+                                },
+                                function (isConfirm) {
+                                    if (isConfirm) {
+                                        $.ajax({
+                                            type: 'post',
+                                            url: 'SystemSetup/UserAccount/Insert_UserAccount.php',
+                                            data: {
+                                                _username: username,
+                                                _role: role,
+                                                _reference: reference,
+                                                _password: password
+                                            },
+                                            success: function (response) {
+                                                swal("Record Added!", "The data is successfully added!", "success");
 
-                    }
-                });
-                alert(document.getElementById('getstat2').value);
+                                                if (role == 'OSAS HEAD')
+                                                    var aiNew = oTable.fnAddData([username, "<center style='padding-top:10px'><span class='label label-primary'>OSAS HEAD</span></center>", '<center><span class="label label-primary">New Account</span></center>', "<center style='padding-top:10px'><span class='label label-success'>Active</span></center>", " <center style='padding-top:10px'><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a><a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-ban'></i></a><center>", '']);
+                                                else if (role == 'Organization')
+                                                    var aiNew = oTable.fnAddData([username, "<center style='padding-top:10px'><span class='label label-inverse'>Organization</span></center>", '<center><span class="label label-primary">New Account</span></center>', "<center style='padding-top:10px'><span class='label label-success'>Active</span></center>", " <center style='padding-top:10px'><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a><a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-ban'></i></a><center>", '']);
+                                                else if (role == 'Administrator')
+                                                    var aiNew = oTable.fnAddData([username, "<center style='padding-top:10px'><span class='label label-success'>Administrator</span></center>", '<center style="padding-top:10px"><span class="label label-primary">New Account</span></center>', "<center style='padding-top:10px'><span class='label label-success'>Active</span></center>", " <center><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a><a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-ban'></i></a><center>", '']);
+                                                else
+                                                    var aiNew = oTable.fnAddData([username, "<center style='padding-top:10px'><span class='label label-warning'>Student</span></center>", '<center style="padding-top:10px"><span class="label label-primary">New Account</span></center>', "<center style='padding-top:10px'><span class='label label-success'>Active</span></center>", " <center><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a><a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-ban'></i></a><center>"]);
 
-                if (username.length) {
-                    if (document.getElementById('getstat2').value == '0') {
-                        if (role != '-1')
-                            if (password.length) {
 
-                                $.ajax({
-                                    url: "Upload_Avatar.php?Username=" + username, // Url to which the request is send
-                                    type: "POST", // Type of request to be send, called as method
-                                    data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-                                    contentType: false, // The content type used when sending data to the server.
-                                    cache: false, // To unable request pages to be cached
-                                    processData: false, // To send DOMDocument or non processed data file it is set to false
-                                    success: function (data) // A function to be called if request succeeds
-                                    {
-                                        alert('okay')
+                                                var nRow = oTable.fnGetNodes(aiNew[0]);
+                                                document.getElementById("form-data").reset();
+                                            },
+                                            error: function (response) {
+                                                swal(response, "Please try again", "error");
+                                                $("#editable-sample_new").click();
+                                            }
+
+                                        });
+
+                                    } else {
+                                        swal("Cancelled", "The transaction is cancelled", "error");
+                                        $("#editable-sample_new").click();
                                     }
+
                                 });
 
-                                swal({
-                                        title: "Are you sure?",
-                                        text: "The record will be save and will be use for further transaction",
-                                        type: "warning",
-                                        showCancelButton: true,
-                                        confirmButtonColor: '#DD6B55',
-                                        confirmButtonText: 'Yes, do it!',
-                                        cancelButtonText: "No, cancel it!",
-                                        closeOnConfirm: false,
-                                        closeOnCancel: false
-                                    },
-                                    function (isConfirm) {
-                                        if (isConfirm) {
-
-
-
-                                            $.ajax({
-                                                type: 'post',
-                                                url: 'SystemSetup/UserAccount/Insert_UserAccount.php',
-                                                data: {
-                                                    _username: username,
-                                                    _role: role,
-                                                    _reference: reference,
-                                                    _password: password
-                                                },
-                                                success: function (response) {
-                                                    document.getElementById('getstat').value = '1';
-                                                    alert(document.getElementById('getstat').value);
-                                                    swal("Record Added!", "The data is successfully added!", "success");
-
-                                                    if (role == 'OSAS HEAD')
-                                                        var aiNew = oTable.fnAddData([username, "<center style='padding-top:10px'><span class='label label-primary'>OSAS HEAD</span></center>", '<center><span class="label label-primary">New Account</span></center>', "<center style='padding-top:10px'><span class='label label-success'>Active</span></center>", " <center style='padding-top:10px'><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-ban'></i></a><center>", '']);
-                                                    else if (role == 'Organization')
-                                                        var aiNew = oTable.fnAddData([username, "<center style='padding-top:10px'><span class='label label-inverse'>Organization</span></center>", '<center><span class="label label-primary">New Account</span></center>', "<center style='padding-top:10px'><span class='label label-success'>Active</span></center>", " <center style='padding-top:10px'><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-ban'></i></a><center>", '']);
-                                                    else if (role == 'Administrator')
-                                                        var aiNew = oTable.fnAddData([username, "<center style='padding-top:10px'><span class='label label-success'>Administrator</span></center>", '<center style="padding-top:10px"><span class="label label-primary">New Account</span></center>', "<center style='padding-top:10px'><span class='label label-success'>Active</span></center>", " <center><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-ban'></i></a><center>", '']);
-                                                    else
-                                                        var aiNew = oTable.fnAddData([username, "<center style='padding-top:10px'><span class='label label-warning'>Student</span></center>", '<center style="padding-top:10px"><span class="label label-primary">New Account</span></center>', "<center style='padding-top:10px'><span class='label label-success'>Active</span></center>", " <center><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-ban'></i></a><center>"]);
-
-
-                                                    var nRow = oTable.fnGetNodes(aiNew[0]);
-
-                                                    document.getElementById("form-data").reset();
-
-
-                                                },
-                                                error: function (response) {
-                                                    swal(response, "Please try again", "error");
-                                                    $("#editable-sample_new").click();
-                                                }
-
-                                            });
-
-
-                                        } else {
-                                            swal("Cancelled", "The transaction is cancelled", "error");
-                                            $("#editable-sample_new").click();
-                                        }
-
-                                    });
-
-                            }
-                        else
-                            swal("Please Fill the password field", "Please try again", "error");
-                        else
-                            swal("Please Fill the role field", "Please try again", "error");
-
-                    } else
-                        swal("Username already Exist", "Please try again", "error");
-
-
-
-
-                } else
-                    swal("Please Fill the username field", "Please try again", "error");
-
-
-
-
-            });
-            $('#updsubmit-data').click(function (e) {
-                e.preventDefault();
-                alert(latcode);
-                var username = document.getElementById("updtxtusername").value;
-                var role = document.getElementById("updselRole").value;
-                var password = document.getElementById("updtxtpassword").value;
-                var reference = document.getElementById("updselRef").value;
-                if (username.length)
-                    if (role != '-1') {
-                        $("#updclose").click();
-
-
-                        swal({
-                                title: "Are you sure?",
-                                text: "The record will be save and will be use for further transaction",
-                                type: "warning",
-                                showCancelButton: true,
-                                confirmButtonColor: '#DD6B55',
-                                confirmButtonText: 'Yes, do it!',
-                                cancelButtonText: "No, cancel it!",
-                                closeOnConfirm: false,
-                                closeOnCancel: false
-                            },
-                            function (isConfirm) {
-                                if (isConfirm) {
-                                    $.ajax({
-                                        type: 'post',
-                                        url: 'SystemSetup/UserAccount/Update_UserAccount.php',
-                                        data: {
-                                            _olduname: latcode,
-                                            _username: username,
-                                            _role: role,
-                                            _reference: reference,
-                                            _password: password
-                                        },
-                                        success: function (response) {
-                                            swal("Record Updated!", "The data is successfully updated!", "success");
-                                            /*
-                                            if (role == 'OSAS HEAD')
-                                                var aiNew = oTable.fnAddData([username, "<center style='padding-top:10px'><span class='label label-primary'>OSAS HEAD</span></center>", '<center><span class="label label-primary">New Account</span></center>', "<center style='padding-top:10px'><span class='label label-success'>Active</span></center>", " <center style='padding-top:10px'><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-ban'></i></a><center>", '']);
-                                            else if (role == 'Organization')
-                                                var aiNew = oTable.fnAddData([username, "<center style='padding-top:10px'><span class='label label-inverse'>Organization</span></center>", '<center><span class="label label-primary">New Account</span></center>', "<center style='padding-top:10px'><span class='label label-success'>Active</span></center>", " <center style='padding-top:10px'><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-ban'></i></a><center>", '']);
-                                            else if (role == 'Administrator')
-                                                var aiNew = oTable.fnAddData([username, "<center style='padding-top:10px'><span class='label label-success'>Administrator</span></center>", '<center style="padding-top:10px"><span class="label label-primary">New Account</span></center>', "<center style='padding-top:10px'><span class='label label-success'>Active</span></center>", " <center><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-ban'></i></a><center>", '']);
-                                            else
-                                                var aiNew = oTable.fnAddData([username, "<center style='padding-top:10px'><span class='label label-warning'>Student</span></center>", '<center style="padding-top:10px"><span class="label label-primary">New Account</span></center>', "<center style='padding-top:10px'><span class='label label-success'>Active</span></center>", " <center><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-ban'></i></a><center>"]);
-
-
-                                            var nRow = oTable.fnGetNodes(aiNew[0]);*/
-                                            document.getElementById("updform-data").reset();
-                                        },
-                                        error: function (response) {
-                                            swal(response, "Please try again", "error");
-                                        }
-
-                                    });
-
-                                } else {
-                                    swal("Cancelled", "The transaction is cancelled", "error");
-                                }
-
-                            });
-
-                    }
+                        }
+                else
+                    swal("Please Fill the password field", "Please try again", "error");
                 else
                     swal("Please Fill the role field", "Please try again", "error");
                 else
@@ -463,7 +346,6 @@ var EditableTable = function () {
                 var nRow = $(this).parents('tr')[0];
                 editRow(oTable, nRow);
                 nEditing = nRow;
-                alert(latcode);
                 $.ajax({
                     type: 'post',
                     url: 'SystemSetup/UserAccount/Retrieve_UserDetails.php',
@@ -472,7 +354,7 @@ var EditableTable = function () {
                         _username: latcode
                     },
                     success: function (data) {
-                        var getref = data.ref;
+                        alert(data.ref);
                         document.getElementById('updtxtusername').value = data.uname;
                         document.getElementById('updselRole').value = data.role;
 
@@ -484,16 +366,15 @@ var EditableTable = function () {
 
                             $.ajax({
                                 type: 'get',
-                                url: 'SystemSetup/UserAccount/Retrieve_UserReference.php',
+                                url: 'SystemSetup/UserAccount/Retrieve_Reference.php',
                                 dataType: 'json',
                                 data: {
-                                    _stat: reftype,
-                                    _ref: data.ref
+                                    _stat: reftype
                                 },
-                                success: function (data2) {
+                                success: function (data) {
                                     document.getElementById('updselRef').innerHTML = '<option value="-1">Please Select an User Reference</option>';
-                                    $.each(data2, function (key, val) {
-                                        if (getref == val.val)
+                                    $.each(data, function (key, val) {
+                                        if (data.ref == val.val)
                                             $('#updselRef').append('<option value="' + val.val + '" selected>' + val.text + '</option>')
                                         else
                                             $('#updselRef').append('<option value="' + val.val + '">' + val.text + '</option>')
@@ -517,17 +398,15 @@ var EditableTable = function () {
 
                             $.ajax({
                                 type: 'get',
-                                url: 'SystemSetup/UserAccount/Retrieve_UserReference.php',
+                                url: 'SystemSetup/UserAccount/Retrieve_Reference.php',
                                 dataType: 'json',
                                 data: {
-                                    _stat: reftype,
-                                    _ref: data.ref
+                                    _stat: reftype
                                 },
-                                success: function (data2) {
+                                success: function (data) {
                                     document.getElementById('updselRef').innerHTML = '<option value="-1">Please Select an User Reference</option>';
-                                    $('#updselRef').append('<option value="' + val.val + '" selected>' + val.text + '</option>')
-                                    $.each(data2, function (key, val) {
-                                        if (getref == val.val)
+                                    $.each(data, function (key, val) {
+                                        if (data.ref == val.val)
                                             $('#updselRef').append('<option value="' + val.val + '" selected>' + val.text + '</option>')
                                         else
                                             $('#updselRef').append('<option value="' + val.val + '">' + val.text + '</option>')
@@ -545,16 +424,14 @@ var EditableTable = function () {
                             reftype = 'stud';
                             $.ajax({
                                 type: 'get',
-                                url: 'SystemSetup/UserAccount/Retrieve_UserReference.php',
+                                url: 'SystemSetup/UserAccount/Retrieve_Reference.php',
                                 dataType: 'json',
                                 data: {
-                                    _stat: reftype,
-                                    _ref: data.ref
+                                    _stat: reftype
                                 },
-                                success: function (data2) {
+                                success: function (data) {
                                     document.getElementById('updselRef').innerHTML = '<option value="-1">Please Select an User Reference</option>';
-                                    $.each(data2, function (key, val) {
-                                        alert(getref + '-' + val.val);
+                                    $.each(data, function (key, val) {
                                         if (data.ref == val.val)
                                             $('#updselRef').append('<option value="' + val.val + '" selected>' + val.text + '</option>')
                                         else
@@ -570,6 +447,17 @@ var EditableTable = function () {
 
                         }
 
+
+
+
+
+
+
+
+
+                        alert()
+                        alert(data.ref)
+                        alert(data.role)
                     },
                     error: function (response) {
                         swal("Error encountered while adding data", "Please try again", "error");

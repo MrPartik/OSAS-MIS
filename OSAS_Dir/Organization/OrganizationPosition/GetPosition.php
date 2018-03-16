@@ -1,9 +1,9 @@
 <?php
 	
-    include('../../../config/connection.php');
+	include('../../connection.php');
     $compcode = $_GET['_code'];
     $query = "SELECT OrgOffiPosDetails_NAME,OrgOffiPosDetails_DESC  FROM r_org_officer_position_details WHERE OrgOffiPosDetails_DISPLAY_STAT = 'Active' AND OrgOffiPosDetails_ORG_CODE = '$compcode' ";
-    $view_query = mysqli_query($con,$query);
+    $view_query = mysqli_query($connection,$query);
     $container_arr = array();
     while($row = mysqli_fetch_assoc($view_query))
     {

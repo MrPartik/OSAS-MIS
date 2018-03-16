@@ -1,12 +1,11 @@
 <?php
 	
-    include('../../../config/connection.php');
-
+	include('../../connection.php');
     $compcode = $_GET['_code'];
     $stat = $_GET['_stat'];
     
 
-    $view_query = mysqli_query($con," SELECT CONCAT(Stud_LNAME,', ',Stud_FNAME ,' ', IFNULL(Stud_MNAME,''))  AS NAME , Stud_NO FROM t_assign_org_members
+    $view_query = mysqli_query($connection," SELECT CONCAT(Stud_LNAME,', ',Stud_FNAME ,' ', IFNULL(Stud_MNAME,''))  AS NAME , Stud_NO FROM t_assign_org_members
 		INNER JOIN r_stud_profile ON AssOrgMem_STUD_NO = Stud_NO
         WHERE AssOrgMem_DISPLAY_STAT = 'Active' AND AssOrgMem_APPL_ORG_CODE = '$compcode' ");
 

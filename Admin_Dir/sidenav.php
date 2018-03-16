@@ -29,6 +29,7 @@
                         <li <?php if( $currentPage==='Admin_AccrReq' ) { echo 'class="active"';} ?> ><a href="AccreditationRequirement.php">Accreditation Requirement</a></li>
                         <li <?php if( $currentPage==='Admin_Course' ) { echo 'class="active"';} ?>><a href="Course.php">Course</a></li>
                         <li <?php if( $currentPage==='Admin_OrgCat' ) { echo 'class="active"';} ?>><a href="OrganizationCategory.php">Organization Category</a></li>
+                        <li <?php if( $currentPage==='Admin_OfficerPos' ) { echo 'class="active"';} ?>><a href="OfficerPosition.php">Officer Position</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">

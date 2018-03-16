@@ -18,8 +18,6 @@
 <script src="../js/evnt.calendar.init.js"></script>
 <script src="../js/jvector-map/jquery-jvectormap-1.2.2.min.js"></script>
 <script src="../js/jvector-map/jquery-jvectormap-us-lcc-en.js"></script>
-<script src="../js/select2/select2.js"></script>
-<script src="../js/select-init.js"></script>
 <script src="../js/gauge/gauge.js"></script>
 <!--clock init-->
 <script src="../js/css3clock/js/css3clock.js"></script>
@@ -35,6 +33,8 @@
 <script src="../js/scripts.js"></script>
 <!--script for this page-->
 <script src="../js/advanced-form.js"></script>
+<script src="../js/select2/select2.js"></script>
+<script src="../js/select-init.js"></script>
 <script type="text/javascript" src="../js/fuelux/js/spinner.min.js"></script>
 <script type="text/javascript" src="../js/advanced-datatable/js/jquery.dataTables.js"></script>
 

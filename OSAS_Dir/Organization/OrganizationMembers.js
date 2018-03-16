@@ -103,7 +103,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: "GET",
-                                url: 'Organization/OrganizationMembers/Syncdata.php',
+                                url: 'OrganizationMembers/Syncdata.php',
                                 dataType: 'json',
                                 data: {
                                     _code: getcode
@@ -168,7 +168,7 @@ var EditableTable = function () {
                 document.getElementById('orgcode').innerText = getcode;
                 $.ajax({
                     type: "GET",
-                    url: 'Organization/OrganizationMembers/GetData-ajax.php',
+                    url: 'OrganizationMembers/GetData-ajax.php',
                     dataType: 'json',
                     data: {
                         _code: getcode,
@@ -184,7 +184,7 @@ var EditableTable = function () {
 
                 $.ajax({
                     type: "GET",
-                    url: 'Organization/OrganizationMembers/FillPos.php',
+                    url: 'OrganizationMembers/FillPos.php',
                     dataType: 'json',
                     data: {
                         _code: getcode
@@ -201,7 +201,7 @@ var EditableTable = function () {
 
                 $.ajax({
                     type: "GET",
-                    url: 'Organization/OrganizationMembers/FillTableStud.php',
+                    url: 'OrganizationMembers/FillTableStud.php',
                     dataType: 'json',
                     data: {
                         _code: getcode,
@@ -224,7 +224,7 @@ var EditableTable = function () {
 
                 $.ajax({
                     type: "GET",
-                    url: 'Organization/OrganizationMembers/FillSelStudent.php',
+                    url: 'OrganizationMembers/FillSelStudent.php',
                     dataType: 'json',
                     data: {
                         _code: getcode
@@ -363,7 +363,7 @@ var initproftable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: "GET",
-                                url: 'Organization/OrganizationMembers/Syncdata.php',
+                                url: 'OrganizationMembers/Syncdata.php',
                                 dataType: 'json',
                                 data: {
                                     _code: getcode
@@ -402,7 +402,7 @@ var initproftable = function () {
 
                 $.ajax({
                     type: 'post',
-                    url: 'Organization/OrganizationMembers/AddStud.php',
+                    url: 'OrganizationMembers/AddStud.php',
                     data: {
                         _studno: drpstud,
                         _pos: drppos,
@@ -416,10 +416,10 @@ var initproftable = function () {
                     }
 
                 });
-                //                alert(drpstud + '-' + appcode);
+                alert(drpstud + '-' + appcode);
                 $.ajax({
                     type: "GET",
-                    url: 'Organization/OrganizationMembers/GetCourseYS.php',
+                    url: 'OrganizationMembers/GetCourseYS.php',
                     dataType: 'json',
                     data: {
                         _studno: drpstud,
@@ -443,7 +443,7 @@ var initproftable = function () {
             });
 
 
-            $('#proftable a.delete').on('click', function (e) {
+            $('#proftable a.delete').click(function (e) {
                 e.preventDefault();
                 var nRow = $(this).parents('tr')[0];
                 var getval = $(this).closest('tr').children('td:first').text();
@@ -466,7 +466,7 @@ var initproftable = function () {
 
                             $.ajax({
                                 type: 'post',
-                                url: 'Organization/OrganizationMembers/DelStud.php',
+                                url: 'OrganizationMembers/DelStud.php',
                                 data: {
                                     _studno: getval,
                                     _appcode: appcode

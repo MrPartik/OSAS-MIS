@@ -20,7 +20,6 @@ var EditableTable = function () {
             }
 
             function saveRow(oTable, nRow) {
-                //                alert(document.getElementById('txtupdcode').value);
                 var code = document.getElementById('txtupdcode').value;
                 oTable.fnUpdate(code, nRow, 0, false);
                 oTable.fnUpdate(document.getElementById('txtupdname').value, nRow, 1, false);
@@ -189,7 +188,6 @@ var EditableTable = function () {
                     reccode = document.getElementById('updcode' + z).innerText;
                     //                    alert(latcode + '-' + reccode + '-' + stat);
                     $.ajax({
-<<<<<<< HEAD
                         type: 'post'
                         , url: 'Organization/OrganizationProfile/Step5.php'
                         , async: true
@@ -208,27 +206,6 @@ var EditableTable = function () {
                             , confirmButtonText: 'Ok'}, function (isConfirm) {location.reload();});
                         }
                         , error: function (response) {
-=======
-                        type: 'post',
-                        url: 'Organization/OrganizationProfile/Step5.php',
-                        async: true,
-                        data: {
-                            _drpcode: latcode,
-                            _reccode: reccode,
-                            _stat: stat
-
-                        },
-                        success: function (response) {
-                            ///                            alert(latcode + '-' + reccode + '-' + stat);
-                            swal("Woaah, that's neat!", "The application is successfull!", "success");
-                            $('#tableForm').show(500);
-                            $('#wizardForm').hide(500);
-
-
-                            //document.getElementById("form-data").reset();
-                        },
-                        error: function (response) {
->>>>>>> origin/master
                             swal("Error encountered while adding data", "Please try again", "error");
                         }
                     });
@@ -348,10 +325,6 @@ var EditableTable = function () {
                     }
                 });
             });
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
             $('#editable-sample').on('click', 'a.wizardOpen', function (e) {
                 e.preventDefault();
                 var nRow = $(this).parents('tr')[0];
@@ -368,13 +341,7 @@ var EditableTable = function () {
                     }
                     , success: function (curstep) {
                         //DITO NASGSTART YUNG PAGFILL SA STEP1
-                        alert(curstep);
                         if (curstep > 1) {
-<<<<<<< HEAD
-=======
-                            alert('qwewqe');
-
->>>>>>> origin/master
                             $.ajax({
                                 type: 'GET'
                                 , url: 'Organization/OrganizationProfile/FillStep1.php'
@@ -579,10 +546,6 @@ var EditableTable = function () {
                     else swal("Cancelled", "The transaction is cancelled", "error");
                 });
             });
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
             $('#editable-sample').on('click', 'a.cancel', function (e) {
                 e.preventDefault();
                 if ($(this).attr("data-mode") == "new") {
@@ -594,12 +557,6 @@ var EditableTable = function () {
                     nEditing = null;
                 }
             });
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> origin/master
             $('#editable-sample').on('click', ' a.edit', function (e) {
                 e.preventDefault();
                 var id = $(this).closest('tr').children('td:first').text();
