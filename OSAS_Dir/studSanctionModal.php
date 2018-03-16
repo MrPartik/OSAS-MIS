@@ -128,8 +128,38 @@
                                                         <input id="checkFinished" checkStatus="<?php echo  $SancDetrow[ 'FINISHED'] ?>" <?php if( $SancDetrow[ 'FINISHED']==='Finished' ) {echo 'checked';} ?> type="checkbox" /></center>
                                                 </td>
                                                 <td class="actionDes">
-                                                    <center><i title="Delete" style='cursor:pointer;font-size: 20px; ' id='deletemotoInside' class='fa fa-minus-circle '></i> </center>
+                                                    <center><i title="Delete" style='cursor:pointer;font-size: 20px; ' id='deletemotoInside' class='fa fa-minus-circle  '></i> </center> <br>
+                                                    <center><i title="History" style='cursor:pointer;font-size: 20px; ' id='history' class='fa fa-exchange'></i> </center>
+
                                                 </td>
+                                                <div id="sanctionDivs" class="row collapse panel-body">
+                            <div class="col-md-4" style="width:300px"> Available Sanction
+                                <select id="sanctionSelection" class="js-example-basic-single form-control m-bot15">
+                                    <?php $querySanc =mysqli_query($con,"select * from r_sanction_details where SancDetails_DISPLAY_STAT = 'Active'");
+                                          while($row =mysqli_fetch_array($querySanc)) { ?>
+                                        <option sanctionCode="<?php echo $row['SancDetails_CODE'];?>" sanctionTimeValue="<?php echo $row['SancDetails_TIMEVAL']?>">
+                                            <?php echo $row['SancDetails_NAME']?>
+                                        </option>
+                                        <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4" style="width:270px"> Available Designated Office
+                                <select id="officesSelection" class="form-control m-bot15">
+                                    <?php $queryDesignatedOffice =mysqli_query($con,"select * from r_designated_offices_details where DesOffDetails_DISPLAY_STAT = 'active'");
+                                          while($desRow =mysqli_fetch_array($queryDesignatedOffice)) { ?>
+                                        <option value="<?php echo  $desRow['DesOffDetails_CODE']?>">
+                                            <?php echo  $desRow['DesOffDetails_NAME']?>
+                                        </option>
+                                        <?php }?>
+                                </select>
+                            </div>
+                            <div class="col-md-4" style="width:10px">
+                                <center>
+                                    <br>
+                                    <button id="addSanction" class="btnSave btn btn-primary"><i class="fa fa-plus-circle "></i> Assign</button>
+                                </center>
+                            </div>
+                        </div>
                                             </tr>
                                             <?php }}?>
                                     </tbody>
@@ -147,13 +177,14 @@
                                 </table>
                             </div>
                         </div>
-                    </div>
+
                     <div class="modal-footer">
                         <button id="saveSanctionSet" type="submit" class="btnSave btn btn-success"><i class="fa fa-save"></i> Save</button>
                     </div>
                 </div>
             </div>
         </div>
+                    </div>
         <script>
             $(document).ready(function () {
                 var dataSrc = [];
@@ -178,6 +209,10 @@
                     ,iDisplayLength: 3
                 });
             });
+
+            $("i[id='history']").on("click",function(){
+                alert("asdasdasdasdasdasdddddddddddddddddddddddddddddddddddddd");
+            });
             $('#assignSanction').on("click", function () {
                 if ($('#sanctionDiv:visible').length) {
                     $("#sanctionDiv").slideToggle(500);
@@ -187,6 +222,7 @@
                     $("#sanctionDiv").slideToggle(500);
                     $("#assignSanction").html("<i class='fa  fa-arrow-circle-o-left'></i>  Back");
                 }
+
             });
             $("#tbodySanctions").on('input', "textarea[id='sancRemarks']", function () {
                 if ($(this).val() == $(this).attr("value")) {
@@ -224,20 +260,20 @@
                     , Remaining = $('#sanctionSelection option:selected').attr("sanctionTimeValue");
 
                 $("#tbodySanctions").find(".dataTables_empty").closest("tr ").remove();
-                $("#tbodySanctions").append("<tr id='newSanction'> <td class='hidden'>" + SanctionCode + "</td><td class='hidden'>" + DesignatedOfficeCode + "</td><td><span class='label label-success'>NEW</span> " + SanctionName + '<br>Time Value:  ' + Hrs + ' Hours' + "<br/><br/><i style='font-size:10px'>Date Added:" + currDate + "</i></td><td><textarea id='sancRemarks' style='resize:vertical; width:100%;height:100px'></textarea></td><td class='numeric'>  <center><input id='inputConsume' type='text' value='0' maxVal='" + Hrs + "' style='width:50px; text-align:center;' /> </center></td><td class='timeRemaining numeric'>" + Remaining + "</td><td> <center> <input id='checkFinished' type='checkbox'  /></center></td> <td><center> <i title='Delete' style='cursor:pointer;font-size: 20px; ' id='deletemoto' class='fa fa-minus-circle '></i> </center></td>< /tr> ");
+                $("#tbodySanctions").append("<tr id='newSanction'> <td class='hidden'>" + SanctionCode + "</td><td class='hidden'>" + DesignatedOfficeCode + "</td><td><span class='label label-success'>NEW</span> " + SanctionName + '<br>Time Value:  ' + Hrs + ' Hours' + "<br/><br/><i style='font-size:10px'>Date Added:" + currDate + "</i></td><td><textarea id='sancRemarks' style='resize:vertical; width:100%;height:100px'></textarea></td><td class='numeric'>  <center><input id='inputConsume' type='text' value='0' maxVal='" + Hrs + "' style='width:50px; text-align:center;' /> </center></td><td class='timeRemaining numeric'>" + Remaining + "</td><td> <center> <input id='checkFinished' type='checkbox'  /></center></td> <td><center> <i title='Delete' style='cursor:pointer;font-size: 20px; ' id='deletemoto' class='fa fa-minus-circle '></i> </center></td>< /tr>  ");
             });
             $("#tbodySanctions").on("click", "i[id='deletemoto']", function (e) {
                 $(this).closest('tr').remove();
             });
             $("#tbodySanctions").on("click", "i[id='deletemotoInside']", function (e) {
                 $(this).closest('tr').addClass("tobeRemoved");
-                $(this).closest('tr').find(".TDSancName").html("<span class='label label-danger'>DELETE!</span><span class='spanSancName'>  " + $(this).closest('tr').find(".spanSancName").html() + "</span>");
-                $(this).closest('tr').find(".actionDes").html(" <center> <i style='cursor:pointer;font-size: 20px' id='returnmotoInside' class='fa fa-undo'></i> </center>");
+                $(this).closest('tr').find(".TDSancName").html("<span class='label label-danger'>Deactivate!</span><span class='spanSancName'>  " + $(this).closest('tr').find(".TDSancName").html() + "</span>");
+                $(this).closest('tr').find(".actionDes").html(" <center> <i style='cursor:pointer;font-size: 20px' id='returnmotoInside' class='fa fa-undo'></i> </center><br><center><i title='History' style='cursor:pointer;font-size: 20px; ' id='history' class='fa fa-exchange'></i> </center>");
             });
             $("#tbodySanctions").on("click", "i[id='returnmotoInside']", function (e) {
                 $(this).closest('tr').removeClass("tobeRemoved");
                 $(this).closest('tr').find(".TDSancName").html("<span class='spanSancName'>" + $(this).closest('tr').find(".spanSancName").html() + "</span>");
-                $(this).closest('tr').find(".actionDes").html("  <center> <i style='cursor:pointer;font-size: 20px' id='deletemotoInside' class='fa fa-minus-circle'></i> </center>");
+                $(this).closest('tr').find(".actionDes").html("  <center> <i style='cursor:pointer;font-size: 20px' id='deletemotoInside' class='fa fa-minus-circle'></i> </center><br><center><i title='History' style='cursor:pointer;font-size: 20px; ' id='history' class='fa fa-exchange'></i> </center>");
             });
             $("#tbodySanctions").on('input change', "input[id='inputConsume']", function () {
                 $(this).closest('tr').find('.timeRemaining').html($(this).attr('maxVal') - $(this).val());
@@ -262,13 +298,13 @@
                 }
             });
             $("#saveSanctionSet").on("click", function () { 
-                
-                $("tbody").find("tr [id='newSanction']").each(function (i) {
+                $("#saveSanctionSet").attr("disabled","disabled");
+                $("tbody").find("tr[id='newSanction']").each(function (i) {
                     var $tds = $(this).find('td')
                         , SanctionCode = $tds.eq(0).text()
                         , DesignatedOfficeCode = $tds.eq(1).text()
                         , StudNumber = "<?php echo $_GET['StudNo']?>"
-                        , Cons = $tds.eq(4).find("input[id='inputConsume'] ").val()
+                        , Cons = $tds.eq(4).find("input[id='inputConsume']").val()
                         , Finish = $tds.eq(6).find("input[id='checkFinished']").is(':checked') ? 'Finished' : 'Processing'
                         , sancRemarks = $tds.eq(3).find("textarea[id='sancRemarks']").val();
                     $.ajax({

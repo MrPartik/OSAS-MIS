@@ -36,6 +36,7 @@ include('../config/connection.php');
                             <a href="javascript:;" class="fa fa-times"></a>
                          </span> </header>
                                 <div id="TableStudSanc" class="panel-body"> 
+                                    <button data-toggle="modal" href="#AddDest" class="btn  btn-default"> <i class="fa fa-plus"></i> Clerance signatories</button>
                                     <div class="adv-table">
                                         <table class="display table table-bordered table-striped" id="dynamic-table" >
                                             <thead>
@@ -91,7 +92,7 @@ include('../config/connection.php');
                                                             </td>
                                                             <td>
                                                                 <center>
-                                                                    <button id="StudSanctionModalClick" value="<?php echo $stud_row['Stud_NO']; ?>" class="btn btn-info " data-toggle="modal" href="#studSanction"> <i class="fa  fa-info-circle"></i> </button>
+                                                                    <button id="StudSemModalClick" value="<?php echo $stud_row['Stud_NO']; ?>" class="btn btn-info " data-toggle="modal" href="#studSemClearance"> <i class="fa  fa-info-circle"></i> </button>
                                                                 </center>
                                                             </td>
                                                         </tr>
@@ -178,7 +179,7 @@ include('../config/connection.php');
                 </div>
             </div>
             <!-- Modal Dest-->
-            <div id="studSanction" class="modal fade content-sanction " role="dialog "> </div>
+            <div id="studSemClearance" class="modal fade content-sanction " role="dialog "> </div>
             <!--main content end-->
             <!-- Placed js at the end of the document so the pages load faster -->
             <!--Core js-->
@@ -210,7 +211,7 @@ include('../config/connection.php');
             , aaSorting: [[5, "desc"]]
         });
     });
-    $("#TableStudSanc ").on("click ", "#StudSanctionModalClick ", function () {
+    $("#TableStudSanc ").on("click ", "#StudSemModalClick ", function () {
         var datas = $(this).attr("value");
         $.ajax({
             url: "studClearanceSemModal.php?StudNo=" + datas

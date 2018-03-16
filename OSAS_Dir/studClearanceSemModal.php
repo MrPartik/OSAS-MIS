@@ -56,7 +56,7 @@
                     <br/>
                         <div class="col-lg-12 form-group" id="course">
                                                 <Strong >Choose Signatories</Strong><br>
-                                                <i>This will let this Student Services to hold clearance</i>
+                                                <i>This will letting the Student Services to hold clearance</i>
                                                 <select multiple name="e9" id="e9" style="width:100%" class="populate">
                                                         <?php
                                                             $view_query = mysqli_query($con,"SELECT * FROM `r_clearance_signatories` WHERE `ClearSignatories_DISPLAY_STAT` ='active'");
@@ -64,11 +64,11 @@
                                                             {
                                                                 $name = $row["ClearSignatories_NAME"];
                                                                 $code = $row["ClearSignatories_CODE"];
-                                                                echo "<option value='$code'>$name</option>  ";
+                                                                echo "<option value='$code' >$name</option>  ";
                                                             }
                                                         ?>
                                                     </select>
-                                                <br><span class="label label-danger">NOTE!</span>  Every signatories above, signifies that the student didn't comply.
+                                                <br><br><span class="label label-danger">NOTE!</span>  Every signatories above, signifies that the student dind't cleared with the specific singatories
                                             </div>
                 </div>
                     <div class="modal-footer">
