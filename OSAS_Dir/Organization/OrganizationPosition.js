@@ -105,7 +105,7 @@ var EditableTable = function () {
                 var oTable = $('#editable-sample').dataTable();
                 $.ajax({
                     type: "GET",
-                    url: 'OrganizationPosition/GetPositionCount.php',
+                    url: 'Organization/OrganizationPosition/GetPositionCount.php',
                     dataType: 'json',
                     data: {
                         _code: getlatcode
@@ -126,7 +126,7 @@ var EditableTable = function () {
 
                 $.ajax({
                     type: "GET",
-                    url: 'OrganizationPosition/GetPosition.php',
+                    url: 'Organization/OrganizationPosition/GetPosition.php',
                     dataType: 'json',
                     data: {
                         _code: selOrg
@@ -153,7 +153,7 @@ var EditableTable = function () {
                 e.preventDefault();
                 var pos = document.getElementById('txtcode').value;
                 var desc = document.getElementById('txtdesc').value;
-
+                $("#close").click();
                 swal({
 
                         title: "Are you sure?",
@@ -170,7 +170,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'OrganizationPosition/AddPosition.php',
+                                url: 'Organization/OrganizationPosition/AddPosition.php',
                                 data: {
                                     _code: getlatcode,
                                     _pos: pos,
@@ -178,17 +178,22 @@ var EditableTable = function () {
                                 },
                                 success: function (response) {
                                     swal("Record Added!", "The data is successfully Added!", "success");
-                                    oTable.fnDeleteRow(nRow);
+                                    var aiNew = oTable.fnAddData([pos, desc, "<center> <a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-trash-o'></i></a></center>"]);
+                                    var nRow = oTable.fnGetNodes(aiNew[0]);
+
                                 },
                                 error: function (response) {
                                     swal("Error encountered while adding data", "Please try again", "error");
-                                    oTable.fnDeleteRow(nRow);
+                                    $("#editable-sample_new").click();
                                 }
 
                             });
 
-                        } else
+                        } else {
                             swal("Cancelled", "The transaction is cancelled", "error");
+                            $("#editable-sample_new").click();
+
+                        }
 
                     });
 
@@ -218,7 +223,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'OrganizationPosition/DeletePosition.php',
+                                url: 'Organization/OrganizationPosition/DeletePosition.php',
                                 data: {
                                     _orgcode: getlatcode,
                                     _code: getval
@@ -271,7 +276,7 @@ var EditableTable = function () {
                     if (jqInputs[1].value.length > 0 && jqInputs[1].value.length > 0) {
                         $.ajax({
                             type: 'post',
-                            url: 'OrganizationPosition/UpdatePos.php',
+                            url: 'Organization/OrganizationPosition/UpdatePos.php',
                             data: {
                                 _pos: jqInputs[0].value,
                                 _desc: jqInputs[1].value,

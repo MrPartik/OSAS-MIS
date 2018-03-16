@@ -1,6 +1,6 @@
 <?php
 
-    include('../../connection.php');
+    include('../../../config/connection.php');     
     echo $filename=$_FILES["file"]["tmp_name"];
 
     if($_FILES["file"]["size"] > 0)
@@ -11,7 +11,7 @@
         {
 
         //It wiil insert a row to our subject table from our csv file`
-            $query = mysqli_query($connection,"INSERT INTO excel (studname,studnum) VALUES ('$emapData[1]','$emapData[2]') ");
+            $query = mysqli_query($con,"INSERT INTO excel (studname,studnum) VALUES ('$emapData[1]','$emapData[2]') ");
 
         }
         fclose($file);

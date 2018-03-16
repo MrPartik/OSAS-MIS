@@ -184,6 +184,9 @@ include('../config/connection.php');
             <!-- Placed js at the end of the document so the pages load faster -->
             <!--Core js-->
             <?php include('footer.php')?>
+                <script type="text/javascript " language="javascript " src="../js/advanced-datatable/js/jquery.dataTables.js "></script>
+                <script type="text/javascript " src="../js/data-tables/DT_bootstrap.js "></script>
+                <script src="../js/dynamic_table_init.js "></script>
     </body>
 
 </html>
@@ -214,7 +217,7 @@ include('../config/connection.php');
     $("#TableStudSanc ").on("click ", "#StudSemModalClick ", function () {
         var datas = $(this).attr("value");
         $.ajax({
-            url: "studClearanceSemModal.php?StudNo=" + datas
+            url: "studSanctionModal.php?StudNo=" + datas
             , cache: false
             , async: false
             , success: function (result) {

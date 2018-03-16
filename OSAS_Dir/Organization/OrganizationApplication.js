@@ -20,6 +20,7 @@ var EditableTable = function () {
             }
 
             function saveRow(oTable, nRow) {
+                //                alert(document.getElementById('txtupdcode').value);
                 var code = document.getElementById('txtupdcode').value;
                 oTable.fnUpdate(code, nRow, 0, false);
                 oTable.fnUpdate(document.getElementById('txtupdname').value, nRow, 1, false);
@@ -188,24 +189,25 @@ var EditableTable = function () {
                     reccode = document.getElementById('updcode' + z).innerText;
                     //                    alert(latcode + '-' + reccode + '-' + stat);
                     $.ajax({
-                        type: 'post'
-                        , url: 'Organization/OrganizationProfile/Step5.php'
-                        , async: true
-                        , data: {
-                            _drpcode: latcode
-                            , _reccode: reccode
-                            , _stat: stat
-                        }
-                        , success: function (response) {
+                        type: 'post',
+                        url: 'Organization/OrganizationProfile/Step5.php',
+                        async: true,
+                        data: {
+                            _drpcode: latcode,
+                            _reccode: reccode,
+                            _stat: stat
 
-                             swal({  title: "Woaah, that's neat!"
-                            , text: "The application is successfull!"
-                            , type: "success"
-                            , showCancelButton: false
-                            , confirmButtonColor: '#9DD656'
-                            , confirmButtonText: 'Ok'}, function (isConfirm) {location.reload();});
-                        }
-                        , error: function (response) {
+                        },
+                        success: function (response) {
+                            ///                            alert(latcode + '-' + reccode + '-' + stat);
+                            swal("Woaah, that's neat!", "The application is successfull!", "success");
+                            $('#tableForm').show(500);
+                            $('#wizardForm').hide(500);
+
+
+                            //document.getElementById("form-data").reset();
+                        },
+                        error: function (response) {
                             swal("Error encountered while adding data", "Please try again", "error");
                         }
                     });
@@ -341,7 +343,10 @@ var EditableTable = function () {
                     }
                     , success: function (curstep) {
                         //DITO NASGSTART YUNG PAGFILL SA STEP1
+                        alert(curstep);
                         if (curstep > 1) {
+                            alert('qwewqe');
+
                             $.ajax({
                                 type: 'GET'
                                 , url: 'Organization/OrganizationProfile/FillStep1.php'
@@ -557,6 +562,9 @@ var EditableTable = function () {
                     nEditing = null;
                 }
             });
+
+
+
             $('#editable-sample').on('click', ' a.edit', function (e) {
                 e.preventDefault();
                 var id = $(this).closest('tr').children('td:first').text();
