@@ -29,7 +29,6 @@ var EditableTable = function () {
             }
 
             function saveRow(oTable, nRow) {
-                //                alert(document.getElementById('txtupdcode').value);
                 var code = document.getElementById('txtupdcode').value;
                 oTable.fnUpdate(code, nRow, 0, false);
                 oTable.fnUpdate(document.getElementById('txtupdname').value, nRow, 1, false);
@@ -261,7 +260,6 @@ var EditableTable = function () {
 
                         },
                         success: function (response) {
-                            ///                            alert(latcode + '-' + reccode + '-' + stat);
                             swal("Woaah, that's neat!", "The application is successfull!", "success");
                             $('#tableForm').show(500);
                             $('#wizardForm').hide(500);
@@ -467,9 +465,7 @@ var EditableTable = function () {
                     },
                     success: function (curstep) {
                         //DITO NASGSTART YUNG PAGFILL SA STEP1
-                        alert(curstep);
                         if (curstep > 1) {
-                            alert('qwewqe');
 
                             $.ajax({
                                 type: 'GET',
