@@ -429,7 +429,7 @@ var EditableTable = function () {
 
             });
 
-            $('#editable-sample a.wizardOpen').live('click', function (e) {
+            $('#editable-sample').on('click', 'a.wizardOpen',function (e) {
                 e.preventDefault();
 
                 var nRow = $(this).parents('tr')[0];
@@ -667,7 +667,7 @@ var EditableTable = function () {
 
 
             });
-            $('#editable-sample a.delete').live('click', function (e) {
+            $('#editable-sample').on('click',' a.delete', function (e) {
                 e.preventDefault();
 
                 var nRow = $(this).parents('tr')[0];
@@ -710,7 +710,7 @@ var EditableTable = function () {
                     });
             });
 
-            $('#editable-sample a.cancel').live('click', function (e) {
+            $('#editable-sample').on('click', 'a.cancel',function (e) {
                 e.preventDefault();
                 if ($(this).attr("data-mode") == "new") {
                     var nRow = $(this).parents('tr')[0];
@@ -723,7 +723,7 @@ var EditableTable = function () {
 
 
 
-            $('#editable-sample a.edit').live('click', function (e) {
+            $('#editable-sample').on('click',' a.edit', function (e) {
                 e.preventDefault();
 
                 var id = $(this).closest('tr').children('td:first').text();
