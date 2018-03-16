@@ -370,20 +370,28 @@ var EditableTable = function () {
                                     swal(errorfill, "Please try again", "error");
                                 }
                             });
-                            $('#step-1').css('display', 'block');
-                            $('#step-2').css('display', 'none');
-                            $('#step-3').css('display', 'none');
-                            $('#step-4').css('display', 'none');
-                            $('#step-5').css('display', 'none');
-                            $('#astep1').removeClass('btn-success');
-                            $('#astep2').removeClass('btn-success');
-                            $('#astep2').attr('disabled', 'disabled');
-                            $('#astep3').removeClass('btn-success');
-                            $('#astep2').attr('disabled', 'disabled');
-                            $('#astep4').removeClass('btn-success');
-                            $('#astep4').prop('disabled', true);
-                            $('#astep5').removeClass('btn-success');
-                            $('#astep5').prop('disabled', true);
+                $('#step-1').css('display', 'block');
+                $('#step-2').css('display', 'none');
+                $('#step-3').css('display', 'none');
+                $('#step-4').css('display', 'none');
+                $('#step-5').css('display', 'none');
+
+                $('#astep1').removeClass('btn-success');
+
+                $('#astep2').removeClass('btn-success');
+                $('#astep2').attr('disabled', 'disabled');
+
+                $('#astep3').removeClass('btn-success');
+                $('#astep2').attr('disabled', 'disabled');
+
+                $('#astep4').removeClass('btn-success');
+                $('#astep4').prop('disabled', true);
+
+                $('#astep5').removeClass('btn-success');
+                $('#astep5').prop('disabled', true);
+
+
+
                         }
                         //END NG FILL NG STEP1
                         //DITO NASGSTART YUNG PAGFILL SA STEP2
