@@ -151,27 +151,27 @@ include('../config/connection.php');
             <!-- Modal Sanction-->
             <!-- Modal Dest-->
             <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="AddDest" class="modal fade">
-                <div class="modal-dialog">
+                <div class="modal-dialog" style="width:700px">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Add Available Offices</h4> </div>
+                            <h4 class="modal-title">Add Clearance Signatories</h4> </div>
                         <div class="modal-body">
                             <br>
-                            <p>You are now adding available offices data</p>
+                            <p>You are now adding clearance signatories data</p>
                             <br>
                             <div class="row">
-                                <div class="col-md-12 form-group"> *Office Code
-                                    <input title="office code is depending on the office description, it is a short description for the designated office of the student who has sanction" id="OffCode" type="text" class="form-control" placeholder="ex. Lib" required/> </div>
-                                <div class="col-md-12 form-group"> *Office Name
-                                    <textarea title="Office name" id="OffName" type="text" class="form-control" style="resize:vertical" placeholder="ex. Liibrary" required></textarea>
+                                <div class="col-md-12 form-group"> *Signatory Code
+                                    <input title="signatory code depends on the name of the signatory name" id="SigCode" type="text" class="form-control" placeholder="ex. Acco" required/> </div>
+                                <div class="col-md-12 form-group"> *Signatory Name
+                                    <textarea title="Signatory Name" id="SigName" type="text" class="form-control" style="resize:vertical" placeholder="ex. Accounting Office" required></textarea>
                                 </div>
-                                <div class="col-md-12 form-group"> *Office Description
-                                    <textarea id="OffDesc" type="text" class="form-control" placeholder="ex. A school library is a library within a school where students, staff, and often, parents of a public or private school have access to a variety of resources." style=" resize:vertical " required></textarea>
+                                <div class="col-md-12 form-group"> *Signatory Description
+                                    <textarea id="SigDesc" type="text" class="form-control" placeholder="ex. Check if the balance tuition of a specific student" style=" resize:vertical " required></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer ">
-                                <button class="btnInsertOff btn btn-success " type="submit ">Submit</button>
+                                <button class="btnInsertSig btn btn-success " type="submit ">Submit</button>
                                 <button data-dismiss="modal" class="btn btn-cancel" type="button">Cancel</button>
                             </div>
                         </div>
@@ -222,22 +222,20 @@ include('../config/connection.php');
             }
         });
     });
-    $(".btnInsertSanc").on("click", function () {
-        var $Code = $("#sancCode").val()
-            , $Name = $("#sancName").val()
-            , $Desc = $("#sancDesc").val()
-            , $Time = $("#sancTime").val();
+    $(".btnInsertSig").on("click", function () {
+        var $Code = $("#SigCode").val()
+            , $Name = $("#SigName").val()
+            , $Desc = $("#SigDesc").val()
         $.ajax({
-            url: "studSanctionSave.php"
+            url: "studClearanceSemSave.php"
             , cache: false
             , async: false
             , type: "Post"
             , data: {
-                insertSanctionDetails: 'insertNow'
+                insertSig: 'insertNow'
                 , Code: $Code
                 , Name: $Name
                 , SDesc: $Desc
-                , Time: $Time
             }
             , success: function (result) {
                 alert(result);

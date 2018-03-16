@@ -1,5 +1,5 @@
 <?php include ('../config/query.php'); ?>
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -55,29 +55,30 @@
                         <br/> </div>
                     <div class="collapse-group">
                         <div id="FinanDiv" class="row collapse panel-body">
-                            <div class="col-md-6" >Financial Assistance 
+                            <div class="col-md-6">Financial Assistance
                                 <select id="finanDesc" class="form-control m-bot15">
                                     <?php $querySanc =mysqli_query($con,"select * from r_financial_assistance_title where FinAssiTitle_DISPLAY_STAT<>'Inactive'"); 
                                           while($row =mysqli_fetch_array($querySanc)) { ?>
-                                        <option desc="<?php echo $row['FinAssiTitle_DESC']?>"><?php echo $row['FinAssiTitle_NAME']?></option>
+                                        <option desc="<?php echo $row['FinAssiTitle_DESC']?>" value="<?php echo $row['FinAssiTitle_NAME']?>">
+                                            <?php echo $row['FinAssiTitle_NAME']?>
+                                        </option>
                                         <?php } ?>
                                 </select>
                             </div>
-                            <div class="col-md-6"   >Status
-                                <select id="finanStatus" class="form-control m-bot15" > 
-                                        <option>Active</option> 
-                                        <option>Inactive</option> 
-                                        <option>Void</option> 
-                                        <option>Cancelled</option> 
+                            <div class="col-md-6">Status
+                                <select id="finanStatus" class="form-control m-bot15">
+                                    <option>Active</option>
+                                    <option>Inactive</option>
+                                    <option>Void</option>
+                                    <option>Cancelled</option>
                                 </select>
-                            </div>  
-                          
-                            <div class="col-md-12" >Remarks
+                            </div>
+                            <div class="col-md-12">Remarks
                                 <textarea id="finanRemarks" style="resize:vertical; width:100%"></textarea>
                             </div>
-                              <div class="col-md-6" style="width:10px">
+                            <div class="col-md-6" style="width:10px">
                                 <center>
-                                    <br> 
+                                    <br>
                                     <button id="assFinanStud" class="btnSave btn btn-primary"><i class="fa fa-plus-circle "></i> Assign</button>
                                 </center>
                             </div>
@@ -94,29 +95,30 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbodyFinancial" >
+                                    <tbody id="tbodyFinancial">
                                         <?php 
                             viewFinanStudCond(0,$profileLayoutRow['Stud_NO']);
                             while($FinanDet=mysqli_fetch_array($view_studFinanCond)){ ?>
                                             <tr>
-                                                <td class="hidden "><?php echo $FinanDet['ID']?></td>
-                                                <td class="TDFinanDesc">
-                                                    <span class="spanSancName"><?php  
+                                                <td class="hidden ">
+                                                    <?php echo $FinanDet['ID']?>
+                                                </td>
+                                                <td class="TDFinanDesc"> <span class="spanSancName"><?php
                                                 $dateStart =new DateTime($FinanDet['Start']);
                                                 $dateMod =new DateTime($FinanDet['Mods']);
-                                                echo $FinanDet['Finan_Name'].': '.$FinanDet['FinanDesc'].'<br><br><i style="font-size:10px">Date Added: '. $dateStart->format('D M d, Y h:i A').' <br>Last Modified: '. $dateMod->format('D M d, Y h:i A').'</i>'?></span> </td>
+                                                echo "<strong>".$FinanDet['Finan_Name'].': '.$FinanDet['FinanDesc'].'</strong><br><br><i style="font-size:10px">Date Added: '. $dateStart->format('D M d, Y h:i A').' <br>Last Modified: '. $dateMod->format('D M d, Y h:i A').'</i>'?></span> </td>
                                                 <td>
                                                     <center>
-                                                <select id="finanStatSelection" style="height: 30px;" value="<?php echo $FinanDet['Status']?>" > 
-                                                        <option  <?php   if ($FinanDet['Status']=='Active') echo 'selected' ?> >Active</option> 
-                                                        <option  <?php   if ($FinanDet['Status']=='Inactive') echo 'selected' ?> >Inactive</option> 
-                                                        <option  <?php   if ($FinanDet['Status']=='Void') echo 'selected' ?>>Void</option> 
-                                                        <option  <?php   if ($FinanDet['Status']=='Cancelled') echo 'selected' ?> >Cancelled</option> 
-                                                </select>
+                                                        <select id="finanStatSelection" style="height: 30px;" value="<?php echo $FinanDet['Status']?>">
+                                                            <option <?php if ($FinanDet[ 'Status']=='Active' ) echo 'selected' ?> >Active</option>
+                                                            <option <?php if ($FinanDet[ 'Status']=='Inactive' ) echo 'selected' ?> >Inactive</option>
+                                                            <option <?php if ($FinanDet[ 'Status']=='Void' ) echo 'selected' ?>>Void</option>
+                                                            <option <?php if ($FinanDet[ 'Status']=='Cancelled' ) echo 'selected' ?> >Cancelled</option>
+                                                        </select>
                                                     </center>
                                                 </td>
                                                 <td>
-                                                    <textarea id="efinanRemarks"style="resize:vertical" value="<?php echo $FinanDet['remarks']?>"><?php echo $FinanDet['remarks']?></textarea>
+                                                    <textarea id="efinanRemarks" style="resize:vertical" value="<?php echo $FinanDet['remarks']?>"><?php echo $FinanDet['remarks']?> </textarea>
                                                 </td>
                                                 <td class="actionDes">
                                                     <center> <i style='cursor:pointer;font-size: 20px' id='deletemotoInside' class='fa fa-minus-circle'></i> </center>
@@ -124,7 +126,7 @@
                                             </tr>
                                             <?php }}?>
                                     </tbody>
-                                                <tfoot>
+                                    <tfoot>
                                         <tr>
                                             <th class="hidden">Financial Assistance ID</th>
                                             <th style="width:50% ">Financial Assistance Details</th>
@@ -132,165 +134,241 @@
                                             <th>Remarks</th>
                                             <th>Action</th>
                                         </tr>
-                                    </tfoot >
-                                </table> 
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="saveFinanSet" class="btnSave btn btn-success"><i class="fa fa-save"></i> Save</button>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button id="saveFinanSet" class="btnSave btn btn-success"><i class="fa fa-save"></i> Save</button>
-                    </div>
                 </div>
-            </div>
-        </div>
-        <script> 
-            
-            $(document).ready(function () {
-                var dataSrc = [];
-                var table = $('#dynamic-table-modal').DataTable({
-                    'initComplete': function () {
-                        var api = this.api(); 
-                        api.cells('tr', [1]).every(function () { 
-                            var data = $('<div>').html(this.data()).text();
-                            if (dataSrc.indexOf(data) === -1) {
-                                dataSrc.push(data);
+            </div >
+            <script>
+                $(document).ready(function () {
+                    var dataSrc = [];
+                    var table = $('#dynamic-table-modal').DataTable({
+                        'initComplete': function () {
+                            var api = this.api();
+                            api.cells('tr', [1]).every(function () {
+                                var data = $('<div>').html(this.data()).text();
+                                if (dataSrc.indexOf(data) === -1) {
+                                    dataSrc.push(data);
+                                }
+                            });
+                            dataSrc.sort();
+                            $('.dataTables_filter input[type="search"]', api.table().container()).typeahead({
+                                source: dataSrc
+                                , afterSelect: function (value) {
+                                    api.search(value).draw();
+                                }
+                            });
+                        }
+                        , bDestroy: true
+                        , iDisplayLength: 3
+                    });
+                });
+                $('#addFinanStud').on("click", function () {
+                    if ($('#FinanDiv:visible').length) {
+                        $("#FinanDiv").slideToggle(500);
+                        $("#addFinanStud").html("<i class='fa  fa-plus'></i>  Add");
+                    }
+                    else {
+                        $("#FinanDiv").slideToggle(500);
+                        $("#addFinanStud").html("<i class='fa  fa-arrow-circle-o-left'></i>  Back");
+                    }
+                });
+                $("#tbodyFinancial").on("input", "textarea[id='efinanRemarks']", function () {
+                    if ($(this).attr("value") == $(this).val()) $(this).closest("tr").removeClass("updatingRow");
+                    else $(this).closest("tr").addClass("updatingRow");
+                });
+                $("#tbodyFinancial").on("change", "select[id='finanStatSelection']", function () {
+                    if ($(this).attr("value") == $(this, "option:selected").val()) $(this).closest("tr").removeClass("updatingRow");
+                    else $(this).closest("tr").addClass("updatingRow");
+                });
+                $("#assFinanStud").on("click", function () {
+                    var currDate = "<?php echo dateNow(); ?>"
+                        , FinanTitle = $("#finanDesc option:selected").val()
+                        , FinanDesc = FinanTitle + ": " + $("#finanDesc option:selected").attr("Desc") + "<br/><br/><i style='font-size:10px'>Date Added:" + currDate + "</i>"
+                        , FinanStatus = $("#finanStatus option:selected").text()
+                        , FinanRemarks = $("#finanRemarks").val()
+                        , opt1 = (FinanStatus == "Active") ? 'selected' : ''
+                        , opt2 = (FinanStatus == "Inactive") ? 'selected' : ''
+                        , opt3 = (FinanStatus == "Void") ? 'selected' : ''
+                        , opt4 = (FinanStatus == "Cancelled") ? 'selected' : '';
+                    $("#tbodyFinancial").find(".dataTables_empty").closest("tr ").remove();
+                    $("#dynamic-table-modal > tbody:last").append("<tr id='newFinancialAss' ><td id='financAssDet' finanTitle='" + FinanTitle + "'><span class='label label-success'>NEW</span>" + FinanDesc + "</td><td><center><select id='finanStatSelection' style='height: 30px;' >   <option " + opt1 + " >Active</option>  <option " + opt2 + ">Inactive</option> <option " + opt3 + ">Void</option>   <option " + opt4 + " >Cancelled</option>  </select></center></td><td><textarea id='finanRemarks' style='resize:vertical'>" + FinanRemarks + "</textarea></td><td> <center> <i style='cursor:pointer;font-size: 20px' id='deletemoto' class='fa fa-minus-circle'></i> </center></td></tr>");
+                });
+                $("#tbodyFinancial").on("click", "i[id='deletemoto']", function (e) {
+                    $(this).closest('tr').remove();
+                });
+                $("#tbodyFinancial").on("click", "i[id='deletemotoInside']", function (e) {
+                    $(this).closest('tr').addClass("tobeRemoved");
+                    $(this).closest('tr').find(".TDFinanDesc").html("<span class='label label-danger'>Delete!</span><span class='spanSancName'>  " + $(this).closest('tr').find(".spanSancName").html() + "</span>");
+                    $(this).closest('tr').find(".actionDes").html(" <center> <i style='cursor:pointer;font-size: 20px' id='returnmotoInside' class='fa fa-undo'></i> </center>");
+                });
+                $("#tbodyFinancial").on("click", "i[id='returnmotoInside']", function (e) {
+                    $(this).closest('tr').removeClass("tobeRemoved");
+                    $(this).closest('tr').find(".TDFinanDesc").html("<span class='spanSancName'>" + $(this).closest('tr').find(".spanSancName").html() + "</span>");
+                    $(this).closest('tr').find(".actionDes").html("  <center> <i style='cursor:pointer;font-size: 20px' id='deletemotoInside' class='fa fa-minus-circle'></i> </center>");
+                });
+                $("#saveFinanSet").on("click", function () {
+                    var newFinancialAss = $('tbody').find("tr[id='newFinancialAss']").length
+                        , tobeRemoved = $("tbody").find("tr[class='tobeRemoved']").length
+                        , updatingRow = $("tbody").find("tr[class='updatingRow']").length;
+                    if(newFinancialAss!=0||tobeRemoved!=0||updatingRow!=0 ){
+                    if (newFinancialAss != 0) {
+                        swal({
+                            title: "Are you sure?"
+                            , text: "This data will be added  and used for further transaction"
+                            , type: "warning"
+                            , showCancelButton: true
+                            , confirmButtonColor: '#9DD656'
+                            , confirmButtonText: 'Yes, Add it!'
+                            , cancelButtonText: "No, cancel it!"
+                            , closeOnConfirm: false
+                            , closeOnCancel: false
+                        }, function (isConfirm) {
+                            if (isConfirm) {
+                                $("tbody").find("tr[id='newFinancialAss']").each(function (i) {
+                                    var $tds = $(this).find('td')
+                                        , FinanTitle = $tds.eq(0).attr("finantitle")
+                                        , FinanStat = $tds.eq(1).find("#finanStatSelection option:selected").val()
+                                        , StudNumber = "<?php echo $_GET['StudNo']?>"
+                                        , Remarks = $tds.eq(2).find("#finanRemarks").val();
+                                    $.ajax({
+                                        type: 'post'
+                                        , url: 'finanAssignSave.php'
+                                        , data: {
+                                            insertFinanAss: 'FinanAssAdd'
+                                            , FinanAssTitle: FinanTitle
+                                            , FinanAssStat: FinanStat
+                                            , StudNumber: StudNumber
+                                            , FinanAssRemarks: Remarks
+                                        }
+                                        , success: function (result) {}
+                                        , error: function (result) {
+                                            swal("Error encountered while adding data", "Please try again", "error");
+                                        }
+                                    });
+                                }).promise().done(function () {
+                                    swal({
+                                        title: "Woaah, that's neat!"
+                                        , text: "The financial assistance or scholarship is added"
+                                        , type: "success"
+                                        , showCancelButton: false
+                                        , confirmButtonColor: '#9DD656'
+                                        , confirmButtonText: 'Ok'
+                                    }, function (isConfirm) {
+                                        location.reload();
+                                    });
+                                });
                             }
-                        }); 
-                        dataSrc.sort(); 
-                        $('.dataTables_filter input[type="search"]', api.table().container()).typeahead({
-                            source: dataSrc
-                            , afterSelect: function (value) {
-                                api.search(value).draw();
+                            else {
+                                swal("Cancelled", "The transaction is cancelled", "error");
                             }
                         });
                     }
-                    , bDestroy: true 
-                    ,iDisplayLength: 3
-                });
-            });
-            $('#addFinanStud').on("click", function () {
-                if ($('#FinanDiv:visible').length) {
-                    $("#FinanDiv").slideToggle(500);
-                    $("#addFinanStud").html("<i class='fa  fa-plus'></i>  Add");
-                }
-                else {
-                    $("#FinanDiv").slideToggle(500);
-                    $("#addFinanStud").html("<i class='fa  fa-arrow-circle-o-left'></i>  Back");
-                }
-            });
-            $("#tbodyFinancial").on("input","textarea[id='efinanRemarks']",function(){
-                if($(this).attr("value") == $(this).val())
-                        $(this).closest("tr").removeClass("updatingRow");
-                else
-                     $(this).closest("tr").addClass("updatingRow");
-            });
-            
-            $("#tbodyFinancial").on("change","select[id='finanStatSelection']",function(){
-                
-                if($(this).attr("value")==$(this,"option:selected").val())
-                    $(this).closest("tr").removeClass("updatingRow");
-                else
-                    $(this).closest("tr").addClass("updatingRow");
-            });
-            $("#assFinanStud").on("click",function(){
-                var FinanID = $("#finanDesc option:selected").text()
-                ,currDate ="<?php echo dateNow(); ?>"
-                ,FinanTitle = $("#finanDesc option:selected").text()
-                ,FinanDesc =FinanTitle + ": "+$("#finanDesc option:selected").attr("Desc")+"<br/><br/><i style='font-size:10px'>Date Added:"+currDate+"</i>"
-                ,FinanStatus = $("#finanStatus option:selected").text()
-                ,FinanRemarks=$("#finanRemarks").val()
-                ,opt1 = (FinanStatus=="Active")?'selected':''
-                ,opt2 = (FinanStatus=="Inactive")?'selected':''
-                ,opt3 = (FinanStatus=="Void")?'selected':''
-                ,opt4 = (FinanStatus=="Active")?'selected':'';
+                    if (tobeRemoved != 0) {
+                        swal({
+                            title: "Are you sure?"
+                            , text: "This data will be deleted permanently"
+                            , type: "warning"
+                            , showCancelButton: true
+                            , confirmButtonColor: '#9DD656'
+                            , confirmButtonText: 'Yes, delete  it!'
+                            , cancelButtonText: "No, cancel it!"
+                            , closeOnConfirm: false
+                            , closeOnCancel: false
+                        }, function (isConfirm) {
+                            if (isConfirm) {
+                                $("tbody").find("tr[class='tobeRemoved']").each(function (i) {
+                                    var $tds = $(this).find('td')
+                                        , ID = $tds.eq(0).text();
+                                    $.ajax({
+                                        type: 'post'
+                                        , url: 'finanAssignSave.php'
+                                        , data: {
+                                            archiveFinanAss: 'archive'
+                                            , ID: ID
+                                        }
+                                        , success: function (result) {}
+                                        , error: function (result) {
+                                            swal("Error encountered while deliting  data", "Please try again", "error");
+                                        }
+                                    });
+                                }).promise().done(function () {
+                                    swal({
+                                        title: "Woaah, that's neat!"
+                                        , text: "The financial assistance or scholarship is deleted permanently"
+                                        , type: "success"
+                                        , showCancelButton: false
+                                        , confirmButtonColor: '#9DD656'
+                                        , confirmButtonText: 'Ok'
+                                    }, function (isConfirm) {
+                                        location.reload();
+                                    });
+                                });
+                            }
+                            else {
+                                swal("Cancelled", "The transaction is cancelled", "error");
+                            }
+                        });
+                    }
+                    if (updatingRow != 0 && newFinancialAss ==0 ) {
+                        swal({
+                            title: "Are you sure?"
+                            , text: "This data will be saved  and used in further transactions"
+                            , type: "warning"
+                            , showCancelButton: true
+                            , confirmButtonColor: '#9DD656'
+                            , confirmButtonText: 'Yes, update it!'
+                            , cancelButtonText: "No, cancel it!"
+                            , closeOnConfirm: false
+                            , closeOnCancel: false
+                        }, function (isConfirm) {
+                            if (isConfirm) {
+                                $("tbody").find("tr[class='updatingRow']").each(function (i) {
+                                    var $tds = $(this).find('td')
+                                        , ID = $tds.eq(0).text()
+                                        , FinanStat = $tds.eq(2).find("#finanStatSelection option:selected").val()
+                                        , Remarks = $tds.eq(3).find("#efinanRemarks").val();
+                                    $.ajax({
+                                        type: 'post'
+                                        , url: 'finanAssignSave.php'
+                                        , data: {
+                                            updateFinanAss: 'FinanAssUpdate'
+                                            , ID: ID
+                                            , FinanAssStat: FinanStat
+                                            , FinanAssRemarks: Remarks
+                                        }
+                                        , success: function (result) {}
+                                        , error: function (result) {
+                                            swal("Error encountered while updating  data", "Please try again", "error");
+                                        }
+                                    });
+                                }).promise().done(function(){
 
-                $("#tbodyFinancial").find(".dataTables_empty").closest("tr ").remove();
-                $("#tbodyFinancial").append("<tr id='newFinancialAss' ><td id='financAssDet' finanTitle='"+FinanTitle+"'><span class='label label-success'>NEW</span>"+FinanDesc+"</td><td><select id='finanStatSelection' style='height: 30px;' >   <option "+opt1+" >Active</option>  <option "+opt2+">Inactive</option> <option "+opt3+">Void</option>   <option "+opt4+" >Cancelled</option>  </select></td><td><textarea id='finanRemarks' style='resize:vertical'>"+FinanRemarks+"</textarea></td><td> <center> <i style='cursor:pointer;font-size: 20px' id='deletemoto' class='fa fa-minus-circle'></i> </center></td></tr>");
-            });
-            $("#tbodyFinancial").on("click", "i[id='deletemoto']", function (e) {
-                $(this).closest('tr').remove();
-            }); 
-            $("#tbodyFinancial").on("click", "i[id='deletemotoInside']", function (e) {
-                $(this).closest('tr').addClass("tobeRemoved");
-                $(this).closest('tr').find(".TDFinanDesc").html("<span class='label label-danger'>Delete!</span><span class='spanSancName'>  " + $(this).closest('tr').find(".spanSancName").html() + "</span>");
-                $(this).closest('tr').find(".actionDes").html(" <center> <i style='cursor:pointer;font-size: 20px' id='returnmotoInside' class='fa fa-undo'></i> </center>");
-            });
-            $("#tbodyFinancial").on("click", "i[id='returnmotoInside']", function (e) {
-                $(this).closest('tr').removeClass("tobeRemoved");
-                $(this).closest('tr').find(".TDFinanDesc").html("<span class='spanSancName'>" + $(this).closest('tr').find(".spanSancName").html() + "</span>");
-                $(this).closest('tr').find(".actionDes").html("  <center> <i style='cursor:pointer;font-size: 20px' id='deletemotoInside' class='fa fa-minus-circle'></i> </center>");
-            });
-            
-            $("#saveFinanSet").on("click", function () {
-                $("tbody").find("tr[id='newFinancialAss']").each(function (i) {
-                    var $tds = $(this).find('td')
-                        , FinanTitle = $tds.eq(0).attr("finantitle")
-                        , FinanStat = $tds.eq(1).text()
-                        , StudNumber = "<?php echo $_GET['StudNo']?>"
-                        , Remarks = $tds.eq(2).find("#finanRemarks").val();
-                    $.ajax({
-                        type: 'post'
-                        , url: 'finanAssignSave.php'
-                        , data: {
-                            insertFinanAss: 'FinanAssAdd'
-                            , FinanAssTitle: FinanTitle
-                            , FinanAssStat: FinanStat
-                            , StudNumber: StudNumber
-                            ,FinanAssRemarks:Remarks 
-                            
-                        }
-                        , success: function (result) {
-                            alert(FinanTitle+FinanStat+StudNumber+Remarks ); 
-                            alert(result);
-                            window.location.reload();
-                        }
-                        , error: function (result) {
-                            alert('Error')
-                        }
-                    });
+                                            swal({
+                                                title: "Woaah, that's neat!"
+                                                , text: "The financial assistance or scholarship is now updated"
+                                                , type: "success"
+                                                , showCancelButton: false
+                                                , confirmButtonColor: '#9DD656'
+                                                , confirmButtonText: 'Ok'
+                                            }, function (isConfirm) {
+                                                location.reload();
+                                            });
+
+                                });
+                            }
+                            else {
+                                swal("Cancelled", "The transaction is cancelled", "error");
+                            }
+                        });
+                    }
+                    }else{
+                                swal("Error", "no transaction has been made", "error");
+                    }
                 });
-                $("tbody").find("tr[class='tobeRemoved']").each(function (i) {
-                    var $tds = $(this).find('td')
-                        , ID = $tds.eq(0).text();
-                    $.ajax({
-                        type: 'post'
-                        , url: 'finanAssignSave.php'
-                        , data: {
-                            archiveFinanAss: 'archive'
-                            , ID: ID
-                        }
-                        , success: function (result) {
-                            alert('');
-                            alert(result);
-                            window.location.reload();
-                        }
-                        , error: function (result) {
-                            alert('Error')
-                        }
-                    });
-                });
-                $("tbody").find("tr[class='updatingRow']").each(function (i) {
-                    var $tds = $(this).find('td')
-                        , ID = $tds.eq(0).text()
-                        , FinanStat = $tds.eq(2).find("#finanStatSelection option:selected").val() 
-                        , Remarks = $tds.eq(3).find("#efinanRemarks").val(); 
-                    $.ajax({
-                        type: 'post'
-                        , url: 'finanAssignSave.php'
-                        , data: {
-                            updateFinanAss: 'FinanAssUpdate'
-                            , ID: ID 
-                            , FinanAssStat: FinanStat 
-                            ,FinanAssRemarks:Remarks 
-                        }
-                        , success: function (result) {
-                            alert(ID+FinanStat+Remarks);
-                            alert(result);
-                            window.location.reload();
-                        }
-                        , error: function (result) {
-                            alert('Error')
-                        }
-                    });
-                });
-            });
-        </script>
+            </script>

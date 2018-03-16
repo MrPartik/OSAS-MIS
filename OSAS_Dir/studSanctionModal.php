@@ -211,7 +211,7 @@
             });
 
             $("i[id='history']").on("click",function(){
-                alert("asdasdasdasdasdasdddddddddddddddddddddddddddddddddddddd");
+                alert("");
             });
             $('#assignSanction').on("click", function () {
                 if ($('#sanctionDiv:visible').length) {

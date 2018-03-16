@@ -606,7 +606,7 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
                 $('#wizardForm').hide();
                 $('.hidethis').hide
                 wizardOpen = $('.wizardOpen');
-                wizardOpen.click(function() {
+                wizardOpen.on('click',function() {
                     $('#tableForm').slideToggle();
                     $('#wizardForm').slideToggle();
 

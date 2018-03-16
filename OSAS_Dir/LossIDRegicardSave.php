@@ -5,8 +5,12 @@ include ('../config/connection.php');
 if(isset($_POST['insertLossAss']))
 {
     $LossType = $_POST['LossType'];
+    if(!empty($_POST['LossClaim'])){
     $LossClaimDate= new DateTime( $_POST['LossClaim']);
     $LossClaim =  $LossClaimDate->format('Y-m-d H:i:s');
+    }else{
+    $LossClaim =null;
+    }
     $StudNumber=$_POST['StudNumber'];
     $LossRemarks=$_POST['LossRemarks'];  
    mysqli_query($con,"call Insert_LossIDRegi('$StudNumber','$LossType','$LossClaim','$LossRemarks')"); 
