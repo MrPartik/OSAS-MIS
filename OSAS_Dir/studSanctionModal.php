@@ -109,10 +109,10 @@
                                                 <td class="hidden">
                                                     <?php echo $SancDetrow['AssSancID']?>
                                                 </td>
-                                                <td class="TDSancName"> <span class="spanSancName"><?php 
+                                                <td class="TDSancName"> <strong><span class="spanSancName"><?php
                                                 $dateStart =new DateTime($SancDetrow['Start']);
                                                 $dateMod =new DateTime($SancDetrow['Mods']);
-                                                echo $SancDetrow['SanctionName'].'<br>Time Value:  '. $SancDetrow['TimeVal'].' Hours<br>Designated Office: '.$SancDetrow['Office'].'<i style="font-size:10px"><br><br>Date Started: '. $dateStart->format('D M d, Y h:i A').' <br>Last Modified: '. $dateMod->format('D M d, Y h:i A').'</i>'?></span> </td>
+                                                echo $SancDetrow['SanctionName'].'<br>Time Value:  '. $SancDetrow['TimeVal'].' Hours<br>Designated Office: '.$SancDetrow['Office'].'<i style="font-size:10px"><br><br></strong>Date Started: '. $dateStart->format('D M d, Y h:i A').' <br>Last Modified: '. $dateMod->format('D M d, Y h:i A').'</i>'?></span> </td>
                                                 <td>
                                                     <textarea id="sancRemarks" style="resize:vertical; width:100%;height:100px" value="<?php echo $SancDetrow['Remarks']?>"><?php echo $SancDetrow['Remarks']?></textarea>
                                                 </td>
@@ -224,7 +224,7 @@
                     , Remaining = $('#sanctionSelection option:selected').attr("sanctionTimeValue");
 
                 $("#tbodySanctions").find(".dataTables_empty").closest("tr ").remove();
-                $("#tbodySanctions ").append("<tr id='newSanction'> <td class='hidden'>" + SanctionCode + "</td><td class='hidden'>" + DesignatedOfficeCode + "</td><td><span class='label label-success'>NEW</span> " + SanctionName + '<br>Time Value:  ' + Hrs + ' Hours' + "<br/><br/><i style='font-size:10px'>Date Added:" + currDate + "</i></td>" + "<td><textarea id='sancRemarks' style='resize:vertical; width:100%;height:100px'></textarea></td>" + "<td class='numeric'>  <center><input id='inputConsume' type='text' value='0' maxVal='" + Hrs + "' style='width:50px; text-align:center;' /> </center></td><td class='timeRemaining numeric'>" + Remaining + "</td><td> <center> <input id='checkFinished' type='checkbox'  /></center></td>" + " <td><center> <i title='Delete' style='cursor:pointer;font-size: 20px; ' id='deletemoto' class='fa fa-minus-circle '></i> </center></td>< /tr> ");
+                $("#tbodySanctions").append("<tr id='newSanction'> <td class='hidden'>" + SanctionCode + "</td><td class='hidden'>" + DesignatedOfficeCode + "</td><td><span class='label label-success'>NEW</span> " + SanctionName + '<br>Time Value:  ' + Hrs + ' Hours' + "<br/><br/><i style='font-size:10px'>Date Added:" + currDate + "</i></td><td><textarea id='sancRemarks' style='resize:vertical; width:100%;height:100px'></textarea></td><td class='numeric'>  <center><input id='inputConsume' type='text' value='0' maxVal='" + Hrs + "' style='width:50px; text-align:center;' /> </center></td><td class='timeRemaining numeric'>" + Remaining + "</td><td> <center> <input id='checkFinished' type='checkbox'  /></center></td> <td><center> <i title='Delete' style='cursor:pointer;font-size: 20px; ' id='deletemoto' class='fa fa-minus-circle '></i> </center></td>< /tr> ");
             });
             $("#tbodySanctions").on("click", "i[id='deletemoto']", function (e) {
                 $(this).closest('tr').remove();
