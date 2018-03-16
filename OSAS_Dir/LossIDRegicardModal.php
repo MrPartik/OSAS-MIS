@@ -126,8 +126,7 @@
                 </div>
             </div>
         </div>
-        
-                <script src="../js/advanced-datatable/js/autocomplete.js"></script>
+
         <script> 
             
             $(document).ready(function () {

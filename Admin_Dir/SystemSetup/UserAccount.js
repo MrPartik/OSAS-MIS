@@ -237,7 +237,7 @@ var EditableTable = function () {
 
 
             });
-            $('#editable-sample a.delete').on('click', function (e) {
+            $('#editable-sample a.delete').live('click', function (e) {
                 e.preventDefault();
 
                 var nRow = $(this).parents('tr')[0];
@@ -282,7 +282,7 @@ var EditableTable = function () {
 
                     });
             });
-            $('#editable-sample a.retrieve').on('click', function (e) {
+            $('#editable-sample a.retrieve').live('click', function (e) {
                 e.preventDefault();
 
                 var nRow = $(this).parents('tr')[0];
@@ -328,7 +328,7 @@ var EditableTable = function () {
                     });
             });
 
-            $('#editable-sample a.cancel').on('click', function (e) {
+            $('#editable-sample a.cancel').live('click', function (e) {
                 e.preventDefault();
                 if ($(this).attr("data-mode") == "new") {
                     var nRow = $(this).parents('tr')[0];
@@ -341,7 +341,7 @@ var EditableTable = function () {
 
 
 
-            $('#editable-sample a.edit').on('click', function (e) {
+            $('#editable-sample a.edit').live('click', function (e) {
                 e.preventDefault();
                 var nRow = $(this).parents('tr')[0];
                 editRow(oTable, nRow);

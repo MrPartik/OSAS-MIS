@@ -294,7 +294,6 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
                                                 <label class="control-label">Course</label>
                                                 <select multiple name="e9" id="e9" style="width:100%" class="populate">
                                                         <?php
-
                                                             $view_query = mysqli_query($con,"SELECT Course_CODE as CODE FROM `r_courses` WHERE Course_DISPLAY_STAT = 'Active'");
                                                             while($row = mysqli_fetch_assoc($view_query))
                                                             {
@@ -304,7 +303,6 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
                                                                     <option value='$coucode'>$coucode</option>
                                                                         ";
                                                             }
-
                                                         ?>
                                                     </select>
                                             </div>
