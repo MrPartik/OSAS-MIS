@@ -196,12 +196,13 @@ else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
     <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Add" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Add User Account</h4>
-                </div>
-                <div class="modal-body">
-                    <form method="post" id="form-data">
+                <form method="post" id="form-data" action="" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Add User Account</h4>
+                    </div>
+                    <div class="modal-body">
+
                         <div class="row" style="padding-left:15px;padding-top:10px">
                             <div class="col-lg-12">
                                 <div class="col-lg-8">
@@ -244,7 +245,7 @@ else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
                                                 
                                                    <span class="fileupload-new"><i class="fa fa-paper-clip" ></i> Select image</span>
                                             <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
-                                            <input type="file" class="default" />
+                                            <input type="file" name="file" id="file" class="default" />
                                             </span>
                                             <a href="#" class="btn btn-danger btn-sm fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i>Remove</a>
 
@@ -253,13 +254,17 @@ else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button data-dismiss="modal" class="btn btn-default" id="close" type="button">Close</button>
-                    <button class="btn btn-success " id="submit-data" type="button">Save</button>
-                </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="text" value="0" id="getstat" />
+                        <input type="text" value="0" id="getstat2" />
+                        <button data-dismiss="modal" class="btn btn-default" id="close" type="button">Close</button>
+                        <button class="btn btn-success " id="submit-data" type="submit">Save</button>
+                    </div>
+                </form>
             </div>
+
         </div>
     </div>
     <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Edit" class="modal fade">
@@ -332,6 +337,7 @@ else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
         </div>
     </div>
     <?php include("footer.php")?>
+
     <script src="SystemSetup/UserAccount.js"></script>
     <script src="../js/select2/select2.js"></script>
     <script src="../js/select-init.js"></script>
@@ -339,8 +345,7 @@ else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
 
     <!-- END JAVASCRIPTS -->
     <script>
-        $(document).ready(function() {
-        });
+        $(document).ready(function() {});
         jQuery(document).ready(function() {
             EditableTable.init();
         });

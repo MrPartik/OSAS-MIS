@@ -197,14 +197,10 @@
                 ,FinanTitle = $("#finanDesc option:selected").text()
                 ,FinanDesc =FinanTitle + ": "+$("#finanDesc option:selected").attr("Desc")+"<br/><br/><i style='font-size:10px'>Date Added:"+currDate+"</i>"
                 ,FinanStatus = $("#finanStatus option:selected").text()
-                ,FinanRemarks=$("#finanRemarks").val()
-                ,opt1 = (FinanStatus=="Active")?'selected':''
-                ,opt2 = (FinanStatus=="Inactive")?'selected':''
-                ,opt3 = (FinanStatus=="Void")?'selected':''
-                ,opt4 = (FinanStatus=="Active")?'selected':'';
+                ,FinanRemarks=$("#finanRemarks").val(); 
 
                 $("#tbodyFinancial").find(".dataTables_empty").closest("tr ").remove();
-                $("#tbodyFinancial").append("<tr id='newFinancialAss' ><td id='financAssDet' finanTitle='"+FinanTitle+"'><span class='label label-success'>NEW</span>"+FinanDesc+"</td><td><select id='finanStatSelection' style='height: 30px;' >   <option "+opt1+" >Active</option>  <option "+opt2+">Inactive</option> <option "+opt3+">Void</option>   <option "+opt4+" >Cancelled</option>  </select></td><td><textarea id='finanRemarks' style='resize:vertical'>"+FinanRemarks+"</textarea></td><td> <center> <i style='cursor:pointer;font-size: 20px' id='deletemoto' class='fa fa-minus-circle'></i> </center></td></tr>");
+                $("#tbodyFinancial").append("<tr id='newFinancialAss' ><td id='financAssDet' finanTitle='"+FinanTitle+"'><span class='label label-success'>NEW</span>"+FinanDesc+"</td><td>"+FinanStatus+"</td><td><textarea id='finanRemarks' style='resize:vertical'>"+FinanRemarks+"</textarea></td><td> <center> <i style='cursor:pointer;font-size: 20px' id='deletemoto' class='fa fa-minus-circle'></i> </center></td></tr>");
             });
             $("#tbodyFinancial").on("click", "i[id='deletemoto']", function (e) {
                 $(this).closest('tr').remove();

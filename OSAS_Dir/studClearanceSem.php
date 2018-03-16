@@ -183,37 +183,17 @@ include('../config/connection.php');
             <!-- Placed js at the end of the document so the pages load faster -->
             <!--Core js-->
             <?php include('footer.php')?>
+                <script type="text/javascript " language="javascript " src="../js/advanced-datatable/js/jquery.dataTables.js "></script>
+                <script type="text/javascript " src="../js/data-tables/DT_bootstrap.js "></script>
+                <script src="../js/dynamic_table_init.js "></script>
     </body>
 
 </html>
 <script>   
-    $(document).ready(function () {
-        var dataSrc = [];
-        var table = $('#dynamic-table').DataTable({
-            'initComplete': function () {
-                var api = this.api();
-                api.cells('tr', [0, 1, 2,3,4]).every(function () {
-                    var data = $('<div>').html(this.data()).text();
-                    if (dataSrc.indexOf(data) === -1) {
-                        dataSrc.push(data);
-                    }
-                });
-                dataSrc.sort();
-                $('.dataTables_filter input[type="search"]', api.table().container()).typeahead({
-                    source: dataSrc
-                    , afterSelect: function (value) {
-                        api.search(value).draw();
-                    }
-                });
-            }
-            , bDestroy: true
-            , aaSorting: [[5, "desc"]]
-        });
-    });
     $("#TableStudSanc ").on("click ", "#StudSanctionModalClick ", function () {
         var datas = $(this).attr("value");
         $.ajax({
-            url: "studClearanceSemModal.php?StudNo=" + datas
+            url: "studSanctionModal.php?StudNo=" + datas
             , cache: false
             , async: false
             , success: function (result) {
