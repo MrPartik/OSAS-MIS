@@ -26,7 +26,7 @@ $.ajax({
     url: 'Dashboard/DonutGraph.php',
     dataType: 'json',
     data: {
-        _appcode: 'OAAAAAAA2018'
+        _appcode: $(".username").attr("code")
     },
     success: function (data) {
         var i = 0;

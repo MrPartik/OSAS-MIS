@@ -9,6 +9,7 @@ $breadcrumbs =" <div class='col-md-12'>
 </ul>
 </div>";
 include('header.php'); 
+$compcode = $referenced_user;
 include('../config/connection.php');     
 
 ?>
@@ -74,7 +75,7 @@ include('../config/connection.php');
                 type: "GET",
                 url: 'Dashboard/Officer.php',
                 data: {
-                    _appcode: 'OAAAAAAA2018'
+                    _appcode:'<?php echo $compcode?>'
                 },
                 success: function(data) {
                     //alert(data)
@@ -90,7 +91,7 @@ include('../config/connection.php');
                 type: "GET",
                 url: 'Dashboard/Population.php',
                 data: {
-                    _appcode: 'OAAAAAAA2018'
+                    _appcode:'<?php echo $compcode?>'
                 },
                 success: function(data) {
                     //alert(data)
