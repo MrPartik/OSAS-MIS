@@ -24,9 +24,9 @@
         }
         
         if($cou == '1')            
-            $query = mysqli_query($connection,"UPDATE t_assign_org_members SET AssOrgMem_APPL_ORG_CODE = '$code' WHERE AssOrgMem_STUD_NO = '$no' ");
+            $query = mysqli_query($connection,"UPDATE t_assign_org_members SET AssOrgMem_COMPL_ORG_CODE = '$code' WHERE AssOrgMem_STUD_NO = '$no' ");
         else        
-            $query = mysqli_query($connection,"INSERT INTO t_assign_org_members (AssOrgMem_STUD_NO,AssOrgMem_APPL_ORG_CODE) VALUES ('$no','$code') ");
+            $query = mysqli_query($connection,"INSERT INTO t_assign_org_members (AssOrgMem_STUD_NO,AssOrgMem_COMPL_ORG_CODE) VALUES ('$no','$code') ");
 
     }
 

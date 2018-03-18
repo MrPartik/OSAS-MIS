@@ -18,7 +18,7 @@
                 $studnum = mysqli_real_escape_string($con, $row[0]);  
                
                
-               $view_query = mysqli_query($con,"SELECT COUNT(*) AS COU FROM t_assign_org_members WHERE  AssOrgMem_STUD_NO= '$studnum' AND AssOrgMem_APPL_ORG_CODE = '$org'  ");
+               $view_query = mysqli_query($con,"SELECT COUNT(*) AS COU FROM t_assign_org_members WHERE  AssOrgMem_STUD_NO= '$studnum' AND AssOrgMem_COMPL_ORG_CODE = '$org'  ");
 
                 while($row = mysqli_fetch_assoc($view_query))
                 {
@@ -28,7 +28,7 @@
                
                if($getcou == '1')
                {
-                 $queryy = mysqli_query($con," UPDATE `t_assign_org_members` SET `AssOrgMem_DISPLAY_STAT` = 'Active' WHERE `t_assign_org_members`.`AssOrgMem_STUD_NO` = '$studnum' AND `t_assign_org_members`.`AssOrgMem_APPL_ORG_CODE` = '$org' ");
+                 $queryy = mysqli_query($con," UPDATE `t_assign_org_members` SET `AssOrgMem_DISPLAY_STAT` = 'Active' WHERE `t_assign_org_members`.`AssOrgMem_STUD_NO` = '$studnum' AND `t_assign_org_members`.`AssOrgMem_COMPL_ORG_CODE` = '$org' ");
                   ;
                    
                }
@@ -36,7 +36,7 @@
                {
                
                 $queryy = mysqli_query($con,"INSERT INTO t_assign_org_members  
-                     (AssOrgMem_STUD_NO, AssOrgMem_APPL_ORG_CODE)  
+                     (AssOrgMem_STUD_NO, AssOrgMem_COMPL_ORG_CODE)  
                      VALUES ('$studnum', '$org')");
                    
                    

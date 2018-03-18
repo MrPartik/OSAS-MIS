@@ -7,7 +7,7 @@
 
     $view_query = mysqli_query($connection," SELECT CONCAT(Stud_LNAME,' ,',Stud_FNAME ,' ', Stud_MNAME) AS NAME , Stud_NO FROM t_assign_org_members
 		INNER JOIN r_stud_profile ON AssOrgMem_STUD_NO = Stud_NO
-        WHERE AssOrgMem_DISPLAY_STAT = 'Active' AND AssOrgMem_APPL_ORG_CODE = '$compcode' ");
+        WHERE AssOrgMem_DISPLAY_STAT = 'Active' AND AssOrgMem_COMPL_ORG_CODE = '$compcode' ");
 
 // $view_query = mysqli_query($connection," SELECT CONCAT(Stud_LNAME,' ,',Stud_FNAME ,' ', Stud_MNAME) AS NAME , Stud_NO,OrgForCompliance_OrgApplProfile_APPL_CODE FROM `r_stud_profile` 
 //		INNER JOIN t_assign_org_academic_course ON AssOrgAcademic_COURSE_CODE = Stud_COURSE
