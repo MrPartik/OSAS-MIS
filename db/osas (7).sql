@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2018 at 06:36 PM
+-- Generation Time: Mar 18, 2018 at 06:45 PM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -105,20 +105,20 @@ INSERT INTO R_STUD_PROFILE
 ,Stud_ADDRESS
 ,Stud_STATUS)
 VALUES
-(	
+( 
     STUDNO
     ,FNAME
-	,MNAME
-	,LNAME
-	,COUSRE
-	,SECTION
-	,GENDER
-	,EMAIL
-	,CONTACT
-	,BDAY
-	,BPLACE
-	,ADDRESS
-	,STATUS
+  ,MNAME
+  ,LNAME
+  ,COUSRE
+  ,SECTION
+  ,GENDER
+  ,EMAIL
+  ,CONTACT
+  ,BDAY
+  ,BPLACE
+  ,ADDRESS
+  ,STATUS
 )$$
 
 DROP PROCEDURE IF EXISTS `Insert_Users`$$
@@ -192,16 +192,16 @@ select * from r_courses where course_display_stat ='active'$$
 DROP PROCEDURE IF EXISTS `View_StudProfile`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `View_StudProfile` ()  NO SQL
 select 
-	Stud_NO
-	,CONCAT(Stud_LNAME,', ',Stud_FNAME,' ',COALESCE(Stud_MNAME,'')) as FullName
-	,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) as Course
-	,Stud_EMAIL
-	,Stud_CONTACT_NO
-	,Stud_GENDER
-	,Stud_BIRHT_DATE
-	,Stud_BIRTH_PLACE
-	,Stud_STATUS
-	,Stud_ADDRESS
+  Stud_NO
+  ,CONCAT(Stud_LNAME,', ',Stud_FNAME,' ',COALESCE(Stud_MNAME,'')) as FullName
+  ,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) as Course
+  ,Stud_EMAIL
+  ,Stud_CONTACT_NO
+  ,Stud_GENDER
+  ,Stud_BIRHT_DATE
+  ,Stud_BIRTH_PLACE
+  ,Stud_STATUS
+  ,Stud_ADDRESS
 FROM osas.r_stud_profile$$
 
 DROP PROCEDURE IF EXISTS `View_StudSanction`$$
@@ -216,11 +216,11 @@ SELECT B.AssSancStudStudent_ID AssSancID
 ,b.AssSancStudStudent_CONSUMED_HOURS AS Consumed
 FROM r_stud_profile A
 INNER JOIN  t_assign_stud_saction B ON
-	A.Stud_NO = B.AssSancStudStudent_STUD_NO
+  A.Stud_NO = B.AssSancStudStudent_STUD_NO
 INNER JOIN r_sanction_details C ON
-	C.SancDetails_CODE = B.AssSancStudStudent_SancDetails_CODE
+  C.SancDetails_CODE = B.AssSancStudStudent_SancDetails_CODE
 INNER JOIN r_designated_offices_details D ON
-	D.DesOffDetails_CODE = B.AssSancStudStudent_DesOffDetails_CODE 
+  D.DesOffDetails_CODE = B.AssSancStudStudent_DesOffDetails_CODE 
 WHERE A.Stud_DISPLAY_STATUS='ACTIVE'
 AND B.AssSancStudStudent_DISPLAY_STAT='ACTIVE'
 AND C.SancDetails_DISPLAY_STAT='ACTIVE'
@@ -248,6 +248,15 @@ CREATE TABLE IF NOT EXISTS `log_sanction` (
   KEY `FK_LogSanc_AssSancSudent_ID` (`LogSanc_AssSancSudent_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `log_sanction`
+--
+
+INSERT INTO `log_sanction` (`LogSanc_ID`, `LogSanc_AssSancSudent_ID`, `LogSanc_CONSUMED_HOURS`, `LogSanc_REMARKS`, `LogSanc_IS_FINISH`, `LogSanc_DATE_MOD`) VALUES
+(1, 1, 0, 'OWKAY NA HUEHUE', 'Processing', '2018-03-16 18:02:05'),
+(2, 1, 0, 'OWKAY NA HUEHUEs', 'Processing', '2018-03-16 18:04:05'),
+(3, 1, 0, 'excused pala', 'Processing', '2018-03-16 18:04:27');
+
 -- --------------------------------------------------------
 
 --
@@ -262,6 +271,13 @@ CREATE TABLE IF NOT EXISTS `r_application_wizard` (
   PRIMARY KEY (`WIZARD_ID`),
   KEY `WIZARD_ORG_CODE` (`WIZARD_ORG_CODE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `r_application_wizard`
+--
+
+INSERT INTO `r_application_wizard` (`WIZARD_ID`, `WIZARD_ORG_CODE`, `WIZARD_CURRENT_STEP`) VALUES
+(25, 'CIT2017', 5);
 
 -- --------------------------------------------------------
 
@@ -300,6 +316,19 @@ CREATE TABLE IF NOT EXISTS `r_batch_details` (
   UNIQUE KEY `UNQ_Batch_YEAR` (`Batch_YEAR`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `r_batch_details`
+--
+
+INSERT INTO `r_batch_details` (`Batch_ID`, `Batch_CODE`, `Batch_YEAR`, `Batch_DESC`, `Batch_DISPLAY_STAT`) VALUES
+(1, 'BAT00001', '2011-2012', 'Batch descriptions', 'Active'),
+(2, 'BAT00002', '2012-2013', 'Batch description', 'Active'),
+(3, 'BAT00003', '2013-2014', 'Batch description', 'Active'),
+(4, 'BAT00004', '2014-2015', 'Batch description', 'Active'),
+(5, 'BAT00005', '2015-2016', 'Batch description', 'Active'),
+(6, 'BAT00006', '2016-2017', 'Batch description', 'Active'),
+(7, 'BAT00007', '2017-2018', 'Batch description', 'Active');
+
 -- --------------------------------------------------------
 
 --
@@ -318,6 +347,17 @@ CREATE TABLE IF NOT EXISTS `r_clearance_signatories` (
   PRIMARY KEY (`ClearSignatories_ID`),
   UNIQUE KEY `UNQ_SancDetails_CODE` (`ClearSignatories_CODE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `r_clearance_signatories`
+--
+
+INSERT INTO `r_clearance_signatories` (`ClearSignatories_ID`, `ClearSignatories_CODE`, `ClearSignatories_NAME`, `ClearSignatories_DESC`, `ClearSignatories_DATE_MOD`, `ClearSignatories_DATE_ADD`, `ClearSignatories_DISPLAY_STAT`) VALUES
+(1, 'SIG00001', 'Accounting Office', 'Accounting Offices', '2018-03-11 20:33:05', '2018-02-08 14:27:28', 'Active'),
+(2, 'SIG00002', 'Head of Academic Affairs', 'Head of Academic Affairs', '2018-02-10 09:58:18', '2018-02-10 09:58:18', 'Active'),
+(3, 'SIG00003', 'Academic Affairs', 'Academic Affairs', '2018-02-11 21:34:00', '2018-02-11 21:34:00', 'Active'),
+(4, 'Lib', 'Library', '0', '2018-03-17 02:44:12', '2018-03-17 02:44:12', 'Active'),
+(7, 'osas', 'osass', 'osass', '2018-03-17 02:48:26', '2018-03-17 02:48:26', 'Active');
 
 -- --------------------------------------------------------
 
@@ -340,6 +380,15 @@ CREATE TABLE IF NOT EXISTS `r_courses` (
   KEY `FK_Course_CURR_YEAR` (`Course_CURR_YEAR`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `r_courses`
+--
+
+INSERT INTO `r_courses` (`Course_ID`, `Course_CODE`, `Course_NAME`, `Course_DESC`, `Course_CURR_YEAR`, `Course_DATE_MOD`, `Course_DATE_ADD`, `Course_DISPLAY_STAT`) VALUES
+(1, 'BSIT', 'Bachelor of Science in Information Technology', 'Course Description', '2011-2012', '2018-03-11 20:38:21', '2018-02-07 18:41:43', 'Active'),
+(2, 'DOMT', 'Diploma In Office Management Technology', 'Course Description', '2011-2012', '2018-02-09 17:54:51', '2018-02-09 17:54:51', 'Active'),
+(3, 'DICT', 'Diploma in Information Communication Technology', 'Diploma in Information Communication Technology', '2011-2012', '2018-03-11 20:40:22', '2018-03-11 20:40:22', 'Active');
+
 -- --------------------------------------------------------
 
 --
@@ -358,6 +407,15 @@ CREATE TABLE IF NOT EXISTS `r_designated_offices_details` (
   PRIMARY KEY (`DesOffDetails_ID`),
   UNIQUE KEY `UNQ_DesOffDetails_CODE` (`DesOffDetails_CODE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `r_designated_offices_details`
+--
+
+INSERT INTO `r_designated_offices_details` (`DesOffDetails_ID`, `DesOffDetails_CODE`, `DesOffDetails_NAME`, `DesOffDetails_DESC`, `DesOffDetails_DATE_ADD`, `DesOffDetails_DATE_MOD`, `DesOffDetails_DISPLAY_STAT`) VALUES
+(1, 'OFF00001', 'Library', 'Library', '2018-02-08 14:28:12', '2018-02-08 14:28:12', 'Active'),
+(2, 'ADDOFF', 'Admission Office', 'Offices Description', '2018-02-13 11:18:42', '2018-03-11 21:00:26', 'Active'),
+(3, 'CR MISE', 'Comfort Room', 'CR sa mise', '2018-02-22 00:31:04', '2018-02-22 00:31:04', 'Active');
 
 -- --------------------------------------------------------
 
@@ -378,6 +436,14 @@ CREATE TABLE IF NOT EXISTS `r_financial_assistance_title` (
   UNIQUE KEY `UNQ_FinAssiTitle_NAME` (`FinAssiTitle_NAME`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `r_financial_assistance_title`
+--
+
+INSERT INTO `r_financial_assistance_title` (`FinAssiTitle_ID`, `FinAssiTitle_CODE`, `FinAssiTitle_NAME`, `FinAssiTitle_DESC`, `FinAssiTitle_DATE_ADD`, `FinAssiTitle_DATE_MOD`, `FinAssiTitle_DISPLAY_STAT`) VALUES
+(1, 'Finan0001', 'CHED', 'Commission on Higher Education of the Philippines', '2018-02-09 17:55:20', '2018-02-09 17:55:20', 'Active'),
+(2, 'Finan0002', 'SYDP', 'Quezon City Government - Scholarship & Youth Development Program', '2018-02-09 17:55:45', '2018-02-09 17:55:45', 'Active');
+
 -- --------------------------------------------------------
 
 --
@@ -396,6 +462,15 @@ CREATE TABLE IF NOT EXISTS `r_org_accreditation_details` (
   PRIMARY KEY (`OrgAccrDetail_ID`),
   UNIQUE KEY `UNQ_OrgAccrDetail_CODE` (`OrgAccrDetail_CODE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `r_org_accreditation_details`
+--
+
+INSERT INTO `r_org_accreditation_details` (`OrgAccrDetail_ID`, `OrgAccrDetail_CODE`, `OrgAccrDetail_NAME`, `OrgAccrDetail_DESC`, `OrgAccrDetail_DATE_ADD`, `OrgAccrDetail_DATE_MOD`, `OrgAccrDetail_DISPLAY_STAT`) VALUES
+(1, 'REQ00001', 'Organization Name', 'Every organization must have unique name', '2018-02-08 14:37:56', '2018-03-11 19:09:28', 'Active'),
+(2, 'REQ00002', 'Organization must have mission and vision', 'Every organization must have a mission and vision', '2018-03-11 20:23:02', '2018-03-11 20:23:35', 'Active'),
+(3, 'REQ00003', 'Organization Logo', 'Logo ng org', '2018-03-15 16:50:10', '2018-03-15 16:50:10', 'Active');
 
 -- --------------------------------------------------------
 
@@ -417,6 +492,13 @@ CREATE TABLE IF NOT EXISTS `r_org_applicant_profile` (
   UNIQUE KEY `UNQ_OrgAppProfile_ORG_CODE` (`OrgAppProfile_APPL_CODE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `r_org_applicant_profile`
+--
+
+INSERT INTO `r_org_applicant_profile` (`OrgAppProfile_ID`, `OrgAppProfile_APPL_CODE`, `OrgAppProfile_NAME`, `OrgAppProfile_DESCRIPTION`, `OrgAppProfile_STATUS`, `OrgAppProfile_DATE_ADD`, `OrgAppProfile_DATE_MOD`, `OrgAppProfile_DISPLAY_STAT`) VALUES
+(6, 'CIT2018', 'Commonwealth Information Technology', 'CommITS inshort', 'This application is ready for accreditation', '2018-03-15 15:59:39', '2018-03-15 17:40:50', 'Active');
+
 -- --------------------------------------------------------
 
 --
@@ -435,6 +517,14 @@ CREATE TABLE IF NOT EXISTS `r_org_category` (
   PRIMARY KEY (`OrgCat_ID`),
   UNIQUE KEY `UNQ_OrgCat_NAME` (`OrgCat_CODE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `r_org_category`
+--
+
+INSERT INTO `r_org_category` (`OrgCat_ID`, `OrgCat_CODE`, `OrgCat_NAME`, `OrgCat_DESC`, `OrgCat_DATE_ADD`, `OrgCat_DATE_MOD`, `OrgCat_DISPLAY_STAT`) VALUES
+(1, 'ACAD_ORG', 'Academic Organization', 'Academic Organization', '2018-02-08 14:39:16', '2018-03-15 23:55:34', 'Active'),
+(2, 'NON_ACAD', 'Non Academic Organization', 'Non Academic Ogranization', '2018-03-15 16:13:27', '2018-03-15 16:13:27', 'Active');
 
 -- --------------------------------------------------------
 
@@ -456,6 +546,13 @@ CREATE TABLE IF NOT EXISTS `r_org_essentials` (
   KEY `FK_OrgEssentials_ORG_CODE` (`OrgEssentials_ORG_CODE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `r_org_essentials`
+--
+
+INSERT INTO `r_org_essentials` (`OrgEssentials_ID`, `OrgEssentials_ORG_CODE`, `OrgEssentials_MISSION`, `OrgEssentials_VISION`, `OrgEssentials_LOGO`, `OrgEssentials_DATE_ADD`, `OrgEssentials_DATE_MOD`, `OrgEssentials_DISPLAY_STAT`) VALUES
+(13, 'CIT2017', 'Mission mo to', 'Vision mo to', '', '2018-03-15 16:29:06', '2018-03-15 16:29:06', 'Active');
+
 -- --------------------------------------------------------
 
 --
@@ -474,6 +571,13 @@ CREATE TABLE IF NOT EXISTS `r_org_officer_position_details` (
   PRIMARY KEY (`OrgOffiPosDetails_ID`),
   KEY `FK_OrgOffiPosDetails_ORG_CODE` (`OrgOffiPosDetails_ORG_CODE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `r_org_officer_position_details`
+--
+
+INSERT INTO `r_org_officer_position_details` (`OrgOffiPosDetails_ID`, `OrgOffiPosDetails_ORG_CODE`, `OrgOffiPosDetails_NAME`, `OrgOffiPosDetails_DESC`, `OrgOffiPosDetails_DATE_MOD`, `OrgOffiPosDetails_DATE_ADD`, `OrgOffiPosDetails_DISPLAY_STAT`) VALUES
+(1, 'CIT2017', 'President', 'Presidente ako', '2018-03-19 01:30:56', '2018-03-18 22:25:02', 'Active');
 
 -- --------------------------------------------------------
 
@@ -495,6 +599,13 @@ CREATE TABLE IF NOT EXISTS `r_osas_head` (
   UNIQUE KEY `UNQ_OSASHead_CODE` (`OSASHead_CODE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `r_osas_head`
+--
+
+INSERT INTO `r_osas_head` (`OSASHead_ID`, `OSASHead_CODE`, `OSASHead_NAME`, `OSASHead_DESC`, `OSASHead_DATE_PROMOTED`, `OSASHead_DATE_ADD`, `OSASHead_DATE_MOD`, `OSASHead_DISPLAY_STAT`) VALUES
+(1, '2017-OSAS-CM-0', 'Demelyn Espejo Monzon', 'Introduce your self', '2017-04-27 00:00:00', '2018-02-08 08:13:12', '2018-02-08 08:13:12', 'Active');
+
 -- --------------------------------------------------------
 
 --
@@ -515,6 +626,18 @@ CREATE TABLE IF NOT EXISTS `r_sanction_details` (
   UNIQUE KEY `UNQ_SancDetails_CODE` (`SancDetails_CODE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `r_sanction_details`
+--
+
+INSERT INTO `r_sanction_details` (`SancDetails_ID`, `SancDetails_CODE`, `SancDetails_NAME`, `SancDetails_DESC`, `SancDetails_TIMEVAL`, `SancDetails_DATE_MOD`, `SancDetails_DATE_ADD`, `SancDetails_DISPLAY_STAT`) VALUES
+(1, '2.1 3rdOffense', '3rd Offense Failure to bring valid ID', '2.1 failure to bring valid ID in case the student can present his/her registration certificate', 42, '2018-02-12 01:48:39', '2018-02-12 01:48:39', 'Active'),
+(2, '2.1 < 3 Offense', 'Greater than 3Offenses, Failure to bring valid ID', 'minimum of 3 days suspension', 72, '2018-03-11 21:32:19', '2018-02-12 02:46:57', 'Active'),
+(8, '123', '123', '', 123, '2018-03-01 20:05:13', '2018-02-21 23:54:35', 'Inactive'),
+(9, 'asd', '123123', '', 12, '2018-03-01 20:05:19', '2018-02-21 23:55:11', 'Inactive'),
+(10, 'SANC00005', 'sanc1', 'asd', 8, '2018-03-11 21:31:09', '2018-03-01 20:05:55', 'Inactive'),
+(11, 'wqe', 'qwe', '123', 21, '2018-03-11 21:37:47', '2018-03-11 21:37:24', 'Inactive');
+
 -- --------------------------------------------------------
 
 --
@@ -533,6 +656,14 @@ CREATE TABLE IF NOT EXISTS `r_semester` (
   PRIMARY KEY (`Semestral_ID`),
   UNIQUE KEY `UNQ_Semstral_NAME` (`Semestral_NAME`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `r_semester`
+--
+
+INSERT INTO `r_semester` (`Semestral_ID`, `Semestral_CODE`, `Semestral_NAME`, `Semestral_DESC`, `Semestral_DATE_ADD`, `Semestral_DATE_MOD`, `Semestral_DISPLAY_STAT`) VALUES
+(1, 'Sem001', 'First Semester', 'Semester Descriptions', '2018-02-09 18:07:00', '2018-03-15 13:16:24', 'Active'),
+(2, 'Sem002', 'Second Semester', 'Semester Description', '2018-02-09 18:07:00', '2018-02-09 18:07:00', 'Active');
 
 -- --------------------------------------------------------
 
@@ -566,6 +697,29 @@ CREATE TABLE IF NOT EXISTS `r_stud_profile` (
   KEY `FK_COURSE` (`Stud_COURSE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `r_stud_profile`
+--
+
+INSERT INTO `r_stud_profile` (`Stud_ID`, `Stud_NO`, `Stud_FNAME`, `Stud_MNAME`, `Stud_LNAME`, `Stud_COURSE`, `Stud_YEAR_LEVEL`, `Stud_SECTION`, `Stud_GENDER`, `Stud_EMAIL`, `Stud_CONTACT_NO`, `Stud_BIRHT_DATE`, `Stud_BIRTH_PLACE`, `Stud_ADDRESS`, `Stud_STATUS`, `Stud_DATE_MOD`, `Stud_DATE_ADD`, `Stud_DATE_DEACTIVATE`, `Stud_DISPLAY_STATUS`) VALUES
+(2, '2015-00265-CM-0', 'Ceriaco', 'Buelva', 'Respecia Jr.', 'BSIT', 3, '1', 'Male', 'ceriaco_respecia@gmail.com', 'None', '1998-10-03', 'Quezon City', 'Not Specified', 'Regular', '2018-02-19 14:07:24', '2018-02-07 18:48:39', NULL, 'Inactive'),
+(3, '2015-00046-CM-0', 'Keith Eyvan', 'Nobong', 'Alvior', 'BSIT', 1, '1', 'Male', 'zheuswalker@gmail.com', 'None', '1999-03-26', 'Quezon City', 'Not Specify', 'Regular', '2018-02-21 21:58:22', '2018-02-07 18:49:28', NULL, 'Active'),
+(5, '2015-00194-CM-0', 'Eric Kristopher', 'Paras', 'Valdez', 'BSIT', 1, '1', 'Male', 'eric_kristopher@gmail.com', 'None', '1999-09-04', 'Quezon City', 'Not Specify', 'Regular', '2018-02-12 17:20:48', '2018-02-07 18:50:31', NULL, 'Active'),
+(6, '2015-00572-CM-0', 'Juan Paolo', '', 'Villanueva', 'BSIT', 1, '1', 'Male', 'juan_villanueva@gmail.com', 'None', '1998-10-10', 'Cavite City', 'Not Specify', 'Regular', '2018-02-07 18:51:28', '2018-02-07 18:51:28', NULL, 'Active'),
+(7, '2015-00410-CM-0', 'Ma. Michaela', 'Cruz', 'Alejandria', 'BSIT', 1, '1', 'Female', 'michaeia@gmail.com', 'None', '1998-06-17', 'Quezon City', 'Greater Lagro', 'Regular', '2018-02-08 15:31:40', '2018-02-08 15:31:40', NULL, 'Active'),
+(8, '2014-00119-CM-0', 'Ian', 'Badal', 'Avena', 'BSIT', 1, '1', 'Female', 'ianavena4@gmail.com', '09125665771', '1997-11-04', 'Don Fabian', 'PUP', 'Disqualified', '2018-02-28 07:56:25', '2018-02-08 17:35:53', NULL, 'Active'),
+(9, '2015-00394-cm-0', 'Malene', '', 'Dizon', 'BSIT', 1, '3', 'Female', 'malene@gmail.com', '09776685572', '1998-06-10', 'QC', 'hhhhhhhhhhhhhhh', 'Regular', '2018-02-08 17:37:12', '2018-02-08 17:37:12', NULL, 'Active'),
+(10, '2015-00001-CM-0', 'Sample fname', 'Mname', 'Lname', 'DICT', 1, '1', 'Male', 'Emailad@email.com', 'None', '1998-02-10', 'Quezon City', 'Hulaan mo', 'Regular', '2018-02-18 09:47:13', '2018-02-10 22:58:01', NULL, 'Active'),
+(36, '2016-00303-CM-0', 'Joana Rose', 'Balmonte', 'Loyola', 'BSIT', 1, '1', 'Female', 'joanaloyola@gmail.com', '099995251071', '1999-10-26', 'Quezon City', 'please see the address of 2015-00073-CM-0', 'Regular', '2018-02-12 11:36:57', '2018-02-11 22:05:44', NULL, 'Active'),
+(40, '20', '1', '1', '1', 'DOMT', 1, '1', 'Male', '1212', '11', '2018-01-30', '1', '1', 'Regular', '2018-02-12 00:06:42', '2018-02-11 23:11:43', NULL, 'Inactive'),
+(41, '123', '12', '123', '123', 'DICT', 1, '1', 'Male', '123', '123', '1988-02-13', '123', '213', 'Regular', '2018-02-12 00:09:25', '2018-02-11 23:39:08', NULL, 'Inactive'),
+(43, '2014-00114-CM-0', 'lean', 'badal', 'avena', 'BSIT', 1, '2', 'Male', 'ian@gmail.com', '09125665771', '1997-11-04', 'or min', 'pupqc', 'Regular', '2018-02-19 17:55:44', '2018-02-19 17:55:04', NULL, 'Active'),
+(44, '2015-00202-CM-0', 'Jennifer', 'Tuban', 'Sanchez', 'BSIT', 1, '1', 'Male', 'eomma@gmail.com', 'None', '1998-07-15', 'Sampaloc, Manila', 'sa bahay', 'Regular', '2018-02-26 08:58:21', '2018-02-26 08:58:21', NULL, 'Active'),
+(45, '2015-00040-CM-0', 'Franchesca', 'Ronquillo', 'Silonga', 'BSIT', 1, '1', 'Female', 'chescamae@gmail.com', 'None', '1998-01-22', 'Caloocan City', 'Sa bahay ni blaster', 'Regular', '2018-02-26 19:03:24', '2018-02-26 19:03:24', NULL, 'Active'),
+(46, '454545', 'JJ', 'HH', 'GG', 'BSIT', 1, '1', 'Female', 'malene@yahoo', '0988888', '1998-12-30', 'QC', 'hhhhhhhhhhhhhhhhhhh', 'Regular', '2018-02-28 08:29:53', '2018-02-28 08:29:53', NULL, 'Active'),
+(47, '2017-00000', 'g', 'g', 'g', 'BSIT', 1, '1', 'Female', 'mh@w', '777', '1996-12-29', 'qc', 'hhh', 'Regular', '2018-03-01 18:13:40', '2018-03-01 18:13:40', NULL, 'Active'),
+(48, '2015-00073-CM-0', 'John Patrick', 'Balmonte', 'Loyola', 'BSIT', 1, '1', 'Male', 'loyolapat04@gmail.com', '09995251071', '1998-11-04', 'Quezon City', '1127', 'Regular', '2018-03-04 22:43:03', '2018-03-04 22:43:03', NULL, 'Active');
+
 -- --------------------------------------------------------
 
 --
@@ -587,6 +741,15 @@ CREATE TABLE IF NOT EXISTS `r_users` (
   UNIQUE KEY `UNQ_Users_USERNAME` (`Users_USERNAME`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `r_users`
+--
+
+INSERT INTO `r_users` (`Users_ID`, `Users_USERNAME`, `Users_REFERENCED`, `Users_PASSWORD`, `Users_ROLES`, `Users_PROFILE_PATH`, `Users_DATE_ADD`, `Users_DATE_MOD`, `Users_DISPLAY_STAT`) VALUES
+(1, 'Demelyn', '2017-OSAS-CM-0', 0x852fa0a245a1467fcfd3e79a8c1bb0c9, 'OSAS HEAD', NULL, '2018-02-08 08:47:45', '2018-02-08 08:47:45', 'Active'),
+(4, 'Patrick', '', 0x852fa0a245a1467fcfd3e79a8c1bb0c9, 'Administrator', '../avatar/ytyytytyt', '2018-03-12 02:41:39', '2018-03-17 04:18:32', 'Active'),
+(5, 'Commits', 'CIT2017', 0x852fa0a245a1467fcfd3e79a8c1bb0c9, 'Organization', NULL, '2018-03-18 21:54:15', '2018-03-18 21:54:15', 'Active');
+
 -- --------------------------------------------------------
 
 --
@@ -605,6 +768,15 @@ CREATE TABLE IF NOT EXISTS `t_assign_org_academic_course` (
   UNIQUE KEY `UNQ_AssOrgAcademic_ID` (`AssOrgAcademic_ID`),
   KEY `FK_AssOrgAcademic_COURSE_CODE` (`AssOrgAcademic_COURSE_CODE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `t_assign_org_academic_course`
+--
+
+INSERT INTO `t_assign_org_academic_course` (`AssOrgAcademic_ID`, `AssOrgAcademic_ORG_CODE`, `AssOrgAcademic_COURSE_CODE`, `AssOrgAcademic_DATE_ADD`, `AssOrgAcademic_DATE_MOD`, `AssOrgAcademic_DISPLAY_STAT`) VALUES
+(21, 'CIT2017', 'BSIT', '2018-03-15 16:42:37', '2018-03-15 16:42:37', 'Active'),
+(20, 'CIT2017', 'DICT', '2018-03-15 16:42:37', '2018-03-15 16:42:37', 'Active'),
+(19, 'CIT2017', 'DOMT', '2018-03-15 16:28:58', '2018-03-15 16:28:58', 'Inactive');
 
 -- --------------------------------------------------------
 
@@ -625,6 +797,13 @@ CREATE TABLE IF NOT EXISTS `t_assign_org_category` (
   KEY `FK_AssOrgCategory_ORGCAT_CODE` (`AssOrgCategory_ORGCAT_CODE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `t_assign_org_category`
+--
+
+INSERT INTO `t_assign_org_category` (`AssOrgCategory_ID`, `AssOrgCategory_ORG_CODE`, `AssOrgCategory_ORGCAT_CODE`, `AssOrgCategory_DATE_ADD`, `AssOrgCategory_DATE_MOD`, `AssOrgCategory_DISPLAY_STAT`) VALUES
+(19, 'CIT2017', 'ACAD_ORG', '2018-03-15 16:28:58', '2018-03-15 16:28:58', 'Active');
+
 -- --------------------------------------------------------
 
 --
@@ -643,6 +822,26 @@ CREATE TABLE IF NOT EXISTS `t_assign_org_members` (
   UNIQUE KEY `UNQ_AssOrgMem_ID` (`AssOrgMem_ID`),
   KEY `FK_AssOrgMem_COMPL_ORG_CODE` (`AssOrgMem_COMPL_ORG_CODE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `t_assign_org_members`
+--
+
+INSERT INTO `t_assign_org_members` (`AssOrgMem_ID`, `AssOrgMem_STUD_NO`, `AssOrgMem_COMPL_ORG_CODE`, `AssOrgMem_DATE_ADD`, `AssOrgMem_DATE_MOD`, `AssOrgMem_DISPLAY_STAT`) VALUES
+(9, '2014-00114-CM-0', 'CIT2017', '2018-03-18 23:23:27', NULL, 'Active'),
+(5, '2014-00119-CM-0', 'CIT2017', '2018-03-18 23:23:26', NULL, 'Active'),
+(7, '2015-00001-CM-0', 'CIT2017', '2018-03-18 23:23:27', NULL, 'Active'),
+(11, '2015-00040-CM-0', 'CIT2017', '2018-03-18 23:23:27', NULL, 'Active'),
+(1, '2015-00046-CM-0', 'CIT2017', '2018-03-18 23:10:14', NULL, 'Active'),
+(14, '2015-00073-CM-0', 'CIT2017', '2018-03-18 23:23:27', NULL, 'Active'),
+(2, '2015-00194-CM-0', 'CIT2017', '2018-03-18 23:20:12', NULL, 'Active'),
+(10, '2015-00202-CM-0', 'CIT2017', '2018-03-18 23:23:27', NULL, 'Active'),
+(6, '2015-00394-cm-0', 'CIT2017', '2018-03-18 23:23:26', NULL, 'Active'),
+(4, '2015-00410-CM-0', 'CIT2017', '2018-03-18 23:23:26', NULL, 'Active'),
+(3, '2015-00572-CM-0', 'CIT2017', '2018-03-18 23:23:26', NULL, 'Active'),
+(8, '2016-00303-CM-0', 'CIT2017', '2018-03-18 23:23:27', NULL, 'Active'),
+(13, '2017-00000', 'CIT2017', '2018-03-18 23:23:27', NULL, 'Active'),
+(12, '454545', 'CIT2017', '2018-03-18 23:23:27', NULL, 'Active');
 
 -- --------------------------------------------------------
 
@@ -708,6 +907,16 @@ CREATE TABLE IF NOT EXISTS `t_assign_stud_finan_assistance` (
   KEY `FK_AssStudFinanAssistance_FINAN_NAME` (`AssStudFinanAssistance_FINAN_NAME`)
 ) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `t_assign_stud_finan_assistance`
+--
+
+INSERT INTO `t_assign_stud_finan_assistance` (`AssStudFinanAssistance_ID`, `AssStudFinanAssistance_STUD_NO`, `AssStudFinanAssistance_FINAN_NAME`, `AssStudFinanAssistance_STATUS`, `AssStudFinanAssistance_REMARKS`, `AssStudFinanAssistance_DATE_ADD`, `AssStudFinanAssistance_DATE_MOD`, `AssStudFinanAssistance_DISPLAY_STAT`) VALUES
+(90, '2015-00046-CM-0', 'CHED', 'Active', ' ', '2018-03-17 01:49:02', '2018-03-17 14:39:33', 'Active'),
+(91, '2015-00046-CM-0', 'SYDP', 'Active', ' a', '2018-03-17 01:53:49', '2018-03-17 01:54:51', 'Active'),
+(93, '2015-00194-CM-0', 'CHED', 'Active', '', '2018-03-18 11:07:11', '2018-03-18 11:07:11', 'Active'),
+(92, '2015-00194-CM-0', 'SYDP', 'Inactive', '', '2018-03-18 11:07:11', '2018-03-18 11:07:11', 'Active');
+
 -- --------------------------------------------------------
 
 --
@@ -727,6 +936,32 @@ CREATE TABLE IF NOT EXISTS `t_assign_stud_loss_id_regicard` (
   PRIMARY KEY (`AssLoss_ID`),
   KEY `FK_AssLoss_STUD_NO` (`AssLoss_STUD_NO`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `t_assign_stud_loss_id_regicard`
+--
+
+INSERT INTO `t_assign_stud_loss_id_regicard` (`AssLoss_ID`, `AssLoss_STUD_NO`, `AssLoss_TYPE`, `AssLoss_REMARKS`, `AssLoss_DATE_CLAIM`, `AssLoss_DATE_ADD`, `AssLoss_DATE_MOD`, `AssLoss_DISPLAY_STAT`) VALUES
+(1, '2015-00410-CM-0', 'Registration Card', '123', '2018-03-19 00:00:00', '2018-03-01 03:25:35', '2018-03-01 03:25:35', 'Inactive'),
+(2, '2015-00046-CM-0', 'Registration Card', '', '2018-03-12 00:00:00', '2018-03-01 13:38:24', '2018-03-01 13:38:24', 'Inactive'),
+(3, '2015-00194-CM-0', 'Registration Card', 'ds', '2018-12-12 11:11:00', '2018-03-01 15:44:37', '2018-03-01 15:44:37', 'Inactive'),
+(4, '2015-00410-CM-0', 'Registration Card', '', '2018-03-09 17:59:19', '2018-03-10 00:59:19', '2018-03-10 00:59:19', 'Inactive'),
+(5, '2015-00410-CM-0', 'Identification Card', 'hahaha', '2018-03-12 12:42:30', '2018-03-12 19:42:30', '2018-03-12 19:42:30', 'Inactive'),
+(6, '2015-00194-CM-0', 'Identification Card', ' ', '2018-03-12 00:00:00', '2018-03-12 20:00:52', '2018-03-12 20:00:52', 'Inactive'),
+(7, '2015-00194-CM-0', 'Registration Card', '', '2018-03-16 19:03:29', '2018-03-17 02:03:29', '2018-03-17 02:03:29', 'Inactive'),
+(8, '2015-00194-CM-0', 'Identification Card', '', '2018-03-16 19:07:41', '2018-03-17 02:07:41', '2018-03-17 02:07:41', 'Inactive'),
+(9, '2015-00194-CM-0', 'Registration Card', '', '2018-03-16 19:07:41', '2018-03-17 02:07:41', '2018-03-17 02:07:41', 'Inactive'),
+(10, '2015-00046-CM-0', 'Registration Card', 'asd', '2018-03-16 19:16:06', '2018-03-17 02:16:06', '2018-03-17 02:16:06', 'Inactive'),
+(11, '2015-00046-CM-0', 'Registration Card', '', '2018-03-16 19:24:25', '2018-03-17 02:24:25', '2018-03-17 02:24:25', 'Inactive'),
+(12, '2015-00046-CM-0', 'Registration Card', '', '2018-03-16 19:25:16', '2018-03-17 02:25:16', '2018-03-17 02:25:16', 'Inactive'),
+(13, '2015-00046-CM-0', 'Registration Card', '', '0000-00-00 00:00:00', '2018-03-17 02:26:46', '2018-03-17 02:26:46', 'Inactive'),
+(14, '2015-00046-CM-0', 'Registration Card', '', '0000-00-00 00:00:00', '2018-03-17 02:27:00', '2018-03-17 02:27:00', 'Inactive'),
+(15, '2015-00046-CM-0', 'Registration Card', '', '2018-03-17 00:00:00', '2018-03-17 02:27:30', '2018-03-17 02:27:30', 'Inactive'),
+(16, '2015-00046-CM-0', 'Registration Card', '', '0000-00-00 00:00:00', '2018-03-17 03:40:42', '2018-03-17 03:40:42', 'Inactive'),
+(17, '2015-00046-CM-0', 'Registration Card', '', '0000-00-00 00:00:00', '2018-03-17 04:26:59', '2018-03-17 04:26:59', 'Inactive'),
+(18, '2015-00046-CM-0', 'Registration Card', ' rytyty', '2018-03-18 04:06:23', '2018-03-17 04:39:28', '2018-03-17 04:39:28', 'Active'),
+(19, '2015-00046-CM-0', 'Identification Card', 'kk', '0000-00-00 00:00:00', '2018-03-18 11:06:43', '2018-03-18 11:06:43', 'Active'),
+(20, '2015-00046-CM-0', 'Identification Card', 'kk', '0000-00-00 00:00:00', '2018-03-18 11:06:43', '2018-03-18 11:06:43', 'Active');
 
 -- --------------------------------------------------------
 
@@ -752,6 +987,13 @@ CREATE TABLE IF NOT EXISTS `t_assign_stud_saction` (
   KEY `FK_AssSancStudStudent_SancDetails_CODE` (`AssSancStudStudent_SancDetails_CODE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `t_assign_stud_saction`
+--
+
+INSERT INTO `t_assign_stud_saction` (`AssSancStudStudent_ID`, `AssSancStudStudent_STUD_NO`, `AssSancStudStudent_SancDetails_CODE`, `AssSancStudStudent_DesOffDetails_CODE`, `AssSancStudStudent_CONSUMED_HOURS`, `AssSancStudStudent_REMARKS`, `AssSancStudStudent_IS_FINISH`, `AssSancStudStudent_DATE_ADD`, `AssSancStudStudent_DATE_MOD`, `AssSancStudStudent_DISPLAY_STAT`) VALUES
+(1, '2015-00046-CM-0', '2.1 3rdOffense', 'OFF00001', 0, 'excused pala', 'Processing', '2018-03-16 18:02:05', '2018-03-16 18:04:27', 'Active');
+
 -- --------------------------------------------------------
 
 --
@@ -771,6 +1013,15 @@ CREATE TABLE IF NOT EXISTS `t_org_accreditation_process` (
   UNIQUE KEY `UNQ_OrgAccrProcess_ID` (`OrgAccrProcess_ID`),
   KEY `FK_OrgAccrProcess_OrgAccrDetail_CODE` (`OrgAccrProcess_OrgAccrDetail_CODE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `t_org_accreditation_process`
+--
+
+INSERT INTO `t_org_accreditation_process` (`OrgAccrProcess_ID`, `OrgAccrProcess_ORG_CODE`, `OrgAccrProcess_OrgAccrDetail_CODE`, `OrgAccrProcess_IS_ACCREDITED`, `OrgAccrProcess_DATE_ADD`, `OrgAccrProcess_DATE_MOD`, `OrgAccrProcess_DISPLAY_STAT`) VALUES
+(5, 'CIT2017', 'REQ00001', 0, '2018-03-15 16:29:07', '2018-03-15 16:29:07', 'Active'),
+(6, 'CIT2017', 'REQ00002', 1, '2018-03-15 16:29:07', '2018-03-15 16:29:07', 'Active'),
+(7, 'CIT2017', 'REQ00003', 1, '2018-03-15 16:52:25', '2018-03-15 16:52:25', 'Active');
 
 -- --------------------------------------------------------
 
@@ -853,6 +1104,13 @@ CREATE TABLE IF NOT EXISTS `t_org_for_compliance` (
   KEY `FK_OrgForCompliance_CODE` (`OrgForCompliance_OrgApplProfile_APPL_CODE`),
   KEY `FK_OR_ORG_FOUNDED_BATCH_YEAR` (`OrgForCompliance_BATCH_YEAR`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `t_org_for_compliance`
+--
+
+INSERT INTO `t_org_for_compliance` (`OrgForCompliance_ID`, `OrgForCompliance_ORG_CODE`, `OrgForCompliance_OrgApplProfile_APPL_CODE`, `OrgForCompliance_ADVISER`, `OrgForCompliance_BATCH_YEAR`, `OrgForCompliance_DATE_ADD`, `OrgForCompliance_DATE_MOD`, `OrgForCompliance_DISPAY_STAT`) VALUES
+(20, 'CIT2017', 'CIT2018', 'sample name', '2017-2018', '2018-03-15 16:28:54', '2018-03-15 16:28:54', 'Active');
 
 -- --------------------------------------------------------
 
