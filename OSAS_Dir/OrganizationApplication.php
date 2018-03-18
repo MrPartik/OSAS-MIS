@@ -195,7 +195,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                         <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                             <thead>
                                                 <tr>
-                                                    <th>Application Code</th>
+                                                    <th>Organization Code</th>
                                                     <th>Organization Name</th>
                                                     <th>Organization Description</th>
                                                     <th style="width:100px">Status</th>
@@ -206,14 +206,21 @@ $user_check = $_SESSION['logged_user']['username'];
                                                 <?php
 
 
-                                        $view_query = mysqli_query($con," SELECT OrgAppProfile_APPL_CODE,OrgAppProfile_NAME,OrgAppProfile_DESCRIPTION, (SELECT IFNULL((SELECT WIZARD_CURRENT_STEP FROM r_application_wizard WHERE WIZARD_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE )),'1') ) AS STEP, (SELECT COUNT(*) FROM r_org_accreditation_details WHERE OrgAccrDetail_DISPLAY_STAT = 'Active') AS A1, (SELECT COUNT(*) FROM t_org_accreditation_process WHERE OrgAccrProcess_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE) AND OrgAccrProcess_DISPLAY_STAT = 'Active' ) as A2 ,
-(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process WHERE OrgAccrProcess_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE) AND OrgAccrProcess_IS_ACCREDITED = 1 ) = (SELECT COUNT(*) FROM r_org_accreditation_details WHERE OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE' ) ) AS TR
-
-
-FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
+                                        $view_query = mysqli_query($con,"SELECT  DISTINCT
+                                        OrgAppProfile_APPL_CODE
+                                        ,OrgAppProfile_DESCRIPTION
+                                        ,OrgForCompliance_ORG_CODE
+                                        ,OrgAppProfile_NAME
+                                        ,OrgForCompliance_ADVISER
+                                        ,OrgAppProfile_STATUS
+                                        ,(SELECT IFNULL((SELECT WIZARD_CURRENT_STEP FROM r_application_wizard A WHERE A.WIZARD_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM `t_org_for_compliance` B WHERE B.OrgForCompliance_DISPAY_STAT = 'Active' AND B.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE  AND B.OrgForCompliance_ORG_CODE =  OFC.OrgForCompliance_ORG_CODE)),'1') ) AS STEP
+                                        ,(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OFC.OrgForCompliance_ORG_CODE AND OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details WHERE OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) AS TR
+                                            FROM `r_org_applicant_profile` AS OAP 
+                                            INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE 
+                                            WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active'");
                                         while($row = mysqli_fetch_assoc($view_query))
                                         {
-                                            $code = $row["OrgAppProfile_APPL_CODE"];
+                                            $code = $row["OrgForCompliance_ORG_CODE"];
                                             $name = $row["OrgAppProfile_NAME"];
                                             $desc = $row["OrgAppProfile_DESCRIPTION"];
                                             $accstat = $row["TR"];
@@ -259,7 +266,7 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th>Application Code</th>
+                                                    <th>Organization Code</th>
                                                     <th>Organization Name</th>
                                                     <th>Organization Description</th>
                                                     <th style="width:100px">Status</th>

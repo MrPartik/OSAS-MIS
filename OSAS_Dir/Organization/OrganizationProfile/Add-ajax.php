@@ -28,7 +28,6 @@ include('../../../config/connection.php');
         $acr = strtoupper($acr);
         $query = mysqli_query($con,"INSERT INTO r_org_applicant_profile (OrgAppProfile_APPL_CODE,OrgAppProfile_NAME,OrgAppProfile_DESCRIPTION,OrgAppProfile_STATUS)  VALUES (CONCAT('$acr',YEAR(CURRENT_DATE)),'$name','$desc','$accstat')");
         
-    
 	}
 
 ?>

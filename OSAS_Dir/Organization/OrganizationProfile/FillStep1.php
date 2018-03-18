@@ -10,7 +10,7 @@ include('../../../config/connection.php');
     $vision = '';
     
     $view_query = mysqli_query($con,"SELECT OrgForCompliance_BATCH_YEAR AS BATYEAR
-        FROM t_org_for_compliance WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_OrgApplProfile_APPL_CODE = '$id' ") ;
+        FROM t_org_for_compliance WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_ORG_CODE = '$id' ") ;
     while($row = mysqli_fetch_assoc($view_query))
     {
         $year = $row["BATYEAR"];

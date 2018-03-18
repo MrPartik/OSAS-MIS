@@ -14,7 +14,7 @@
         
 
 
-        $query = mysqli_query($con,"UPDATE r_org_applicant_profile SET OrgAppProfile_NAME = '$name',OrgAppProfile_DESCRIPTION = '$desc',OrgAppProfile_STATUS = '$accstat' WHERE OrgAppProfile_APPL_CODE  = '$id' ");
+        $query = mysqli_query($con,"UPDATE r_org_applicant_profile SET OrgAppProfile_NAME = '$name',OrgAppProfile_DESCRIPTION = '$desc',OrgAppProfile_STATUS = '$accstat' WHERE OrgAppProfile_APPL_CODE  = (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM  t_org_for_compliance WHERE OrgForCompliance_ORG_CODE = '$id') ");
                 
 
         

@@ -6,7 +6,7 @@
 	{
 		$code = $_POST['_code'];
 		
-		$query = mysqli_query($con,"UPDATE r_org_applicant_profile SET OrgAppProfile_DISPLAY_STAT = 'Inactive',OrgAppProfile_DATE_MOD = CURRENT_TIMESTAMP WHERE OrgAppProfile_APPL_CODE = '$code'");
+		$query = mysqli_query($con,"UPDATE t_org_for_compliance SET OrgForCompliance_DISPAY_STAT = 'Inactive', OrgForCompliance_DATE_MOD	 = CURRENT_TIMESTAMP WHERE OrgForCompliance_ORG_CODE = '$code'");
 
 	}
 

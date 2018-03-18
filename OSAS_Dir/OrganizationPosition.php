@@ -60,7 +60,7 @@ include('../config/connection.php');
                                                     {
                                                         $code = $row["OrgForCompliance_ORG_CODE"];
                                                         $name = $row["OrgAppProfile_NAME"];
-                                                        echo '<option value="'.$code.'">',$name.'</option>';
+                                                        echo '<option value="'.$code.'">' .$code.'-  '.$name.'</option>';
                                                     }
 
 
