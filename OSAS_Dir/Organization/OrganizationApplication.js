@@ -279,16 +279,30 @@ var EditableTable = function () {
 
                 }
                 if (x == cou) {
-                    alert("Woaah, that's neat!\nThe application is successfull!");
+                    swal({
+                        title: "Woaah, that's neat!"
+                        , text: "The application is successfull!"
+                        , type: "success"
+                        , showCancelButton: false
+                        , confirmButtonColor: '#9DD656'
+                        , confirmButtonText: 'Ok'
+                    }, function (isConfirm) {
+                        location.reload();
+                    });  
                     //swal("Woaah, that's neat!", "The application is successfull!", "success");
 
                 } else
-                    alert("Woaah, almost done!\nThe application is saved!");
-                //swal("Woaah, almost done!", "The application is saved!", "success");
-                window.location.reload();
-
-
-
+                swal({
+                    title: "Woaah, almost done!"
+                    , text: "The application is saved!"
+                    , type: "success"
+                    , showCancelButton: false
+                    , confirmButtonColor: '#9DD656'
+                    , confirmButtonText: 'Ok'
+                }, function (isConfirm) {
+                    location.reload();
+                }); 
+                //swal("Woaah, almost done!", "The application is saved!", "success");  
             });
 
             $('#drpcat').change(function () {

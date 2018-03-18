@@ -13,10 +13,7 @@
     $stat = 0;
     while($row = mysqli_fetch_assoc($view_query))
     {
-        $stat = $row["STAT"];
-        
-       
-        
+        $stat = $row["STAT"]; 
         
     }
 
