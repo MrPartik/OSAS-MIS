@@ -332,8 +332,9 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
                                                             }
                                                         ?>
                                                  </select>
-                                                </div>
+                                                </div> 
                                                 <button class="btn btn-primary nextBtn pull-right" type="button" id="btnStep1">Next</button>
+                                              
                                             </div>
                                         </div>
 
@@ -570,32 +571,7 @@ FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
         </div>
         <!-- modal -->
         <!-- Placed js at the end of the document so the pages load faster -->
-
-        <!--Core js-->
-        <script src="../js/jquery-1.8.3.min.js"></script>
-        <script src="../bs3/js/bootstrap.min.js"></script>
-        <script class="include" type="text/javascript" src="../js/jquery.dcjqaccordion.2.7.js"></script>
-        <script src="../js/jquery.scrollTo.min.js"></script>
-        <script src="../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-        <script src="../js/jquery.nicescroll.js"></script>
-        <!--Easy Pie Chart-->
-        <script src="../js/easypiechart/jquery.easypiechart.js"></script>
-        <!--Sparkline Chart-->
-        <script src="../js/sparkline/jquery.sparkline.js"></script>
-        <!--jQuery Flot Chart-->
-        <script src="../js/flot-chart/jquery.flot.js"></script>
-        <script src="../js/flot-chart/jquery.flot.tooltip.min.js"></script>
-        <script src="../js/flot-chart/jquery.flot.resize.js"></script>
-        <script src="../js/flot-chart/jquery.flot.pie.resize.js"></script>
-
-        <script type="text/javascript" src="../js/data-tables/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="../js/data-tables/DT_bootstrap.js"></script>
-        <script type="text/javascript" src="../js/sweetalert/sweetalert.min.js"></script>
-        <script src="../js/select2/select2.js"></script>
-        <script src="../js/select-init.js"></script>
-
-        <!--common script init for all pages-->
-        <script src="../js/scripts.js"></script>
+<?php include('footer.php')?>
 
         <!--script for this page only-->
         <script src="Organization/OrganizationApplication.js"></script>

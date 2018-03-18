@@ -41,10 +41,11 @@
 								if (isset($_POST['login'])){
 								$username = $_POST['username'];
 								$password = $_POST['password'];
-								$query = "call Login_User('$username','$password')";
+                                $query = "call Login_User('$username','$password')"; 
 								$result = mysqli_query($con,$query);
                                 $num_row = mysqli_num_rows($result); 
-                                $row = mysqli_fetch_assoc($result); 
+                                $row = mysqli_fetch_assoc($result);  
+                               
 									if( $num_row > 0 ) {
                                         $_SESSION['logged_in']=	$row["Users_USERNAME"];
                                         $_SESSION['logged_user']=array(

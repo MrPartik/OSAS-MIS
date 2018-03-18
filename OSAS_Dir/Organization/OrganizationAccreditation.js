@@ -22,11 +22,7 @@ var EditableTable = function () {
 
             function editRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
-                var jqTds = $('>td', nRow);
-
-
-
-
+                var jqTds = $('>td', nRow); 
             }
 
             function saveRow(oTable, nRow) {
