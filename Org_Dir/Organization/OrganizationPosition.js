@@ -95,13 +95,11 @@ var EditableTable = function () {
                     $('#Add').modal('toggle');
 
                 }
-            });
-            $('#selOrg').change(function () {
-
+            }); 
                 //PINAKAIMPORTANTEST HAHAHAH GUMANAAMPU
-                var _selOrg = document.getElementById('selOrg');
-                var selOrg = _selOrg.options[_selOrg.selectedIndex].value;
-
+                var _selOrg =  $(".username").attr("code");
+                var selOrg =  $(".username").attr("code");
+                getlatcode = selOrg;
                 var oTable = $('#editable-sample').dataTable();
                 $.ajax({
                     type: "GET",
@@ -143,9 +141,8 @@ var EditableTable = function () {
                     error: function (response) {
                         swal("Error encountered while adding data", "Please try again", "error");
                     }
-
-                });
-                getlatcode = selOrg;
+ 
+              
 
 
             });
