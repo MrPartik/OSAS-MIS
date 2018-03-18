@@ -10,8 +10,8 @@ $breadcrumbs="<div class='col-md-12'>
 </div>"; 
 $currentPage ='OSAS_OrgMem'; 
 //ANDTIOOOOOOO    
-$compcode = 'OAAAAAAA2018';
 include('header.php'); 
+$compcode = $referenced_user;
 include('../config/connection.php');
 ?>
 <link href="../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
@@ -46,7 +46,7 @@ include('../config/connection.php');
                                         </button>
                                             <button class='btn btn-primary ' id="btnsync">Sync <i class='fa fa-refresh' ></i></button>
 
-                                            <class id="getappcode">OAAAAAAA2018</class>
+                                            <class id="getappcode"><?php echo $referenced_user;?></class>
 
                                         </div>
                                     </div>

@@ -2,8 +2,8 @@
 session_start();
 include('../config/dashboard/count.php'); 
 include('../config/query.php');
-if($_SESSION['logged_user']['role']=="OSAS HEAD")
-{ header("location:../osas_dir/dashboard.php"); }
+    if($_SESSION['logged_user']['role']=="OSAS HEAD")
+    { header("location:../osas_dir/dashboard.php"); }
 else if($_SESSION['logged_user']['role']=="Organization")
 { }
 else if($_SESSION['logged_user']['role']=="Student")

@@ -27,7 +27,7 @@
 				    session_start();
                     if(isset($_SESSION['logged_in']))
                     {   if($_SESSION['logged_user']['role']=="Organization")
-                        { }
+                        { header("location:../org_dir/dashboard.php");  }
                         else if($_SESSION['logged_user']['role']=="OSAS HEAD")
                          { header("location:../osas_dir/dashboard.php"); }
                         else if($_SESSION['logged_user']['role']=="Administrator")
@@ -55,7 +55,7 @@
                                             'ref'=>$row['Users_REFERENCED']);
                                         $role = $_SESSION['logged_user']['role'];
                                            if($_SESSION['logged_user']['role']=="Organization")
-                                            { }
+                                            { header("location:../org_dir/dashboard.php");  }
                                             else if($_SESSION['logged_user']['role']=="OSAS HEAD")
                                             { header("location:../osas_dir/dashboard.php"); }
                                             else if($_SESSION['logged_user']['role']=="Administrator")

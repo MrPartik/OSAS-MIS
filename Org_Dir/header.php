@@ -3,8 +3,8 @@
 session_start();
 include('../config/dashboard/count.php'); 
 include('../config/query.php');
-if($_SESSION['logged_user']['role']=="Organization")
-    { }
+if($_SESSION['logged_user']['role']=="OSAS HEAD")
+{ header("location:../osas_dir/dashboard.php"); }
     else if($_SESSION['logged_user']['role']=="Administrator")
     { header("location:../admin_dir/dashboard.php"); }
     else if($_SESSION['logged_user']['role']=="Student")
@@ -12,6 +12,7 @@ if($_SESSION['logged_user']['role']=="Organization")
     else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
     { header("location:../");}
 $user_check = $_SESSION['logged_user']['username']; 
+$referenced_user = $_SESSION['logged_user']['ref']; 
  ?>
     <!DOCTYPE html>
 <head>
