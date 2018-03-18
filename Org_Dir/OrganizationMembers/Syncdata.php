@@ -5,7 +5,7 @@
     $compcode = $_GET['_code'];
 //    $query = mysqli_query($connection,"UPDATE t_assign_org_members SET AssOrgMem_DISPLAY_STAT = 'Inactive' WHERE AssOrgMem_COMPL_ORG_CODE = '$compcode' ");
     $view_query = mysqli_query($con," SELECT CONCAT(Stud_LNAME,' ,',Stud_FNAME ,' ', IFNULL(Stud_MNAME,'')) AS NAME , Stud_NO FROM `r_stud_profile` 
-    		WHERE Stud_DISPLAY_STATUS = 'Active' AND Stud_COURSE IN ( SELECT AssOrgAcademic_COURSE_CODE FROM `t_assign_org_academic_course` WHERE AssOrgAcademic_DISPLAY_STAT= 'Active' AND AssOrgAcademic_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_OrgApplProfile_APPL_CODE = '$compcode' AND OrgForCompliance_DISPAY_STAT = 'Active'))");
+    		WHERE Stud_DISPLAY_STATUS = 'Active' AND Stud_COURSE IN ( SELECT AssOrgAcademic_COURSE_CODE FROM `t_assign_org_academic_course` WHERE AssOrgAcademic_DISPLAY_STAT= 'Active' AND AssOrgAcademic_ORG_CODE = '$compcode')");
     $list = '';
     $i = 0;
 
