@@ -9,11 +9,12 @@
 		INNER JOIN r_stud_profile ON AssOrgMem_STUD_NO = Stud_NO
         INNER JOIN t_org_officers  ON OrgOffi_STUD_NO = AssOrgMem_STUD_NO       
         INNER JOIN r_org_officer_position_details ON OrgOffiPosDetails_ID = OrgOffi_OrgOffiPosDetails_ID
-        WHERE AssOrgMem_DISPLAY_STAT = 'Active' AND AssOrgMem_APPL_ORG_CODE = '$appcode' AND OrgOffiPosDetails_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM t_org_for_compliance WHERE OrgForCompliance_OrgApplProfile_APPL_CODE = '$appcode' AND OrgForCompliance_DISPAY_STAT = 'Active')  ");
+        WHERE AssOrgMem_DISPLAY_STAT = 'Active' AND  OrgOffi_DISPLAY_STAT = 'Active' AND  AssOrgMem_APPL_ORG_CODE = '$appcode' AND OrgOffiPosDetails_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM t_org_for_compliance WHERE OrgForCompliance_OrgApplProfile_APPL_CODE = '$appcode' AND OrgForCompliance_DISPAY_STAT = 'Active')  ");
     $officerlist = '';
-
+    $i = 0;
     while($row = mysqli_fetch_assoc($view_query))
     {
+        $i = 1;
         $name = $row["NAME"];
         $stud = $row["Stud_NO"];
         $cas = $row["CAS"];
@@ -39,6 +40,8 @@
 
         
     }
+    if($i == 0)
+        $officerlist = '<span class="label label-primary" style="font-size:15px">Empty</span>';
 
 
     echo $officerlist;

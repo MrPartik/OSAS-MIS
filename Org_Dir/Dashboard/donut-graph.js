@@ -29,29 +29,50 @@ $.ajax({
         _appcode: 'OAAAAAAA2018'
     },
     success: function (data) {
-
+        var i = 0;
         $.each(data, function (key, val) {
-            //            alert(val.cou + '-' + val.course);
-
             item.push({
                 value: val.value,
                 label: val.label,
                 formatted: val.formatted
             });
-            //
+            i++;
         });
-        Morris.Donut({
-            element: 'graph-donut',
-            data: item,
-            backgroundColor: '#fff',
-            labelColor: '#1fb5ac',
-            colors: [
+        if (i == 0) {
+            Morris.Donut({
+                element: 'graph-donut',
+                data: [
+                    {
+                        value: 100,
+                        label: 'Empty',
+                        formatted: 'No Members'
+                    }
+                ],
+                backgroundColor: '#fff',
+                labelColor: '#1fb5ac',
+                colors: [
         '#E67A77', '#D9DD81', '#79D1CF', '#95D7BB'
             ],
-            formatter: function (x, data) {
-                return data.formatted;
-            }
-        });
+                formatter: function (x, data) {
+                    return data.formatted;
+                }
+            });
+
+        } else {
+            Morris.Donut({
+                element: 'graph-donut',
+                data: item,
+                backgroundColor: '#fff',
+                labelColor: '#1fb5ac',
+                colors: [
+        '#E67A77', '#D9DD81', '#79D1CF', '#95D7BB'
+            ],
+                formatter: function (x, data) {
+                    return data.formatted;
+                }
+            });
+        }
+
 
 
     },
