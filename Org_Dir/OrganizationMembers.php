@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-<title>OSAS - Organization Members</title>
 <?php 
 $breadcrumbs="<div class='col-md-12'>
 <ul class='breadcrumbs-alt'>
@@ -14,6 +13,7 @@ include('header.php');
 $compcode = $referenced_user;
 include('../config/connection.php');
 ?>
+<title><?php echo $compcode ?> - Organization Members</title>
 <link href="../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
 <link href="../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
 <link rel="stylesheet" href="../js/data-tables/DT_bootstrap.css" />

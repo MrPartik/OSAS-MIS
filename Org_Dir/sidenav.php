@@ -10,7 +10,7 @@
                 </li>
                 <li> <a <?php if( $currentPage==='Org_Member' ) {echo 'class="active"';} ?> href="OrganizationMembers.php">
                         <i class="fa fa-group"></i>
-                        <span>Organization Members</span>
+                        <span>Org Officers and Members</span>
                     </a>
                 </li>
             </ul>

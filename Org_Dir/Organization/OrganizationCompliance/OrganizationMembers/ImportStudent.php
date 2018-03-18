@@ -11,6 +11,7 @@
         {
 
         //It wiil insert a row to our subject table from our csv file`
+        
             $query = mysqli_query($con,"INSERT INTO excel (studname,studnum) VALUES ('$emapData[1]','$emapData[2]') ");
 
         }
