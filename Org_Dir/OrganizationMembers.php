@@ -102,7 +102,15 @@ include('../config/connection.php');
 
 
                                             ?>
-                                        </tbody>
+                                        </tbody> <tfoot>
+                                            <tr>
+                                                <th>Student Number</th>
+                                                <th>Student Name</th>
+                                                <th>Course - Year and Section</th>
+                                                <th>Position</th>
+                                                <th>Action</th>
+                                            </tr>
+                                                </tfoot>
                                     </table>
                                 </div>
                                 <div class="col-lg-12">
