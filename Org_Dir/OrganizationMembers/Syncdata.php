@@ -1,6 +1,6 @@
 <?php
 	
-    include('../../../config/connection.php');     
+    include('../../config/connection.php');     
 
     $compcode = $_GET['_code'];
 //    $query = mysqli_query($connection,"UPDATE t_assign_org_members SET AssOrgMem_DISPLAY_STAT = 'Inactive' WHERE AssOrgMem_APPL_ORG_CODE = '$compcode' ");
@@ -34,6 +34,5 @@
     echo json_encode(
           array("list" => $list)
      );
-
 
 ?>

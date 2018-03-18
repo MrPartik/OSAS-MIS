@@ -138,7 +138,7 @@ var EditableTable = function () {
                 //                console.log("Inside ajax: " + result);
                 // Do whatever you need with result variable
             }
-            $('#editable-sample ').on('click', 'a.edit', function (e) {
+            $('#editable-sample a.edit').click(function (e) {
                 e.preventDefault();
                 var nRow = $(this).parents('tr')[0];
                 var getcode = $(this).closest('tr').children('td:first').text();
@@ -443,61 +443,67 @@ var initproftable = function () {
 
             });
 
-            $('#updaccreqlist').on('click', 'a.delete', function (e) {
+            $('#1').on('click', function (e) {
                 e.preventDefault();
-                var nRow = $(this).parents('tr')[0];
-                var getval = $(this).closest('tr').children('td:first').text();
-                var getname = $(this).closest('tr').children('td:first').next().text();
-
-                swal({
-
-                        title: "Are you sure?",
-                        text: "The record will be save and will be use for further transaction",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: '#DD6B55',
-                        confirmButtonText: 'Yes, do it!',
-                        cancelButtonText: "No, cancel it!",
-                        closeOnConfirm: false,
-                        closeOnCancel: false
-                    },
-                    function (isConfirm) {
-                        if (isConfirm) {
-
-                            $.ajax({
-                                type: 'post',
-                                url: 'Organization/OrganizationMembers/DelStud.php',
-                                data: {
-                                    _studno: getval,
-                                    _appcode: appcode
-                                },
-                                success: function (response) {
-                                    swal("Record Deleted!", "The data is successfully deleted!", "success");
-                                    var x = document.getElementById("drpstud");
-                                    var option = document.createElement("option");
-                                    option.text = getname;
-                                    option.value = getval;
-                                    x.add(option);
-
-                                    oTable.fnDeleteRow(nRow);
-                                },
-                                error: function (response) {
-                                    swal("Error encountered while adding data", "Please try again", "error");
-                                }
-
-                            });
-
-
-
-                        } else
-                            swal("Cancelled", "The transaction is cancelled", "error");
-
-                    });
+                alert('qwewqe');
 
 
             });
+            //            $('#proftable a.delete').on('click', function (e) {
+            //                e.preventDefault();
+            //                var nRow = $(this).parents('tr')[0];
+            //                var getval = $(this).closest('tr').children('td:first').text();
+            //                var getname = $(this).closest('tr').children('td:first').next().text();
+            //
+            //                swal({
+            //
+            //                        title: "Are you sure?",
+            //                        text: "The record will be save and will be use for further transaction",
+            //                        type: "warning",
+            //                        showCancelButton: true,
+            //                        confirmButtonColor: '#DD6B55',
+            //                        confirmButtonText: 'Yes, do it!',
+            //                        cancelButtonText: "No, cancel it!",
+            //                        closeOnConfirm: false,
+            //                        closeOnCancel: false
+            //                    },
+            //                    function (isConfirm) {
+            //                        if (isConfirm) {
+            //
+            //                            $.ajax({
+            //                                type: 'post',
+            //                                url: 'Organization/OrganizationMembers/DelStud.php',
+            //                                data: {
+            //                                    _studno: getval,
+            //                                    _appcode: appcode
+            //                                },
+            //                                success: function (response) {
+            //                                    swal("Record Deleted!", "The data is successfully deleted!", "success");
+            //                                    var x = document.getElementById("drpstud");
+            //                                    var option = document.createElement("option");
+            //                                    option.text = getname;
+            //                                    option.value = getval;
+            //                                    x.add(option);
+            //
+            //                                    oTable.fnDeleteRow(nRow);
+            //                                },
+            //                                error: function (response) {
+            //                                    swal("Error encountered while adding data", "Please try again", "error");
+            //                                }
+            //
+            //                            });
+            //
+            //
+            //
+            //                        } else
+            //                            swal("Cancelled", "The transaction is cancelled", "error");
+            //
+            //                    });
+            //
+            //
+            //            });
 
-            $('#proftable a.cancel').click(function (e) {
+            $('#proftable a.i.cancel').click(function (e) {
                 e.preventDefault();
                 if ($(this).attr("data-mode") == "new") {
                     var nRow = $(this).parents('tr')[0];
