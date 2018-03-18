@@ -24,6 +24,8 @@ var EditableTable = function () {
             function editRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
                 var jqTds = $('>td', nRow);
+                var jqTds = $('>td', nRow);
+                var nRow = $(this).parents('tr')[0];
 
 
 
@@ -148,6 +150,7 @@ var EditableTable = function () {
             });
             var result = 0;
 
+
             $('#editable-sample a.i.cancel').click(function (e) {
                 e.preventDefault();
                 if ($(this).attr("data-mode") == "new") {
@@ -262,8 +265,72 @@ var EditableTable = function () {
 
 
             });
+            $('#updsubmit-data').click(function (e) {
+                e.preventDefault();
+                alert('qwe');
+                var getappcode = document.getElementById('getappcode').innerText;
+                var updstudnum = document.getElementById('updstudnum').innerText;
+                var _upddrppos = document.getElementById('upddrppos');
+                var upddrpposvalue = _upddrppos.options[_upddrppos.selectedIndex].value;
+                var upddrppostext = _upddrppos.options[_upddrppos.selectedIndex].text;
+                $('#close').click();
+                swal({
+                    title: "Are you sure?",
+                    text: "This data will be saved and used for further transaction",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: '#DD6B55',
+                    confirmButtonText: 'Yes, Add it!',
+                    cancelButtonText: "No, cancel it!",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            type: 'post',
+                            url: 'OrganizationMembers/UpdateStud.php',
+                            data: {
+                                _studno: updstudnum,
+                                _appcode: getappcode,
+                                _pos: upddrpposvalue
+                            },
+                            success: function (response) {
+                                swal("Record Added!", "The data is successfully Added!", "success");
+                            },
+                            error: function (response) {
+                                swal("Error encountered while adding data", "Please try again", "error");
+                                $('#editable-sample_new').click();
+                            }
+                        });
+
+                    } else {
+                        swal("Cancelled", "The transaction is cancelled", "error");
+                        $('#editable-sample_new').click();
+                    }
+                });
 
 
+
+            });
+
+            $('#editable-sample ').on('click', 'a.edit', function (e) {
+                e.preventDefault();
+
+                var _upddrppos = document.getElementById('upddrppos');
+                document.getElementById('updstudname').innerText = $(this).closest('tr').children('td:first').next().text();
+                document.getElementById('updstudnum').innerText = $(this).closest('tr').children('td:first').text();
+                var getval = '';
+                var postext = $(this).closest('tr').children('td:first').next().next().next().text();
+                $('#upddrppos option').each(function (index, item) {
+                    if (item.text == postext)
+                        getval = item.value
+
+                });
+
+
+                _upddrppos.value = getval;
+
+            });
 
 
 

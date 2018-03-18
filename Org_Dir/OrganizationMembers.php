@@ -80,7 +80,7 @@ include('../config/connection.php');
 		INNER JOIN r_stud_profile ON AssOrgMem_STUD_NO = Stud_NO
         LEFT JOIN t_org_officers  ON OrgOffi_STUD_NO = AssOrgMem_STUD_NO       
         LEFT JOIN r_org_officer_position_details ON OrgOffiPosDetails_ID = OrgOffi_OrgOffiPosDetails_ID
-        WHERE AssOrgMem_DISPLAY_STAT = 'Active' AND AssOrgMem_APPL_ORG_CODE = '$compcode'"
+        WHERE AssOrgMem_DISPLAY_STAT = 'Active'  AND AssOrgMem_APPL_ORG_CODE = '$compcode'"
                                                     );
                                                     while($row = mysqli_fetch_assoc($view_query))
                                                     {
@@ -94,7 +94,7 @@ include('../config/connection.php');
                                                                 <td>$sname</td>
                                                                 <td>$cas</td>
                                                                 <td>$pos</td>
-                                                                <td><center><a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-trash-o'></i></a></center></td>
+                                                                <td><center><a class='btn btn-success edit' data-toggle='modal'  href='#Edit'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-trash-o'></i></a></center></td>
                                                             </tr>
                                                                 ";
                                                     }
@@ -167,7 +167,7 @@ include('../config/connection.php');
                                             </div>
                                             <div class="col-lg-12"> Position
                                                 <select class="form-control input-sm m-bot15 " style="width:100%" id="drppos">
-                                                        <option value="default" selected disabled>Member</option>
+                                                        <option value="default" selected>Member</option>
                                                          <?php
                                                    
                                                      $view_query = mysqli_query($con," SELECT OrgOffiPosDetails_ID,OrgOffiPosDetails_NAME FROM `r_org_officer_position_details`
@@ -198,6 +198,60 @@ include('../config/connection.php');
             </div>
         </div>
     </div>
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Edit" class="modal fade">
+        <div class="modal-dialog" style="width:40%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Organization Members</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <section class="panel">
+                                <div class="panel-body">
+                                    <form method="post" id="updform-data">
+                                        <div class="row" style="padding-top:10px">
+                                            <div class="col-lg-12">
+                                                <label for="upddrpstud">Student Name</label>
+                                                <br/>
+                                                <span class="label label-primary" id="updstudname" style="font-size:12px">Primary</span>
+                                                <span class="label label-primary" id="updstudnum" style="font-size:12px">Primary</span>
+
+                                            </div>
+                                            <div class="col-lg-12" style="padding-top:5px"> Position
+                                                <select class="form-control input-sm m-bot15 " style="width:100%" id="upddrppos">
+                                                        <option value="default" selected>Member</option>
+                                                         <?php
+                                                   
+                                                     $view_query = mysqli_query($con," SELECT OrgOffiPosDetails_ID,OrgOffiPosDetails_NAME FROM `r_org_officer_position_details`
+                                                        WHERE OrgOffiPosDetails_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM t_org_for_compliance WHERE OrgForCompliance_OrgApplProfile_APPL_CODE = '$compcode' AND OrgForCompliance_DISPAY_STAT = 'Active') AND OrgOffiPosDetails_DISPLAY_STAT = 'Active'  ");                                                   
+                                                    while($row = mysqli_fetch_assoc($view_query))
+                                                    {
+                                                        $id = $row['OrgOffiPosDetails_ID'];
+                                                        $name = $row['OrgOffiPosDetails_NAME'];
+                                                        echo " <option value='".$id."' >".$name."</option>";
+
+                                                    }
+
+                                            ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default" id="close" type="button">Close</button>
+                    <button class="btn btn-success " id="updsubmit-data" type="button">Save</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <!-- modal -->
     <!-- Placed js at the end of the document so the pages load faster -->
     <!--Core js-->
@@ -220,6 +274,7 @@ include('../config/connection.php');
     <script>
         $(document).ready(function() {
             $('#getappcode').hide();
+            $('#updstudnum').hide();
             var countreq = 0;
             var flag = 0;
             $('#upload_csv').on("submit", function(e) {
