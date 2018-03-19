@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html> 
+<html>
+
 <head>
     <title>Admin - Accreditation Requirement</title>
     <?php
@@ -13,8 +14,8 @@ include('../config/connection.php');
 
     <section id="container">
         <aside>
-            <div id="sidebar" class="nav-collapse"> 
-                <?php include('sidenav.php')   ?> 
+            <div id="sidebar" class="nav-collapse">
+                <?php include('sidenav.php')   ?>
             </div>
         </aside>
         <!--sidebar end-->
@@ -48,13 +49,7 @@ include('../config/connection.php');
                                     </button>
                                         </div>
                                         <div class="btn-group pull-right">
-                                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
-                                    </button>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li><a href="#">Print</a></li>
-                                                <li><a href="#">Save as PDF</a></li>
-                                                <li><a href="#">Export to Excel</a></li>
-                                            </ul>
+                                            <button class="btn btn-default " id="btnprint">Print <i class="fa fa-print"></i></button>
                                         </div>
                                     </div>
                                     <div class="space15"></div>
@@ -64,46 +59,46 @@ include('../config/connection.php');
                                                 <th>Requirement Code</th>
                                                 <th>Requirement Name</th>
                                                 <th>Requirement Description</th>
-                                                <th>Action</th> 
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
 							 
-										$view_query = mysqli_query($con,"select * from `r_org_accreditation_details` where OrgAccrDetail_DISPLAY_STAT = 'Active'");
-										while($row = mysqli_fetch_assoc($view_query))
-										{
-											$code = $row["OrgAccrDetail_CODE"];
-											$name = $row["OrgAccrDetail_NAME"];
-											$desc = $row["OrgAccrDetail_DESC"];										
-											$id = $row["OrgAccrDetail_ID"];										
-											
-											echo "
-											<tr class=''>
-												<td>$code</td>
-												<td>$name</td>
-												<td >$desc</td>
-												<td style='width:150px'>
-													<center>
-														<a class='btn btn-success edit' href='javascript:;'>Edit</a>
-														<a class='btn btn-danger delete' href='javascript:;'>Delete</a>								
-													<center>
-												</td>
-												
-											</tr>
-											";
-										}			
+                                                $view_query = mysqli_query($con,"select * from `r_org_accreditation_details` where OrgAccrDetail_DISPLAY_STAT = 'Active'");
+                                                while($row = mysqli_fetch_assoc($view_query))
+                                                {
+                                                    $code = $row["OrgAccrDetail_CODE"];
+                                                    $name = $row["OrgAccrDetail_NAME"];
+                                                    $desc = $row["OrgAccrDetail_DESC"];										
+                                                    $id = $row["OrgAccrDetail_ID"];										
+
+                                                    echo "
+                                                    <tr class=''>
+                                                        <td>$code</td>
+                                                        <td>$name</td>
+                                                        <td >$desc</td>
+                                                        <td style='width:150px'>
+                                                            <center>
+                                                                <a class='btn btn-success edit' href='javascript:;'>Edit</a>
+                                                                <a class='btn btn-danger delete' href='javascript:;'>Delete</a>								
+                                                            <center>
+                                                        </td>
+
+                                                    </tr>
+                                                    ";
+                                                }			
 											
 										
-									?>
+    									   ?>
 
-                                        </tbody>  
+                                        </tbody>
                                         <tfoot>
                                             <tr>
                                                 <th>Requirement Code</th>
                                                 <th>Requirement Name</th>
                                                 <th>Requirement Description</th>
-                                                <th>Action</th> 
+                                                <th>Action</th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -175,7 +170,7 @@ include('../config/connection.php');
     <!-- Placed js at the end of the document so the pages load faster -->
 
     <?php include("footer.php") ?>
-    <!--Core js-->   
+    <!--Core js-->
 
     <!--script for this page only-->
     <script src="OrganizationSetup/AccreditationRequirement.js"></script>
@@ -183,6 +178,14 @@ include('../config/connection.php');
     <!-- END JAVASCRIPTS -->
     <script>
         $(document).ready(function() {
+            $('#btnprint').click(function() {
+                var items = [];
+                var table = $('#editable-sample').DataTable();
+                jQuery(table.fnGetNodes()).each(function() {
+                    items.push($(this).closest('tr').children('td:first').text());
+                });
+                window.open('Print/AccreditationRequirement_Print.php?items=' + items, '_blank');
+            });
             $('.add').click(function() {
                 $.ajax({
                     type: "GET",

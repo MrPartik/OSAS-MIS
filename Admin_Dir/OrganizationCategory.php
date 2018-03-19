@@ -10,7 +10,7 @@ include('../config/connection.php');
 ?>
 </head>
 
-<body> 
+<body>
     <section id="container">
         <aside>
             <div id="sidebar" class="nav-collapse">
@@ -58,13 +58,7 @@ include('../config/connection.php');
                                     </button>
                                         </div>
                                         <div class="btn-group pull-right">
-                                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
-                                    </button>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li><a href="#">Print</a></li>
-                                                <li><a href="#">Save as PDF</a></li>
-                                                <li><a href="#">Export to Excel</a></li>
-                                            </ul>
+                                            <button class="btn btn-default " id="btnprint">Print <i class="fa fa-print"></i></button>
                                         </div>
                                     </div>
                                     <div class="space15"></div>
@@ -188,23 +182,16 @@ include('../config/connection.php');
 
     <!-- END JAVASCRIPTS -->
     <script>
-        //        $(document).ready(function() {
-        //            $('.add').click(function() {
-        //                $.ajax({
-        //                    type: "GET",
-        //                    url: 'OrganizationCategory/GetLatest-Code.php',
-        //                    success: function(data) {
-        //                        jqTds[0].innerHTML = '<input type="text" class="form-control small " value="' + data + '" disabled style="width:100%">';
-        //                    }
-        //                });
-        //                jqTds[1].innerHTML = '<input type="text" class="form-control small" value="' + aData[1] + '" style="width:100%">';
-        //                jqTds[2].innerHTML = '<input type="text" class="form-control small" value="' + aData[2] + '" style="width:100%">';
-        //                jqTds[3].innerHTML = '<center><a class="btn btn-success  edit" href="">Add</a> <a class="btn btn-danger cancel" href="">Cancel</a></center>';
-        //
-        //            });
-        //
-        //        });
         jQuery(document).ready(function() {
+            $('#btnprint').click(function() {
+
+                var items = [];
+                var table = $('#editable-sample').DataTable();
+                jQuery(table.fnGetNodes()).each(function() {
+                    items.push($(this).closest('tr').children('td:first').text());
+                });
+                window.open('Print/OrganizationCategory_Print.php?items=' + items, '_blank');
+            });
             EditableTable.init();
         });
 

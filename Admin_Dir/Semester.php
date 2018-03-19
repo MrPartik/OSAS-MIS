@@ -59,20 +59,13 @@ include('../config/connection.php');
                                     </button>
                                         </div>
                                         <div class="btn-group pull-right">
-                                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
-                                    </button>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li><a href="#">Print</a></li>
-                                                <li><a href="#">Save as PDF</a></li>
-                                                <li><a href="#">Export to Excel</a></li>
-                                            </ul>
+                                            <button class="btn btn-default " id="btnprint">Print <i class="fa fa-print"></i></button>
                                         </div>
                                     </div>
                                     <div class="space15"></div>
                                     <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                         <thead>
                                             <tr>
-                                                <th class="hidden">Semestral Code</th>
                                                 <th>Semestral Name</th>
                                                 <th>Semestral Description</th>
                                                 <th>Action</th>
@@ -85,7 +78,6 @@ include('../config/connection.php');
 								$view_query = mysqli_query($con,"select * from `r_semester` where Semestral_DISPLAY_STAT = 'Active'  ");
 								while($row = mysqli_fetch_assoc($view_query))
 								{
-									$code = $row["Semestral_CODE"];
 									$name = $row["Semestral_NAME"];
 									$desc = $row["Semestral_DESC"];										
 									
@@ -93,7 +85,6 @@ include('../config/connection.php');
 									
 									echo "
 									<tr>
-										<td class='hidden'>$code</td>
 										<td>$name</td>
 										<td>$desc</td>
 										<td style='width:180px' >
@@ -113,7 +104,6 @@ include('../config/connection.php');
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th class="hidden">Semestral Code</th>
                                                 <th>Semestral Name</th>
                                                 <th>Semestral Description</th>
                                                 <th>Action</th>
@@ -192,6 +182,15 @@ include('../config/connection.php');
     <!-- END JAVASCRIPTS -->
     <script>
         $(document).ready(function() {
+            $('#btnprint').click(function() {
+
+                var items = [];
+                $('#editable-sample tbody tr').each(function() {
+                    items.push($(this).closest('tr').children('td:first').text());
+
+                });
+                window.open('Print/Semester_Print.php?items=' + items, '_blank');
+            });
             $('.add').click(function() {
                 $.ajax({
                     type: "GET",

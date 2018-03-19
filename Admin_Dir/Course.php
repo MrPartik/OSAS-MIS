@@ -8,7 +8,7 @@ $currentPage ='Admin_Course';
 include('header.php');  
 include('../config/connection.php');
 
-?> 
+?>
 
 </head>
 
@@ -61,13 +61,7 @@ include('../config/connection.php');
                                     </button>
                                         </div>
                                         <div class="btn-group pull-right">
-                                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
-                                    </button>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li><a href="#">Print</a></li>
-                                                <li><a href="#">Save as PDF</a></li>
-                                                <li><a href="#">Export to Excel</a></li>
-                                            </ul>
+                                            <button class="btn btn-default " id="btnprint">Print <i class="fa fa-print"></i></button>
                                         </div>
                                     </div>
                                     <div class="space15"></div>
@@ -214,6 +208,15 @@ include('../config/connection.php');
         <!-- END JAVASCRIPTS -->
         <script>
             jQuery(document).ready(function() {
+                $('#btnprint').click(function() {
+
+                    var items = [];
+                    $('#editable-sample tbody tr').each(function() {
+                        items.push($(this).closest('tr').children('td:first').text());
+
+                    });
+                    window.open('Print/Course_Print.php?items=' + items, '_blank');
+                });
                 EditableTable.init();
             });
 

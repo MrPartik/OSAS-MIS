@@ -3,7 +3,7 @@
 
 <head>
     <title>Admin - Sanction Detail</title>
-  <?php   
+    <?php   
 $currentPage ='Admin_SancDet'; 
 include('header.php');  
 include('../config/connection.php');
@@ -59,13 +59,7 @@ include('../config/connection.php');
                                     </button>
                                         </div>
                                         <div class="btn-group pull-right">
-                                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
-                                    </button>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li><a href="#">Print</a></li>
-                                                <li><a href="#">Save as PDF</a></li>
-                                                <li><a href="#">Export to Excel</a></li>
-                                            </ul>
+                                            <button class="btn btn-default " id="btnprint">Print <i class="fa fa-print"></i></button>
                                         </div>
                                     </div>
                                     <div class="space15"></div>
@@ -76,7 +70,7 @@ include('../config/connection.php');
                                                 <th>Sanction Name</th>
                                                 <th>Time Value (Hour/s)</th>
                                                 <th>Sanction Description</th>
-                                                <th>Action</th> 
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -118,7 +112,7 @@ include('../config/connection.php');
                                                 <th>Sanction Name</th>
                                                 <th>Time Value (Hour/s)</th>
                                                 <th>Sanction Description</th>
-                                                <th>Action</th> 
+                                                <th>Action</th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -164,7 +158,7 @@ include('../config/connection.php');
                 <div class="modal-body">
                     <form method="post" id="form-data">
                         <div class="row">
-                            
+
                         </div>
                         <div class="row" style="padding-left:15px;padding-top:10px">
                             <div class="col-md-4">
@@ -195,6 +189,14 @@ include('../config/connection.php');
     <!-- END JAVASCRIPTS -->
     <script>
         $(document).ready(function() {
+            $('#btnprint').on('click', function() {
+                var items = [];
+                var table = $('#editable-sample').DataTable();
+                jQuery(table.fnGetNodes()).each(function() {
+                    items.push($(this).closest('tr').children('td:first').text());
+                });
+                window.open('Print/Sanction_Print.php?items=' + items, '_blank');
+            });
             $('.add').click(function() {
                 $.ajax({
                     type: "GET",

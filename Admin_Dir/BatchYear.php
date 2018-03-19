@@ -3,7 +3,7 @@
 
 <head>
     <title>Admin - Batch Year</title>
-<?php   
+    <?php   
 $currentPage ='Admin_BYear'; 
 include('header.php');  
 include('../config/connection.php');
@@ -57,20 +57,13 @@ include('../config/connection.php');
                                     </button>
                                         </div>
                                         <div class="btn-group pull-right">
-                                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
-                                    </button>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li><a href="#">Print</a></li>
-                                                <li><a href="#">Save as PDF</a></li>
-                                                <li><a href="#">Export to Excel</a></li>
-                                            </ul>
+                                            <button class="btn btn-default " id="btnprint">Print <i class="fa fa-print"></i></button>
                                         </div>
                                     </div>
                                     <div class="space15"></div>
                                     <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                         <thead>
                                             <tr>
-                                                <th class="hidden">Batch Code </th>
                                                 <th>Batch Year </th>
                                                 <th>Batch Year Description</th>
                                                 <th>Action</th>
@@ -90,7 +83,6 @@ include('../config/connection.php');
 											
 											echo "
 											<tr class=''>
-												<td class='hidden' >$code</td>
 												<td >$name</td>
 												<td >$desc</td>
 												<td value='qweqwe' style='width:180px'>
@@ -110,7 +102,6 @@ include('../config/connection.php');
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th class="hidden">Batch Code </th>
                                                 <th>Batch Year </th>
                                                 <th>Batch Year Description</th>
                                                 <th>Action</th>
@@ -183,13 +174,14 @@ include('../config/connection.php');
             </div>
         </div>
     </div>
- 
-    <?php include("footer.php") ?> 
+
+    <?php include("footer.php") ?>
     <script src="StudentSetup/BatchYear.js"></script>
 
     <!-- END JAVASCRIPTS -->
     <script>
         $(document).ready(function() {
+
             $('.add').click(function() {
                 $.ajax({
                     type: "GET",
@@ -203,6 +195,14 @@ include('../config/connection.php');
 
         });
         jQuery(document).ready(function() {
+            $('#btnprint').on('click', function() {
+                var items = [];
+                var table = $('#editable-sample').DataTable();
+                jQuery(table.fnGetNodes()).each(function() {
+                    items.push($(this).closest('tr').children('td:first').text());
+                });
+                window.open('Print/AcademicYear_Print.php?items=' + items, '_blank');
+            });
             EditableTable.init();
         });
 
