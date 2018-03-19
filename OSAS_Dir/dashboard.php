@@ -27,6 +27,18 @@ include('../config/connection.php');
                                 <li> <a href="dashboard.php" class="current">Dashboard</a> </li>
                             </ul>
                         </div> -->
+                        <div class="col-md-6">
+                            <div class="mini-stat clearfix"> <span class="mini-stat-icon tar"><i class="fa  fa-chain"></i></span>
+                                <div class="mini-stat-info"> <span> <?php echo $current_acadyear['ActiveAcadYear_Batch_YEAR']?></span> Actived Academic Year </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mini-stat clearfix"> <span class="mini-stat-icon tar"><i class="fa  fa-chain"></i></span> 
+                                <div class="mini-stat-info"> <span><?php echo $current_semster['ActiveSemester_SEMESTRAL_NAME']?></span> Actived Semester </div>
+                            </div>
+                        </div>
+                        
+                        
                         <div class="col-md-3">
                             <div class="mini-stat clearfix"> <span class="mini-stat-icon blue"><i class="fa fa-user"></i></span>
                                 <div class="mini-stat-info"> <span><?php echo $count_stud; ?></span> Number of Students </div>
@@ -57,17 +69,17 @@ include('../config/connection.php');
                                 <div class="mini-stat-info"> <span>20</span> Organization/s who is peding for accreditation </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="mini-stat clearfix"> <span class="mini-stat-icon blue"><i class="fa fa-envelope"></i></span>
-                                <div class="mini-stat-info"> <span>100</span> Number of Archived Documents </div>
-                            </div>
-                        </div>
+                       
                         <div class="col-md-3">
                             <div class="mini-stat clearfix"> <span class="mini-stat-icon tar"><i class="fa fa-paperclip"></i></span>
                                 <div class="mini-stat-info"> <span>0</span>Number of Student who has financial assistance</div>
                             </div>
                         </div>
-                       
+                        <div class="col-md-3">
+                            <div class="mini-stat clearfix"> <span class="mini-stat-icon blue"><i class="fa fa-envelope"></i></span>
+                                <div class="mini-stat-info"> <span>100</span> Number of Archived Documents </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </section>

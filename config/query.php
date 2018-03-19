@@ -180,4 +180,11 @@ $view_studProfile = mysqli_query($con,"select Stud_ID as ID
                                         FROM osas.r_stud_profile 
                                     where Stud_DISPLAY_STATUS='active'"); 
 
+$current_semster = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM  active_semester where `ActiveSemester_IS_ACTIVE` =1 and `ActiveSemester_ID` = (SELECT MAX(`ActiveSemester_ID`) FROM active_semester A 
+INNER JOIN r_semester B ON A.ActiveSemester_SEMESTRAL_NAME = B.Semestral_NAME AND B.Semestral_DISPLAY_STAT='ACTIVE' WHERE A.ActiveSemester_IS_ACTIVE =1 )"));
+
+$current_acadyear = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM  active_academic_year where `ActiveAcadYear_IS_ACTIVE` =1 and `ActiveAcadYear_ID` = (SELECT MAX(`ActiveAcadYear_ID`) FROM active_academic_year A 
+INNER JOIN r_batch_details B ON A.ActiveAcadYear_Batch_YEAR = B.Batch_YEAR AND B.Batch_DISPLAY_STAT='ACTIVE' WHERE A.ActiveAcadYear_IS_ACTIVE =1 )"));
+
+ 
 $view_course = mysqli_query($con,"select * from r_courses where course_display_stat ='active'"); ?>
