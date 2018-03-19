@@ -77,8 +77,7 @@ include('../config/connection.php');
                 data: {
                     _appcode:'<?php echo $compcode?>'
                 },
-                success: function(data) {
-                    //alert(data)
+                success: function(data) { 
                     document.getElementById('fillmembers').innerHTML = data;
 
                 },
