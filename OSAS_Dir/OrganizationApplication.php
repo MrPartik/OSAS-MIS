@@ -690,7 +690,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                         $("#btnStep4").trigger("click");
                                         
                                     }else if($("#step-5").css("display")=='block'){
-                                        $("#btnStep5").trigger("click");
+                                        $("#btnFinish").trigger("click");
                                         
                                     }
                                             location.reload();
