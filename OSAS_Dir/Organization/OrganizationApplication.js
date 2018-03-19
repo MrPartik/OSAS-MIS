@@ -94,9 +94,7 @@ var EditableTable = function () {
                     data: {
                         _year: year,
                         _appcode: latcode,
-                        _orgname: getname
-
-
+                        _orgname: getname 
                     },
                     success: function (response) {},
                     error: function (response) {
@@ -465,8 +463,7 @@ var EditableTable = function () {
                 var nRow = $(this).parents('tr')[0];
                 getname = $(this).closest('tr').children('td:first').next().text();
                 latcode = $(this).closest('tr').children('td:first').text(); 
-                document.getElementById('lblname').innerText =latcode+' - '+getname + ' Application Wizard'; 
-                document.getElementById('orgcode').innerText=latcode;
+                document.getElementById('lblname').innerText =latcode+' - '+getname + ' Application Wizard';  
                 var fillyear = '';
                 var fillcat = '';
 
@@ -478,57 +475,107 @@ var EditableTable = function () {
                     data: {
                         _appcode: latcode
                     },
-                    success: function (curstep) {
-                        
-                        if (curstep == 1) {
+                    success: function (curstep) { 
 
-                            $.ajax({
-                                type: 'GET',
-                                url: 'Organization/OrganizationProfile/fillSteps.php',
-                                dataType: 'json',
-                                cache:false,
-                                data: {
-                                    _appcode: latcode
-                                },
-                                success: function (step) {
-                                    $('#drpyear option').each(function (index, brand) {
-                                        if (brand.value == step.year) {
-                                            fillyear = fillyear + '<option value="' + step.year + '" selected >' + step.year + '</option>';
+                        if(curstep==1){
+                            $('#step-1').css("display", "block");
+                            $('#step-2').css("display", "none");
+                            $('#step-3').css("display", "none");
+                            $('#step-4').css("display", "none");
+                            $('#step-5').css("display", "none");
 
-                                        } else {
-                                            fillyear = fillyear + '<option value="' + brand.value + '" >' + brand.value + '</option>';
-                                        }
+                            $('#aStep1').removeAttr('disabled');
+                            $('#aStep2').attr('disabled',true);
+                            $('#aStep3').attr('disabled',true);
+                            $('#aStep4').attr('disabled',true);
+                            $('#aStep5').attr('disabled',true);
 
+                            $('#aStep1').addClass('btn-success');
+                            $('#aStep2').removeClass('btn-success');
+                            $('#aStep3').removeClass('btn-success');
+                            $('#aStep4').removeClass('btn-success');
+                            $('#aStep5').removeClass('btn-success');
+                        }
+                        if(curstep==2){
+                            
+                            $('#step-1').css("display", "none");
+                            $('#step-2').css("display", "block");
+                            $('#step-3').css("display", "none");
+                            $('#step-4').css("display", "none");
+                            $('#step-5').css("display", "none");
 
-                                    });
-                                    document.getElementById('drpyear').innerHTML = fillyear;
-                                    $('#step-1').css("display", "block");
-                                    $('#step-2').css("display", "none");
-                                    $('#step-3').css("display", "none");
-                                    $('#step-4').css("display", "none");
-                                    $('#step-5').css("display", "none");
+                            $('#aStep1').removeAttr('disabled');
+                            $('#aStep2').removeAttr('disabled'); 
+                            $('#aStep3').attr('disabled',true);
+                            $('#aStep4').attr('disabled',true);
+                            $('#aStep5').attr('disabled',true);
 
-                                    $('#aStep1').removeAttr('disabled');
-                                    $('#aStep2').attr('disabled',true);
-                                    $('#aStep3').attr('disabled',true);
-                                    $('#aStep4').attr('disabled',true);
-                                    $('#aStep5').attr('disabled',true);
+                            $('#aStep1').removeClass('btn-success');
+                            $('#aStep2').addClass('btn-success'); 
+                            $('#aStep3').removeClass('btn-success');
+                            $('#aStep4').removeClass('btn-success');
+                            $('#aStep5').removeClass('btn-success');
+                        }
+                        if(curstep==3){
+                            $('#step-1').css("display", "none");
+                            $('#step-2').css("display", "none");
+                            $('#step-3').css("display", "block");
+                            $('#step-4').css("display", "none");
+                            $('#step-5').css("display", "none");
 
-                                    $('#aStep1').addClass('btn-success');
-                                    $('#aStep2').removeClass('btn-success');
-                                    $('#aStep3').removeClass('btn-success');
-                                    $('#aStep4').removeClass('btn-success');
-                                    $('#aStep5').removeClass('btn-success') 
-                                },
-                                error: function (errorfill) {
-                                    swal(errorfill, "Please try again", "error");
-                                }
+                            $('#aStep1').removeAttr('disabled');
+                            $('#aStep2').removeAttr('disabled');
+                            $('#aStep3').removeAttr('disabled'); 
+                            $('#aStep4').attr('disabled',true);
+                            $('#aStep5').attr('disabled',true);
 
-                            });
+                            $('#aStep1').removeClass('btn-success');
+                            $('#aStep2').removeClass('btn-success');
+                            $('#aStep3').addClass('btn-success'); 
+                            $('#aStep4').removeClass('btn-success');
+                            $('#aStep5').removeClass('btn-success');
 
+                        }
+                        if(curstep==4){
+                            $('#step-1').css("display", "none");
+                            $('#step-2').css("display", "none");
+                            $('#step-3').css("display", "none");
+                            $('#step-4').css("display", "block");
+                            $('#step-5').css("display", "none");
+
+                            $('#aStep1').removeAttr('disabled');
+                            $('#aStep2').removeAttr('disabled');
+                            $('#aStep3').removeAttr('disabled');
+                            $('#aStep4').removeAttr('disabled'); 
+                            $('#aStep5').attr('disabled',true);
+
+                            $('#aStep1').removeClass('btn-success');
+                            $('#aStep2').removeClass('btn-success');
+                            $('#aStep3').removeClass('btn-success');
+                            $('#aStep4').addClass('btn-success');
+                            $('#aStep5').removeClass('btn-success');
+                        }
+                        if(curstep==5){
+                            $('#step-1').css("display", "none");
+                            $('#step-2').css("display", "none");
+                            $('#step-3').css("display", "none");
+                            $('#step-4').css("display", "none");
+                            $('#step-5').css("display", "block");
+
+                            $('#aStep1').removeAttr('disabled');
+                            $('#aStep2').removeAttr('disabled');
+                            $('#aStep3').removeAttr('disabled');
+                            $('#aStep4').removeAttr('disabled');
+                            $('#aStep5').removeAttr('disabled');
+
+                            $('#aStep1').removeClass('btn-success');
+                            $('#aStep2').removeClass('btn-success');
+                            $('#aStep3').removeClass('btn-success');
+                            $('#aStep4').removeClass('btn-success');
+                            $('#aStep5').addClass('btn-success')
                         }
                         //DITO NASGSTART YUNG PAGFILL SA STEP1
-                        if (curstep == 2) {
+                        if (curstep > 1) {
 
                             $.ajax({
                                 type: 'GET',
@@ -550,20 +597,7 @@ var EditableTable = function () {
 
                                     });
                                     document.getElementById('drpyear').innerHTML = fillyear;
-                                    $('#step-1').css("display", "none");
-                                    $('#step-2').css("display", "block");
-                                    $('#step-3').css("display", "none");
-                                    $('#step-4').css("display", "none");
-                                    $('#step-5').css("display", "none");
-
-                                    $('#aStep1').removeAttr('disabled');
-                                    $('#aStep2').removeAttr('disabled'); 
-                                    $('#aStep3').attr('disabled',true);
-                                    $('#aStep4').attr('disabled',true);
-                                    $('#aStep5').attr('disabled',true);
-
-                                    $('#aStep1').removeClass('btn-success');
-                                    $('#aStep2').addClass('btn-success')
+                                    
                                 },
                                 error: function (errorfill) {
                                     swal(errorfill, "Please try again", "error");
@@ -571,11 +605,10 @@ var EditableTable = function () {
 
                             });
 
-                        }
+                        } 
                         //END NG FILL NG STEP1
                         //DITO NASGSTART YUNG PAGFILL SA STEP2
-                        if (curstep == 3) {
-
+                        if (curstep > 2) {
                             $.ajax({
                                 type: 'GET',
                                 url: 'Organization/OrganizationProfile/fillSteps.php',
@@ -586,7 +619,11 @@ var EditableTable = function () {
                                     _appcode: latcode
                                 },
                                 success: function (step) {
-                                     
+                                    if (step.catname != 'Academic Organization') {
+                                        $('#course').addClass('hidden');
+                                    }else{
+                                        $('#course').removeClass('hidden');
+                                    }
                                     $('#drpcat option').each(function (index, brand) {
                                         if (brand.value == step.catcode) {
                                             fillcat = fillcat + '<option value="' + step.catcode + '" selected >' + step.catname + '</option>';
@@ -594,11 +631,7 @@ var EditableTable = function () {
                                         } else {
                                             fillcat = fillcat + '<option value="' + brand.value + '" >' + brand.text + '</option>';
                                         }
-                                        if (step.catname != 'Academic Organization') {
-                                            $('#course').addClass('hidden');
-                                        }else{
-                                            $('#course').removeClass('hidden');
-                                        }
+                                        
 
 
                                     });
@@ -607,7 +640,7 @@ var EditableTable = function () {
                                     var i = 0;
                                     $.ajax({
                                         type: 'GET',
-                                        url: 'Organization/OrganizationProfile/fillSteps.php',
+                                        url: 'Organization/OrganizationProfile/fillCourse.php',
                                         dataType: 'json',
                                         async: true,
                                         cache:false,
@@ -628,22 +661,7 @@ var EditableTable = function () {
                                     });
 
                                     document.getElementById('drpcat').innerHTML = fillcat;
-                                    $('#step-1').css("display", "none");
-                                    $('#step-2').css("display", "none");
-                                    $('#step-3').css("display", "block");
-                                    $('#step-4').css("display", "none");
-                                    $('#step-5').css("display", "none");
-
-                                    $('#aStep1').removeAttr('disabled');
-                                    $('#aStep2').removeAttr('disabled');
-                                    $('#aStep3').removeAttr('disabled'); 
-                                    $('#aStep4').attr('disabled',true);
-                                    $('#aStep5').attr('disabled',true);
-
-                                    $('#aStep1').removeClass('btn-success');
-                                    $('#aStep2').removeClass('btn-success');
-                                    $('#aStep3').addClass('btn-success')
-
+                                   
                                 },
                                 error: function (errorfill) {
                                     swal(errorfill, "Please try again", "error");
@@ -654,7 +672,7 @@ var EditableTable = function () {
                         }
                         //END NG FILL NG STEP2
                         //DITO NASGSTART YUNG PAGFILL SA STEP3
-                        if (curstep == 4) {
+                        if (curstep > 3) {
 
                             $.ajax({
                                 type: 'GET',
@@ -666,23 +684,7 @@ var EditableTable = function () {
                                     _appcode: latcode
                                 },
                                 success: function (step) {
-                                    document.getElementById('txtadvname').value = step.advname;
-                                    $('#step-1').css("display", "none");
-                                    $('#step-2').css("display", "none");
-                                    $('#step-3').css("display", "none");
-                                    $('#step-4').css("display", "block");
-                                    $('#step-5').css("display", "none");
-
-                                    $('#aStep1').removeAttr('disabled');
-                                    $('#aStep2').removeAttr('disabled');
-                                    $('#aStep3').removeAttr('disabled');
-                                    $('#aStep4').removeAttr('disabled'); 
-                                    $('#aStep5').attr('disabled',true);
-
-                                    $('#aStep1').removeClass('btn-success');
-                                    $('#aStep2').removeClass('btn-success');
-                                    $('#aStep3').removeClass('btn-success');
-                                    $('#aStep4').addClass('btn-success')
+                                    document.getElementById('txtadvname').value = step.advname; 
 
                                 },
                                 error: function (response2) {
@@ -694,7 +696,7 @@ var EditableTable = function () {
                         }
                         //END NG FILL NG STEP3
                         //DITO NASGSTART YUNG PAGFILL SA STEP4
-                        if (curstep== 5) {
+                        if (curstep > 4) {
 
                             $.ajax({
                                 type: 'GET',
@@ -708,23 +710,7 @@ var EditableTable = function () {
                                 success: function (step) {
                                     document.getElementById('txtmission').value = step.mission;
                                     document.getElementById('txtvision').value = step.vision;
-                                    $('#step-1').css("display", "none");
-                                    $('#step-2').css("display", "none");
-                                    $('#step-3').css("display", "none");
-                                    $('#step-4').css("display", "none");
-                                    $('#step-5').css("display", "block");
-
-                                    $('#aStep1').removeAttr('disabled');
-                                    $('#aStep2').removeAttr('disabled');
-                                    $('#aStep3').removeAttr('disabled');
-                                    $('#aStep4').removeAttr('disabled');
-                                    $('#aStep5').removeAttr('disabled');
-
-                                    $('#aStep1').removeClass('btn-success');
-                                    $('#aStep2').removeClass('btn-success');
-                                    $('#aStep3').removeClass('btn-success');
-                                    $('#aStep4').removeClass('btn-success');
-                                    $('#aStep5').addClass('btn-success')
+                                    
                                 },
                                 error: function (response2) {
                                     swal(response2, "Please try again", "error");
@@ -756,25 +742,7 @@ var EditableTable = function () {
                                             $('#chkupdstat' + index).prop('checked', true);
                                         }else {
                                             $('#chkupdstat' + index).prop('checked', false);
-                                        }
-                                        $('#step-1').css("display", "none");
-                                        $('#step-2').css("display", "none");
-                                        $('#step-3').css("display", "none");
-                                        $('#step-4').css("display", "none");
-                                        $('#step-5').css("display", "block");  
-
-                                    $('#aStep1').removeAttr('disabled');
-                                    $('#aStep2').removeAttr('disabled');
-                                    $('#aStep3').removeAttr('disabled');
-                                    $('#aStep4').removeAttr('disabled');
-                                    $('#aStep5').removeAttr('disabled');
-
-                                    $('#aStep1').removeClass('btn-success');
-                                    $('#aStep2').removeClass('btn-success');
-                                    $('#aStep3').removeClass('btn-success');
-                                    $('#aStep4').removeClass('btn-success');
-                                    $('#aStep5').addClass('btn-success')
-
+                                        } 
                                     },
                                     error: function (response2) {
                                         swal(response2, "Please try again", "error");

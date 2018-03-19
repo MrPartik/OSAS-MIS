@@ -340,8 +340,10 @@ $user_check = $_SESSION['logged_user']['username'];
                                                         ?>
                                                  </select>
                                                 </div> 
+                                                <div class="col-lg-12">
                                                 <button class="btn btn-primary nextBtn pull-right" type="button" id="btnStep1">Next</button>
-                                              
+                                                <button class="btn btn-info " type="button" id="savemuna">Save for Now?</button>
+                                              </div>
                                             </div>
                                         </div>
 
@@ -386,7 +388,11 @@ $user_check = $_SESSION['logged_user']['username'];
                                                         ?>
                                                     </select>
                                                 </div>
+                                                <div class="col-lg-12">
                                                 <button class="btn btn-primary nextBtn pull-right" id="btnStep2" type="button">Next</button>
+                                                </button>
+                                                <button class="btn btn-info " type="button" id="savemuna">Save for Now?</button>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -399,7 +405,11 @@ $user_check = $_SESSION['logged_user']['username'];
                                                     <label class="control-label">Adviser Name</label>
                                                     <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Adviser Name" id="txtadvname" />
                                                 </div>
+                                                <div class="col-lg-12">
                                                 <button class="btn btn-primary nextBtn pull-right" type="button" id="btnStep3">Next</button>
+                                                </button>
+                                                <button class="btn btn-info " type="button" id="savemuna">Save for Now?</button>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -418,7 +428,11 @@ $user_check = $_SESSION['logged_user']['username'];
                                                         <label class="control-label">Vision</label>
                                                         <textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtvision" style="roverflow:auto;resize:none"></textarea>
                                                     </div>
+                                                <div class="col-lg-12">
                                                     <button class="btn btn-primary nextBtn pull-right" type="button" id="btnStep4">Next</button>
+                                                    </button>
+                                                <button class="btn btn-info " type="button" id="savemuna">Save for Now?</button>
+                                                </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -462,8 +476,11 @@ $user_check = $_SESSION['logged_user']['username'];
                                                         </table>
                                                     </form>
                                                 </div>
+                                                <div class="col-lg-12">
                                                 <button class="btn btn-success pull-right" type="button" id="btnFinish">Finish!</button>
-                                                <h4 id="orgcode" style="display:none">asd</h4>
+                                                </button>
+                                                <button class="btn btn-info " type="button" id="savemuna">Save for Now?</button>
+                                                </div>
 
                                             </div>
                                         </div>
@@ -639,6 +656,51 @@ $user_check = $_SESSION['logged_user']['username'];
 
                 $('div.setup-panel div a.btn-success').trigger('click');
             });
+            
+            $("button[id='savemuna']").on('click',function(){
+                swal({
+                                title: "Are you sure?"
+                                , text: "You want to temporarily save the steps?"
+                                , type: "warning"
+                                , showCancelButton: true
+                                , confirmButtonColor: '#9DD656'
+                                , confirmButtonText: 'Yes, Save it!'
+                                , cancelButtonText: "No, cancel it!"
+                                , closeOnConfirm: false
+                                , closeOnCancel: false
+                            }, function (isConfirm) {
+                                if(isConfirm){ 
+                                    swal({
+                                            title: "Woaah, that's neat!"
+                                            , text: "You have successfully save the current step. please continue it if you are ready."
+                                            , type: "success"
+                                            , showCancelButton: false
+                                            , confirmButtonColor: '#9DD656'
+                                            , confirmButtonText: 'Ok'
+                                        }, function (isConfirm) {
+                                    if($("#step-1").css("display")=='block'){
+                                        $("#btnStep1").trigger("click");
+                                    }else if($("#step-2").css("display")=='block'){
+                                        $("#btnStep2").trigger("click");
+                                        
+                                    }else if($("#step-3").css("display")=='block'){
+                                        $("#btnStep3").trigger("click");
+                                        
+                                    }else if($("#step-4").css("display")=='block'){
+                                        $("#btnStep4").trigger("click");
+                                        
+                                    }else if($("#step-5").css("display")=='block'){
+                                        $("#btnStep5").trigger("click");
+                                        
+                                    }
+                                            location.reload();
+                                        });
+                                }else{
+                                    swal("Cancelled", "The transaction is cancelled", "error");
+                                }
+                            });
+            });
+
             jQuery(document).ready(function() {
                 EditableTable.init();
             });

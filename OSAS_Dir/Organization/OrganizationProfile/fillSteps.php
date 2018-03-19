@@ -47,8 +47,22 @@ include('../../../config/connection.php');
     }
 
 
+
+    $view_querycourse = mysqli_query($con,"SELECT AssOrgAcademic_COURSE_CODE as COURSE FROM `t_assign_org_academic_course`  INNER JOIN r_courses ON Course_CODE = AssOrgAcademic_COURSE_CODE
+                where AssOrgAcademic_ORG_CODE = '$id' AND AssOrgAcademic_DISPLAY_STAT = 'Active' AND Course_DISPLAY_STAT = 'Active' ") ;
+    $container_arr = array();
+    while($row = mysqli_fetch_assoc($view_querycourse))
+    {
+        $course = $row["COURSE"];
+        
+       $arr = array( 'course' => $course );
+       array_push($container_arr, (array)$arr );
+        
+        
+    }
+
     echo json_encode(
-          array("year" => $year,"catname" => $catname,"catcode" => $catcode,"advname" => $advname,"mission" => $mission,"vision" => $vision)
+          array("year" => $year,"catname" => $catname,"catcode" => $catcode,"advname" => $advname,"mission" => $mission,"vision" => $vision,$container_arr)
      );
 
 
