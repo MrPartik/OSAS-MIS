@@ -1,3 +1,6 @@
+
+
+<footer class="footer"></footer>
 <script src="../js/jquery.js"></script>
 <script src="../js/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
 <script src="../bs3/js/bootstrap.min.js"></script>

@@ -1,8 +1,25 @@
+<style>
+.userpic {
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;   
+}
+</style>
 <aside>
     <div id="sidebar" class="nav-collapse">
         <!-- sidebar menu start-->
         <div class="leftside-navigation">
             <ul class="sidebar-menu" id="nav-accordion">
+                <!-- <li style="padding-top:20px"> 
+                <center>
+                    <img src="../images/OSAS/MAAM%20DEM.jpg" class="userpic" alt="lock avatar"> 
+                <center>
+                </li>
+                <li style="padding-top:10px">
+                <span class="label label-info col-lg-12 "><?php echo $user_check; ?></span>
+                </li> -->
+                
                 <li> <a <?php if( $currentPage==='OSAS_Dashboard' ) {echo 'class="active"';} ?> href="dashboard.php">
                         <i class ="fa fa-dashboard" ></i>
                         <span>Dashboard</span>
@@ -41,12 +58,14 @@
                     <ul class="sub">
                         <li <?php if( $currentPage==='OSAS_StudClearance' ) { echo 'class="active"';} ?> ><a href="studClearanceSem.php">Semestral Clearance</a></li>
                         <li><a href="#">General Clearance</a></li>
+                        <li><a href="#">View Cleared Clearance</a></li>
+                        <li><a href="#">View not Cleared Clearance</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
                     <a href="docuArchiving.php" <?php if( $currentPage==='OSAS_docuArchive' ) {echo 'class="active"';} ?> > <i class="fa fa-envelope"></i> <span>Document Archiving </span> </a>
                 </li>
-                <li class="sub-menu-bottom">
+                <li >
                     <a href="#admin-login" data-toggle="modal"> <i class="fa fa-unlock"></i> <span>Switch Administrator Account </span> </a>
                 </li>
             </ul>
