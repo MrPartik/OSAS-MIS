@@ -38,8 +38,7 @@
 
         if($cou == 0)
         {
-             $query = mysqli_query($con,"INSERT INTO r_application_wizard (WIZARD_ORG_CODE,WIZARD_CURRENT_STEP) 
-                                                VALUES ('$appcode','3')  ");
+             $query = mysqli_query($con,"INSERT INTO r_application_wizard (WIZARD_ORG_CODE,WIZARD_CURRENT_STEP)   VALUES ('$appcode','3')  ");
             
             
         }

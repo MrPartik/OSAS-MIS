@@ -203,21 +203,21 @@ $user_check = $_SESSION['logged_user']['username'];
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php
-
-
-                                        $view_query = mysqli_query($con,"SELECT  DISTINCT
+                                                <?php 
+                                        $view_query = mysqli_query($con,"SELECT  
                                         OrgAppProfile_APPL_CODE
                                         ,OrgAppProfile_DESCRIPTION
                                         ,OrgForCompliance_ORG_CODE
                                         ,OrgAppProfile_NAME
                                         ,OrgForCompliance_ADVISER
                                         ,OrgAppProfile_STATUS
+                                        ,(SELECT COUNT(*) FROM r_org_accreditation_details WHERE OrgAccrDetail_DISPLAY_STAT = 'Active') AS A1
+                                        , (SELECT COUNT(*) FROM t_org_accreditation_process A WHERE OrgAccrProcess_ORG_CODE = OFC.OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_DISPLAY_STAT='Active')  as A2 
                                         ,(SELECT IFNULL((SELECT WIZARD_CURRENT_STEP FROM r_application_wizard A WHERE A.WIZARD_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM `t_org_for_compliance` B WHERE B.OrgForCompliance_DISPAY_STAT = 'Active' AND B.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE  AND B.OrgForCompliance_ORG_CODE =  OFC.OrgForCompliance_ORG_CODE)),'1') ) AS STEP
-                                        ,(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OFC.OrgForCompliance_ORG_CODE AND OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details WHERE OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) AS TR
-                                            FROM `r_org_applicant_profile` AS OAP 
-                                            INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE 
-                                            WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active'");
+                                        ,(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OFC.OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) AS TR
+                                        FROM `r_org_applicant_profile` AS OAP 
+                                        INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE 
+                                        WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active'");
                                         while($row = mysqli_fetch_assoc($view_query))
                                         {
                                             $code = $row["OrgForCompliance_ORG_CODE"];
@@ -238,7 +238,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                             {
                                                 if($accstat == 'TRUE' )
                                                     $curstep = '<span class="label label-success">Accredited</span>';
-                                                else
+                                                else  if($accstat == 'FALSE' )
                                                     $curstep = '<span class="label " style="background-color:#41CAC0">Completing Accreditation</span>';
                                             }
 

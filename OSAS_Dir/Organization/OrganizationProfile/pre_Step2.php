@@ -8,9 +8,4 @@
 
     echo $compcode;
 
-
-        
-  
-
-
 ?>

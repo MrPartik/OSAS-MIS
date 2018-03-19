@@ -463,8 +463,9 @@ var EditableTable = function () {
 
                 var nRow = $(this).parents('tr')[0];
                 getname = $(this).closest('tr').children('td:first').next().text();
-                latcode = $(this).closest('tr').children('td:first').text();
-                document.getElementById('lblname').innerText = getname + ' Application Wizard';
+                latcode = $(this).closest('tr').children('td:first').text(); 
+                document.getElementById('lblname').innerText =latcode+' - '+getname + ' Application Wizard'; 
+                document.getElementById('orgcode').innerText=latcode;
                 var fillyear = '';
                 var fillcat = '';
 
@@ -472,6 +473,7 @@ var EditableTable = function () {
                     type: 'GET',
                     url: 'Organization/OrganizationProfile/GetCurrentStep.php',
                     async: true,
+                    cache: false,
                     data: {
                         _appcode: latcode
                     },
@@ -525,20 +527,23 @@ var EditableTable = function () {
                                 type: 'GET',
                                 url: 'Organization/OrganizationProfile/FillStep2.php',
                                 dataType: 'json',
+                                async:true,
                                 data: {
                                     _appcode: latcode
                                 },
                                 success: function (step) {
-                                    if (step.catname != 'Academic Organization') {
-                                        $('#course').addClass('hidden');
-                                    }
-
+                                     
                                     $('#drpcat option').each(function (index, brand) {
                                         if (brand.value == step.catcode) {
                                             fillcat = fillcat + '<option value="' + step.catcode + '" selected >' + step.catname + '</option>';
 
                                         } else {
                                             fillcat = fillcat + '<option value="' + brand.value + '" >' + brand.text + '</option>';
+                                        }
+                                        if (step.catname != 'Academic Organization') {
+                                            $('#course').addClass('hidden');
+                                        }else{
+                                            $('#course').removeClass('hidden');
                                         }
 
 
@@ -673,6 +678,7 @@ var EditableTable = function () {
                         //END NG FILL NG STEP4
                         //DITO NASGSTART YUNG PAGFILL SA STEP5
                         if (curstep == 5) {
+
                             $('#updaccreqlist tr ').each(function (index, brand) {
                                 index++;
                                 var reqcode = document.getElementById('updcode' + index).innerText;
@@ -684,9 +690,12 @@ var EditableTable = function () {
                                         _appcode: latcode,
                                         _reqcode: reqcode
                                     },
-                                    success: function (data2) {
-                                        if (data2 == '1')
+                                    success: function (data2) { 
+                                        if (data2 == '1'){
                                             $('#chkupdstat' + index).prop('checked', true);
+                                        }else {
+                                            $('#chkupdstat' + index).prop('checked', false);
+                                        }
                                         $('#step-1').css("display", "none");
                                         $('#step-2').css("display", "none");
                                         $('#step-3').css("display", "none");

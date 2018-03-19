@@ -11,9 +11,7 @@
     {
         $course = $row["COURSE"];
         
-       $arr = array(
-            'course' => $course
-              );
+       $arr = array( 'course' => $course );
       array_push(  $container_arr, (array)$arr );
         
         
