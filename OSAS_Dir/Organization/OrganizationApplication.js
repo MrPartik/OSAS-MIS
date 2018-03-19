@@ -415,6 +415,7 @@ var EditableTable = function () {
                     if (isConfirm) {
                         $.ajax({
                             type: 'post',
+                            cache:false,
                             url: 'Organization/OrganizationProfile/Update-ajax.php',
                             data: {
                                 _id: getid,
@@ -485,6 +486,7 @@ var EditableTable = function () {
                                 type: 'GET',
                                 url: 'Organization/OrganizationProfile/FillStep1.php',
                                 dataType: 'json',
+                                cache:false,
                                 data: {
                                     _appcode: latcode
                                 },
@@ -528,6 +530,7 @@ var EditableTable = function () {
                                 url: 'Organization/OrganizationProfile/FillStep2.php',
                                 dataType: 'json',
                                 async:true,
+                                cache:false,
                                 data: {
                                     _appcode: latcode
                                 },
@@ -556,6 +559,7 @@ var EditableTable = function () {
                                         url: 'Organization/OrganizationProfile/FillCourse.php',
                                         dataType: 'json',
                                         async: true,
+                                        cache:false,
                                         data: {
                                             _appcode: latcode
                                         },
@@ -604,6 +608,7 @@ var EditableTable = function () {
                                 url: 'Organization/OrganizationProfile/FillStep3.php',
                                 dataType: 'json',
                                 async: true,
+                                cache:false,
                                 data: {
                                     _appcode: latcode
                                 },
@@ -642,6 +647,7 @@ var EditableTable = function () {
                                 url: 'Organization/OrganizationProfile/FillStep4.php',
                                 dataType: 'json',
                                 async: true,
+                                cache:false,
                                 data: {
                                     _appcode: latcode
                                 },
@@ -686,6 +692,7 @@ var EditableTable = function () {
                                     type: 'GET',
                                     url: 'Organization/OrganizationProfile/FillAccreditationTable.php',
                                     async: true,
+                                    cache:false,
                                     data: {
                                         _appcode: latcode,
                                         _reqcode: reqcode
@@ -700,7 +707,19 @@ var EditableTable = function () {
                                         $('#step-2').css("display", "none");
                                         $('#step-3').css("display", "none");
                                         $('#step-4').css("display", "none");
-                                        $('#step-5').css("display", "block");
+                                        $('#step-5').css("display", "block");  
+
+                                    $('#aStep1').removeAttr('disabled');
+                                    $('#aStep2').removeAttr('disabled');
+                                    $('#aStep3').removeAttr('disabled');
+                                    $('#aStep4').removeAttr('disabled');
+                                    $('#aStep5').removeAttr('disabled');
+
+                                    $('#aStep1').removeClass('btn-success');
+                                    $('#aStep2').removeClass('btn-success');
+                                    $('#aStep3').removeClass('btn-success');
+                                    $('#aStep4').removeClass('btn-success');
+                                    $('#aStep5').addClass('btn-success')
 
                                     },
                                     error: function (response2) {
