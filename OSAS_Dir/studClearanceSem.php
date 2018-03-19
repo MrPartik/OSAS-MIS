@@ -42,8 +42,7 @@ include('../config/connection.php');
                                             <thead>
                                                 <tr>
                                                     <th>Student Number</th>
-                                                    <th>Full Name</th>
-                                                    <th>Course year and Section</th>
+                                                    <th>Student Details</th> 
                                                     <th>Status</th>
                                                     <th>Progress</th>
                                                     <th>Last Modified</th>
@@ -58,11 +57,8 @@ include('../config/connection.php');
                                                                 <?php echo $stud_row['Stud_NO'];?>
                                                             </td>
                                                             <td>
-                                                                <?php echo $stud_row['FullName'];?>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo $stud_row['Course']?>
-                                                            </td>
+                                                                <?php echo '<strong>'.$stud_row['FullName'].'</strong><br>'.$stud_row['Course'];?>
+                                                            </td> 
                                                             <td>
                                                                 <?php  
                                                             $studNo = $stud_row['Stud_NO'];
@@ -86,8 +82,7 @@ include('../config/connection.php');
                                                                 <?php   
                                                                         $StudNo= $stud_row['Stud_NO'];
                                                                        $row=mysqli_fetch_array(mysqli_query($con,"select max(AssSancStudStudent_DATE_MOD) from t_assign_stud_saction where AssSancStudStudent_STUD_NO ='$StudNo'"));
-                                                                        echo  ($row[0]==null )?"":(new DateTime($row[0]))->format('D M d, Y h:i A');
-                                                                                                                          
+                                                                        echo  ($row[0]==null )?"":(new DateTime($row[0]))->format('D M d, Y h:i A'); 
                                                                 ?>
                                                             </td>
                                                             <td>
@@ -101,8 +96,7 @@ include('../config/connection.php');
                                             <tfoot>
                                                 <tr>
                                                     <th>Student Number</th>
-                                                    <th>Full Name</th>
-                                                    <th>Course year and Section</th>
+                                                    <th>Student Details</th> 
                                                     <th>Status</th>
                                                     <th>Progress</th>
                                                     <th>Last Modified</th>
