@@ -84,8 +84,7 @@ var EditableTable = function () {
                 var nRow = $(this).parents('tr')[0];
                 var getcode = $(this).closest('tr').children('td:first').text();
                 var getname = $(this).closest('tr').children('td:first').next('td').text();
-                document.getElementById('orgname').innerText = getname;
-                document.getElementById('orgcode').innerText = getcode;
+                document.getElementById('orgname').innerText = getcode+' - '+getname; 
 
                 $.ajax({
                     type: "GET",
