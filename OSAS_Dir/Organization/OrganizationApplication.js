@@ -479,12 +479,60 @@ var EditableTable = function () {
                         _appcode: latcode
                     },
                     success: function (curstep) {
-                        //DITO NASGSTART YUNG PAGFILL SA STEP1
-                        if (curstep > 1) {
+                        
+                        if (curstep == 1) {
 
                             $.ajax({
                                 type: 'GET',
-                                url: 'Organization/OrganizationProfile/FillStep1.php',
+                                url: 'Organization/OrganizationProfile/fillSteps.php',
+                                dataType: 'json',
+                                cache:false,
+                                data: {
+                                    _appcode: latcode
+                                },
+                                success: function (step) {
+                                    $('#drpyear option').each(function (index, brand) {
+                                        if (brand.value == step.year) {
+                                            fillyear = fillyear + '<option value="' + step.year + '" selected >' + step.year + '</option>';
+
+                                        } else {
+                                            fillyear = fillyear + '<option value="' + brand.value + '" >' + brand.value + '</option>';
+                                        }
+
+
+                                    });
+                                    document.getElementById('drpyear').innerHTML = fillyear;
+                                    $('#step-1').css("display", "block");
+                                    $('#step-2').css("display", "none");
+                                    $('#step-3').css("display", "none");
+                                    $('#step-4').css("display", "none");
+                                    $('#step-5').css("display", "none");
+
+                                    $('#aStep1').removeAttr('disabled');
+                                    $('#aStep2').attr('disabled',true);
+                                    $('#aStep3').attr('disabled',true);
+                                    $('#aStep4').attr('disabled',true);
+                                    $('#aStep5').attr('disabled',true);
+
+                                    $('#aStep1').addClass('btn-success');
+                                    $('#aStep2').removeClass('btn-success');
+                                    $('#aStep3').removeClass('btn-success');
+                                    $('#aStep4').removeClass('btn-success');
+                                    $('#aStep5').removeClass('btn-success') 
+                                },
+                                error: function (errorfill) {
+                                    swal(errorfill, "Please try again", "error");
+                                }
+
+                            });
+
+                        }
+                        //DITO NASGSTART YUNG PAGFILL SA STEP1
+                        if (curstep == 2) {
+
+                            $.ajax({
+                                type: 'GET',
+                                url: 'Organization/OrganizationProfile/fillSteps.php',
                                 dataType: 'json',
                                 cache:false,
                                 data: {
@@ -509,7 +557,10 @@ var EditableTable = function () {
                                     $('#step-5').css("display", "none");
 
                                     $('#aStep1').removeAttr('disabled');
-                                    $('#aStep2').removeAttr('disabled');
+                                    $('#aStep2').removeAttr('disabled'); 
+                                    $('#aStep3').attr('disabled',true);
+                                    $('#aStep4').attr('disabled',true);
+                                    $('#aStep5').attr('disabled',true);
 
                                     $('#aStep1').removeClass('btn-success');
                                     $('#aStep2').addClass('btn-success')
@@ -523,11 +574,11 @@ var EditableTable = function () {
                         }
                         //END NG FILL NG STEP1
                         //DITO NASGSTART YUNG PAGFILL SA STEP2
-                        if (curstep > 2) {
+                        if (curstep == 3) {
 
                             $.ajax({
                                 type: 'GET',
-                                url: 'Organization/OrganizationProfile/FillStep2.php',
+                                url: 'Organization/OrganizationProfile/fillSteps.php',
                                 dataType: 'json',
                                 async:true,
                                 cache:false,
@@ -556,7 +607,7 @@ var EditableTable = function () {
                                     var i = 0;
                                     $.ajax({
                                         type: 'GET',
-                                        url: 'Organization/OrganizationProfile/FillCourse.php',
+                                        url: 'Organization/OrganizationProfile/fillSteps.php',
                                         dataType: 'json',
                                         async: true,
                                         cache:false,
@@ -585,7 +636,9 @@ var EditableTable = function () {
 
                                     $('#aStep1').removeAttr('disabled');
                                     $('#aStep2').removeAttr('disabled');
-                                    $('#aStep3').removeAttr('disabled');
+                                    $('#aStep3').removeAttr('disabled'); 
+                                    $('#aStep4').attr('disabled',true);
+                                    $('#aStep5').attr('disabled',true);
 
                                     $('#aStep1').removeClass('btn-success');
                                     $('#aStep2').removeClass('btn-success');
@@ -601,11 +654,11 @@ var EditableTable = function () {
                         }
                         //END NG FILL NG STEP2
                         //DITO NASGSTART YUNG PAGFILL SA STEP3
-                        if (curstep > 3) {
+                        if (curstep == 4) {
 
                             $.ajax({
                                 type: 'GET',
-                                url: 'Organization/OrganizationProfile/FillStep3.php',
+                                url: 'Organization/OrganizationProfile/fillSteps.php',
                                 dataType: 'json',
                                 async: true,
                                 cache:false,
@@ -623,7 +676,8 @@ var EditableTable = function () {
                                     $('#aStep1').removeAttr('disabled');
                                     $('#aStep2').removeAttr('disabled');
                                     $('#aStep3').removeAttr('disabled');
-                                    $('#aStep4').removeAttr('disabled');
+                                    $('#aStep4').removeAttr('disabled'); 
+                                    $('#aStep5').attr('disabled',true);
 
                                     $('#aStep1').removeClass('btn-success');
                                     $('#aStep2').removeClass('btn-success');
@@ -640,11 +694,11 @@ var EditableTable = function () {
                         }
                         //END NG FILL NG STEP3
                         //DITO NASGSTART YUNG PAGFILL SA STEP4
-                        if (curstep > 4) {
+                        if (curstep== 5) {
 
                             $.ajax({
                                 type: 'GET',
-                                url: 'Organization/OrganizationProfile/FillStep4.php',
+                                url: 'Organization/OrganizationProfile/fillSteps.php',
                                 dataType: 'json',
                                 async: true,
                                 cache:false,

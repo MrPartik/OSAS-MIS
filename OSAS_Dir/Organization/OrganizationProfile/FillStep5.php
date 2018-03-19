@@ -13,9 +13,7 @@
     while($row = mysqli_fetch_assoc($view_query))
     {
         $mission = $row["MISSION"];
-        $vision = $row["VISION"];
-
-
+        $vision = $row["VISION"]; 
     }
 
    
