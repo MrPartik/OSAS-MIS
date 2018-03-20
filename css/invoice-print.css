@@ -1,4 +1,4 @@
-.print #main-content{
+.print #main-content {
     margin-left: 0;
 }
 
@@ -10,10 +10,11 @@
 }
 
 .wrapper {
-    margin-top:0px ;
+    margin-top: 0px;
 }
 
-.invoice-to h2, .invoice-to {
+.invoice-to h2,
+.invoice-to {
     margin-top: 15px;
 }
 
@@ -36,6 +37,7 @@
 h1 {
     font-size: 20px;
 }
+
 h3 {
     font-size: 15px;
 }
@@ -62,11 +64,31 @@ ul.amounts li {
 }
 
 .logo-print {
+    height: 100px;
+    width: 100px;
     float: right;
-    margin:-35px 0 0 250px;
+    margin: -35px 0 0 250px;
+    margin-top: 35px;
 }
 
 .invoice-header {
     border: none;
 }
 
+@media print {
+
+    h3 {
+        color: black;
+
+    }
+    p {
+        color: blue;
+
+    }
+    .footer {
+        font-size: 5px;
+
+
+    }
+
+}

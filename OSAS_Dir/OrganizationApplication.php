@@ -394,7 +394,6 @@ $user_check = $_SESSION['logged_user']['username'];
                                                 <h3 class="panel-title" style="color:white">What do they Visualize?</h3>
                                             </div>
                                             <div class="panel-body">
-
                                                 <div class="row">
                                                     <div class="form-group col-md-6">
                                                         <label class="control-label">Mission</label>
@@ -417,7 +416,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                             </div>
                                             <div class="panel-body">
                                                 <div class="clearfix">
-                                                    <div class="btn-group" id="btnoffadd">
+                                                    <div class="btn-group" id="btnposadd">
                                                         <button id="editable-sample_new2" data-toggle="modal" href="#AddPos" class="btn btn-success" type="button"> Add <i class="fa fa-plus"></i> </button>
                                                     </div>
 
@@ -436,7 +435,6 @@ $user_check = $_SESSION['logged_user']['username'];
                                             </div>
                                             <div class="col-lg-12">
                                                 <button class="btn btn-primary nextBtn pull-right" type="button" id="next4">Next</button>
-                                                <button class="btn btn-info " type="button" id="btnStep4">Save for Now?</button>
                                             </div>
                                         </div>
                                         <div class="panel panel-primary setup-content" id="step-5">
@@ -444,11 +442,25 @@ $user_check = $_SESSION['logged_user']['username'];
                                                 <h3 class="panel-title" style="color:white">Who are the officer in the organization?</h3>
                                             </div>
                                             <div class="panel-body">
+                                                <div class="clearfix">
+                                                    <div class="btn-group" id="btnoffadd">
+                                                        <button id="editable-sample_new3" data-toggle="modal" href="#AddOff" class="btn btn-success" type="button"> Add <i class="fa fa-plus"></i> </button>
+                                                    </div>
 
+                                                </div>
+                                                <table class="table table-striped table-hover table-bordered" id="editable-sample3">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Officer Position</th>
+                                                            <th>Name</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tblpos"> </tbody>
+                                                </table>
                                             </div>
                                             <div class="col-lg-12">
                                                 <button class="btn btn-primary nextBtn pull-right" type="button" id="next5">Next</button>
-                                                <button class="btn btn-info " type="button" id="btnStep5">Save for Now?</button>
                                             </div>
                                         </div>
                                         <div class="panel panel-primary setup-content" id="step-6">
@@ -634,6 +646,34 @@ $user_check = $_SESSION['logged_user']['username'];
                 </div>
             </div>
         </div>
+        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="AddOff" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Add Organization Officer</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" id="offform-data">
+                            <div class="row" style="padding-left:15px;padding-top:10px">
+                                <div class="col-lg-8 " style="padding-top:10px"> Student
+                                    <select class="form-control input-sm m-bot15 selectYear" id="drpstud">
+                                    </select>
+                                </div>
+                                <div class="col-lg-8 " style="padding-top:10px"> Position
+                                    <select class="form-control input-sm m-bot15 selectYear" id="drppos">
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" id="close3" type="button">Close</button>
+                        <button class="btn btn-success " id="btnsubmitoff" type="button">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- modal -->
         <!-- Placed js at the end of the document so the pages load faster -->
         <?php include('footer.php')?>
@@ -745,6 +785,7 @@ $user_check = $_SESSION['logged_user']['username'];
             jQuery(document).ready(function() {
                 EditableTable.init();
                 EditableTable2.init();
+                EditableTable3.init();
             });
 
         </script>

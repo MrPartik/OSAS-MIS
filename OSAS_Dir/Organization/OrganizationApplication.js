@@ -84,7 +84,121 @@ var EditableTable = function () {
             var oTable2 = $('#editable-sample2').dataTable({
 
             });
+            var oTable3 = $('#editable-sample3').dataTable({
 
+            });
+
+            function fillstep5() {
+
+                var fillstud = '<option value="default">Please Choose a member</option>';
+                var fillpos = '<option value="default">Please Choose a position</option>';
+                document.getElementById('drpstud').innerHTML = fillstud;
+                document.getElementById('drppos').innerHTML = fillpos;
+                $.ajax({
+                    type: "GET",
+                    url: 'Organization/OrganizationProfile/FillStep5.php',
+                    dataType: 'json',
+                    data: {
+                        _code: latcode
+                    },
+                    success: function (data2) {
+                        $.each(data2, function (key, val) {
+                            $('#drpstud').append('<option value="' + val.no + '">' + val.name + '</option>')
+
+                        });
+                    },
+                    error: function (response) {
+                        swal("Error encountered while adding data", "Please try again", "error");
+                    }
+
+                });
+
+                $.ajax({
+                    type: "GET",
+                    url: 'Organization/OrganizationProfile/FillStep5b.php',
+                    dataType: 'json',
+                    data: {
+                        _code: latcode
+                    },
+                    success: function (data2) {
+                        $.each(data2, function (key, val) {
+                            $('#drppos').append('<option value="' + val.id + '">' + val.name + '</option>')
+
+                        });
+                    },
+                    error: function (response) {
+                        swal("Error encountered while adding data", "Please try again", "error");
+                    }
+
+                });
+            }
+
+            $('#editable-sample_new3').on('click', function (e) {
+                fillstep5();
+            });
+
+            $('#btnsubmitoff').on('click', function (e) {
+                e.preventDefault();
+                var _drppos = document.getElementById('drppos');
+                var drpposname = _drppos.options[_drppos.selectedIndex].text;
+                var drpposval = _drppos.options[_drppos.selectedIndex].value;
+                var _drpstud = document.getElementById('drpstud');
+                var drpstudname = _drpstud.options[_drpstud.selectedIndex].text;
+                var drpstudval = _drpstud.options[_drpstud.selectedIndex].value;
+
+                if (drpposval != 'default') {
+                    if (drpstudval != 'default') {
+                        $("#close3").click();
+                        swal({
+
+                                title: "Are you sure?",
+                                text: "The record will be save and will be use for further transaction",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, do it!',
+                                cancelButtonText: "No, cancel it!",
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            },
+                            function (isConfirm) {
+                                if (isConfirm) {
+                                    $.ajax({
+                                        type: 'post',
+                                        url: 'Organization/OrganizationProfile/AddOfficer.php',
+                                        data: {
+                                            _studno: drpstudval,
+                                            _pos: drpposval
+                                        },
+                                        success: function (response) {
+                                            swal("Record Added!", "The data is successfully Added!", "success");
+                                            fillstep5();
+                                            var aiNew = oTable3.fnAddData([drpposname, drpstudname, "<center> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-trash-o'></i></a></center>"]);
+                                            var nRow = oTable3.fnGetNodes(aiNew[0]);
+
+                                        },
+                                        error: function (response) {
+                                            swal("Error encountered while adding data", "Please try again", "error");
+                                            $("#editable-sample_new2").click();
+                                        }
+
+                                    });
+
+                                } else {
+                                    swal("Cancelled", "The transaction is cancelled", "error");
+                                    $("#editable-sample_new2").click();
+
+                                }
+
+                            });
+
+                    } else
+                        swal("Please fill the position", "The transaction is cancelled", "error");
+
+                } else
+                    swal("Please fill the member", "The transaction is cancelled", "error");
+
+            });
             $('#submit-data2').on('click', function (e) {
                 e.preventDefault();
                 var pos = document.getElementById('txtposcode').value;
@@ -823,7 +937,7 @@ var EditableTable = function () {
                         //END NG FILL NG STEP3
 
                         //DITO NASGSTART YUNG PAGFILL SA STEP4
-                        if (curstep == 4) {
+                        if (curstep >= 4) {
 
                             $.ajax({
                                 type: "GET",
@@ -836,6 +950,34 @@ var EditableTable = function () {
                                     $.each(data2, function (key, val) {
                                         var aiNew = oTable2.fnAddData([val.name, val.occ, val.desc, '<center><a class="btn btn-danger delete" href="javascript:;"><i class="fa fa-trash-o" ></i></a></center>', ]);
                                         var nRow = oTable2.fnGetNodes(aiNew[0]);
+                                    });
+                                },
+                                error: function (response) {
+                                    swal("Error encountered while adding data", "Please try again", "error");
+                                }
+
+                            });
+
+
+
+                        }
+
+
+                        if (curstep >= 5) {
+                            fillstep5();
+                            $.ajax({
+                                type: "GET",
+                                url: 'Organization/OrganizationProfile/FillStep5c.php',
+                                dataType: 'json',
+                                data: {
+                                    _code: latcode
+                                },
+                                success: function (data2) {
+                                    $.each(data2, function (key, val) {
+                                        var aiNew = oTable3.fnAddData([val.pos, val.name, '<center><a class="btn btn-danger delete" href="javascript:;"><i class="fa fa-trash-o" ></i></a></center>', ]);
+                                        var nRow = oTable3.fnGetNodes(aiNew[0]);
+
+
                                     });
                                 },
                                 error: function (response) {
@@ -1100,6 +1242,145 @@ var EditableTable2 = function () {
             });
 
             $('#editable-sample2 a.cancel').on('click', function (e) {
+                e.preventDefault();
+                if ($(this).attr("data-mode") == "new") {
+                    var nRow = $(this).parents('tr')[0];
+                    oTable.fnDeleteRow(nRow);
+                } else {
+                    restoreRow(oTable, nEditing);
+                    nEditing = null;
+                }
+            });
+
+
+
+
+        }
+
+    };
+
+}();
+var EditableTable3 = function () {
+
+    return {
+
+        //main function to initiate the module
+        init: function () {
+            function restoreRow(oTable, nRow) {
+                var aData = oTable.fnGetData(nRow);
+                var jqTds = $('>td', nRow);
+
+                for (var i = 0, iLen = jqTds.length; i < iLen; i++) {
+                    oTable.fnUpdate(aData[i], nRow, i, false);
+                }
+
+                oTable.fnDraw();
+
+            }
+
+            function editRow(oTable, nRow) {
+                var aData = oTable.fnGetData(nRow);
+                var jqTds = $('>td', nRow);
+            }
+
+            function saveRow(oTable, nRow) {
+                var jqInputs = $('input', nRow);
+
+                oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
+                oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
+                oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
+                oTable.fnUpdate('<center><a class="btn btn-success edit" href="">Edit</a> <a class="btn btn-danger delete" href="">Delete</a></center>', nRow, 3, false);
+                oTable.fnDraw();
+
+
+            }
+
+            function cancelEditRow(oTable, nRow) {
+                var jqInputs = $('input', nRow);
+                oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
+                oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
+                oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
+                oTable.fnUpdate('<a class="btn btn-success edit" href="">Edit</a>', nRow, 3, false);
+                oTable.fnDraw();
+            }
+
+            var oTable = $('#editable-sample3').dataTable({
+                "aLengthMenu": [
+                    [5, 15, 20, -1],
+                    [5, 15, 20, "All"] // change per page values here
+                ],
+                // set the initial value
+                "iDisplayLength": 5,
+                "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
+                "sPaginationType": "bootstrap",
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ records per page",
+                    "oPaginate": {
+                        "sPrevious": "Prev",
+                        "sNext": "Next"
+                    }
+                },
+                "aoColumnDefs": [{
+                        'bSortable': false,
+                        'aTargets': [0]
+                    }
+                ]
+            });
+
+            jQuery('#editable-sample3_wrapper .dataTables_filter input').addClass("form-control medium"); // modify table search input
+            jQuery('#editable-sample3_wrapper .dataTables_length select').addClass("form-control xsmall"); // modify table per page dropdown
+
+            var nEditing = null;
+
+
+            $('#tblpos').on('click', 'a.delete', function (e) {
+                e.preventDefault();
+
+                var nRow = $(this).parents('tr')[0];
+                var getcode = $(this).closest('tr').children('td:first').text();
+                swal({
+
+                        title: "Are you sure?",
+                        text: "The record will be save and will be use for transaction",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: '#DD6B55',
+                        confirmButtonText: 'Yes, do it!',
+                        cancelButtonText: "No, cancel it!",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                type: 'post',
+                                url: 'Organization/OrganizationProfile/DeletePosition.php',
+                                data: {
+                                    _orgcode: latcode,
+                                    _code: getcode
+                                },
+                                success: function (response) {
+                                    swal("Record Deleted!", "The data is successfully deleted!", "success");
+                                    oTable.fnDeleteRow(nRow);
+                                },
+                                error: function (response) {
+                                    swal(response + "Error encountered while adding data", "Please try again", "error");
+                                    oTable.fnDeleteRow(nRow);
+                                }
+
+                            });
+
+                        } else
+                            swal("Cancelled", "The transaction is cancelled", "error");
+
+                    });
+
+
+
+
+            });
+
+            $('#editable-sample3 a.cancel').on('click', function (e) {
                 e.preventDefault();
                 if ($(this).attr("data-mode") == "new") {
                     var nRow = $(this).parents('tr')[0];
