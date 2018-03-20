@@ -95,7 +95,7 @@ include('../config/connection.php');
                                                                     </center>
                                                             </td>
                                                             <td> 
-                                                                <?php   
+                                                                <?php    
                                                                         $StudNo= $stud_row['Stud_NO'];
                                                                        $row=mysqli_fetch_array(mysqli_query($con,"select max(`AssStudClearance_DATE_MOD`) from t_assign_student_clearance where `AssStudClearance_STUD_NO` ='$StudNo' 
                                                                        AND `AssStudClearance_BATCH` ='$current_acadyear' 
