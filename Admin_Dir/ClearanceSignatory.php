@@ -196,10 +196,15 @@ include('../config/connection.php');
         $(document).ready(function() {
             $('#btnprint').on('click', function() {
                 var items = [];
-                var table = $('#editable-sample').DataTable();
-                jQuery(table.fnGetNodes()).each(function() {
+                var rows = $('#editable-sample').dataTable()
+                    .$('tr', {
+                        "filter": "applied"
+                    });
+                $(rows).each(function(index, el) {
                     items.push($(this).closest('tr').children('td:first').text());
-                });
+
+                })
+
                 window.open('Print/Clearance_Print.php?items=' + items, '_blank');
             });
             $('.add').click(function() {
