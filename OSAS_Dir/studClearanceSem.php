@@ -22,9 +22,19 @@ include('../config/connection.php');
             <section id="main-content">
                 <section class="wrapper">
                     <div class="row ">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="mini-stat clearfix"> <span class="mini-stat-icon orange"><i class="fa fa-tag"></i></span>
-                                <div class="mini-stat-info"> <span><?php echo $count_stud_sanction?></span> Number of Students who has Cleared their clearance </div>
+                                <div class="mini-stat-info"> <span><?php echo $count_stud_sanction?></span> Students who cleared their clearance </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mini-stat clearfix"> <span class="mini-stat-icon tar"><i class="fa  fa-chain"></i></span>
+                                <div class="mini-stat-info"> <span> <?php echo $current_acadyear?></span> Activated Academic Year </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mini-stat clearfix"> <span class="mini-stat-icon tar"><i class="fa  fa-chain"></i></span> 
+                                <div class="mini-stat-info"> <span><?php echo $current_semster?></span> Activated Semester </div>
                             </div>
                         </div>
                     </div>
@@ -32,7 +42,7 @@ include('../config/connection.php');
                         <div class="col-sm-12">
                             <section class="panel">
                                 <header class="panel-heading">Semestral Clearance Record <span class="tools pull-right">
-                            <a href="javascript:;" class="fa fa-chevron-down"></a> 
+                            <a href="javascript:;" class="fa fa-chevron-down"></a>  
                             <a href="javascript:;" class="fa fa-times"></a>
                          </span> </header>
                                 <div id="TableStudSanc" class="panel-body"> 
@@ -43,15 +53,16 @@ include('../config/connection.php');
                                                 <tr>
                                                     <th>Student Number</th>
                                                     <th>Student Details</th> 
-                                                    <th>Status</th>
-                                                    <th>Progress</th>
+                                                    <th>Sanction</th>
+                                                    <th>Conficts</th>
                                                     <th>Last Modified</th>
                                                     <th><center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 
-                                                    <?php   while($stud_row=mysqli_fetch_array($view_studProfile)) { ?>
+                                                    <?php   
+                                                    while($stud_row=mysqli_fetch_array($view_studProfile)) { ?>
                                                         <tr>
                                                             <td>
                                                                 <?php echo $stud_row['Stud_NO'];?>
@@ -62,26 +73,33 @@ include('../config/connection.php');
                                                             <td>
                                                                 <?php  
                                                             $studNo = $stud_row['Stud_NO'];
-                                                            $noRow = mysqli_fetch_array(mysqli_query($con,"SELECT (SELECT COUNT(`AssSancStudStudent_STUD_NO`) FROM `t_assign_stud_saction` WHERE `AssSancStudStudent_STUD_NO` = '$studNo' and `AssSancStudStudent_DISPLAY_STAT` <> 'Inactive'  and `AssSancStudStudent_IS_FINISH` <>'finished'), (SELECT COUNT(`AssSancStudStudent_STUD_NO`) FROM `t_assign_stud_saction` WHERE `AssSancStudStudent_STUD_NO`  = '$studNo' and `AssSancStudStudent_IS_FINISH` ='finished' and `AssSancStudStudent_DISPLAY_STAT` <> 'Inactive' )")); ?>
+                                                            $noRow = mysqli_fetch_array(mysqli_query($con,"SELECT (SELECT COUNT(`AssSancStudStudent_STUD_NO`) FROM `t_assign_stud_saction` WHERE `AssSancStudStudent_STUD_NO` = '$studNo' and `AssSancStudStudent_DISPLAY_STAT` <> 'Inactive'  and `AssSancStudStudent_IS_FINISH` <>'finished')")); ?>
                                                         
-                                                                    <center>
-                                                                        <span class="label label-danger label-mini"> Pending </span> 
-                                                                    </center>
+                                                        <center> <span class="label label-danger label-mini"> <?php echo $noRow[0] ?>  </span></center>
                                                             </td>
-                                                            <td style="width:20%;">
+                                                            <td style="width:20%;"> 
+                                                            <center> <strong>
                                                                 <?php
-                                                viewStudSanctionComputation($stud_row['Stud_NO']);
-                                                while($row=mysqli_fetch_array($view_studSanctionComputation)){ 
+                                                $clearance_view= mysqli_query($con,"SELECT B.ClearSignatories_NAME
+                                                FROM  t_assign_student_clearance  A
+                                                INNER JOIN  r_clearance_signatories B on A.`AssStudClearance_SIGNATORIES_CODE` = B.ClearSignatories_CODE
+                                                where A.`AssStudClearance_STUD_NO` = '$studNo' 
+                                                AND A.`AssStudClearance_BATCH` ='$current_acadyear'
+                                                AND A.`AssStudClearance_SEMESTER`='$current_semster'
+                                                AND A.`AssStudClearance_DISPLAY_STAT` ='Active'");
+                                                while($row=mysqli_fetch_array($clearance_view)){ 
                                                 ?>
-                                                                    <div class="progress progress-striped progress-xs">
-                                                                        <div style="width:0<?php echo $row['Percentage'] ?>%" aria-valuemax="100%" aria-valuemin="0" role="progressbar" class="progress-bar progress-bar-success"> <span class="sr-only">40% Complete (success)</span> </div>
-                                                                    </div>
+                                                            <?php echo $row[0].',' ?>
                                                                     <?php }?>
+                                                                    </strong    >
+                                                                    </center>
                                                             </td>
                                                             <td> 
                                                                 <?php   
                                                                         $StudNo= $stud_row['Stud_NO'];
-                                                                       $row=mysqli_fetch_array(mysqli_query($con,"select max(AssSancStudStudent_DATE_MOD) from t_assign_stud_saction where AssSancStudStudent_STUD_NO ='$StudNo'"));
+                                                                       $row=mysqli_fetch_array(mysqli_query($con,"select max(`AssStudClearance_DATE_MOD`) from t_assign_student_clearance where `AssStudClearance_STUD_NO` ='$StudNo' 
+                                                                       AND `AssStudClearance_BATCH` ='$current_acadyear' 
+                                                                       AND `AssStudClearance_SEMESTER`='$current_semster'"));
                                                                         echo  ($row[0]==null )?"":(new DateTime($row[0]))->format('D M d, Y h:i A'); 
                                                                 ?>
                                                             </td>
@@ -97,8 +115,8 @@ include('../config/connection.php');
                                                 <tr>
                                                     <th>Student Number</th>
                                                     <th>Student Details</th> 
-                                                    <th>Status</th>
-                                                    <th>Progress</th>
+                                                    <th>Sanction</th>
+                                                    <th>Confilicts</th>
                                                     <th>Last Modified</th>
                                                     <th><center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
                                                 </tr>

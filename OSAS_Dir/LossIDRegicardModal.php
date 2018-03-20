@@ -214,8 +214,7 @@
                                             , LossClaim = $tds.eq(2).find("#DateClaim").val()
                                             , LossRemarks = $tds.eq(3).find("#lossRemarks").val()
                                             , StudNumber = "<?php echo $_GET['StudNo']?>"
-
-                                        alert(LossClaim);
+ 
                                         $.ajax({
                                             type: 'post'
                                             , url: 'LossIDRegicardSave.php'
