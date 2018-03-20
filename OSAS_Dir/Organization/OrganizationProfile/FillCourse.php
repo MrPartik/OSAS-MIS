@@ -10,8 +10,11 @@
     while($row = mysqli_fetch_assoc($view_query))
     {
         $course = $row["COURSE"];
-        $arr = array( 'course' => $course );
+        
+       $arr = array( 'course' => $course );
       array_push(  $container_arr, (array)$arr );
+        
+        
     }
 
      echo json_encode($container_arr);
