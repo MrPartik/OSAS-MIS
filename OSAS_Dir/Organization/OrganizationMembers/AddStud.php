@@ -19,10 +19,22 @@
 
     }
 
+    $view_query = mysqli_query($con,"SELECT OrgOffi_ID FROM `t_org_officers` 
+                                            INNER JOIN r_org_officer_position_details ON OrgOffiPosDetails_ID = OrgOffi_OrgOffiPosDetails_ID
+                                             WHERE OrgOffi_STUD_NO = '$studno' AND OrgOffiPosDetails_ORG_CODE = '$appcode' ");
+    $getid = 0;
+    while($row = mysqli_fetch_assoc($view_query))
+    {
+        $getid = $row["OrgOffi_ID"];
+
+    }
+
     if($pos != 'member')
     {
-        
+        if($getid == 0)
             $query = mysqli_query($con,"INSERT INTO t_org_officers (OrgOffi_OrgOffiPosDetails_ID,OrgOffi_STUD_NO)  VALUES ('$pos','$studno')");
+        else
+            $query = mysqli_query($con,"UPDATE t_org_officers SET OrgOffi_DISPLAY_STAT = 'Active',OrgOffi_OrgOffiPosDetails_ID = '$pos' WHERE OrgOffi_ID = '$getid' ");
 
         
     }
