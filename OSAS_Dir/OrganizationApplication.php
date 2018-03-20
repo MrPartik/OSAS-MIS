@@ -231,10 +231,12 @@ $user_check = $_SESSION['logged_user']['username'];
                                             else if($step == 2)
                                                 $curstep = '<span class="label label-info">Setting Organization Category</span>';
                                             else if($step == 3)
-                                                $curstep = '<span class="label label-warning">Setting Adviser</span>';
+                                                $curstep = '<span class="label label-warning">Setting Mission and Vision</span>';
                                             else if($step == 4)
-                                                $curstep = '<span class="label label-default">Setting Mission and Vision</span>';
+                                                $curstep = '<span class="label label-default">Setting Position</span>';
                                             else if($step == 5)
+                                                $curstep = '<span class="label label-default">Setting Officer</span>';
+                                            else if($step == 6)
                                             {
                                                 if($accstat == 'TRUE' )
                                                     $curstep = '<span class="label label-success">Accredited</span>';
@@ -298,7 +300,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                             <center>
                                                 <div class="stepwizard-step col-xs-2">
                                                     <a href="#step-1" id="aStep1" type="button" class="btn btn-success btn-circle">1</a>
-                                                    <p><small>Academic Year</small></p>
+                                                    <p><small>Adviser</small></p>
                                                 </div>
                                                 <div class="stepwizard-step col-xs-2">
                                                     <a href="#step-2" id="aStep2" type="button" class="btn btn-default btn-circle" disabled>2</a>
@@ -306,14 +308,18 @@ $user_check = $_SESSION['logged_user']['username'];
                                                 </div>
                                                 <div class="stepwizard-step col-xs-2">
                                                     <a href="#step-3" id="aStep3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
-                                                    <p><small>Adviser</small></p>
-                                                </div>
-                                                <div class="stepwizard-step col-xs-2">
-                                                    <a href="#step-4" id="aStep4" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
                                                     <p><small>Mission & Vision</small></p>
                                                 </div>
                                                 <div class="stepwizard-step col-xs-2">
+                                                    <a href="#step-4" id="aStep4" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
+                                                    <p><small>Position</small></p>
+                                                </div>
+                                                <div class="stepwizard-step col-xs-2">
                                                     <a href="#step-5" id="aStep5" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
+                                                    <p><small>Officer</small></p>
+                                                </div>
+                                                <div class="stepwizard-step col-xs-2">
+                                                    <a href="#step-6" id="aStep6" type="button" class="btn btn-default btn-circle" disabled="disabled">6</a>
                                                     <p><small>Accreditation</small></p>
                                                 </div>
                                             </center>
@@ -322,28 +328,17 @@ $user_check = $_SESSION['logged_user']['username'];
                                     <form role="form">
                                         <div class="panel panel-primary setup-content" id="step-1">
                                             <div class="panel-heading">
-                                                <h3 class="panel-title" style="color:white">For what academic year? </h3>
+                                                <h3 class="panel-title" style="color:white">Who is the Adviser?</h3>
                                             </div>
                                             <div class="panel-body">
                                                 <div class="form-group">
-                                                    <label class="control-label">Academic Year</label>
-                                                    <select class="form-control input-sm m-bot15 selectYear" style="width:100%" id="drpyear">
-                                                        <?php
-
-                                                            $view_query = mysqli_query($con,"SELECT Batch_YEAR AS YEAR FROM `r_batch_details` WHERE Batch_DISPLAY_STAT = 'Active' ORDER BY Batch_YEAR DESC ");
-                                                            while($row = mysqli_fetch_assoc($view_query))
-                                                            {
-                                                                $year = $row["YEAR"];
-
-                                                                echo "<option value='$year'>$year</option>";
-                                                            }
-                                                        ?>
-                                                 </select>
-                                                </div> 
+                                                    <label class="control-label">Adviser Name</label>
+                                                    <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Adviser Name" id="txtadvname" />
+                                                </div>
                                                 <div class="col-lg-12">
-                                                <button class="btn btn-primary nextBtn pull-right" type="button" id="btnStep1">Next</button>
-                                                <button class="btn btn-info " type="button" id="savemuna">Save for Now?</button>
-                                              </div>
+                                                    <button class="btn btn-primary nextBtn pull-right" type="button" id="next1">Next</button>
+                                                    <button class="btn btn-info " type="button" id="btnStep1">Save for Now?</button>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -389,31 +384,12 @@ $user_check = $_SESSION['logged_user']['username'];
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-12">
-                                                <button class="btn btn-primary nextBtn pull-right" id="btnStep2" type="button">Next</button>
-                                                </button>
-                                                <button class="btn btn-info " type="button" id="savemuna">Save for Now?</button>
+                                                    <button class="btn btn-primary nextBtn pull-right" id="next2" type="button">Next</button>
+                                                    <button class="btn btn-info " type="button" id="btnStep2">Save for Now?</button>
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="panel panel-primary setup-content" id="step-3">
-                                            <div class="panel-heading">
-                                                <h3 class="panel-title" style="color:white">Who is the Adviser?</h3>
-                                            </div>
-                                            <div class="panel-body">
-                                                <div class="form-group">
-                                                    <label class="control-label">Adviser Name</label>
-                                                    <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Adviser Name" id="txtadvname" />
-                                                </div>
-                                                <div class="col-lg-12">
-                                                <button class="btn btn-primary nextBtn pull-right" type="button" id="btnStep3">Next</button>
-                                                </button>
-                                                <button class="btn btn-info " type="button" id="savemuna">Save for Now?</button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="panel panel-primary setup-content" id="step-4">
                                             <div class="panel-heading">
                                                 <h3 class="panel-title" style="color:white">What do they Visualize?</h3>
                                             </div>
@@ -428,15 +404,54 @@ $user_check = $_SESSION['logged_user']['username'];
                                                         <label class="control-label">Vision</label>
                                                         <textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtvision" style="roverflow:auto;resize:none"></textarea>
                                                     </div>
-                                                <div class="col-lg-12">
-                                                    <button class="btn btn-primary nextBtn pull-right" type="button" id="btnStep4">Next</button>
-                                                    </button>
-                                                <button class="btn btn-info " type="button" id="savemuna">Save for Now?</button>
-                                                </div>
+                                                    <div class="col-lg-12">
+                                                        <button class="btn btn-primary nextBtn pull-right" type="button" id="next3">Next</button>
+                                                        <button class="btn btn-info " type="button" id="btnStep3">Save for Now?</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="panel panel-primary setup-content" id="step-4">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title" style="color:white">What are the position in the organization?</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="clearfix">
+                                                    <div class="btn-group" id="btnoffadd">
+                                                        <button id="editable-sample_new2" data-toggle="modal" href="#AddPos" class="btn btn-success" type="button"> Add <i class="fa fa-plus"></i> </button>
+                                                    </div>
+
+                                                </div>
+                                                <table class="table table-striped table-hover table-bordered" id="editable-sample2">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Officer Position</th>
+                                                            <th>Ocurrence</th>
+                                                            <th>Description</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tblpos"> </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <button class="btn btn-primary nextBtn pull-right" type="button" id="next4">Next</button>
+                                                <button class="btn btn-info " type="button" id="btnStep4">Save for Now?</button>
+                                            </div>
+                                        </div>
                                         <div class="panel panel-primary setup-content" id="step-5">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title" style="color:white">Who are the officer in the organization?</h3>
+                                            </div>
+                                            <div class="panel-body">
+
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <button class="btn btn-primary nextBtn pull-right" type="button" id="next5">Next</button>
+                                                <button class="btn btn-info " type="button" id="btnStep5">Save for Now?</button>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-primary setup-content" id="step-6">
                                             <div class="panel-heading">
                                                 <h3 class="panel-title" style="color:white">What requirement do they have?</h3>
                                             </div>
@@ -477,9 +492,8 @@ $user_check = $_SESSION['logged_user']['username'];
                                                     </form>
                                                 </div>
                                                 <div class="col-lg-12">
-                                                <button class="btn btn-success pull-right" type="button" id="btnFinish">Finish!</button>
-                                                </button>
-                                                <button class="btn btn-info " type="button" id="savemuna">Save for Now?</button>
+                                                    <button class="btn btn-success pull-right" type="button" id="next6">Finish!</button>
+                                                    <button class="btn btn-info " type="button" id="btnFinish">Save for Now?</button>
                                                 </div>
 
                                             </div>
@@ -593,9 +607,36 @@ $user_check = $_SESSION['logged_user']['username'];
                 </div>
             </div>
         </div>
+        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="AddPos" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Add Officer Position</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" id="posform-data">
+                            <div class="row" style="padding-left:15px;padding-top:10px">
+                                <div class="col-lg-6"> Officer Position
+                                    <input type="text" class="form-control" placeholder="ex. President" id="txtposcode"> </div>
+                                <div class="col-lg-6"> Occurence
+                                    <input type="number" class="form-control" placeholder="1" id="txtocc"> </div>
+                                <div class="col-lg-8 " style="padding-top:10px"> Description
+                                    <textarea class="form-control" placeholder="ex. Leader of the Organization" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtposdesc"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" id="close2" type="button">Close</button>
+                        <button class="btn btn-success " id="submit-data2" type="button">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- modal -->
         <!-- Placed js at the end of the document so the pages load faster -->
-<?php include('footer.php')?>
+        <?php include('footer.php')?>
 
         <!--script for this page only-->
         <script src="Organization/OrganizationApplication.js"></script>
@@ -606,7 +647,7 @@ $user_check = $_SESSION['logged_user']['username'];
                 $('#wizardForm').hide();
                 $('.hidethis').hide
                 wizardOpen = $('.wizardOpen');
-                wizardOpen.on('click',function() {
+                wizardOpen.on('click', function() {
                     $('#tableForm').slideToggle();
                     $('#wizardForm').slideToggle();
 
@@ -656,53 +697,54 @@ $user_check = $_SESSION['logged_user']['username'];
 
                 $('div.setup-panel div a.btn-success').trigger('click');
             });
-            
-            $("button[id='savemuna']").on('click',function(){
+
+            $("button[id='savemuna']").on('click', function() {
                 swal({
-                                title: "Are you sure?"
-                                , text: "You want to temporarily save the steps?"
-                                , type: "warning"
-                                , showCancelButton: true
-                                , confirmButtonColor: '#9DD656'
-                                , confirmButtonText: 'Yes, Save it!'
-                                , cancelButtonText: "No, cancel it!"
-                                , closeOnConfirm: false
-                                , closeOnCancel: false
-                            }, function (isConfirm) {
-                                if(isConfirm){ 
-                                    swal({
-                                            title: "Woaah, that's neat!"
-                                            , text: "You have successfully save the current step. please continue it if you are ready."
-                                            , type: "success"
-                                            , showCancelButton: false
-                                            , confirmButtonColor: '#9DD656'
-                                            , confirmButtonText: 'Ok'
-                                        }, function (isConfirm) {
-                                    if($("#step-1").css("display")=='block'){
-                                        $("#btnStep1").trigger("click");
-                                    }else if($("#step-2").css("display")=='block'){
-                                        $("#btnStep2").trigger("click");
-                                        
-                                    }else if($("#step-3").css("display")=='block'){
-                                        $("#btnStep3").trigger("click");
-                                        
-                                    }else if($("#step-4").css("display")=='block'){
-                                        $("#btnStep4").trigger("click");
-                                        
-                                    }else if($("#step-5").css("display")=='block'){
-                                        $("#btnFinish").trigger("click");
-                                        
-                                    }
-                                            location.reload();
-                                        });
-                                }else{
-                                    swal("Cancelled", "The transaction is cancelled", "error");
-                                }
-                            });
+                    title: "Are you sure?",
+                    text: "You want to temporarily save the steps?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: '#9DD656',
+                    confirmButtonText: 'Yes, Save it!',
+                    cancelButtonText: "No, cancel it!",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        swal({
+                            title: "Woaah, that's neat!",
+                            text: "You have successfully save the current step. please continue it if you are ready.",
+                            type: "success",
+                            showCancelButton: false,
+                            confirmButtonColor: '#9DD656',
+                            confirmButtonText: 'Ok'
+                        }, function(isConfirm) {
+                            if ($("#step-1").css("display") == 'block') {
+                                $("#btnStep1").trigger("click");
+                            } else if ($("#step-2").css("display") == 'block') {
+                                $("#btnStep2").trigger("click");
+
+                            } else if ($("#step-3").css("display") == 'block') {
+                                $("#btnStep3").trigger("click");
+
+                            } else if ($("#step-4").css("display") == 'block') {
+                                $("#btnStep4").trigger("click");
+
+                            } else if ($("#step-5").css("display") == 'block') {
+                                $("#btnFinish").trigger("click");
+
+                            }
+                            location.reload();
+                        });
+                    } else {
+                        swal("Cancelled", "The transaction is cancelled", "error");
+                    }
+                });
             });
 
             jQuery(document).ready(function() {
                 EditableTable.init();
+                EditableTable2.init();
             });
 
         </script>

@@ -81,26 +81,91 @@ var EditableTable = function () {
 
             jQuery('#editable-sample_wrapper .dataTables_filter input').addClass("form-control medium"); // modify table search input
             jQuery('#editable-sample_wrapper .dataTables_length select').addClass("form-control xsmall"); // modify table per page dropdown
+            var oTable2 = $('#editable-sample2').dataTable({
+
+            });
+
+            $('#submit-data2').on('click', function (e) {
+                e.preventDefault();
+                var pos = document.getElementById('txtposcode').value;
+                var desc = document.getElementById('txtposdesc').value;
+                var occ = document.getElementById('txtocc').value;
+                $("#close2").click();
+                swal({
+
+                        title: "Are you sure?",
+                        text: "The record will be save and will be use for further transaction",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: '#DD6B55',
+                        confirmButtonText: 'Yes, do it!',
+                        cancelButtonText: "No, cancel it!",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                type: 'post',
+                                url: 'Organization/OrganizationProfile/AddPosition.php',
+                                data: {
+                                    _code: latcode,
+                                    _pos: pos,
+                                    _occ: occ,
+                                    _desc: desc
+                                },
+                                success: function (response) {
+                                    swal("Record Added!", "The data is successfully Added!", "success");
+
+                                    var aiNew = oTable2.fnAddData([pos, desc, occ, "<center> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-trash-o'></i></a></center>"]);
+                                    var nRow = oTable2.fnGetNodes(aiNew[0]);
+
+                                },
+                                error: function (response) {
+                                    swal("Error encountered while adding data", "Please try again", "error");
+                                    $("#editable-sample_new2").click();
+                                }
+
+                            });
+
+                        } else {
+                            swal("Cancelled", "The transaction is cancelled", "error");
+                            $("#editable-sample_new2").click();
+
+                        }
+
+                    });
+
+
+
+
+            });
 
             var nEditing = null;
             $('#btnStep1').click(function (e) {
                 e.preventDefault();
 
-                var year = document.getElementById('drpyear').value;
+                var advname = document.getElementById('txtadvname').value;
 
                 $.ajax({
                     type: 'post',
                     url: 'Organization/OrganizationProfile/Step1.php',
                     data: {
-                        _year: year,
                         _appcode: latcode,
-                        _orgname: getname 
+                        _advname: advname
+
+
                     },
-                    success: function (response) {},
+                    success: function (response) {
+
+                    },
                     error: function (response) {
                         swal(response, "Please try again", "error");
                     }
                 });
+                swal("Woaah, that's neat!", "The organization adviser is saved", "success");
+
+                //$('#next1').click();
 
 
             });
@@ -139,6 +204,7 @@ var EditableTable = function () {
                             },
                             success: function (response) {
 
+
                             },
                             error: function (response) {
                                 swal(response, "Please try again", "error");
@@ -146,6 +212,9 @@ var EditableTable = function () {
                         });
 
                     });
+                    swal("Woaah, that's neat!", "The organization category is saved", "success");
+                    //$('#next2').click();
+
 
                 } else {
                     $.ajax({
@@ -176,6 +245,9 @@ var EditableTable = function () {
                             swal(response, "Please try again", "error");
                         }
                     });
+                    swal("Woaah, that's neat!", "The organization category is saved", "success");
+                    //$('#next2').click();
+
 
                 }
 
@@ -187,36 +259,12 @@ var EditableTable = function () {
             $('#btnStep3').click(function (e) {
                 e.preventDefault();
 
-                var advname = document.getElementById('txtadvname').value;
-
-                $.ajax({
-                    type: 'post',
-                    url: 'Organization/OrganizationProfile/Step3.php',
-                    data: {
-                        _appcode: latcode,
-                        _advname: advname
-
-
-                    },
-                    success: function (response) {
-
-                    },
-                    error: function (response) {
-                        swal(response, "Please try again", "error");
-                    }
-                });
-
-
-            });
-            $('#btnStep4').click(function (e) {
-                e.preventDefault();
-
                 var mission = document.getElementById('txtmission').value;
                 var vision = document.getElementById('txtvision').value;
 
                 $.ajax({
                     type: 'post',
-                    url: 'Organization/OrganizationProfile/Step4.php',
+                    url: 'Organization/OrganizationProfile/Step3.php',
                     data: {
                         _appcode: latcode,
                         _mission: mission,
@@ -229,9 +277,57 @@ var EditableTable = function () {
                         swal(response, "Please try again", "error");
                     }
                 });
+                //$('#next3').click();
+                swal("Woaah, that's neat!", "The organization mission and vision is saved", "success");
 
 
             });
+            $('#next4').click(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'post',
+                    url: 'Organization/OrganizationProfile/Step4.php',
+                    data: {
+                        _appcode: latcode
+
+
+                    },
+                    success: function (response) {},
+                    error: function (response) {
+                        swal(response, "Please try again", "error");
+                    }
+                });
+
+            });
+
+            $('#next5').click(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'post',
+                    url: 'Organization/OrganizationProfile/Step5.php',
+                    data: {
+                        _appcode: latcode
+
+
+                    },
+                    success: function (response) {},
+                    error: function (response) {
+                        swal(response, "Please try again", "error");
+                    }
+                });
+            });
+            $('#btnStep5').click(function (e) {
+                e.preventDefault();
+                alert(latcode);
+
+
+                swal("Woaah, that's neat!", "The organization officer is saved", "success");
+                //$('#next4').click();
+
+
+
+            });
+            var finflag = 0;
             $('#btnFinish').click(function (e) {
                 e.preventDefault();
                 var x = 0;
@@ -256,7 +352,7 @@ var EditableTable = function () {
 
                     $.ajax({
                         type: 'post',
-                        url: 'Organization/OrganizationProfile/Step5.php',
+                        url: 'Organization/OrganizationProfile/Step6.php',
                         async: true,
                         data: {
                             _drpcode: latcode,
@@ -278,28 +374,29 @@ var EditableTable = function () {
                 }
                 if (x == cou) {
                     swal({
-                        title: "Woaah, that's neat!"
-                        , text: "The application is successfull!"
-                        , type: "success"
-                        , showCancelButton: false
-                        , confirmButtonColor: '#9DD656'
-                        , confirmButtonText: 'Ok'
+                        title: "Woaah, that's neat!",
+                        text: "The application is successfull!",
+                        type: "success",
+                        showCancelButton: false,
+                        confirmButtonColor: '#9DD656',
+                        confirmButtonText: 'Ok'
                     }, function (isConfirm) {
                         location.reload();
-                    });  
+                    });
                     //swal("Woaah, that's neat!", "The application is successfull!", "success");
 
                 } else
-                swal({
-                    title: "Woaah, almost done!"
-                    , text: "The application is saved!"
-                    , type: "success"
-                    , showCancelButton: false
-                    , confirmButtonColor: '#9DD656'
-                    , confirmButtonText: 'Ok'
-                }, function (isConfirm) {
-                    location.reload();
-                }); 
+                    swal({
+                        title: "Woaah, almost done!",
+                        text: "The application is saved!",
+                        type: "success",
+                        showCancelButton: false,
+                        confirmButtonColor: '#9DD656',
+                        confirmButtonText: 'Ok'
+                    }, function (isConfirm) {
+                        location.reload();
+                    });
+                swal("Woaah, that's neat!", "The Accreditation is saved", "success");
                 //swal("Woaah, almost done!", "The application is saved!", "success");  
             });
 
@@ -413,7 +510,7 @@ var EditableTable = function () {
                     if (isConfirm) {
                         $.ajax({
                             type: 'post',
-                            cache:false,
+                            cache: false,
                             url: 'Organization/OrganizationProfile/Update-ajax.php',
                             data: {
                                 _id: getid,
@@ -462,8 +559,8 @@ var EditableTable = function () {
 
                 var nRow = $(this).parents('tr')[0];
                 getname = $(this).closest('tr').children('td:first').next().text();
-                latcode = $(this).closest('tr').children('td:first').text(); 
-                document.getElementById('lblname').innerText =latcode+' - '+getname + ' Application Wizard';  
+                latcode = $(this).closest('tr').children('td:first').text();
+                document.getElementById('lblname').innerText = latcode + ' - ' + getname + ' Application Wizard';
                 var fillyear = '';
                 var fillcat = '';
 
@@ -475,104 +572,141 @@ var EditableTable = function () {
                     data: {
                         _appcode: latcode
                     },
-                    success: function (curstep) { 
+                    success: function (curstep) {
 
-                        if(curstep==1){
+                        if (curstep == 1) {
                             $('#step-1').css("display", "block");
                             $('#step-2').css("display", "none");
                             $('#step-3').css("display", "none");
                             $('#step-4').css("display", "none");
                             $('#step-5').css("display", "none");
+                            $('#step-6').css("display", "none");
 
                             $('#aStep1').removeAttr('disabled');
-                            $('#aStep2').attr('disabled',true);
-                            $('#aStep3').attr('disabled',true);
-                            $('#aStep4').attr('disabled',true);
-                            $('#aStep5').attr('disabled',true);
+                            $('#aStep2').attr('disabled', true);
+                            $('#aStep3').attr('disabled', true);
+                            $('#aStep4').attr('disabled', true);
+                            $('#aStep5').attr('disabled', true);
+                            $('#aStep6').attr('disabled', true);
 
                             $('#aStep1').addClass('btn-success');
                             $('#aStep2').removeClass('btn-success');
                             $('#aStep3').removeClass('btn-success');
                             $('#aStep4').removeClass('btn-success');
                             $('#aStep5').removeClass('btn-success');
+                            $('#aStep6').removeClass('btn-success');
                         }
-                        if(curstep==2){
-                            
+                        if (curstep == 2) {
+
                             $('#step-1').css("display", "none");
                             $('#step-2').css("display", "block");
                             $('#step-3').css("display", "none");
                             $('#step-4').css("display", "none");
                             $('#step-5').css("display", "none");
+                            $('#step-6').css("display", "none");
 
                             $('#aStep1').removeAttr('disabled');
-                            $('#aStep2').removeAttr('disabled'); 
-                            $('#aStep3').attr('disabled',true);
-                            $('#aStep4').attr('disabled',true);
-                            $('#aStep5').attr('disabled',true);
+                            $('#aStep2').removeAttr('disabled');
+                            $('#aStep3').attr('disabled', true);
+                            $('#aStep4').attr('disabled', true);
+                            $('#aStep5').attr('disabled', true);
+                            $('#aStep6').attr('disabled', true);
 
                             $('#aStep1').removeClass('btn-success');
-                            $('#aStep2').addClass('btn-success'); 
+                            $('#aStep2').addClass('btn-success');
                             $('#aStep3').removeClass('btn-success');
                             $('#aStep4').removeClass('btn-success');
                             $('#aStep5').removeClass('btn-success');
+                            $('#aStep6').removeClass('btn-success');
                         }
-                        if(curstep==3){
+                        if (curstep == 3) {
                             $('#step-1').css("display", "none");
                             $('#step-2').css("display", "none");
                             $('#step-3').css("display", "block");
                             $('#step-4').css("display", "none");
                             $('#step-5').css("display", "none");
+                            $('#step-6').css("display", "none");
 
                             $('#aStep1').removeAttr('disabled');
                             $('#aStep2').removeAttr('disabled');
-                            $('#aStep3').removeAttr('disabled'); 
-                            $('#aStep4').attr('disabled',true);
-                            $('#aStep5').attr('disabled',true);
+                            $('#aStep3').removeAttr('disabled');
+                            $('#aStep4').attr('disabled', true);
+                            $('#aStep5').attr('disabled', true);
+                            $('#aStep6').attr('disabled', true);
 
                             $('#aStep1').removeClass('btn-success');
                             $('#aStep2').removeClass('btn-success');
-                            $('#aStep3').addClass('btn-success'); 
+                            $('#aStep3').addClass('btn-success');
                             $('#aStep4').removeClass('btn-success');
                             $('#aStep5').removeClass('btn-success');
+                            $('#aStep6').removeClass('btn-success');
 
                         }
-                        if(curstep==4){
+                        if (curstep == 4) {
                             $('#step-1').css("display", "none");
                             $('#step-2').css("display", "none");
                             $('#step-3').css("display", "none");
                             $('#step-4').css("display", "block");
                             $('#step-5').css("display", "none");
+                            $('#step-6').css("display", "none");
 
                             $('#aStep1').removeAttr('disabled');
                             $('#aStep2').removeAttr('disabled');
                             $('#aStep3').removeAttr('disabled');
-                            $('#aStep4').removeAttr('disabled'); 
-                            $('#aStep5').attr('disabled',true);
+                            $('#aStep4').removeAttr('disabled');
+                            $('#aStep5').attr('disabled', true);
+                            $('#aStep6').attr('disabled', true);
 
                             $('#aStep1').removeClass('btn-success');
                             $('#aStep2').removeClass('btn-success');
                             $('#aStep3').removeClass('btn-success');
                             $('#aStep4').addClass('btn-success');
                             $('#aStep5').removeClass('btn-success');
+                            $('#aStep6').removeClass('btn-success');
                         }
-                        if(curstep==5){
+                        if (curstep == 5) {
                             $('#step-1').css("display", "none");
                             $('#step-2').css("display", "none");
                             $('#step-3').css("display", "none");
                             $('#step-4').css("display", "none");
                             $('#step-5').css("display", "block");
+                            $('#step-6').css("display", "none");
 
                             $('#aStep1').removeAttr('disabled');
                             $('#aStep2').removeAttr('disabled');
                             $('#aStep3').removeAttr('disabled');
                             $('#aStep4').removeAttr('disabled');
                             $('#aStep5').removeAttr('disabled');
+                            $('#aStep6').attr('disabled');
 
                             $('#aStep1').removeClass('btn-success');
                             $('#aStep2').removeClass('btn-success');
                             $('#aStep3').removeClass('btn-success');
                             $('#aStep4').removeClass('btn-success');
                             $('#aStep5').addClass('btn-success')
+                            $('#aStep6').removeClass('btn-success')
+                        }
+                        if (curstep == 6) {
+                            $('#step-1').css("display", "none");
+                            $('#step-2').css("display", "none");
+                            $('#step-3').css("display", "none");
+                            $('#step-4').css("display", "none");
+                            $('#step-5').css("display", "none");
+                            $('#step-6').css("display", "block");
+
+                            $('#aStep1').removeAttr('disabled');
+                            $('#aStep2').removeAttr('disabled');
+                            $('#aStep3').removeAttr('disabled');
+                            $('#aStep4').removeAttr('disabled');
+                            $('#aStep5').removeAttr('disabled');
+                            $('#aStep6').removeAttr('disabled');
+
+                            $('#aStep1').removeClass('btn-success');
+                            $('#aStep2').removeClass('btn-success');
+                            $('#aStep3').removeClass('btn-success');
+                            $('#aStep4').removeClass('btn-success');
+                            $('#aStep5').removeClass('btn-success')
+                            $('#aStep6').addClass('btn-success')
                         }
                         //DITO NASGSTART YUNG PAGFILL SA STEP1
                         if (curstep > 1) {
@@ -581,31 +715,22 @@ var EditableTable = function () {
                                 type: 'GET',
                                 url: 'Organization/OrganizationProfile/fillSteps.php',
                                 dataType: 'json',
-                                cache:false,
+                                async: true,
+                                cache: false,
                                 data: {
                                     _appcode: latcode
                                 },
                                 success: function (step) {
-                                    $('#drpyear option').each(function (index, brand) {
-                                        if (brand.value == step.year) {
-                                            fillyear = fillyear + '<option value="' + step.year + '" selected >' + step.year + '</option>';
+                                    document.getElementById('txtadvname').value = step.advname;
 
-                                        } else {
-                                            fillyear = fillyear + '<option value="' + brand.value + '" >' + brand.value + '</option>';
-                                        }
-
-
-                                    });
-                                    document.getElementById('drpyear').innerHTML = fillyear;
-                                    
                                 },
-                                error: function (errorfill) {
-                                    swal(errorfill, "Please try again", "error");
+                                error: function (response2) {
+                                    swal(response2, "Please try again", "error");
                                 }
 
                             });
 
-                        } 
+                        }
                         //END NG FILL NG STEP1
                         //DITO NASGSTART YUNG PAGFILL SA STEP2
                         if (curstep > 2) {
@@ -613,15 +738,15 @@ var EditableTable = function () {
                                 type: 'GET',
                                 url: 'Organization/OrganizationProfile/fillSteps.php',
                                 dataType: 'json',
-                                async:true,
-                                cache:false,
+                                async: true,
+                                cache: false,
                                 data: {
                                     _appcode: latcode
                                 },
                                 success: function (step) {
                                     if (step.catname != 'Academic Organization') {
                                         $('#course').addClass('hidden');
-                                    }else{
+                                    } else {
                                         $('#course').removeClass('hidden');
                                     }
                                     $('#drpcat option').each(function (index, brand) {
@@ -631,7 +756,7 @@ var EditableTable = function () {
                                         } else {
                                             fillcat = fillcat + '<option value="' + brand.value + '" >' + brand.text + '</option>';
                                         }
-                                        
+
 
 
                                     });
@@ -643,7 +768,7 @@ var EditableTable = function () {
                                         url: 'Organization/OrganizationProfile/fillCourse.php',
                                         dataType: 'json',
                                         async: true,
-                                        cache:false,
+                                        cache: false,
                                         data: {
                                             _appcode: latcode
                                         },
@@ -661,7 +786,7 @@ var EditableTable = function () {
                                     });
 
                                     document.getElementById('drpcat').innerHTML = fillcat;
-                                   
+
                                 },
                                 error: function (errorfill) {
                                     swal(errorfill, "Please try again", "error");
@@ -679,12 +804,13 @@ var EditableTable = function () {
                                 url: 'Organization/OrganizationProfile/fillSteps.php',
                                 dataType: 'json',
                                 async: true,
-                                cache:false,
+                                cache: false,
                                 data: {
                                     _appcode: latcode
                                 },
                                 success: function (step) {
-                                    document.getElementById('txtadvname').value = step.advname; 
+                                    document.getElementById('txtmission').value = step.mission;
+                                    document.getElementById('txtvision').value = step.vision;
 
                                 },
                                 error: function (response2) {
@@ -695,25 +821,25 @@ var EditableTable = function () {
 
                         }
                         //END NG FILL NG STEP3
+
                         //DITO NASGSTART YUNG PAGFILL SA STEP4
-                        if (curstep > 4) {
+                        if (curstep == 4) {
 
                             $.ajax({
-                                type: 'GET',
-                                url: 'Organization/OrganizationProfile/fillSteps.php',
+                                type: "GET",
+                                url: 'Organization/OrganizationProfile/FillStep4.php',
                                 dataType: 'json',
-                                async: true,
-                                cache:false,
                                 data: {
-                                    _appcode: latcode
+                                    _code: latcode
                                 },
-                                success: function (step) {
-                                    document.getElementById('txtmission').value = step.mission;
-                                    document.getElementById('txtvision').value = step.vision;
-                                    
+                                success: function (data2) {
+                                    $.each(data2, function (key, val) {
+                                        var aiNew = oTable2.fnAddData([val.name, val.occ, val.desc, '<center><a class="btn btn-danger delete" href="javascript:;"><i class="fa fa-trash-o" ></i></a></center>', ]);
+                                        var nRow = oTable2.fnGetNodes(aiNew[0]);
+                                    });
                                 },
-                                error: function (response2) {
-                                    swal(response2, "Please try again", "error");
+                                error: function (response) {
+                                    swal("Error encountered while adding data", "Please try again", "error");
                                 }
 
                             });
@@ -723,7 +849,7 @@ var EditableTable = function () {
                         }
                         //END NG FILL NG STEP4
                         //DITO NASGSTART YUNG PAGFILL SA STEP5
-                        if (curstep == 5) {
+                        if (curstep == 6) {
 
                             $('#updaccreqlist tr ').each(function (index, brand) {
                                 index++;
@@ -732,17 +858,17 @@ var EditableTable = function () {
                                     type: 'GET',
                                     url: 'Organization/OrganizationProfile/FillAccreditationTable.php',
                                     async: true,
-                                    cache:false,
+                                    cache: false,
                                     data: {
                                         _appcode: latcode,
                                         _reqcode: reqcode
                                     },
-                                    success: function (data2) { 
-                                        if (data2 == '1'){
+                                    success: function (data2) {
+                                        if (data2 == '1') {
                                             $('#chkupdstat' + index).prop('checked', true);
-                                        }else {
+                                        } else {
                                             $('#chkupdstat' + index).prop('checked', false);
-                                        } 
+                                        }
                                     },
                                     error: function (response2) {
                                         swal(response2, "Please try again", "error");
@@ -852,3 +978,143 @@ var EditableTable = function () {
     };
 
 }()
+
+var EditableTable2 = function () {
+
+    return {
+
+        //main function to initiate the module
+        init: function () {
+            function restoreRow(oTable, nRow) {
+                var aData = oTable.fnGetData(nRow);
+                var jqTds = $('>td', nRow);
+
+                for (var i = 0, iLen = jqTds.length; i < iLen; i++) {
+                    oTable.fnUpdate(aData[i], nRow, i, false);
+                }
+
+                oTable.fnDraw();
+
+            }
+
+            function editRow(oTable, nRow) {
+                var aData = oTable.fnGetData(nRow);
+                var jqTds = $('>td', nRow);
+            }
+
+            function saveRow(oTable, nRow) {
+                var jqInputs = $('input', nRow);
+
+                oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
+                oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
+                oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
+                oTable.fnUpdate('<center><a class="btn btn-success edit" href="">Edit</a> <a class="btn btn-danger delete" href="">Delete</a></center>', nRow, 3, false);
+                oTable.fnDraw();
+
+
+            }
+
+            function cancelEditRow(oTable, nRow) {
+                var jqInputs = $('input', nRow);
+                oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
+                oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
+                oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
+                oTable.fnUpdate('<a class="btn btn-success edit" href="">Edit</a>', nRow, 3, false);
+                oTable.fnDraw();
+            }
+
+            var oTable = $('#editable-sample2').dataTable({
+                "aLengthMenu": [
+                    [5, 15, 20, -1],
+                    [5, 15, 20, "All"] // change per page values here
+                ],
+                // set the initial value
+                "iDisplayLength": 5,
+                "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
+                "sPaginationType": "bootstrap",
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ records per page",
+                    "oPaginate": {
+                        "sPrevious": "Prev",
+                        "sNext": "Next"
+                    }
+                },
+                "aoColumnDefs": [{
+                        'bSortable': false,
+                        'aTargets': [0]
+                    }
+                ]
+            });
+
+            jQuery('#editable-sample2_wrapper .dataTables_filter input').addClass("form-control medium"); // modify table search input
+            jQuery('#editable-sample2_wrapper .dataTables_length select').addClass("form-control xsmall"); // modify table per page dropdown
+
+            var nEditing = null;
+
+
+            $('#tblpos').on('click', 'a.delete', function (e) {
+                e.preventDefault();
+
+                var nRow = $(this).parents('tr')[0];
+                var getcode = $(this).closest('tr').children('td:first').text();
+                swal({
+
+                        title: "Are you sure?",
+                        text: "The record will be save and will be use for transaction",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: '#DD6B55',
+                        confirmButtonText: 'Yes, do it!',
+                        cancelButtonText: "No, cancel it!",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                type: 'post',
+                                url: 'Organization/OrganizationProfile/DeletePosition.php',
+                                data: {
+                                    _orgcode: latcode,
+                                    _code: getcode
+                                },
+                                success: function (response) {
+                                    swal("Record Deleted!", "The data is successfully deleted!", "success");
+                                    oTable.fnDeleteRow(nRow);
+                                },
+                                error: function (response) {
+                                    swal(response + "Error encountered while adding data", "Please try again", "error");
+                                    oTable.fnDeleteRow(nRow);
+                                }
+
+                            });
+
+                        } else
+                            swal("Cancelled", "The transaction is cancelled", "error");
+
+                    });
+
+
+
+
+            });
+
+            $('#editable-sample2 a.cancel').on('click', function (e) {
+                e.preventDefault();
+                if ($(this).attr("data-mode") == "new") {
+                    var nRow = $(this).parents('tr')[0];
+                    oTable.fnDeleteRow(nRow);
+                } else {
+                    restoreRow(oTable, nEditing);
+                    nEditing = null;
+                }
+            });
+
+
+
+
+        }
+
+    };
+
+}();
