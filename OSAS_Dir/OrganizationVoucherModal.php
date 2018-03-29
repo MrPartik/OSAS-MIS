@@ -68,8 +68,3 @@ AND a.OrgVoucher_ORG_CODE ='$orgcode' and a.OrgVoucher_CASH_VOUCHER_NO ='$vouch'
             </div>
         </div>
     </div>
-
-
-    
-        
-            

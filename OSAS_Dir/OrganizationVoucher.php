@@ -30,11 +30,7 @@ include('../config/connection.php');
                                 <li> <a class="current" href="studprofile.php">Student Profile</a> </li>
                             </ul>
                         </div> -->
-                <div class="col-md-3">
-                    <div class="mini-stat clearfix"> <span class="mini-stat-icon blue"><i class="fa fa-user"></i></span>
-                        <div class="mini-stat-info"> <span><?php echo $count_stud; ?></span> Number of Students </div>
-                    </div>
-                </div>
+
             </div>
             <div class="row ">
                 <div class="col-md-12">
@@ -131,9 +127,15 @@ include('../config/connection.php');
                     <div class="row">
                         <div class="col-md-12">
 <table id="meta">
+<tr>
+    <td class="meta-head">Voucher Number:</td>
+    <td class="AddOrgCode"><select id="Addorgcode">><?php  $query= mysqli_query($con,"SELECT * FROM t_org_for_compliance where OrgForCompliance_BATCH_YEAR  = (SELECT  ActiveAcadYear_Batch_YEAR FROM active_academic_year WHERE ActiveAcadYear_IS_ACTIVE =1)"); while($code=mysqli_fetch_assoc($query)){?>
+        <option><?php echo $code["OrgForCompliance_ORG_CODE"]?></option>
+    <?php }?><select></td>
+</tr>
                         <tr>
                             <td class="meta-head">Voucher Number:</td>
-                            <td class="AddVoucherNo"><?php echo mysqli_num_rows(mysqli_query($con,"select *  from t_org_voucher where OrgVoucher_DISPLAY_STAT ='active'"));  ?></td>
+                            <td class="AddVoucherNo"><?php echo mysqli_num_rows(mysqli_query($con,"select *  from t_org_voucher where OrgVoucher_DISPLAY_STAT ='active'"))+1;  ?></td>
                         </tr>
                         <tr> 
                         <td class="meta-head">Date Issued</td>
@@ -141,7 +143,7 @@ include('../config/connection.php');
                     </tr>
                     <tr> 
                     <td class="meta-head">Vouch by</td>
-                    <td><input name="AddVouchBy" type="text"></td>
+                    <td><input id="AddVouchBy" type="text"></td>
                 </tr>   <tr> 
                             <td class="meta-head">Total Vouch</td>
                             <td><p id="cash"></p></td>
@@ -154,6 +156,7 @@ include('../config/connection.php');
                 
                 <br><br>
                 <br><br>
+                <br><br>
                 <br><br>    
                 <center>
                 <table id="items">
@@ -164,10 +167,7 @@ include('../config/connection.php');
                                         </tr> 
                                     <tbody id="tbodyvoucher">
                                     
-                                    <tr class='item-row'> 
-                                        <td><input id='AddDesc' type='text' style='width:100%'></td>
-                                        <td><input id='AddAmo' type='text' style='width:100%'></td>
-                                    </tr>
+                                  
  
                                     </tbody>
 
@@ -237,7 +237,7 @@ include('../config/connection.php');
 
         $("#addItem").on("click",function(){
             
-            $("#tbodyvoucher").append("<tr class='item-row'><td><input id='AddDesc' type='text' style='width:100%'></td> <td><input id='AddAmo' type='text' style='width:100%'></td> </tr>");
+            $("#tbodyvoucher").append("<tr class='newItem'><td><input id='AddDesc' type='text' style='width:100%'></td> <td><input id='AddAmo' type='text' style='width:100%'></td> </tr>");
         });
         $("#TableStudProfile").on("click", "#btnStudProfile", function() {
 
@@ -256,8 +256,57 @@ include('../config/connection.php');
                 }
             });
         });
+        
+        $("#insertVoucher").on("click",function(){
+            var orgcode=($("table[id='meta']").find("tbody").find("tr").find(".AddOrgCode").find("#Addorgcode option:selected").val())
+            ,vouchBy=($("table[id='meta']").find("tbody").find("tr").find("#AddVouchBy").val())
+            ,vouch= ($("table[id='meta']").find("tbody").find("tr").find(".AddVoucherNo").text());
+        
+                    $.ajax({
+                        url: "OrganizationVoucherSave.php"
+                        ,type:"POST"
+                        ,data:{
+                            insertVouch:"insert"
+                            ,orgcode:orgcode
+                            ,vouchBy:vouchBy
+                            ,vouch:vouch
+
+                        }
+                        ,success:function(){
+
+                            $("#tbodyvoucher").find("tr[class='newItem']").each(function(){
+                            var desc= ($(this).find("#AddDesc").val())
+                            ,amou =($(this).find("#AddAmo").val());
+                                    $.ajax({
+
+                                        url:"OrganizationVoucherSave.php"
+                                        ,type:"POST"
+                                        ,data:{
+                                            insertVouchItem:"insert"
+                                            ,desc:desc
+                                            ,amou:amou
+                                            ,vouch:vouch
+
+                                        }
+                                        ,success:function(response){
+                                           
+                            location.reload();
+
+
+                                        },error:function(){
+
+                                        }
+
+                                    });
+                            });
+
+                        },error:function(error){
+                            alert(error);
+                        }
+
+                     });
+        });
 
     </script>
-</body>
-
+</body> 
 </html>
