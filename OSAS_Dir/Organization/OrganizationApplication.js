@@ -81,12 +81,9 @@ var EditableTable = function () {
 
             jQuery('#editable-sample_wrapper .dataTables_filter input').addClass("form-control medium"); // modify table search input
             jQuery('#editable-sample_wrapper .dataTables_length select').addClass("form-control xsmall"); // modify table per page dropdown
-            var oTable2 = $('#editable-sample2').dataTable({
-
-            });
-            var oTable3 = $('#editable-sample3').dataTable({
-
-            });
+         
+            var oTable2 = $('#editable-sample2').dataTable();
+            var oTable3 = $('#editable-sample3').dataTable();
 
             function fillstep5() {
 

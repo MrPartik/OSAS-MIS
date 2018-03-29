@@ -235,13 +235,13 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                 </div>
                 
                 <br><br>
-                <br><br>
-                <br><br>
-                <br><br>    
+                <br>
+                   <button id="addItem" class="btnInsert btn btn-success" type="submit">Add Item</button>
                 <center>
                 <table id="items">
                 
                                         <tr>  
+                                            <th style="width:2%"></th>
                                             <th style="width:100%">Item Description</th>
                                             <th class="numeric ">Amount</th> 
                                         </tr> 
@@ -255,8 +255,7 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                 <br><br>
                 <br><br>  
                                 </center>
-                        </div>
-                        <button id="addItem" class="btnInsert btn btn-success" type="submit">Add Item</button>
+                        </div> 
                     </div> 
                     <div class="modal-footer">
                         <button id="insertVoucher" class="btnInsert btn btn-success" type="submit">Submit</button>
@@ -317,7 +316,11 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
 
         $("#addItem").on("click",function(){
             
-            $("#tbodyvoucher").append("<tr class='newItem'><td><input id='AddDesc' type='text' style='width:100%'></td> <td><input id='AddAmo' type='text' style='width:100%'></td> </tr>");
+            $("#tbodyvoucher").append("<tr class='newItem'><td><i id='deletemoto' class='fa fa-minus-circle  '></i></td><td><input id='AddDesc' type='text' style='width:100%'></td> <td><input id='AddAmo' type='text' style='width:100%'></td> </tr>");
+        });
+        $("#tbodyvoucher").on("click","#deletemoto",function(){
+            
+            $(this).closest("tr").remove();
         });
         $("#TableStudProfile").on("click", "#btnStudProfile", function() {
 

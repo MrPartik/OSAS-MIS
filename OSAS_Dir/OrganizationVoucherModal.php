@@ -45,7 +45,7 @@
                 <table id="items">
                 
                                         <tr>  
-                                            <th style="width:100%">Item Description</th>
+                                            <th style="width:70%">Item Description</th>
                                             <th class="numeric ">Amount</th> 
                                         </tr> 
                                     <tbody id="tbodyvoucher">

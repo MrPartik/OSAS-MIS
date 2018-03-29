@@ -260,9 +260,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                                 <td><center style='padding-top:10px'>$curstep</center></td>
                                                 <td style='width:200px'>
                                                     <center>
-                                                       
-                                                         <a class='btn btn-info wizardOpen' href='javascript:;'><i class='fa fa-flag'></i></a>
-                                                        
+                                                         <a class='btn btn-info' href='javascript:;'><i class='fa fa-flag' onClick='alert('Session Expired');'></i></a>
                                                     </center>
                                                 </td>
                                             </tr>
