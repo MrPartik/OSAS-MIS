@@ -190,4 +190,18 @@ INNER JOIN r_batch_details B ON A.ActiveAcadYear_Batch_YEAR = B.Batch_YEAR AND B
 
 $current_acadyear = $current_acadyear_query['ActiveAcadYear_Batch_YEAR'];
  
-$view_course = mysqli_query($con,"select * from r_courses where course_display_stat ='active'"); ?>
+$view_course = mysqli_query($con,"select * from r_courses where course_display_stat ='active'"); 
+
+$view_orgVoucher = mysqli_query($con,"SELECT * FROM t_org_voucher v
+INNER JOIN t_org_for_compliance OC on v.OrgVoucher_ORG_CODE = oc.OrgForCompliance_ORG_CODE
+INNER JOIN r_org_applicant_profile OP on OP.OrgAppProfile_APPL_CODE = OC.OrgForCompliance_OrgApplProfile_APPL_CODE
+INNER JOIN active_academic_year AY on AY.ActiveAcadYear_Batch_YEAR = OC.OrgForCompliance_BATCH_YEAR
+AND ay.ActiveAcadYear_IS_ACTIVE = 1 AND ay.ActiveAcadYear_ID = (SELECT MAX(ay.ActiveAcadYear_ID))");
+
+$view_availOrgVouch =mysqli_query($con,"SELECT * FROM t_org_for_compliance OC
+INNER JOIN r_org_applicant_profile OP on OP.OrgAppProfile_APPL_CODE = OC.OrgForCompliance_OrgApplProfile_APPL_CODE
+INNER JOIN active_academic_year AY on AY.ActiveAcadYear_Batch_YEAR = OC.OrgForCompliance_BATCH_YEAR
+AND ay.ActiveAcadYear_IS_ACTIVE = 1 AND ay.ActiveAcadYear_ID = (SELECT MAX(ay.ActiveAcadYear_ID)) 
+WHERE (SELECT COUNT(AAP.OrgAccrProcess_IS_ACCREDITED) FROM t_org_accreditation_process AAP WHERE AAP.OrgAccrProcess_IS_ACCREDITED=1 AND AAP.OrgAccrProcess_DISPLAY_STAT='Active' AND AAP.OrgAccrProcess_ORG_CODE = OC.OrgForCompliance_ORG_CODE)=(SELECT COUNT(ad.OrgAccrDetail_CODE) FROM r_org_accreditation_details AD )");
+
+?>

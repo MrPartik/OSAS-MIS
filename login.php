@@ -27,15 +27,15 @@
 				    session_start();
                     if(isset($_SESSION['logged_in']))
                     {   if($_SESSION['logged_user']['role']=="Organization")
-                        { header("location:../org_dir/dashboard.php");  }
+                        { header("location:org_dir/dashboard.php");  }
                         else if($_SESSION['logged_user']['role']=="OSAS HEAD")
                          { header("location:osas_dir/dashboard.php"); }
                         else if($_SESSION['logged_user']['role']=="Administrator")
-                        { header("location:../admin_dir/dashboard.php"); }
+                        { header("location:admin_dir/dashboard.php"); }
                         else if($_SESSION['logged_user']['role']=="Student")
                         { }  
                         else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
-                        { header("location:../");}
+                        { header("location:login.php");}
                     }
                     else{
 								if (isset($_POST['login'])){
@@ -55,15 +55,15 @@
                                             'ref'=>$row['Users_REFERENCED']);
                                         $role = $_SESSION['logged_user']['role'];
                                            if($_SESSION['logged_user']['role']=="Organization")
-                                            { header("location:../org_dir/dashboard.php");  }
+                                            { header("location:org_dir/dashboard.php");  }
                                             else if($_SESSION['logged_user']['role']=="OSAS HEAD")
-                                            { header("location:osas mis/osas_dir/dashboard.php"); }
+                                            { header("location:osas_dir/dashboard.php"); }
                                             else if($_SESSION['logged_user']['role']=="Administrator")
-                                            { header("location:../admin_dir/dashboard.php"); }
+                                            { header("location:admin_dir/dashboard.php"); }
                                             else if($_SESSION['logged_user']['role']=="Student")
                                             { }
                                             else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
-                                            { header("location:../");
+                                            { header("location:login.php");
 									}}
 									else{ ?>
                         <div class="alert alert-danger">Access Denied</div>

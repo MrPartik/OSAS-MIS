@@ -125,7 +125,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                             <thead>
                                                 <tr>
                                                     <th class="hidden">id</th>
-                                                    <th>Remittance Number</th>
+                                                    <th>Remittance No.</th>
                                                     <th>Organization</th>
                                                     <th>Overview</th>
                                                     <th>Description</th>
@@ -153,7 +153,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                                         echo "
                                                         <tr class=''>
                                                             <td class='hidden'>$id</td>
-                                                            <td style='width:250px'><label>$number</label></td>
+                                                            <td ><label>$number</label></td>
                                                             <td style='width:200px'><label>$name</label></td>
                                                             <td style='width:280px'><label>Send by: </label> $send<br/>
                                                                 <label>Receive by: </label> $rec</td>
@@ -175,7 +175,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                             <tfoot>
                                                 <tr>
                                                     <th class="hidden">id</th>
-                                                    <th>Remittance Number</th>
+                                                    <th>Remittance No.</th>
                                                     <th>Organization</th>
                                                     <th>Overview</th>
                                                     <th>Description</th>
@@ -219,7 +219,7 @@ $user_check = $_SESSION['logged_user']['username'];
         </section>
         <!-- modal -->
         <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Add" class="modal fade">
-            <div class="modal-dialog">
+            <div class="modal-dialog" style="width:700px">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -275,7 +275,7 @@ $user_check = $_SESSION['logged_user']['username'];
             </div>
         </div>
         <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Edit" class="modal fade">
-            <div class="modal-dialog">
+            <div class="modal-dialog" style="width:700px">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

@@ -10,10 +10,90 @@ $breadcrumbs =" <div class='col-md-12'>
 </ul>
 </div>";   
 $currentPage ='OSAS_OrgVouch';  
-include('header.php'); 
+include('header.php');  
 include('../config/connection.php');     
 
 ?>
+<style>
+/*
+	 CSS-Tricks Example
+	 by Chris Coyier
+	 http://css-tricks.com
+*/
+* {
+    box-sizing: border-box;
+}
+
+/* Create three equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 33.33%;
+  
+}
+
+/* Clear floats after the columns */
+.headerrow:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+* { margin: 0; padding: 0; } 
+#page-wrap { width: 800px; margin: 0 auto; } 
+table { border-collapse: collapse; }
+table td, table th { border: 1px solid black; padding: 5px; }
+
+#header { height: 34px; width: 100%; margin: 20px 0; background: #222; text-align: center; color: white; font:  15px Helvetica, Sans-Serif; text-decoration: none; letter-spacing: 10px; padding: 8px 0px; }
+#headerlong { height: 34px; width: 100%; margin: 20px 0; background: #222; text-align: center; color: white; font:  10px Helvetica, Sans-Serif; text-decoration: none; letter-spacing: 10px; padding: 8px 0px; }
+
+#address { width: 250px; height: 150px; float: left; }
+#event { overflow: hidden; }
+
+#logo { text-align: right; float: right; position: relative; margin-top: 25px; border: 1px solid #fff; max-width: 540px; max-height: 100px; overflow: hidden; }
+#logo:hover, #logo.edit { border: 1px solid #000; margin-top: 0px; max-height: 125px; }
+#logoctr { display: none; }
+#logo:hover #logoctr, #logo.edit #logoctr { display: block; text-align: right; line-height: 25px; background: #eee; padding: 0 5px; }
+#logohelp { text-align: left; display: none; font-style: italic; padding: 10px 5px;}
+#logohelp input { margin-bottom: 5px; }
+.edit #logohelp { display: block; }
+.edit #save-logo, .edit #cancel-logo { display: inline; }
+.edit #image, #save-logo, #cancel-logo, .edit #change-logo, .edit #delete-logo { display: none; }
+#eventname { font-size: 15px; font-weight: bold; float: left; }
+
+#meta { margin-bottom: 10px; margin-right:-15px; width: 350px; float: right; }
+#meta td { text-align: center;  }
+#meta td.meta-head { text-align: left; background: #eee; padding-left: 10px; }
+#meta td textarea { width: 100%; height: 20px; text-align: right; }
+
+#summ { margin-top: 1px; width: 500px; float: right; }
+#summ td { text-align: right;   }
+#summ td.meta-head { text-align: left; background:  #eee; padding-right: 10px; }
+#summ td textarea { width: 100%; height: 20px; text-align: right; }
+
+
+#items { clear: both; width: 100%; margin: 30px 0 0 0; border: 1px solid black; }
+#items th { background: #eee; }
+#items textarea { width: 80px; height: 50px; }
+#items tr.item-row td {border: 0;vertical-align: top;text-align: center;border-bottom: 1px solid #ccc6c6;}
+#items td.description { width: 1000px; }
+
+#items td.item-name { width: 175px; }
+#items td.description textarea, #items td.item-name textarea { width: 100%; }
+#items td.total-line { border-right: 0; text-align: right; }
+#items td.total-value { border-left: 0; padding: 10px; }
+#items td.total-value textarea { height: 20px; background: none; }
+#items td.balance { background: #eee; }
+#items td.blank { border: 0; }
+
+#terms { text-align: center; margin: 20px 0 20px 0; }
+#terms h5 { text-transform: uppercase; font: 13px Helvetica, Sans-Serif; letter-spacing: 10px; border-bottom: 1px solid black; padding: 0 0 8px 0; margin: 0 0 8px 0; }
+
+
+textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.total-value textarea:focus, .delete:hover { background-color:#EEFF88; }
+
+.delete-wpr { position: relative; }
+.delete { display: block; color: #000; text-decoration: none; position: absolute; background: #EEEEEE; font-weight: bold; padding: 0px 3px; border: 1px solid; top: -6px; left: -22px; font-family: Verdana; font-size: 12px; }
+</style>
 
 <body>
     <!--sidebar start-->
@@ -52,8 +132,8 @@ include('../config/connection.php');
                                 <table class="display table table-bordered table-striped col-md-12" id="dynamic-table">
                                     <thead>
                                         <tr>
+                                            <th>Voucher No.</th>
                                             <th>Organization Code</th>
-                                            <th>Voucher number</th>
                                             <th>Amount</th> 
                                             <th>Checked by</th>
                                             <th>Date Issue</th> 
@@ -65,13 +145,13 @@ include('../config/connection.php');
                                     <tbody>
 
                                         <?php  while($vouch=mysqli_fetch_array($view_orgVoucher)) { ?>
-                                        <tr>
+                                        <tr><td>
+                                                <center>#<?php echo $vouch['OrgVoucher_CASH_VOUCHER_NO'];?></center>
+                                            </td>
                                         <td>
-                                                <?php echo $vouch['OrgForCompliance_ORG_CODE'];?>
+                                                <?php echo $vouch['OrgForCompliance_ORG_CODE']." - ".$vouch['OrgAppProfile_NAME'];?>
                                             </td>
-                                            <td>
-                                                <?php echo $vouch['OrgVoucher_CASH_VOUCHER_NO'];?>
-                                            </td>
+                                            
                                             <td id="amo">
                                                 <?php
                                                 $v = $vouch['OrgVoucher_CASH_VOUCHER_NO'];
@@ -94,8 +174,8 @@ include('../config/connection.php');
                                     </tbody>
                                     <tfoot>
                                         <tr>
+                                            <th>Voucher No.</th>
                                             <th>Organization Code</th>
-                                            <th>Voucher number</th>
                                             <th>Amount</th> 
                                             <th>Checked by</th>
                                             <th>Date Issue</th> 
@@ -128,14 +208,14 @@ include('../config/connection.php');
                         <div class="col-md-12">
 <table id="meta">
 <tr>
-    <td class="meta-head">Voucher Number:</td>
-    <td class="AddOrgCode"><select id="Addorgcode">><?php  $query= mysqli_query($con,"SELECT * FROM t_org_for_compliance where OrgForCompliance_BATCH_YEAR  = (SELECT  ActiveAcadYear_Batch_YEAR FROM active_academic_year WHERE ActiveAcadYear_IS_ACTIVE =1)"); while($code=mysqli_fetch_assoc($query)){?>
-        <option><?php echo $code["OrgForCompliance_ORG_CODE"]?></option>
+    <td class="meta-head">Organization:</td>
+    <td class="AddOrgCode"><select id="Addorgcode" class="form-control m-bot10"><?php  while($code=mysqli_fetch_assoc($view_availOrgVouch)){?>
+        <option value="<?php echo $code['OrgForCompliance_ORG_CODE']?>"><?php echo $code["OrgAppProfile_NAME"]?></option>
     <?php }?><select></td>
 </tr>
                         <tr>
                             <td class="meta-head">Voucher Number:</td>
-                            <td class="AddVoucherNo"><?php echo mysqli_num_rows(mysqli_query($con,"select *  from t_org_voucher where OrgVoucher_DISPLAY_STAT ='active'"))+1;  ?></td>
+                            <td class="AddVoucherNo" value="<?php echo mysqli_num_rows(mysqli_query($con,"select *  from t_org_voucher where OrgVoucher_DISPLAY_STAT ='active'"))+1;  ?>">#<?php echo mysqli_num_rows(mysqli_query($con,"select *  from t_org_voucher where OrgVoucher_DISPLAY_STAT ='active'"))+1;  ?></td>
                         </tr>
                         <tr> 
                         <td class="meta-head">Date Issued</td>
@@ -143,7 +223,7 @@ include('../config/connection.php');
                     </tr>
                     <tr> 
                     <td class="meta-head">Vouch by</td>
-                    <td><input id="AddVouchBy" type="text"></td>
+                    <td><input id="AddVouchBy"class="form-control" type="text"></td>
                 </tr>   <tr> 
                             <td class="meta-head">Total Vouch</td>
                             <td><p id="cash"></p></td>
@@ -226,7 +306,7 @@ include('../config/connection.php');
                 },
                 bDestroy: true,
                 aaSorting: [
-                    [0, "desc"]
+                    [0, "asc"]
                 ]
             });
         });
@@ -260,8 +340,7 @@ include('../config/connection.php');
         $("#insertVoucher").on("click",function(){
             var orgcode=($("table[id='meta']").find("tbody").find("tr").find(".AddOrgCode").find("#Addorgcode option:selected").val())
             ,vouchBy=($("table[id='meta']").find("tbody").find("tr").find("#AddVouchBy").val())
-            ,vouch= ($("table[id='meta']").find("tbody").find("tr").find(".AddVoucherNo").text());
-        
+            ,vouch= ($("table[id='meta']").find("tbody").find("tr").find(".AddVoucherNo").attr("value"));
                     $.ajax({
                         url: "OrganizationVoucherSave.php"
                         ,type:"POST"
@@ -272,8 +351,9 @@ include('../config/connection.php');
                             ,vouch:vouch
 
                         }
-                        ,success:function(){
+                        ,success:function(response){
 
+                            alert(response);
                             $("#tbodyvoucher").find("tr[class='newItem']").each(function(){
                             var desc= ($(this).find("#AddDesc").val())
                             ,amou =($(this).find("#AddAmo").val());
@@ -289,7 +369,7 @@ include('../config/connection.php');
 
                                         }
                                         ,success:function(response){
-                                           
+                                           alert(response);
                             location.reload();
 
 

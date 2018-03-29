@@ -1,4 +1,5 @@
 <?php include ('../config/query.php'); ?>
+
     <div class="modal-dialog" style="width:700px">
         <div class="modal-content">
             <div class="modal-header">

@@ -49,7 +49,7 @@
                     </a>
                     <ul class="sub">
                         <li <?php if( $currentPage==='Admin_ActiveYear' ) { echo 'class="active"';} ?> ><a href="ActiveAcademicYear.php">Active Academic Year and Semester</a></li>
-                        <li <?php if( $currentPage==='Admin_Account' ) { echo 'class="active"';} ?>><a href="UserAccount.php">Sanction Detail</a></li>
+                        <li <?php if( $currentPage==='Admin_Account' ) { echo 'class="active"';} ?>><a href="UserAccount.php">User Account</a></li>
                     </ul>
                 </li>
             </ul>

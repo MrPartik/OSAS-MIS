@@ -5,6 +5,15 @@
     <title>OSAS - Semester</title>
     <?php    
 $currentPage ='Admin_Account'; 
+$breadcrumbs="
+<div class='col-md-12'><ul class='breadcrumbs-alt'>
+<li>
+    <a class='current' href='#'>User Management</a>
+</li>
+<li>
+    <a href='#'>User Setup</a>
+</li>  
+</ul></div>";
 include('header.php');  
 include('../config/connection.php');
       
@@ -42,24 +51,7 @@ else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-                <div class="row" style="float:right;">
-                    <div class="col-md-12  ">
-                        <!--breadcrumbs start -->
-                        <ul class="breadcrumbs-alt ">
-                            <li>
-                                <a class="current" href="#">Semester</a>
-                            </li>
-                            <li>
-                                <a href="#">Student Setup</a>
-                            </li>
-                            <!-- <li> -->
-                            <!-- <a class="active-trail active" href="#">Pages</a> -->
-                            <!-- </li> -->
-
-                        </ul>
-                        <!--breadcrumbs end -->
-                    </div>
-                </div>
+                 
                 <div class="row">
                     <div class="col-sm-12">
                         <section class="panel">
