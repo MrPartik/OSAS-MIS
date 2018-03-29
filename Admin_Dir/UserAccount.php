@@ -4,7 +4,7 @@
 <head>
     <title>OSAS - Semester</title>
     <?php    
-$currentPage ='Admin_Semester'; 
+$currentPage ='Admin_Account'; 
 include('header.php');  
 include('../config/connection.php');
       

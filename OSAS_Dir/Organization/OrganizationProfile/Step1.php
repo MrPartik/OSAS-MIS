@@ -5,7 +5,7 @@
 		
 		$appcode = $_POST['_appcode'];
 		$advname = $_POST['_advname'];
-
+        $cur = 0;
         $query = mysqli_query($con,"UPDATE t_org_for_compliance SET OrgForCompliance_ADVISER = '$advname'
                                                 WHERE OrgForCompliance_ORG_CODE = '$appcode' AND OrgForCompliance_DISPAY_STAT = 'Active' ");                                    
 
@@ -16,14 +16,16 @@
           
         }
 
-        if($cur < 5 )
+        if($cur < 2 )
         {
-             $query = mysqli_query($con,"UPDATE r_application_wizard SET WIZARD_CURRENT_STEP = 2 WHERE WIZARD_ORG_CODE = '$appcode' ");
+             $query = mysqli_query($con,"INSERT INTO r_application_wizard (WIZARD_CURRENT_STEP,WIZARD_ORG_CODE) VALUES ('2','$appcode') ");
 
         }       
+        
+        mysqli_query($con,"call Insert_Users('$appcode','$appcode','Organization','$appcode') "); 
 
 
-  
+    
 
 
 ?>

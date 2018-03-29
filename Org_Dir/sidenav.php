@@ -8,9 +8,19 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li> <a <?php if( $currentPage==='Org_Member' ) {echo 'class="active"';} ?> href="OrganizationMembers.php">
+                <li> <a <?php if( $currentPage==='Org_OrgMem' ) {echo 'class="active"';} ?> href="OrganizationMembers.php">
                         <i class="fa fa-group"></i>
                         <span>Org Officers and Members</span>
+                    </a>
+                </li>
+                <li> <a <?php if( $currentPage==='Org_Remit' ) {echo 'class="active"';} ?> href="Remittance.php">
+                        <i class="fa fa-group"></i>
+                        <span>Remitance</span>
+                    </a>
+                </li>
+                <li> <a <?php if( $currentPage==='Org_Cflow' ) {echo 'class="active"';} ?> href="CashFlowStatement.php">
+                        <i class="fa fa-group"></i>
+                        <span>Cashflow statement</span>
                     </a>
                 </li>
             </ul>

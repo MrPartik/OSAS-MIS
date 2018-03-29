@@ -1,10 +1,11 @@
 <style>
-.userpic {
-  display: inline-block;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;   
-}
+    .userpic {
+        display: inline-block;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+    }
+
 </style>
 <aside>
     <div id="sidebar" class="nav-collapse">
@@ -19,7 +20,7 @@
                 <li style="padding-top:10px">
                 <span class="label label-info col-lg-12 "><?php echo $user_check; ?></span>
                 </li> -->
-                
+
                 <li> <a <?php if( $currentPage==='OSAS_Dashboard' ) {echo 'class="active"';} ?> href="dashboard.php">
                         <i class ="fa fa-dashboard" ></i>
                         <span>Dashboard</span>
@@ -34,16 +35,18 @@
                     </ul>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;" <?php if( $currentPage==='OSAS_OrgAccreditation' || $currentPage==='OSAS_OrgApplication' || $currentPage==='OSAS_OrgCompliance' || $currentPage==='OSAS_OrgPos' || $currentPage==='OSAS_OrgMem' ) { echo 'class="active"';} ?> > <i class="fa fa-users"></i> <span>Organization Management</span> </a>
+                    <a href="javascript:;" <?php if( $currentPage==='OSAS_OrgAccreditation' || $currentPage==='OSAS_OrgApplication' || $currentPage==='OSAS_OrgCompliance' || $currentPage==='OSAS_OrgPos' || $currentPage==='OSAS_OrgMem' || $currentPage==='OSAS_OrgApplicant' || $currentPage==='OSAS_Remittance' || $currentPage==='OSAS_Cflow' ) { echo 'class="active"';} ?> > <i class="fa fa-users"></i> <span>Organization Management</span> </a>
                     <ul class="sub">
-                        <li <?php if( $currentPage==='OSAS_OrgApplication' ) { echo 'class="active"';} ?> ><a href="OrganizationApplication.php">Applicants</a></li>
+                        <li <?php if( $currentPage==='OSAS_OrgApplicant' ) { echo 'class="active"';} ?> ><a href="OrganizationApplicant.php">Applicant</a></li>
+                        <li <?php if( $currentPage==='OSAS_OrgApplication' ) { echo 'class="active"';} ?> ><a href="OrganizationApplication.php">Application Process</a></li>
                         <li <?php if( $currentPage==='OSAS_OrgCompliance' ) { echo 'class="active"';} ?> ><a href="OrganizationCompliance.php">Organization Profile</a></li>
                         <li <?php if( $currentPage==='OSAS_OrgAccreditation' ) { echo 'class="active"';} ?> ><a href="OrganizationAccreditation.php">Accreditation</a></li>
                         <li <?php if( $currentPage==='OSAS_OrgMem' ) { echo 'class="active"';} ?> ><a href="OrganizationMembers.php">Organization Members</a></li>
                         <li <?php if( $currentPage==='OSAS_OrgPos' ) { echo 'class="active"';} ?> ><a href="OrganizationPosition.php">Officer Position</a></li>
                         <li><a href="#">Financial Statement</a></li>
                         <li><a href="#">Voucher</a></li>
-                        <li><a href="#">Remittance</a></li>
+                        <li <?php if( $currentPage==='OSAS_Remittance' ) { echo 'class="active"';} ?>><a href="Remittance.php">Remittance</a></li>
+                        <li <?php if( $currentPage==='OSAS_Cflow' ) { echo 'class="active"';} ?>><a href="CashFlowStatement.php">Cashflow Statement</a></li>
                     </ul>
                 </li>
                 <li> <a <?php if( $currentPage==='OSAS_Financial' ) {echo 'class="active"';} ?> href="finanAssign.php">
@@ -65,7 +68,7 @@
                 <li class="sub-menu">
                     <a href="docuArchiving.php" <?php if( $currentPage==='OSAS_docuArchive' ) {echo 'class="active"';} ?> > <i class="fa fa-envelope"></i> <span>Document Archiving </span> </a>
                 </li>
-                <li >
+                <li>
                     <a href="#admin-login" data-toggle="modal"> <i class="fa fa-unlock"></i> <span>Switch Administrator Account </span> </a>
                 </li>
             </ul>

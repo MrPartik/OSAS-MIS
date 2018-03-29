@@ -8,7 +8,7 @@
 
      $view_query = mysqli_query($con,"(SELECT COUNT(*) AS COU FROM `r_org_officer_position_details` 
  INNER JOIN t_org_officers AS B ON B.OrgOffi_OrgOffiPosDetails_ID = OrgOffiPosDetails_ID
- 	WHERE OrgOffiPosDetails_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM t_org_for_compliance WHERE OrgForCompliance_OrgApplProfile_APPL_CODE = '$appcode' AND OrgOffi_STUD_NO = '$studno' ) AND OrgOffi_STUD_NO = '$studno') ");
+ 	WHERE OrgOffiPosDetails_ORG_CODE = '$appcode' AND OrgOffi_STUD_NO = '$studno') ");
     $cou = 0;
     while($row = mysqli_fetch_assoc($view_query))
     {
@@ -20,7 +20,7 @@
     {
          $view_query = mysqli_query($con,"(SELECT B.OrgOffi_ID AS GETID FROM `r_org_officer_position_details` 
                 INNER JOIN t_org_officers AS B ON B.OrgOffi_OrgOffiPosDetails_ID = OrgOffiPosDetails_ID
-                    WHERE OrgOffiPosDetails_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM t_org_for_compliance WHERE OrgForCompliance_OrgApplProfile_APPL_CODE = '$appcode' AND OrgOffi_STUD_NO = '$studno' ) AND OrgOffi_STUD_NO = '$studno') ");
+                    WHERE OrgOffiPosDetails_ORG_CODE = '$appcode' AND OrgOffi_STUD_NO = '$studno') ");
         $getid = 0;
         while($row = mysqli_fetch_assoc($view_query))
         {

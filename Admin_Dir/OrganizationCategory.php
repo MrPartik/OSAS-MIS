@@ -5,6 +5,20 @@
     <title>Admin - Organization Category</title>
     <?php   
 $currentPage ='Admin_OrgCat'; 
+$breadcrumbs = '<div class="col-md-12  ">
+                        <!--breadcrumbs start -->
+                        <ul class="breadcrumbs-alt ">
+                            <li>
+                                <a  href="#">Organization Setup</a>
+                            </li>
+                            <li>
+                                <a class="current" href="#">Organization Category</a>
+                            </li>
+                        </ul>
+                        <!--breadcrumbs end -->
+                    </div>
+';
+
 include('header.php');  
 include('../config/connection.php');
 ?>
@@ -28,24 +42,6 @@ include('../config/connection.php');
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-                <div class="row" style="float:right;">
-                    <div class="col-md-12  ">
-                        <!--breadcrumbs start -->
-                        <ul class="breadcrumbs-alt ">
-                            <li>
-                                <a class="current" href="#">Organization Category</a>
-                            </li>
-                            <li>
-                                <a href="#">Organization Setup</a>
-                            </li>
-                            <!-- <li> -->
-                            <!-- <a class="active-trail active" href="#">Pages</a> -->
-                            <!-- </li> -->
-
-                        </ul>
-                        <!--breadcrumbs end -->
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-sm-12">
                         <section class="panel">
@@ -76,27 +72,51 @@ include('../config/connection.php');
                                             <?php
     
 										
-										$view_query = mysqli_query($con,"select * from `r_org_category` where OrgCat_DISPLAY_STAT = 'Active'");
+										$view_query = mysqli_query($con,"select * from `r_org_category` ");
 										while($row = mysqli_fetch_assoc($view_query))
 										{
 											$code = $row["OrgCat_CODE"];
 											$name = $row["OrgCat_NAME"];
 											$desc = $row["OrgCat_DESC"];											
                                             $id = $row["OrgCat_ID"];										
+                                            $stat = $row["OrgCat_DISPLAY_STAT"];										
 											
 											echo "
 											<tr>
 												<td>$code</td>
 												<td>$name</td>
-												<td>$desc</td>	
-												<td style='width:180px'>
-													<center>
-														<a class='btn btn-success edit' href='javascript:;'>Edit</a>
-														<a class='btn btn-danger delete' href='javascript:;'>Delete</a>								
-													<center>
-												</td>
-											</tr>
-											";
+												<td>$desc</td>";	
+                                            
+                                            if($stat == 'Active')
+                                            {
+
+                                                echo "										
+                                                        <td style='width:180px'>
+                                                            <center>
+                                                                <a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a>
+                                                                <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>	
+                                                            <center>
+                                                        </td>
+
+                                                    </tr>
+                                                    ";
+
+                                            }
+                                            else
+                                            {
+
+                                                echo "										
+                                                        <td style='width:180px'>
+                                                            <center>
+                                                                <a class='btn btn-info retrieve' href='javascript:;'><i class='fa fa-rotate-left'></i></a>	
+                                                            <center>
+                                                        </td>
+
+                                                    </tr>
+                                                    ";
+
+
+                                            }
 										}			
 											
 										

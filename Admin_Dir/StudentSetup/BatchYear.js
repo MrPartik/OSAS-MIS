@@ -30,8 +30,7 @@ var EditableTable = function () {
 
                     jqTds[0].innerHTML = '<input type="text" class="form-control small " value="' + aData[0] + '" disabled style="width:100%" >';
                     jqTds[1].innerHTML = '<input type="text" class="form-control small" value="' + aData[1] + '" style="width:100%">';
-                    jqTds[2].innerHTML = '<input type="text" class="form-control small" value="' + aData[2] + '" style="width:100%">';
-                    jqTds[3].innerHTML = '<center><a class="btn btn-success  edit" href="">Save</a> <a class="btn btn-danger cancel" href="">Cancel</a></center>';
+                    jqTds[2].innerHTML = '<center><a class="btn btn-success  edit" href=""><i class="fa fa-save"></i></a> <a class="btn btn-danger cancel" href=""><i class="fa fa-ban"></i></a></center>';
 
                 }
 
@@ -42,8 +41,7 @@ var EditableTable = function () {
 
                 oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
                 oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
-                oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
-                oTable.fnUpdate('<center><a class="btn btn-success edit" href="">Edit</a> <a class="btn btn-danger delete" href="">Delete</a></center>', nRow, 3, false);
+                oTable.fnUpdate("<center><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a></center>", nRow, 2, false);
                 oTable.fnDraw();
 
 
@@ -96,7 +94,7 @@ var EditableTable = function () {
                 swal({
 
                         title: "Are you sure?",
-                        text: "The record will be save and will be use for Semester",
+                        text: "The record will be save and will be use for further transcation",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: '#DD6B55',
@@ -114,12 +112,26 @@ var EditableTable = function () {
                                     _code: getval
                                 },
                                 success: function (response) {
-                                    swal("Record Deleted!", "The data is successfully deleted!", "success");
-                                    oTable.fnDeleteRow(nRow);
+                                    swal({
+
+                                            title: "Record Deleted!",
+                                            text: "The data is successfully deleted!",
+                                            type: "success",
+                                            confirmButtonColor: '#86CCEB',
+                                            confirmButtonText: 'Okay',
+                                            closeOnConfirm: false
+                                        },
+                                        function (isConfirm) {
+                                            if (isConfirm) {
+                                                window.location.reload();
+
+                                            } else
+                                                swal("Cancelled", "The transaction is cancelled", "error");
+
+                                        });
                                 },
                                 error: function (response) {
                                     swal("Error encountered while adding data", "Please try again", "error");
-                                    oTable.fnDeleteRow(nRow);
                                 }
 
                             });
@@ -129,6 +141,63 @@ var EditableTable = function () {
 
                     });
             });
+
+            $('#editable-sample a.retrieve').live('click', function (e) {
+                e.preventDefault();
+
+                var nRow = $(this).parents('tr')[0];
+                var getval = $(this).closest('tr').children('td:first').text();
+                swal({
+
+                        title: "Are you sure?",
+                        text: "The record will be save and will be use for further transcation",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: '#DD6B55',
+                        confirmButtonText: 'Yes, do it!',
+                        cancelButtonText: "No, cancel it!",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                type: 'post',
+                                url: 'StudentSetup/BatchYear/Retrieve-ajax.php',
+                                data: {
+                                    _code: getval
+                                },
+                                success: function (response) {
+                                    swal({
+
+                                            title: "Record Retrieved!",
+                                            text: "The data is successfully retrieve!",
+                                            type: "success",
+                                            confirmButtonColor: '#86CCEB',
+                                            confirmButtonText: 'Okay',
+                                            closeOnConfirm: false
+                                        },
+                                        function (isConfirm) {
+                                            if (isConfirm) {
+                                                window.location.reload();
+
+                                            } else
+                                                swal("Cancelled", "The transaction is cancelled", "error");
+
+                                        });
+                                },
+                                error: function (response) {
+                                    swal("Error encountered while adding data", "Please try again", "error");
+                                }
+
+                            });
+
+                        } else
+                            swal("Cancelled", "The transaction is cancelled", "error");
+
+                    });
+            });
+
 
             $('#submit-data').click(function (e) {
                 e.preventDefault();
@@ -216,16 +285,16 @@ var EditableTable = function () {
                     restoreRow(oTable, nEditing);
                     editRow(oTable, nRow);
                     nEditing = nRow;
-                } else if (nEditing == nRow && this.innerHTML == "Save") {
+                } else if (nEditing == nRow && this.innerText == "") {
                     /* Editing this row and want to save it */
                     var jqInputs = $('input', nRow);
-                    if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 5 && jqInputs[2].value.length < 100 && jqInputs[2].value.length > 5) {
+                    if (jqInputs[0].value.length < 100 && jqInputs[0].value.length > 0 && jqInputs[1].value.length < 100 && jqInputs[1].value.length > 0) {
                         $.ajax({
                             type: 'post',
                             url: 'StudentSetup/BatchYear/Update-ajax.php',
                             data: {
-                                _name: jqInputs[1].value,
-                                _desc: jqInputs[2].value,
+                                _name: jqInputs[0].value,
+                                _desc: jqInputs[1].value,
                                 _code: jqInputs[0].value
 
                             },
@@ -246,69 +315,7 @@ var EditableTable = function () {
 
                         swal("Error", "The Office name must be less than 100 characters", "error");
 
-                    } else if (jqInputs[1].value.length < 5) {
-
-                        swal("Error", "Please enter a valid Office name", "error");
-
-                    } else if (jqInputs[2].value.length > 100) {
-
-                        swal("Error", "The Office description must be less than 100 characters", "error");
-
-                    } else if (jqInputs[2].value.length < 5) {
-
-                        swal("Error", "Please enter a valid Office description", "error");
-
-                    }
-                } else if (nEditing == nRow && this.innerHTML == "Add") {
-                    /* Editing this row and want to save it */
-                    var jqInputs = $('input', nRow);
-                    if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 5 && jqInputs[2].value.length < 100 && jqInputs[2].value.length > 5) {
-                        swal({
-                                title: "Are you sure?",
-                                text: "The record will be save and will be use for Designated Office",
-                                type: "warning",
-                                showCancelButton: true,
-                                confirmButtonColor: '#DD6B55',
-                                confirmButtonText: 'Yes, do it!',
-                                cancelButtonText: "No, cancel it!",
-                                closeOnConfirm: false,
-                                closeOnCancel: false
-                            },
-                            function (isConfirm) {
-                                if (isConfirm) {
-                                    $.ajax({
-                                        type: 'post',
-                                        url: 'StudentSetup/BatchYear/Add-ajax.php',
-                                        data: {
-                                            _name: jqInputs[1].value,
-                                            _desc: jqInputs[2].value
-
-
-                                        },
-                                        success: function (response) {
-                                            swal("Record Added!", "The data is successfully added!", "success");
-                                            saveRow(oTable, nEditing);
-                                            nEditing = null;
-                                        },
-                                        error: function (response) {
-                                            swal("Error encountered while adding data", "Please try again", "error");
-                                            saveRow(oTable, nEditing);
-                                            nEditing = null;
-                                        }
-
-                                    });
-
-                                } else
-                                    swal("Cancelled", "The transaction is cancelled", "error");
-
-                            });
-
-
-                    } else if (jqInputs[1].value.length > 100) {
-
-                        swal("Error", "The Office name must be less than 100 characters", "error");
-
-                    } else if (jqInputs[1].value.length < 5) {
+                    } else if (jqInputs[1].value.length < 1) {
 
                         swal("Error", "Please enter a valid Office name", "error");
 

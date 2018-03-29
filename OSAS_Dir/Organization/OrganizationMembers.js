@@ -142,11 +142,17 @@ var EditableTable = function () {
                 e.preventDefault();
                 var nRow = $(this).parents('tr')[0];
                 var getcode = $(this).closest('tr').children('td:first').text();
+                latcode = getcode;
                 var getname = $(this).closest('tr').children('td:first').next('td').text();
                 var getcat = $(this).closest('tr').children('td:first').next('td').next('td').text();
                 var stat = 0;
                 $('#drpstudent').hide();
                 $('#btnstudadd').show();
+                var table = $('#proftable').DataTable();
+                jQuery(table.fnGetNodes()).each(function () {
+                    oTable2.fnDeleteRow(0);
+
+                });
 
                 appcode = $(this).closest('tr').children('td:first').text();
                 //alert(appcode);
@@ -198,20 +204,17 @@ var EditableTable = function () {
 
                 });
 
-                //alert(getcode);
                 $.ajax({
                     type: "GET",
                     url: 'Organization/OrganizationMembers/FillTableStud.php',
                     dataType: 'json',
                     data: {
-                        _code: getcode,
-                        _snum: stud,
-                        _stat: stat
+                        _code: getcode
                     },
                     success: function (data2) {
 
                         $.each(data2, function (key, val) {
-                            var aiNew = oTable2.fnAddData([val.num, val.name, val.cas, val.pos, '<center><a class="btn btn-danger delete" href="javascript:;"><i class="fa fa-trash-o" ></i></a></center>', ]);
+                            var aiNew = oTable2.fnAddData([val.num, val.name, val.cas, val.pos, '<center><a class="btn btn-success edit" data-toggle="modal"  href="#EditPos" href="javascript:;"><i class="fa fa-edit"></i></a> <a class="btn btn-danger delete" href="javascript:;"><i class="fa fa-trash-o" ></i></a></center>', ]);
                             var nRow = oTable2.fnGetNodes(aiNew[0]);
                         });
                     },
@@ -494,6 +497,92 @@ var initproftable = function () {
 
                     });
 
+
+            });
+
+            $('#updaccreqlist').on('click', 'a.edit', function (e) {
+                $('#btnedit').click();
+                var getnum = $(this).closest('tr').children('td:first').text();
+                var getname = $(this).closest('tr').children('td:first').next().text();
+                var getpos = $(this).closest('tr').children('td:first').next().next().next().text();
+                var flag = 0;
+                document.getElementById('updstudname').innerText = getname;
+                document.getElementById('updstudnum').innerText = getnum;
+
+                $.ajax({
+                    type: "GET",
+                    url: 'Organization/OrganizationMembers/FillPos.php',
+                    dataType: 'json',
+                    data: {
+                        _code: latcode
+                    },
+                    success: function (data2) {
+                        document.getElementById('upddrppos').innerHTML = data2.list;
+                        $('#upddrppos option').each(function (index, val) {
+                            if (val.text == getpos) {
+                                flag = 1;
+                                document.getElementById('upddrppos').value = val.value;
+                            }
+                        });
+                        if (flag == 0) {
+                            $('#upddrppos').append('<option selected value="old">' + getpos + '</option>');
+                        }
+                    },
+                    error: function (response) {
+                        swal("Error encountered while adding data", "Please try again", "error");
+                    }
+
+                });
+                //$('#AddPos').modal('show');
+
+
+
+
+            });
+
+            $('#updsubmit-data').click(function () {
+                var _upddrppos = document.getElementById("upddrppos");
+                var upddrppostext = _upddrppos.options[_upddrppos.selectedIndex].text;
+                var upddrpposval = _upddrppos.options[_upddrppos.selectedIndex].value;
+                var studnum = document.getElementById("updstudnum").innerText;
+                swal({
+
+                        title: "Are you sure?",
+                        text: "The record will be save and will be use for further transaction",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: '#DD6B55',
+                        confirmButtonText: 'Yes, do it!',
+                        cancelButtonText: "No, cancel it!",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            if (upddrpposval == 'old') {
+                                swal("Record Updated!", "The data is successfully updated!", "success");
+                            } else {
+                                $.ajax({
+                                    type: 'post',
+                                    url: 'Organization/OrganizationMembers/AddStud.php',
+                                    data: {
+                                        _studno: studnum,
+                                        _pos: upddrpposval,
+                                        _appcode: latcode
+                                    },
+                                    success: function (response) {
+                                        swal("Record Updated!", "The data is successfully updated!", "success");
+                                    },
+                                    error: function (response) {
+                                        swal("Error encountered while adding data", "Please try again", "error");
+                                    }
+
+                                });
+                            }
+                        } else
+                            swal("Cancelled", "The transaction is cancelled", "error");
+
+                    });
 
             });
 

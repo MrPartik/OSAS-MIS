@@ -28,19 +28,7 @@ include('../config/connection.php');
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-                <div class="row" style="float:right;">
-                    <div class="col-md-12  ">
-                        <!--breadcrumbs start -->
-                        <ul class="breadcrumbs-alt ">
-                            <li> <a class="current" href="#">Organization Members</a> </li>
-                            <li> <a href="#">Organization Management</a> </li>
-                            <!-- <li> -->
-                            <!-- <a class="active-trail active" href="#">Pages</a> -->
-                            <!-- </li> -->
-                        </ul>
-                        <!--breadcrumbs end -->
-                    </div>
-                </div>
+
                 <div class="row">
                     <div class="col-sm-12">
                         <section class="panel">
@@ -64,12 +52,12 @@ include('../config/connection.php');
                                         <tbody>
                                             <?php
 
-                                        $view_query = mysqli_query($con,"SELECT OrgForCompliance_OrgApplProfile_APPL_CODE,OrgAppProfile_NAME,OrgForCompliance_ADVISER,OrgAppProfile_STATUS,OC.OrgCat_NAME,(SELECT COUNT(*) FROM t_assign_org_members WHERE AssOrgMem_DISPLAY_STAT = 'Active' AND AssOrgMem_COMPL_ORG_CODE = OAP.OrgAppProfile_APPL_CODE) AS COU
+                                        $view_query = mysqli_query($con," SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME,OrgForCompliance_ADVISER,OrgAppProfile_STATUS,OC.OrgCat_NAME,(SELECT COUNT(*) FROM t_assign_org_members WHERE AssOrgMem_DISPLAY_STAT = 'Active' AND AssOrgMem_COMPL_ORG_CODE = OrgForCompliance_ORG_CODE) AS COU
 FROM `r_org_applicant_profile` AS OAP INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE INNER JOIN t_assign_org_category AOC ON AOC.AssOrgCategory_ORG_CODE = OFC.OrgForCompliance_ORG_CODE INNER JOIN r_org_category OC ON OC.OrgCat_CODE = AOC.AssOrgCategory_ORGCAT_CODE
-WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active'");
+WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active' ");
                                         while($row = mysqli_fetch_assoc($view_query))
                                         {
-                                            $code = $row["OrgForCompliance_OrgApplProfile_APPL_CODE"];
+                                            $code = $row["OrgForCompliance_ORG_CODE"];
                                             $name = $row["OrgAppProfile_NAME"];
                                             $cat = $row["OrgCat_NAME"];
                                             $cou = $row["COU"];
@@ -199,7 +187,7 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                                                             <th>Student Name</th>
                                                             <th>Course - Year and Section</th>
                                                             <th>Position</th>
-                                                            <th id="hideaction">Action</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="updaccreqlist"> </tbody>
@@ -217,6 +205,7 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                                                     </div>
                                                 </div>
                                             </form>
+                                            <!--
                                             <form id="upload_csv2" method="post" enctype="multipart/form-data">
                                                 <div class="controls col-md-12">
                                                     <div class="fileupload fileupload-new row" data-provides="fileupload"> <span class="btn btn-white btn-file" style="width:200px">
@@ -227,6 +216,7 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                                                     </div>
                                                 </div>
                                             </form>
+-->
                                         </div>
                                     </div>
                                 </div>
@@ -235,8 +225,62 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+                    <button data-dismiss="modal" class="btn btn-default" id="btnedit" type="button">Close</button>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="EditPos" class="modal fade">
+        <div class="modal-dialog" style="width:40%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Organization Members</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <section class="panel">
+                                <div class="panel-body">
+                                    <form method="post" id="updform-data">
+                                        <div class="row" style="padding-top:10px">
+                                            <div class="col-lg-12">
+                                                <label for="upddrpstud">Student Name</label>
+                                                <br/>
+                                                <span class="label label-primary" id="updstudname" style="font-size:12px">Primary</span>
+                                                <span class="label label-primary" id="updstudnum" style="font-size:12px">Primary</span>
+
+                                            </div>
+                                            <div class="col-lg-12" style="padding-top:5px"> Position
+                                                <select class="form-control input-sm m-bot15 " style="width:100%" id="upddrppos">
+                                                        <option value="default" selected>Member</option>
+                                                         <?php
+                                                   
+                                                     $view_query = mysqli_query($con," SELECT OrgOffiPosDetails_ID,OrgOffiPosDetails_NAME FROM `r_org_officer_position_details`
+                                                        WHERE OrgOffiPosDetails_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM t_org_for_compliance WHERE OrgForCompliance_OrgApplProfile_APPL_CODE = '$compcode' AND OrgForCompliance_DISPAY_STAT = 'Active') AND OrgOffiPosDetails_DISPLAY_STAT = 'Active'  ");                                                   
+                                                    while($row = mysqli_fetch_assoc($view_query))
+                                                    {
+                                                        $id = $row['OrgOffiPosDetails_ID'];
+                                                        $name = $row['OrgOffiPosDetails_NAME'];
+                                                        echo " <option value='".$id."' >".$name."</option>";
+
+                                                    }
+
+                                            ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default" id="close" type="button">Close</button>
+                    <button class="btn btn-success " id="updsubmit-data" type="button">Save</button>
+                </div>
+
             </div>
         </div>
     </div>
@@ -262,6 +306,7 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
     <script>
         $('#orgcode').hide();
         $('#btnsync').hide();
+        $('#updstudnum').hide();
         $('#drpstudent').hide();
         $(document).ready(function() {
             var countreq = 0;
@@ -412,26 +457,7 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                     } else swal("Cancelled", "The transaction is cancelled", "error");
                 });
             });
-            $('#updsubmit-data').click(function() {
-                var compcode = document.getElementById('orgcode').innerText;
-                var accstat = '';
-                var chkstat = '';
-                var chkcode = '';
-                var stat = 0;
-                swal({
-                    title: "Are you sure?",
-                    text: "This data will be saved and used for further transaction",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: '#DD6B55',
-                    confirmButtonText: 'Yes, Add it!',
-                    cancelButtonText: "No, cancel it!",
-                    closeOnConfirm: false,
-                    closeOnCancel: false
-                }, function(isConfirm) {
-                    if (isConfirm) {} else swal("Cancelled", "The transaction is cancelled", "error");
-                });
-            });
+            //            $('#updsubmit-data').click(function() { // var compcode = document.getElementById('orgcode').innerText; // var accstat = ''; // var chkstat = ''; // var chkcode = ''; // var stat = 0; // swal({ // title: "Are you sure?", // text: "This data will be saved and used for further transaction", // type: "warning", // showCancelButton: true, // confirmButtonColor: '#DD6B55', // confirmButtonText: 'Yes, Add it!', // cancelButtonText: "No, cancel it!", // closeOnConfirm: false, // closeOnCancel: false // }, function(isConfirm) { // if (isConfirm) {} else swal("Cancelled", "The transaction is cancelled", "error"); // }); // });
         });
         jQuery(document).ready(function() {
             initproftable.init();

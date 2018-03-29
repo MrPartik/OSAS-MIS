@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <title>OSAS - Dashboard</title>
 <?php 
-$currentPage ='OSAS_Dashboard';
+$currentPage ='Org_Dashboard';
 $breadcrumbs =" <div class='col-md-12'>
 <ul class='breadcrumbs-alt' style='position'>
     <li> <a href='dashboard.php'>Home</a> </li>
@@ -56,6 +56,25 @@ include('../config/connection.php');
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <section class="panel">
+                                    <div class="panel-body">
+                                        <h3 class="prf-border-head">Remittance</h3>
+                                        <div id="graph-line"></div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <section class="panel">
+                                    <div class="panel-body">
+                                        <div id="Remittance" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </div>
@@ -69,15 +88,88 @@ include('../config/connection.php');
     <script src="../js/morris-chart/morris.js"></script>
     <script src="../js/morris-chart/raphael-min.js"></script>
     <script src="Dashboard/donut-graph.js"></script>
+    <script src="Dashboard/Remitance-LineGraph.js"></script>
+    <script src="../js/highcharts.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/drilldown.js"></script>
+
     <script>
         $(document).ready(function() {
+            var series_array = [];
+            var drilldown_array = [];
+            $.ajax({
+                type: "GET",
+                url: 'Dashboard/Remittance_Series.php',
+                dataType: 'json',
+                success: function(data) {
+                    var i = 0;
+
+
+                    $.each(data, function(key, val) {
+                        series_array.push({
+                            name: val.name,
+                            y: parseFloat(val.percent),
+                            drilldown: val.orgcode
+                        });
+
+                        var drilldown = {};
+                        drilldown.id = val.orgcode;
+                        drilldown.name = val.name;
+                        drilldown.data = [];
+
+                        $.each(val.data, function(key2, val2) {
+                            drilldown.data.push([val2.text, parseFloat(val2.per)]);
+                            //                            drilldown_user.data.push([123]);
+                            //alert(val2.amount)
+                        });
+
+
+                        drilldown_array.push(drilldown);
+
+
+                    });
+                    Highcharts.chart('Remittance', {
+                        chart: {
+                            type: 'pie'
+                        },
+                        plotOptions: {
+                            series: {
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.name}: {point.y:.1f}%'
+                                }
+                            }
+                        },
+
+                        tooltip: {
+                            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+                        },
+
+                        "series": [{
+                            "name": "Organization",
+                            "colorByPoint": true,
+                            "data": series_array
+                        }],
+                        "drilldown": {
+                            "series": drilldown_array
+                        }
+                    });
+
+
+                },
+                error: function(response) {
+                    swal("Error encountered while adding data", "Please try again", "error");
+                }
+
+            });
             $.ajax({
                 type: "GET",
                 url: 'Dashboard/Officer.php',
                 data: {
-                    _appcode:'<?php echo $compcode?>'
+                    _appcode: '<?php echo $compcode?>'
                 },
-                success: function(data) { 
+                success: function(data) {
                     document.getElementById('fillmembers').innerHTML = data;
 
                 },
@@ -90,7 +182,7 @@ include('../config/connection.php');
                 type: "GET",
                 url: 'Dashboard/Population.php',
                 data: {
-                    _appcode:'<?php echo $compcode?>'
+                    _appcode: '<?php echo $compcode?>'
                 },
                 success: function(data) {
                     //alert(data)

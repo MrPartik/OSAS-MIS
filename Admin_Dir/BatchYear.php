@@ -5,6 +5,18 @@
     <title>Admin - Batch Year</title>
     <?php   
 $currentPage ='Admin_BYear'; 
+$breadcrumbs = '<div class="col-md-12  ">
+                        <!--breadcrumbs start -->
+                        <ul class="breadcrumbs-alt ">
+                            <li>
+                                <a href="#">Student Setup</a>
+                            </li>
+                            <li>
+                                <a class="current" href="#">Academic Year</a>
+                            </li>
+                        </ul>
+                    </div>
+';
 include('header.php');  
 include('../config/connection.php');
 
@@ -31,20 +43,6 @@ include('../config/connection.php');
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-                <div class="row" style="float:right;">
-                    <div class="col-md-12  ">
-                        <!--breadcrumbs start -->
-                        <ul class="breadcrumbs-alt ">
-                            <li>
-                                <a class="current" href="#">Batch Year</a>
-                            </li>
-                            <li>
-                                <a href="#">Organization Setup</a>
-                            </li>
-                        </ul>
-                        <!--breadcrumbs end -->
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-sm-12">
                         <section class="panel">
@@ -73,28 +71,55 @@ include('../config/connection.php');
                                         <tbody>
                                             <?php
 							
-										$view_query = mysqli_query($con,"select * from `r_batch_details` where Batch_DISPLAY_STAT = 'Active' ");
+										$view_query = mysqli_query($con,"select * from `r_batch_details` ");
 										while($row = mysqli_fetch_assoc($view_query))
 										{
 											$code = $row["Batch_CODE"];
 											$name = $row["Batch_YEAR"];
 											$desc = $row["Batch_DESC"];										
 											$id = $row["Batch_ID"];										
-											
-											echo "
+											$stat = $row["Batch_DISPLAY_STAT"];										
+                                            
+                                            echo "
 											<tr class=''>
 												<td >$name</td>
 												<td >$desc</td>
-												<td value='qweqwe' style='width:180px'>
-													<center>
-														<a class='btn btn-success edit' href='javascript:;'>Edit</a>
-														<a class='btn btn-danger delete' href='javascript:;'>Delete</a>							
-													<center>
-												</td>
-												
-											</tr>
 											";
-										}			
+
+                                            if($stat == 'Active')
+                                            {
+
+                                                echo "										
+                                                        <td style='width:180px'>
+                                                            <center>
+                                                                <a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a>
+                                                                <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>	
+                                                            <center>
+                                                        </td>
+
+                                                    </tr>
+                                                    ";
+
+                                            }
+                                            else
+                                            {
+
+                                                echo "										
+                                                        <td style='width:180px'>
+                                                            <center>
+                                                                <a class='btn btn-info retrieve' href='javascript:;'><i class='fa fa-rotate-left'></i></a>	
+                                                            <center>
+                                                        </td>
+
+                                                    </tr>
+                                                    ";
+
+
+                                            }
+    
+
+                                        
+                                        }			
 											
 										
 									?>
@@ -105,7 +130,6 @@ include('../config/connection.php');
                                                 <th>Batch Year </th>
                                                 <th>Batch Year Description</th>
                                                 <th>Action</th>
-
                                             </tr>
                                         </tfoot>
                                     </table>

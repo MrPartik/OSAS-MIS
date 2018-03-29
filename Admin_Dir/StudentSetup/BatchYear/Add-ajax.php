@@ -12,7 +12,7 @@
 			$code = $row["CODE"];
 		}
 
-		$query = mysqli_query($con,"INSERT INTO `r_batch_details` (Batch_CODE,Batch_YEAR,Batch_DESC) VALUES ('$code','$name','$desc')");
+		$query = mysqli_query($con,"INSERT INTO `r_batch_details` (Batch_YEAR,Batch_DESC) VALUES ('$name','$desc')");
 
 	}
 

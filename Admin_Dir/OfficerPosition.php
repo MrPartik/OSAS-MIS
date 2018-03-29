@@ -3,8 +3,23 @@
 
 <head>
     <title>Admin - Organization Category</title>
-<?php 
+    <?php 
 $currentPage ='Admin_OfficerPos'; 
+$breadcrumbs = '                              <div class="col-md-12  ">
+                        <!--breadcrumbs start -->
+                        <ul class="breadcrumbs-alt ">
+                            <li>
+                                <a class="current" href="#">Officer Position</a>
+                            </li>
+                            <li>
+                                <a href="#">Organization Setup</a>
+                            </li>
+                        </ul>
+                        <!--breadcrumbs end -->
+                    </div>
+';
+
+    
 include('header.php');  
 include('../config/connection.php');
 ?>
@@ -27,20 +42,6 @@ include('../config/connection.php');
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-                <div class="row" style="float:right;">
-                    <div class="col-md-12  ">
-                        <!--breadcrumbs start -->
-                        <ul class="breadcrumbs-alt ">
-                            <li>
-                                <a class="current" href="#">Officer Position</a>
-                            </li>
-                            <li>
-                                <a href="#">Organization Setup</a>
-                            </li>
-                        </ul>
-                        <!--breadcrumbs end -->
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-sm-12">
                         <section class="panel">
@@ -198,7 +199,7 @@ include('../config/connection.php');
 
     </section>
 
-<?php include("footer.php")?>
+    <?php include("footer.php")?>
     <script src="OrganizationSetup/OfficerPosition.js"></script>
 
     <!-- END JAVASCRIPTS -->

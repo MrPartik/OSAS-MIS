@@ -5,6 +5,16 @@
     <title>Admin - Dashboard</title>
     <?php 
 $currentPage ='Admin_Dashboard'; 
+$breadcrumbs = '<div class="col-md-12  ">
+                <!--breadcrumbs start -->
+                <ul class="breadcrumbs-alt ">
+                    <li>
+                        <a class="current" href="#">Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+';
+
 include('header.php');  
 include('../config/connection.php');
 ?>
@@ -40,24 +50,6 @@ include('../config/connection.php');
             <section id="main-content">
                 <section class="wrapper">
                     <!-- page start-->
-                    <div class="row" style="float:right;">
-                        <div class="col-md-12  ">
-                            <!--breadcrumbs start -->
-                            <ul class="breadcrumbs-alt ">
-                                <li>
-                                    <a class="current" href="#">Dashboard</a>
-                                </li>
-                                <li>
-                                    <a href="#">Home </a>
-                                </li>
-                                <!-- <li> -->
-                                <!-- <a class="active-trail active" href="#">Pages</a> -->
-                                <!-- </li> -->
-
-                            </ul>
-                            <!--breadcrumbs end -->
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <section class="panel">

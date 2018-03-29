@@ -57,7 +57,6 @@ $user_check = $_SESSION['logged_user']['username'];
                 </div>
             </div>
             <div class="top-nav clearfix">
-
                 <!--search & user info start-->
                 <ul class="nav pull-right top-menu">
                     <li>
@@ -172,11 +171,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                 <div class="panel-body">
                                     <div class="adv-table editable-table ">
                                         <div class="clearfix">
-                                            <div class="btn-group">
-                                                <button id="editable-sample_new" data-toggle="modal" id="openAddmodal" href="#Add" class="btn btn-success">
-                                        Application <i class="fa fa-plus"></i>
-                                    </button>
-                                            </div>
+
                                             <div class="btn-group">
                                                 <button id="editable-sample_new" data-toggle="modal" id="openAddmodal" href="#Add" class="btn btn-success">Renew organization <i class="fa fa-plus"></i>
                                     </button>
@@ -198,11 +193,12 @@ $user_check = $_SESSION['logged_user']['username'];
                                                     <th>Organization Code</th>
                                                     <th>Organization Name</th>
                                                     <th>Organization Description</th>
+                                                    <th>Renewal Status</th>
                                                     <th style="width:100px">Status</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="tbodyedit">
                                                 <?php 
                                         $view_query = mysqli_query($con,"SELECT  
                                         OrgAppProfile_APPL_CODE
@@ -213,11 +209,15 @@ $user_check = $_SESSION['logged_user']['username'];
                                         ,OrgAppProfile_STATUS
                                         ,(SELECT COUNT(*) FROM r_org_accreditation_details WHERE OrgAccrDetail_DISPLAY_STAT = 'Active') AS A1
                                         , (SELECT COUNT(*) FROM t_org_accreditation_process A WHERE OrgAccrProcess_ORG_CODE = OFC.OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_DISPLAY_STAT='Active')  as A2 
-                                        ,(SELECT IFNULL((SELECT WIZARD_CURRENT_STEP FROM r_application_wizard A WHERE A.WIZARD_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM `t_org_for_compliance` B WHERE B.OrgForCompliance_DISPAY_STAT = 'Active' AND B.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE  AND B.OrgForCompliance_ORG_CODE =  OFC.OrgForCompliance_ORG_CODE)),'1') ) AS STEP
-                                        ,(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OFC.OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) AS TR
+                                        ,(SELECT IFNULL((SELECT WIZARD_CURRENT_STEP FROM r_application_wizard A WHERE A.WIZARD_ORG_CODE = OrgForCompliance_ORG_CODE),'1') ) AS STEP
+                                        ,(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OFC.OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 ) = (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) AS TR,
+                                        
+                                        (SELECT COUNT(*) FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgAppProfile_APPL_CODE = (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` AS AZ WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR = '$current_acadyear' AND AZ.OrgForCompliance_ORG_CODE = OFC.OrgForCompliance_ORG_CODE  )) AS MYSTAT
+                                        
+                                        
                                         FROM `r_org_applicant_profile` AS OAP 
                                         INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE 
-                                        WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active'");
+                                        WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active' ");
                                         while($row = mysqli_fetch_assoc($view_query))
                                         {
                                             $code = $row["OrgForCompliance_ORG_CODE"];
@@ -225,9 +225,12 @@ $user_check = $_SESSION['logged_user']['username'];
                                             $desc = $row["OrgAppProfile_DESCRIPTION"];
                                             $accstat = $row["TR"];
                                             $step = $row["STEP"];
+                                            $mystat = $row["MYSTAT"];
                                             $curstep = '';
                                             if($step == 1)
                                                 $curstep = '<span class="label label-primary">Newly Applicant</span>';
+                                            else if($step == -1)
+                                                $curstep = '<span class="label " style="background-color:#24F">Renewed Application</span>';
                                             else if($step == 2)
                                                 $curstep = '<span class="label label-info">Setting Organization Category</span>';
                                             else if($step == 3)
@@ -235,7 +238,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                             else if($step == 4)
                                                 $curstep = '<span class="label label-default">Setting Position</span>';
                                             else if($step == 5)
-                                                $curstep = '<span class="label label-default">Setting Officer</span>';
+                                                $curstep = '<span class="label label-default" style="background-color:#FF4">Setting Officer</span>';
                                             else if($step == 6)
                                             {
                                                 if($accstat == 'TRUE' )
@@ -243,22 +246,41 @@ $user_check = $_SESSION['logged_user']['username'];
                                                 else  if($accstat == 'FALSE' )
                                                     $curstep = '<span class="label " style="background-color:#41CAC0">Completing Accreditation</span>';
                                             }
-
+/// <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-edit'></i></a>
+                                            //<a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>
                                             echo "
                                             <tr class=''>
                                                 <td>$code</td>
                                                 <td>$name</td>
-                                                <td>$desc</td>
+                                                <td>$desc</td>";
+                                            
+                                            if($mystat == 0)
+                                            echo "
+                                                <td>Expired</td>
                                                 <td><center style='padding-top:10px'>$curstep</center></td>
                                                 <td style='width:200px'>
                                                     <center>
-                                                        <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-edit'></i></a>
+                                                       
                                                          <a class='btn btn-info wizardOpen' href='javascript:;'><i class='fa fa-flag'></i></a>
-                                                        <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>
+                                                        
                                                     </center>
                                                 </td>
                                             </tr>
                                                     ";
+                                            else
+                                            echo "
+                                                <td>Active</td>
+                                                <td><center style='padding-top:10px'>$curstep</center></td>
+                                                <td style='width:200px'>
+                                                    <center>
+                                                       
+                                                         <a class='btn btn-info wizardOpen' href='javascript:;'><i class='fa fa-flag'></i></a>
+                                                        
+                                                    </center>
+                                                </td>
+                                            </tr>
+                                                    ";
+                                                
                                         }
 
 
@@ -271,6 +293,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                                     <th>Organization Code</th>
                                                     <th>Organization Name</th>
                                                     <th>Organization Description</th>
+                                                    <th>Renewal Status</th>
                                                     <th style="width:100px">Status</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -426,7 +449,6 @@ $user_check = $_SESSION['logged_user']['username'];
                                                         <tr>
                                                             <th>Officer Position</th>
                                                             <th>Ocurrence</th>
-                                                            <th>Description</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -548,21 +570,36 @@ $user_check = $_SESSION['logged_user']['username'];
         </section>
         <!-- Modal -->
         <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Add" class="modal fade">
-            <div class="modal-dialog">
+            <div class="modal-dialog" style="width:500px">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Organization Profile</h4>
+                        <h4 class="modal-title">Renewal</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <form method="post" id="form-data">
                                     <div class="row" id="profile">
-                                        <div class="col-lg-6 form-group">
-                                            Organization Name<input name="emailadd" type="text" class="form-control" placeholder="ex. COMMITS Pioneer" id="txtname">
-                                        </div>
                                         <div class="col-lg-12 form-group">
+                                            Organization
+                                            <select class="form-control input-sm" id="drporg">
+                                            <?php
+                                                $view_query = mysqli_query($con,"SELECT OrgAppProfile_APPL_CODE,OrgAppProfile_NAME FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgAppProfile_APPL_CODE NOT IN ((SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR = '$current_acadyear'))");
+                                                $fillorg = ' <option disable selected value="default" >Please choose an Organization</option>';
+                                                while($row = mysqli_fetch_assoc($view_query))
+                                                {
+                                                    $val = $row['OrgAppProfile_APPL_CODE'];
+                                                    $name = $row['OrgAppProfile_NAME'];
+                                                    $fillorg = $fillorg . " <option value='".$val."' >".$name."</option>";
+
+                                                }
+                                                
+                                                echo $fillorg;
+                                            ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-12 form-group desc">
                                             Organization Description<textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
                                         </div>
                                         <div class="col-lg-3 form-group hidethis">
@@ -685,7 +722,8 @@ $user_check = $_SESSION['logged_user']['username'];
         <script>
             $(document).ready(function() {
                 $('#wizardForm').hide();
-                $('.hidethis').hide
+                $('.hidethis').hide();
+                $('.desc').hide();
                 wizardOpen = $('.wizardOpen');
                 wizardOpen.on('click', function() {
                     $('#tableForm').slideToggle();

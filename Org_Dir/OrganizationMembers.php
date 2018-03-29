@@ -7,13 +7,14 @@ $breadcrumbs="<div class='col-md-12'>
     <li> <a class='current' href='OrganizationMembers.php'>Organization Members</a></li>
 </ul>
 </div>"; 
-$currentPage ='OSAS_OrgMem'; 
+$currentPage ='Org_OrgMem'; 
 //ANDTIOOOOOOO    
 include('header.php'); 
 $compcode = $referenced_user;
 include('../config/connection.php');
 ?>
-<title><?php echo $compcode ?> - Organization Members</title>
+<title>
+    <?php echo $compcode ?> - Organization Members</title>
 <link href="../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
 <link href="../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
 <link rel="stylesheet" href="../js/data-tables/DT_bootstrap.css" />
@@ -46,7 +47,9 @@ include('../config/connection.php');
                                         </button>
                                             <button class='btn btn-primary ' id="btnsync">Sync <i class='fa fa-refresh' ></i></button>
 
-                                            <class id="getappcode"><?php echo $referenced_user;?></class>
+                                            <class id="getappcode">
+                                                <?php echo $referenced_user;?>
+                                            </class>
 
                                         </div>
                                     </div>
@@ -76,7 +79,7 @@ include('../config/connection.php');
                                                    
                                                     $view_query = mysqli_query($con,"SELECT CONCAT(Stud_LNAME,', ',Stud_FNAME ,' ', IFNULL(Stud_MNAME,''))  AS NAME , Stud_NO,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,' - ',Stud_SECTION) AS CAS, IFNULL((SELECT OrgOffiPosDetails_NAME FROM r_org_officer_position_details 
 		INNER JOIN t_org_officers ON OrgOffiPosDetails_ID = OrgOffi_OrgOffiPosDetails_ID
- 	WHERE OrgOffi_DISPLAY_STAT = 'Active' AND OrgOffi_STUD_NO = Stud_NO  AND OrgOffiPosDetails_DISPLAY_STAT = 'Active' AND OrgOffiPosDetails_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM t_org_for_compliance WHERE OrgForCompliance_OrgApplProfile_APPL_CODE = '$compcode' AND OrgForCompliance_DISPAY_STAT = 'Active')   ),'Member') AS POS FROM t_assign_org_members
+ 	WHERE OrgOffi_DISPLAY_STAT = 'Active' AND OrgOffi_STUD_NO = Stud_NO  AND OrgOffiPosDetails_DISPLAY_STAT = 'Active' AND OrgOffiPosDetails_ORG_CODE = '$compcode'   ),'Member') AS POS FROM t_assign_org_members
 		INNER JOIN r_stud_profile ON AssOrgMem_STUD_NO = Stud_NO
         LEFT JOIN t_org_officers  ON OrgOffi_STUD_NO = AssOrgMem_STUD_NO       
         LEFT JOIN r_org_officer_position_details ON OrgOffiPosDetails_ID = OrgOffi_OrgOffiPosDetails_ID
@@ -102,7 +105,8 @@ include('../config/connection.php');
 
 
                                             ?>
-                                        </tbody> <tfoot>
+                                        </tbody>
+                                        <tfoot>
                                             <tr>
                                                 <th>Student Number</th>
                                                 <th>Student Name</th>
@@ -110,7 +114,7 @@ include('../config/connection.php');
                                                 <th>Position</th>
                                                 <th>Action</th>
                                             </tr>
-                                                </tfoot>
+                                        </tfoot>
                                     </table>
                                 </div>
                                 <div class="col-lg-12">
@@ -176,19 +180,7 @@ include('../config/connection.php');
                                             <div class="col-lg-12"> Position
                                                 <select class="form-control input-sm m-bot15 " style="width:100%" id="drppos">
                                                         <option value="default" selected>Member</option>
-                                                         <?php
-                                                   
-                                                     $view_query = mysqli_query($con," SELECT OrgOffiPosDetails_ID,OrgOffiPosDetails_NAME FROM `r_org_officer_position_details`
-                                                        WHERE OrgOffiPosDetails_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM t_org_for_compliance WHERE OrgForCompliance_OrgApplProfile_APPL_CODE = '$compcode' AND OrgForCompliance_DISPAY_STAT = 'Active') AND OrgOffiPosDetails_DISPLAY_STAT = 'Active'  ");                                                   
-                                                    while($row = mysqli_fetch_assoc($view_query))
-                                                    {
-                                                        $id = $row['OrgOffiPosDetails_ID'];
-                                                        $name = $row['OrgOffiPosDetails_NAME'];
-                                                        echo " <option value='".$id."' >".$name."</option>";
-
-                                                    }
-
-                                            ?>
+                                                        
                                                 </select>
                                             </div>
                                         </div>
@@ -230,19 +222,7 @@ include('../config/connection.php');
                                             <div class="col-lg-12" style="padding-top:5px"> Position
                                                 <select class="form-control input-sm m-bot15 " style="width:100%" id="upddrppos">
                                                         <option value="default" selected>Member</option>
-                                                         <?php
-                                                   
-                                                     $view_query = mysqli_query($con," SELECT OrgOffiPosDetails_ID,OrgOffiPosDetails_NAME FROM `r_org_officer_position_details`
-                                                        WHERE OrgOffiPosDetails_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM t_org_for_compliance WHERE OrgForCompliance_OrgApplProfile_APPL_CODE = '$compcode' AND OrgForCompliance_DISPAY_STAT = 'Active') AND OrgOffiPosDetails_DISPLAY_STAT = 'Active'  ");                                                   
-                                                    while($row = mysqli_fetch_assoc($view_query))
-                                                    {
-                                                        $id = $row['OrgOffiPosDetails_ID'];
-                                                        $name = $row['OrgOffiPosDetails_NAME'];
-                                                        echo " <option value='".$id."' >".$name."</option>";
 
-                                                    }
-
-                                            ?>
                                                 </select>
                                             </div>
                                         </div>

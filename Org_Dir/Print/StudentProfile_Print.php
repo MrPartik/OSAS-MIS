@@ -5,7 +5,7 @@
     include('../../config/connection.php');
 ?>
 
-<?php $title = 'SEMESTER' ?>
+<?php $title = 'STUDENT PROFILE' ?>
 
 <body>
 
@@ -24,7 +24,9 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Description</th>
+                                        <th>Student Number</th>
+                                        <th>identification</th>
+                                        <th>Contact Number</th>
 
                                     </tr>
                                 </thead>
@@ -35,16 +37,22 @@
                                             $item = $item . ",'".$data."'";
                                         }
                                         //echo $item;
-                                        $view_query = mysqli_query($con,"SELECT Semestral_NAME AS DESCR FROM r_semester WHERE Semestral_NAME IN ('1'".$item.")");
+                                        $view_query = mysqli_query($con,"SELECT Stud_NO,CONCAT(Stud_LNAME,', ',Stud_FNAME,' ',COALESCE(Stud_MNAME,'')) AS FULLNAME
+	                                                                       ,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) AS CAS,Stud_CONTACT_NO FROM r_stud_profile WHERE Stud_NO IN ('1'".$item.")");
                                         $i = 1;
                                         while($row = mysqli_fetch_assoc($view_query))
                                         {
-                                            $desc = $row["DESCR"];										
+                                            $no = $row["Stud_NO"];										
+                                            $name = $row["FULLNAME"];										
+                                            $cas = $row["CAS"];										
+                                            $con = $row["Stud_CONTACT_NO"];										
 
                                         echo "
                                         <tr class=''>
                                             <td>$i</td>
-                                            <td >$desc</td>
+                                            <td >$no</td>
+                                            <td >$name<br/>$cas</td>
+                                            <td >$con</td>
                                         </tr>
                                         ";
                                             $i = $i + 1;
@@ -53,18 +61,21 @@
                                     ?>
                                 </tbody>
                             </table>
-                            <center>
-                                <div class="row footer" style="padding-top:25px;padding-bottom:25px">
-                                    <p style="font-size:13px;color:black;font-weight:bold;">
-                                        Rothlener Bldg., PUP Quezon City Branch, Don Fabian St., Commonwealth Quezon City
-                                        <br/>Phone: (Direct Lines) 9527817; 4289144; 9577817
-                                        <br/> Email: commonwealth@pup.edu.ph/ Website: www.pup.edu.ph
-                                        <br/>
-                                        <class style="font-style:italic;font-weight:normal;">“The Country’s 1st Polytechnic U”</class>
-                                    </p>
+                            <tfoot>
+                                <center>
+                                    <div class="row footer" style="padding-top:25px;padding-bottom:25px">
+                                        <p style="font-size:13px;color:black;font-weight:bold;">
+                                            Rothlener Bldg., PUP Quezon City Branch, Don Fabian St., Commonwealth Quezon City
+                                            <br/>Phone: (Direct Lines) 9527817; 4289144; 9577817
+                                            <br/> Email: commonwealth@pup.edu.ph/ Website: www.pup.edu.ph
+                                            <br/>
+                                            <class style="font-style:italic;font-weight:normal;">“The Country’s 1st Polytechnic U”</class>
+                                        </p>
 
-                                </div>
-                            </center>
+                                    </div>
+                                </center>
+                            </tfoot>
+
                         </section>
                     </div>
                 </div>

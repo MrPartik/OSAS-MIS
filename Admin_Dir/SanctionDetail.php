@@ -5,6 +5,19 @@
     <title>Admin - Sanction Detail</title>
     <?php   
 $currentPage ='Admin_SancDet'; 
+$breadcrumbs = '<div class="col-md-12  ">
+                <!--breadcrumbs start -->
+                <ul class="breadcrumbs-alt ">
+                    <li>
+                        <a href="#">Sanction Setup</a>
+                    </li>
+                    <li>
+                        <a class="current" href="#">Sanction Detail</a>
+                    </li>
+                </ul>
+            </div>
+';
+
 include('header.php');  
 include('../config/connection.php');
 ?>
@@ -29,24 +42,6 @@ include('../config/connection.php');
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-                <div class="row" style="float:right;">
-                    <div class="col-md-12  ">
-                        <!--breadcrumbs start -->
-                        <ul class="breadcrumbs-alt ">
-                            <li>
-                                <a class="current" href="#">Sanction Detail</a>
-                            </li>
-                            <li>
-                                <a href="#">Sanction Setup</a>
-                            </li>
-                            <!-- <li> -->
-                            <!-- <a class="active-trail active" href="#">Pages</a> -->
-                            <!-- </li> -->
-
-                        </ul>
-                        <!--breadcrumbs end -->
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-sm-12">
                         <section class="panel">

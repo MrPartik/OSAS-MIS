@@ -5,7 +5,7 @@
 	{
 		$code = $_POST['_code'];
 		
-		$query = mysqli_query($con,"UPDATE `r_batch_details` SET Batch_DISPLAY_STAT = 'Inactive' WHERE Batch_CODE = '$code'");
+		$query = mysqli_query($con,"UPDATE `r_batch_details` SET Batch_DISPLAY_STAT = 'Inactive' WHERE Batch_YEAR = '$code'");
 
 	}
 

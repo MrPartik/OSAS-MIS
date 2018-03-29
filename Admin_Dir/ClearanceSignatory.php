@@ -4,7 +4,20 @@
 <head>
     <title>Admin - Clearance Signatory</title>
     <?php 
-$currentPage ='Admin_ClearanceSig'; 
+$currentPage ='Admin_ClearanceSig';
+$breadcrumbs = '<div class="col-md-12  ">
+                    <!--breadcrumbs start -->
+                    <ul class="breadcrumbs-alt ">
+                        <li>
+                            <a href="#">Sanction Setup</a>
+                        </li>
+                        <li>
+                            <a class="current" href="#">Clearance Signatory</a>
+                        </li>
+                    </ul>
+                </div>
+';
+
 include('header.php');  
 include('../config/connection.php');
 
@@ -31,24 +44,6 @@ include('../config/connection.php');
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-                <div class="row" style="float:right;">
-                    <div class="col-md-12  ">
-                        <!--breadcrumbs start -->
-                        <ul class="breadcrumbs-alt ">
-                            <li>
-                                <a class="current" href="#">Accreditation Requirement</a>
-                            </li>
-                            <li>
-                                <a href="#">Sanction Setup</a>
-                            </li>
-                            <!-- <li> -->
-                            <!-- <a class="active-trail active" href="#">Pages</a> -->
-                            <!-- </li> -->
-
-                        </ul>
-                        <!--breadcrumbs end -->
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-sm-12">
                         <section class="panel">
@@ -78,29 +73,53 @@ include('../config/connection.php');
                                         </thead>
                                         <tbody>
                                             <?php 
-										$view_query = mysqli_query($con,"select * from `r_clearance_signatories` where ClearSignatories_DISPLAY_STAT = 'Active'");
+										$view_query = mysqli_query($con,"select * from `r_clearance_signatories`");
 										while($row = mysqli_fetch_assoc($view_query))
 										{
 											$code = $row["ClearSignatories_CODE"];
 											$name = $row["ClearSignatories_NAME"];
 											$desc = $row["ClearSignatories_DESC"];										
 											$id = $row["ClearSignatories_ID"];										
+											$stat = $row["ClearSignatories_DISPLAY_STAT"];										
 											
 											echo "
 											<tr class=''>
 												<td>$code</td>
 												<td>$name</td>
-												<td >$desc</td>
-												<td style='width:180px'>
-													<center>
-														<a class='btn btn-success edit' href='javascript:;'>Edit</a>
-														<a class='btn btn-danger delete' href='javascript:;'>Delete</a>								
-													<center>
-												</td>
-                                                
+												<td >$desc</td>";
+                                            
+                                            if($stat == 'Active')
+                                            {
 
-											</tr>
-											";
+                                                echo "										
+                                                        <td style='width:180px'>
+                                                            <center>
+                                                                <a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a>
+                                                                <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>	
+                                                            <center>
+                                                        </td>
+
+                                                    </tr>
+                                                    ";
+
+                                            }
+                                            else
+                                            {
+
+                                                echo "										
+                                                        <td style='width:180px'>
+                                                            <center>
+                                                                <a class='btn btn-info retrieve' href='javascript:;'><i class='fa fa-rotate-left'></i></a>	
+                                                            <center>
+                                                        </td>
+
+                                                    </tr>
+                                                    ";
+
+
+                                            }
+                                            
+                                            
 										}			
 											
 										

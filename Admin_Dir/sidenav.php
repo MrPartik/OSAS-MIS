@@ -42,6 +42,16 @@
                         <li <?php if( $currentPage==='Admin_SancDet' ) { echo 'class="active"';} ?>><a href="SanctionDetail.php">Sanction Detail</a></li>
                     </ul>
                 </li>
+                <li class="sub-menu">
+                    <a <?php if( $currentPage==='Admin_ActiveYear' || $currentPage==='Admin_ActiveSem' || $currentPage==='Admin_Account' ) { echo 'class="active"';} ?> href="javascript:;">
+                        <i class="fa fa-user"></i>
+                        <span>Admin Setup</span>
+                    </a>
+                    <ul class="sub">
+                        <li <?php if( $currentPage==='Admin_ActiveYear' ) { echo 'class="active"';} ?> ><a href="ActiveAcademicYear.php">Active Academic Year and Semester</a></li>
+                        <li <?php if( $currentPage==='Admin_Account' ) { echo 'class="active"';} ?>><a href="UserAccount.php">Sanction Detail</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
         <!-- sidebar menu end-->

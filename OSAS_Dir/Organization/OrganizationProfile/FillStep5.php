@@ -6,7 +6,7 @@
 	INNER JOIN r_org_category ON AssOrgCategory_ORGCAT_CODE = OrgCat_CODE
     WHERE AssOrgCategory_ORG_CODE = '$compcode'") ;
     $container_arr = array();
-
+    $category = '';
     while($row = mysqli_fetch_assoc($view_query))
     {
         $category = $row["OrgCat_NAME"];

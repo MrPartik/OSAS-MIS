@@ -530,19 +530,10 @@ var EditableTable = function () {
             $('#submit-data').click(function (e) {
                 e.preventDefault();
 
-                //                var code = document.getElementById('txtcode').value;
-                var name = document.getElementById('txtname').value;
-                var desc = document.getElementById('txtdesc').value;
-                var acc = document.getElementById('chkacc');
-                var accstat = '';
-                var chkstat = '';
-                var chkcode = '';
-                var stat = 0;
+                var _drporg = document.getElementById('drporg');
+                var drporgname = _drporg.options[_drporg.selectedIndex].text;
+                var drporgval = _drporg.options[_drporg.selectedIndex].value;
 
-                if (acc.checked)
-                    accstat = 'Accredited';
-                else
-                    accstat = 'This application is ready for accreditation';
                 $("#close").click();
 
                 swal({
@@ -557,24 +548,26 @@ var EditableTable = function () {
                     closeOnCancel: false
                 }, function (isConfirm) {
                     if (isConfirm) {
-
-
-
                         $.ajax({
                             type: 'post',
                             url: 'Organization/OrganizationProfile/Add-ajax.php',
                             data: {
-                                _name: name,
-                                _desc: desc,
-                                _accstat: accstat
-
-
+                                _name: drporgname,
+                                _appcode: drporgval
                             },
                             success: function (response) {
-                                swal("Record Updated!", "The data is successfully Added!", "success");
-                                //                                var aiNew = oTable.fnAddData([code, name, desc, accstat, "<center><a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'>Edit</a> <a class='btn btn-danger delete' href='javascript:;'>Delete</a>		</center>", '']);
-                                //                                var nRow = oTable.fnGetNodes(aiNew[0]);
-                                document.getElementById("form-data").reset();
+                                swal({
+                                    title: "Record Added!",
+                                    text: "The data is successfully Added!",
+                                    type: "success",
+                                    confirmButtonColor: '#88A755',
+                                    confirmButtonText: 'Okay',
+                                    closeOnConfirm: false
+                                }, function (isConfirm) {
+                                    window.location.reload();
+
+                                });
+
                             },
                             error: function (response) {
                                 swal("Error encountered while adding data", "Please try again", "error");
@@ -664,7 +657,7 @@ var EditableTable = function () {
 
 
             });
-            $('#editable-sample a.wizardOpen').on('click', function (e) {
+            $('#editable-sample').on('click', ' a.wizardOpen', function (e) {
                 e.preventDefault();
                 if (initFlag == 0) {
                     initFlag = 1;
@@ -688,7 +681,7 @@ var EditableTable = function () {
                     },
                     success: function (curstep) {
 
-                        if (curstep == 1) {
+                        if (curstep == 1 || curstep == -1) {
                             $('#step-1').css("display", "block");
                             $('#step-2').css("display", "none");
                             $('#step-3').css("display", "none");
@@ -823,6 +816,24 @@ var EditableTable = function () {
                             $('#aStep6').addClass('btn-success')
                         }
                         //DITO NASGSTART YUNG PAGFILL SA STEP1
+                        $.ajax({
+                            type: "GET",
+                            url: 'Organization/OrganizationProfile/FillStep4.php',
+                            dataType: 'json',
+                            data: {
+                                _code: latcode
+                            },
+                            success: function (data2) {
+                                $.each(data2, function (key, val) {
+                                    var aiNew = oTable2.fnAddData([val.name, val.occ, '<center><a class="btn btn-danger delete" href="javascript:;"><i class="fa fa-trash-o" ></i></a></center>', ]);
+                                    var nRow = oTable2.fnGetNodes(aiNew[0]);
+                                });
+                            },
+                            error: function (response) {
+                                swal("Error encountered while adding data", "Please try again", "error");
+                            }
+
+                        });
                         if (curstep > 1) {
 
                             $.ajax({
@@ -939,24 +950,24 @@ var EditableTable = function () {
                         //DITO NASGSTART YUNG PAGFILL SA STEP4
                         if (curstep >= 4) {
 
-                            $.ajax({
-                                type: "GET",
-                                url: 'Organization/OrganizationProfile/FillStep4.php',
-                                dataType: 'json',
-                                data: {
-                                    _code: latcode
-                                },
-                                success: function (data2) {
-                                    $.each(data2, function (key, val) {
-                                        var aiNew = oTable2.fnAddData([val.name, val.occ, val.desc, '<center><a class="btn btn-danger delete" href="javascript:;"><i class="fa fa-trash-o" ></i></a></center>', ]);
-                                        var nRow = oTable2.fnGetNodes(aiNew[0]);
-                                    });
-                                },
-                                error: function (response) {
-                                    swal("Error encountered while adding data", "Please try again", "error");
-                                }
-
-                            });
+                            //                            $.ajax({
+                            //                                type: "GET",
+                            //                                url: 'Organization/OrganizationProfile/FillStep4.php',
+                            //                                dataType: 'json',
+                            //                                data: {
+                            //                                    _code: latcode
+                            //                                },
+                            //                                success: function (data2) {
+                            //                                    $.each(data2, function (key, val) {
+                            //                                        var aiNew = oTable2.fnAddData([val.name, val.occ, val.desc, '<center><a class="btn btn-danger delete" href="javascript:;"><i class="fa fa-trash-o" ></i></a></center>', ]);
+                            //                                        var nRow = oTable2.fnGetNodes(aiNew[0]);
+                            //                                    });
+                            //                                },
+                            //                                error: function (response) {
+                            //                                    swal("Error encountered while adding data", "Please try again", "error");
+                            //                                }
+                            //
+                            //                            });
 
 
 

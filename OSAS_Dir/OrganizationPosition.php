@@ -39,14 +39,6 @@ include('../config/connection.php');
                                     <div class="btn-group" id="btnoffadd">
                                         <button id="editable-sample_new" data-toggle="modal" id="openAddmodal" class="btn btn-success"> Add <i class="fa fa-plus"></i> </button>
                                     </div>
-                                    <div class="btn-group pull-right">
-                                        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i> </button>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li><a href="#">Print</a></li>
-                                            <li><a href="#">Save as PDF</a></li>
-                                            <li><a href="#">Export to Excel</a></li>
-                                        </ul>
-                                    </div>
                                 </div>
                                 <div class="space15" style="padding-top:15px"></div>
                                 <div class="btn-group">
@@ -118,6 +110,8 @@ include('../config/connection.php');
                         <div class="row" style="padding-left:15px;padding-top:10px">
                             <div class="col-lg-6"> Officer Position
                                 <input type="text" class="form-control" placeholder="ex. President" id="txtcode"> </div>
+                            <div class="col-lg-6"> Occurence
+                                <input type="number" class="form-control" placeholder="1" id="txtocc"> </div>
                             <div class="col-lg-8 " style="padding-top:10px"> Description
                                 <textarea class="form-control" placeholder="ex. Leader of the Organization" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
                             </div>

@@ -85,10 +85,12 @@ ul.amounts li {
         color: blue;
 
     }
-    .footer {
-        font-size: 5px;
-
-
+    #footer {
+        display: block;
+        position: fixed;
+        bottom: 0;
     }
+
+
 
 }

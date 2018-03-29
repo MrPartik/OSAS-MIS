@@ -5,6 +5,20 @@
     <title>Admin - Financial Assistance Title</title>
     <?php  
 $currentPage ='Admin_Title'; 
+$breadcrumbs = '<div class="col-md-12  ">
+                        <!--breadcrumbs start -->
+                        <ul class="breadcrumbs-alt ">
+                            <li>
+                                <a href="#">Student Setup</a>
+                            </li>
+                            <li>
+                                <a class="current" href="#">Financial Assistance Title</a>
+                            </li>
+
+                        </ul>
+                        <!--breadcrumbs end -->
+                    </div>
+';
 include('header.php');  
 include('../config/connection.php');
 ?>
@@ -26,24 +40,6 @@ include('../config/connection.php');
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-                <div class="row" style="float:right;">
-                    <div class="col-md-12  ">
-                        <!--breadcrumbs start -->
-                        <ul class="breadcrumbs-alt ">
-                            <li>
-                                <a class="current" href="#">Financial Assistance Title</a>
-                            </li>
-                            <li>
-                                <a href="#">Student Setup</a>
-                            </li>
-                            <!-- <li> -->
-                            <!-- <a class="active-trail active" href="#">Pages</a> -->
-                            <!-- </li> -->
-
-                        </ul>
-                        <!--breadcrumbs end -->
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-sm-12">
                         <section class="panel">
@@ -71,29 +67,54 @@ include('../config/connection.php');
                                         </thead>
                                         <tbody>
                                             <?php 
-								$view_query = mysqli_query($con,"select * from `r_financial_assistance_title` where FinAssiTitle_DISPLAY_STAT = 'Active' ");
+								$view_query = mysqli_query($con,"select * from `r_financial_assistance_title` ");
 								while($row = mysqli_fetch_assoc($view_query))
 								{
 									$code = $row["FinAssiTitle_CODE"];
 									$name = $row["FinAssiTitle_NAME"];
 									$desc = $row["FinAssiTitle_DESC"];										
 									$id = $row["FinAssiTitle_ID"];										
-									
+									$stat = $row["FinAssiTitle_DISPLAY_STAT"];										
+
 									echo "
 									<tr>
 										<td>$code</td>
 										<td>$name</td>
 										<td>$desc</td>
-										<td style='width:180px'>
-											<center>
-												<a class='btn btn-success edit' href='javascript:;'>Edit</a>
-												<a class='btn btn-danger delete' href='javascript:;'>Delete</a>								
-											<center>
-										</td>
-                                        
-									</tr>
 											";
-										}			
+                                    
+                                    if($stat == 'Active')
+                                    {
+                                    
+                                        echo "										
+                                                <td style='width:180px'>
+                                                    <center>
+                                                        <a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a>
+                                                        <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>	
+                                                    <center>
+                                                </td>
+
+                                            </tr>
+                                            ";
+                                        
+                                    }
+                                    else
+                                    {
+                                
+                                        echo "										
+                                                <td style='width:180px'>
+                                                    <center>
+                                                        <a class='btn btn-info retrieve' href='javascript:;'><i class='fa fa-rotate-left'></i></a>	
+                                                    <center>
+                                                </td>
+
+                                            </tr>
+                                            ";
+                                        
+                                        
+                                    }
+                                    
+                                }			
 											
 										
 									?>
