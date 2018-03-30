@@ -197,7 +197,7 @@
                         , opt3 = (FinanStatus == "Void") ? 'selected' : ''
                         , opt4 = (FinanStatus == "Cancelled") ? 'selected' : '';
                     $("#tbodyFinancial").find(".dataTables_empty").closest("tr ").remove();
-                    $("#dynamic-table-modal > tbody:last").append("<tr id='newFinancialAss' ><td id='financAssDet' finanTitle='" + FinanTitle + "'><span class='label label-success'>NEW</span>" + FinanDesc + "</td><td><center><select id='finanStatSelection' style='height: 30px;' >   <option " + opt1 + " >Active</option>  <option " + opt2 + ">Inactive</option> <option " + opt3 + ">Void</option>   <option " + opt4 + " >Cancelled</option>  </select></center></td><td><textarea id='finanRemarks' style='resize:vertical'>" + FinanRemarks + "</textarea></td><td> <center> <i style='cursor:pointer;font-size: 20px' id='deletemoto' class='fa fa-minus-circle'></i> </center></td></tr>");
+                    $("#dynamic-table-modal > tbody:last").prepend("<tr id='newFinancialAss' ><td id='financAssDet' finanTitle='" + FinanTitle + "'><span class='label label-success'>NEW</span>" + FinanDesc + "</td><td><center><select id='finanStatSelection' style='height: 30px;' >   <option " + opt1 + " >Active</option>  <option " + opt2 + ">Inactive</option> <option " + opt3 + ">Void</option>   <option " + opt4 + " >Cancelled</option>  </select></center></td><td><textarea id='finanRemarks' style='resize:vertical'>" + FinanRemarks + "</textarea></td><td> <center> <i style='cursor:pointer;font-size: 20px' id='deletemoto' class='fa fa-minus-circle'></i> </center></td></tr>");
                 });
                 $("#tbodyFinancial").on("click", "i[id='deletemoto']", function (e) {
                     $(this).closest('tr').remove();

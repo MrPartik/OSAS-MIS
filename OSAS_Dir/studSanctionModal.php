@@ -99,6 +99,7 @@
                                         <th class="numeric ">Consumed</th>
                                         <th class="numeric ">Remaining</th>
                                         <th>Finish</th>
+                                        <th>To be Finished</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -129,9 +130,10 @@
                                             <center>
                                                 <input id="checkFinished" checkStatus="<?php echo  $SancDetrow[ 'FINISHED'] ?>" <?php if( $SancDetrow[ 'FINISHED']==='Finished' ) {echo 'checked';} ?> type="checkbox" /></center>
                                         </td>
+                                         <td> <center><input id="tobeDone" class="form-control" type="Date" >
+                                            </center>  </td>
                                         <td class="actionDes">
-                                            <center><i title="Delete" style='cursor:pointer;font-size: 20px; ' id='deletemotoInside' class='fa fa-minus-circle  '></i> </center> <br>
-                                            <center><i title="History" style='cursor:pointer;font-size: 20px; ' id='history' class='fa fa-exchange'></i> </center>
+                                            <center><i title="Delete" style='cursor:pointer;font-size: 20px; ' id='deletemotoInside' class='fa fa-minus-circle  '></i> </center> 
 
                                         </td>
                                         <div id="sanctionDivs" class="row collapse panel-body">
@@ -173,6 +175,7 @@
                                         <th class="numeric ">Consumed</th>
                                         <th class="numeric ">Remaining</th>
                                         <th>Finish</th>
+                                        <th>To be Finished</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -211,10 +214,7 @@
                 iDisplayLength: 3
             });
         });
-
-        $("i[id='history']").on("click", function() {
-            alert("");
-        });
+ 
         $('#assignSanction').on("click", function() {
             if ($('#sanctionDiv:visible').length) {
                 $("#sanctionDiv").slideToggle(500);
@@ -258,7 +258,7 @@
                 Remaining = $('#sanctionSelection option:selected').attr("sanctionTimeValue");
 
             $("#tbodySanctions").find(".dataTables_empty").closest("tr ").remove();
-            $("#tbodySanctions").append("<tr id='newSanction'> <td class='hidden'>" + SanctionCode + "</td><td class='hidden'>" + DesignatedOfficeCode + "</td><td><span class='label label-success'>NEW</span> " + SanctionName + '<br>Time Value:  ' + Hrs + ' Hours' + "<br/><br/><i style='font-size:10px'>Date Added:" + currDate + "</i></td><td><textarea id='sancRemarks' style='resize:vertical; width:100%;height:100px'></textarea></td><td class='numeric'>  <center><input id='inputConsume' type='text' value='0' maxVal='" + Hrs + "' style='width:50px; text-align:center;' /> </center></td><td class='timeRemaining numeric'>" + Remaining + "</td><td> <center> <input id='checkFinished' type='checkbox'  /></center></td> <td><center> <i title='Delete' style='cursor:pointer;font-size: 20px; ' id='deletemoto' class='fa fa-minus-circle '></i> </center></td>< /tr>  ");
+            $("#tbodySanctions").prepend("<tr id='newSanction'> <td class='hidden'>" + SanctionCode + "</td><td class='hidden'>" + DesignatedOfficeCode + "</td><td><span class='label label-success'>NEW</span><strong> " + SanctionName + '<br></strong>Time Value:  ' + Hrs + ' Hours' + "<br/><br/><i style='font-size:10px'>Date Added:" + currDate + "</i></td><td><textarea id='sancRemarks' style='resize:vertical; width:100%;height:100px'></textarea></td><td class='numeric'>  <center><input id='inputConsume' type='text' value='0' maxVal='" + Hrs + "' style='width:50px; text-align:center;' /> </center></td><td class='timeRemaining numeric'>" + Remaining + "</td><td> <center> <input id='checkFinished' type='checkbox'  /></center><td> <center><input id='tobeDone' class='form-control' type='Date' > </center></td></td> <td><center> <i title='Delete' style='cursor:pointer;font-size: 20px; ' id='deletemoto' class='fa fa-minus-circle '></i> </center></td>< /tr>  ");
         });
         $("#tbodySanctions").on("click", "i[id='deletemoto']", function(e) {
             $(this).closest('tr').remove();
@@ -266,12 +266,12 @@
         $("#tbodySanctions").on("click", "i[id='deletemotoInside']", function(e) {
             $(this).closest('tr').addClass("tobeRemoved");
             $(this).closest('tr').find(".TDSancName").html("<span class='label label-danger'>Deactivate!</span><span class='spanSancName'>  " + $(this).closest('tr').find(".TDSancName").html() + "</span>");
-            $(this).closest('tr').find(".actionDes").html(" <center> <i style='cursor:pointer;font-size: 20px' id='returnmotoInside' class='fa fa-undo'></i> </center><br><center><i title='History' style='cursor:pointer;font-size: 20px; ' id='history' class='fa fa-exchange'></i> </center>");
+            $(this).closest('tr').find(".actionDes").html(" <center> <i style='cursor:pointer;font-size: 20px' id='returnmotoInside' class='fa fa-undo'></i> </center>");
         });
         $("#tbodySanctions").on("click", "i[id='returnmotoInside']", function(e) {
             $(this).closest('tr').removeClass("tobeRemoved");
             $(this).closest('tr').find(".TDSancName").html("<span class='spanSancName'>" + $(this).closest('tr').find(".spanSancName").html() + "</span>");
-            $(this).closest('tr').find(".actionDes").html("  <center> <i style='cursor:pointer;font-size: 20px' id='deletemotoInside' class='fa fa-minus-circle'></i> </center><br><center><i title='History' style='cursor:pointer;font-size: 20px; ' id='history' class='fa fa-exchange'></i> </center>");
+            $(this).closest('tr').find(".actionDes").html("  <center> <i style='cursor:pointer;font-size: 20px' id='deletemotoInside' class='fa fa-minus-circle'></i> </center>");
         });
         $("#tbodySanctions").on('input change', "input[id='inputConsume']", function() {
             $(this).closest('tr').find('.timeRemaining').html($(this).attr('maxVal') - $(this).val());
@@ -317,8 +317,10 @@
                                     DesignatedOfficeCode = $tds.eq(1).text(),
                                     StudNumber = "<?php echo $_GET['StudNo']?>",
                                     Cons = $tds.eq(4).find("input[id='inputConsume']").val(),
-                                    Finish = $tds.eq(6).find("input[id='checkFinished']").is(':checked') ? 'Finished' : 'Processing',
+                                    Finish = $tds.eq(6).find("input[id='checkFinished']").is(':checked') ? 'Finished' : 'Processing', 
+                                    Done = $tds.eq(6).find("input[id='tobeDone']").val(),
                                     sancRemarks = $tds.eq(3).find("textarea[id='sancRemarks']").val();
+                                    alert(Done);
                                 $.ajax({
                                     type: 'post',
                                     url: 'studSanctionSave.php',
