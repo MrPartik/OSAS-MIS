@@ -75,7 +75,7 @@ include('../config/connection.php');
                                                 <form method="post">
                                                     <?php
 							
-										$view_query = mysqli_query($con,"select * from `r_batch_details` where Batch_DISPLAY_STAT = 'Active' ");
+										$view_query = mysqli_query($con,"select * from `r_batch_details` where Batch_DISPLAY_STAT = 'Active' order by Batch_YEAR asc");
                                         $i = 1;
 										while($row = mysqli_fetch_assoc($view_query))
 										{
