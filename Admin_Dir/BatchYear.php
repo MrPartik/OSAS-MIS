@@ -62,8 +62,8 @@ include('../config/connection.php');
                                     <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                         <thead>
                                             <tr>
-                                                <th>Batch Year </th>
-                                                <th>Batch Year Description</th>
+                                                <th>Academic Year </th>
+                                                <th>Academic Year Description</th>
                                                 <th>Action</th>
 
                                             </tr>
@@ -82,8 +82,8 @@ include('../config/connection.php');
                                             
                                             echo "
 											<tr class=''>
-												<td >$name</td>
-												<td >$desc</td>
+												<td idAcadY='$id' >$name</td>
+												<td >$desc</td> 
 											";
 
                                             if($stat == 'Active')
@@ -127,8 +127,8 @@ include('../config/connection.php');
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th>Batch Year </th>
-                                                <th>Batch Year Description</th>
+                                                <th>Academic Year </th>
+                                                <th>Academic Year Description</th>
                                                 <th>Action</th>
                                             </tr>
                                         </tfoot>

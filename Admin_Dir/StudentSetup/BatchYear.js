@@ -28,7 +28,7 @@ var EditableTable = function () {
                 getcode = aData[0];
                 if (getcode != '') {
 
-                    jqTds[0].innerHTML = '<input type="text" class="form-control small " value="' + aData[0] + '" disabled style="width:100%" >';
+                    jqTds[0].innerHTML = '<input type="text" class="form-control small " value="' + aData[0] + '"  style="width:100%" >';
                     jqTds[1].innerHTML = '<input type="text" class="form-control small" value="' + aData[1] + '" style="width:100%">';
                     jqTds[2].innerHTML = '<center><a class="btn btn-success  edit" href=""><i class="fa fa-save"></i></a> <a class="btn btn-danger cancel" href=""><i class="fa fa-ban"></i></a></center>';
 
@@ -278,8 +278,7 @@ var EditableTable = function () {
 
                 /* Get the row as a parent of the link that was clicked on */
                 var nRow = $(this).parents('tr')[0];
-                //						alert(this.innerHTML);
-
+                var table = $(this);
                 if (nEditing !== null && nEditing != nRow) {
                     /* Currently editing - but not this row - restore the old before continuing to edit mode */
                     restoreRow(oTable, nEditing);
@@ -295,13 +294,13 @@ var EditableTable = function () {
                             data: {
                                 _name: jqInputs[0].value,
                                 _desc: jqInputs[1].value,
-                                _code: jqInputs[0].value
+                                _code: $(nRow).find('td:first').attr('idacady')
 
                             },
                             success: function (response) {
                                 swal("Record Updated!", "The data is successfully updated!", "success");
                                 saveRow(oTable, nEditing);
-                                nEditing = null;
+                                nEditing = null;  
                             },
                             error: function (response) {
                                 swal("Error encountered while adding data", "Please try again", "error");
@@ -313,19 +312,19 @@ var EditableTable = function () {
 
                     } else if (jqInputs[1].value.length > 100) {
 
-                        swal("Error", "The Office name must be less than 100 characters", "error");
+                        swal("Error", "The Academic Year name must be less than 100 characters", "error");
 
                     } else if (jqInputs[1].value.length < 1) {
 
-                        swal("Error", "Please enter a valid Office name", "error");
+                        swal("Error", "Academic Year description coudn't be nulled", "error");
 
                     } else if (jqInputs[2].value.length > 100) {
 
-                        swal("Error", "The Office description must be less than 100 characters", "error");
+                        swal("Error", "The Academic Year description must be less than 100 characters", "error");
 
                     } else if (jqInputs[2].value.length < 5) {
 
-                        swal("Error", "Please enter a valid Office description", "error");
+                        swal("Error", "Please enter a valid Academic Year description", "error");
 
                     }
                 } else {
