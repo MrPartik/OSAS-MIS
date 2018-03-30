@@ -46,7 +46,7 @@ include('../config/connection.php');
                                                 <tr>
                                                     <th>Student Number</th>
                                                     <th>Full Name</th>
-                                                    <th>Course year and Section</th>
+                                                    <th>Course</th>
                                                     <th>ID and Regicard</th>
                                                     <th>Last Modified</th>
                                                     <th>
@@ -95,7 +95,7 @@ include('../config/connection.php');
                                                 <tr>
                                                     <th>Student Number</th>
                                                     <th>Full Name</th>
-                                                    <th>Course year and Section</th>
+                                                    <th>Course</th>
                                                     <th>ID and Regicard</th>
                                                     <th>Last Modified</th>
                                                     <th>
