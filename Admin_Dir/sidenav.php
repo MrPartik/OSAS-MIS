@@ -16,7 +16,7 @@
                     </a>
                     <ul class="sub">
                         <li <?php if( $currentPage==='Admin_Title' ) { echo 'class="active"';} ?>><a href="FinancialAssistanceTitle.php">Assistance Title</a></li>
-                        <li <?php if( $currentPage==='Admin_BYear' ) { echo 'class="active"';} ?> ><a href="BatchYear.php">Batch Year</a></li>
+                        <li <?php if( $currentPage==='Admin_BYear' ) { echo 'class="active"';} ?> ><a href="BatchYear.php">Academic Year</a></li>
                         <li <?php if( $currentPage==='Admin_Semester' ) { echo 'class="active"';} ?>><a href="Semester.php">Semester</a></li>
                     </ul>
                 </li>
