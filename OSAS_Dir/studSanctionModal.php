@@ -192,7 +192,7 @@
     </div>
     <script> 
 
-        var table = $('#dynamic-table-modal').DataTable(); 
+        var table = $('#dynamic-table-modal').DataTable({iDisplayLength:3}); 
         $('#assignSanction').on("click", function() {
             if ($('#sanctionDiv:visible').length) {
                 $("#sanctionDiv").slideToggle(500);

@@ -72,29 +72,9 @@
     <script src="../js/select2/select2.js"></script>
     <script src="../js/select-init.js"></script>
     <script>
-        $(document).ready(function () {
-            var dataSrc = [];
             var table = $('#dynamic-table-modal').DataTable({
-                'initComplete': function () {
-                    var api = this.api();
-                    api.cells('tr', [1]).every(function () {
-                        var data = $('<div>').html(this.data()).text();
-                        if (dataSrc.indexOf(data) === -1) {
-                            dataSrc.push(data);
-                        }
-                    });
-                    dataSrc.sort();
-                    $('.dataTables_filter input[type="search"]', api.table().container()).typeahead({
-                        source: dataSrc
-                        , afterSelect: function (value) {
-                            api.search(value).draw();
-                        }
-                    });
-                }
-                , bDestroy: true
-                , iDisplayLength: 3
+                iDisplayLength: 3
             });
-        });
         $("#saveClearanceSemSave").on("click", function () {
             swal({
                 title: "Are you sure?"

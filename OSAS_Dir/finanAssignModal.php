@@ -145,29 +145,10 @@
                 </div>
             </div >
             <script>
-                $(document).ready(function () {
-                    var dataSrc = [];
                     var table = $('#dynamic-table-modal').DataTable({
-                        'initComplete': function () {
-                            var api = this.api();
-                            api.cells('tr', [1]).every(function () {
-                                var data = $('<div>').html(this.data()).text();
-                                if (dataSrc.indexOf(data) === -1) {
-                                    dataSrc.push(data);
-                                }
-                            });
-                            dataSrc.sort();
-                            $('.dataTables_filter input[type="search"]', api.table().container()).typeahead({
-                                source: dataSrc
-                                , afterSelect: function (value) {
-                                    api.search(value).draw();
-                                }
-                            });
-                        }
-                        , bDestroy: true
+                         bDestroy: true
                         , iDisplayLength: 3
                     });
-                });
                 $('#addFinanStud').on("click", function () {
                     if ($('#FinanDiv:visible').length) {
                         $("#FinanDiv").slideToggle(500);
