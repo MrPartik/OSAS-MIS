@@ -9,7 +9,9 @@ if(isset($_POST['insertSanction']))
     $Cons=$_POST['Cons']; 
     $Finish=$_POST['Finish']; 
     $sancRemarks=$_POST['SancRemarks'];
-   mysqli_query($con,"call Insert_AssignSanction('$StudNumber','$SanctionCode','$DesignatedOfficeCode',$Cons,'$Finish','$sancRemarks')"); 
+    $done = (new DateTime( $_POST['Done']))->format('Y-m-d H:i:s');  
+   mysqli_query($con,"call Insert_AssignSanction('$StudNumber','$SanctionCode','$DesignatedOfficeCode',$Cons,'$Finish','$sancRemarks','$done')"); 
+   echo "call Insert_AssignSanction('$StudNumber','$SanctionCode','$DesignatedOfficeCode',$Cons,'$Finish','$sancRemarks','$done')";
 } 
 if(isset($_POST['updateSanction']))
 {
@@ -17,7 +19,8 @@ if(isset($_POST['updateSanction']))
     $Cons=$_POST['Cons']; 
     $Finish=$_POST['finish'];   
     $sancRemarks=$_POST['SancRemarks'];
-        mysqli_query($con,"call Update_AssignSanction($ID,$Cons,'$Finish','$sancRemarks')"); 
+    $done = (new DateTime( $_POST['Done']))->format('Y-m-d H:i:s');  
+        mysqli_query($con,"call Update_AssignSanction($ID,$Cons,'$Finish','$sancRemarks','$done')");  
   
         
 } 

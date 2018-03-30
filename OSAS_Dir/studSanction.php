@@ -22,13 +22,6 @@ include('../config/connection.php');
             <section id="main-content">
                 <section class="wrapper">
                     <div class="row ">
-                        <!-- <div class="col-md-12">
-                            <ul class="breadcrumbs-alt">
-                                <li> <a href="dashboard.php">Home</a> </li>
-                                <li> <a href="#">Student Management</a> </li>
-                                <li> <a class="current" href="studSanction.php">Student Sanction</a> </li>
-                            </ul>
-                        </div> -->
                         <div class="col-md-3">
                             <div class="mini-stat clearfix"> <span class="mini-stat-icon orange"><i class="fa fa-user"></i></span>
                                 <div class="mini-stat-info"> <span><?php echo $count_stud_sanction?></span> Number of Students who has Sanction </div>
@@ -51,7 +44,7 @@ include('../config/connection.php');
                                                 <tr>
                                                     <th width="15%">Student Number</th>
                                                     <th>Full Name</th>
-                                                    <th>Course year and Section</th>
+                                                    <th>Course</th>
                                                     <th>Status</th>
                                                     <th>Progress</th>
                                                     <th>Last Modified</th>
@@ -61,54 +54,51 @@ include('../config/connection.php');
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                       
-                                                    <?php   while($stud_row=mysqli_fetch_array($view_studProfile)) { ?>
-                                                        <tr>
-                                                            <td>
-                                                                <?php echo $stud_row['Stud_NO'];?>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo $stud_row['FullName'];?>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo $stud_row['Course']?>
-                                                            </td>
-                                                            <td>
-                                                                <?php  
+                                                <?php   while($stud_row=mysqli_fetch_array($view_studProfile)) { ?>
+                                                    <tr>
+                                                        <td>
+                                                            <?php echo $stud_row['Stud_NO'];?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $stud_row['FullName'];?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $stud_row['Course']?>
+                                                        </td>
+                                                        <td>
+                                                            <?php  
                                                             $studNo = $stud_row['Stud_NO'];
                                                             $noRow = mysqli_fetch_array(mysqli_query($con,"SELECT (SELECT COUNT(a.AssSancStudStudent_STUD_NO) FROM t_assign_stud_saction a inner join r_sanction_details b on a.AssSancStudStudent_SancDetails_CODE = b.SancDetails_CODE and b.SancDetails_DISPLAY_STAT='Active' WHERE a.AssSancStudStudent_STUD_NO = '$studNo' and a.AssSancStudStudent_DISPLAY_STAT <> 'Inactive'  and a.AssSancStudStudent_IS_FINISH <>'finished'), (SELECT COUNT(a.AssSancStudStudent_STUD_NO) FROM t_assign_stud_saction a inner join r_sanction_details b on a.AssSancStudStudent_SancDetails_CODE= b.SancDetails_CODE WHERE a.AssSancStudStudent_STUD_NO  = '$studNo' and a.AssSancStudStudent_IS_FINISH ='finished' and a.AssSancStudStudent_DISPLAY_STAT <> 'Inactive' )")); ?>
-                                                                    <center> <span class="label label-danger label-mini"> <?php echo $noRow[0] ?>  </span> &nbsp; <span class="label label-success label-mini"> <?php echo $noRow[1] ?>  </span> </center>
-                                                            </td>
-                                                            <td style="width:20%;">
-                                                                <?php
+                                                                <center> <span class="label label-danger label-mini"> <?php echo $noRow[0] ?>  </span> &nbsp; <span class="label label-success label-mini"> <?php echo $noRow[1] ?>  </span> </center>
+                                                        </td>
+                                                        <?php
                                                 viewStudSanctionComputation($stud_row['Stud_NO']);
-                                                while($row=mysqli_fetch_array($view_studSanctionComputation)){ 
+                                                $row=mysqli_fetch_array($view_studSanctionComputation) 
                                                 ?>
-                                                                    <div class="progress progress-striped progress-xs">
-                                                                        <div style="width:0<?php echo $row['Percentage'] ?>%" aria-valuemax="100%" aria-valuemin="0" role="progressbar" class="progress-bar progress-bar-success"> <span class="sr-only">40% Complete (success)</span> </div>
-                                                                    </div>
-                                                                    <?php }?>
+                                                            <td style="width:20%;" title="<?php echo $row['Percentage'] ?>"> <span class="hidden"><?php echo $row['Percentage'] ?></span>
+                                                                <div class="progress progress-striped progress-xs">
+                                                                    <div style="width:<?php echo $row['Percentage'] ?>%" aria-valuemax="100%" aria-valuemin="0" role="progressbar" class="progress-bar progress-bar-success"> <span class="sr-only">40% Complete (success)</span> </div>
+                                                                </div>
                                                             </td>
-                                                                <?php   
+                                                            <?php   
                                                                         $StudNo= $stud_row['Stud_NO'];
                                                                        $row=mysqli_fetch_array(mysqli_query($con,"select max(AssSancStudStudent_DATE_MOD) from t_assign_stud_saction where AssSancStudStudent_STUD_NO ='$StudNo'"));?>
-                                                            
-                                                            <td data-order="<?php   echo  ($row[0]==null )?"":($row[0]); ?>">
-                                                                     <?php   echo  ($row[0]==null )?"":(new DateTime($row[0]))->format('D M d, Y h:i A'); ?>
-                                                            </td>
-                                                            <td>
-                                                                <center>
-                                                                    <button id="StudSanctionModalClick" value="<?php echo $stud_row['Stud_NO']; ?>" class="btn btn-info " data-toggle="modal" href="#studSanction"> <i class="fa  fa-info-circle"></i> </button>
-                                                                </center>
-                                                            </td>
-                                                        </tr>
-                                                        <?php }?>
+                                                                <td data-order="<?php   echo  ($row[0]==null )?" ":($row[0]); ?>">
+                                                                    <?php   echo  ($row[0]==null )?"":(new DateTime($row[0]))->format('D M d, Y h:i A'); ?>
+                                                                </td>
+                                                                <td>
+                                                                    <center>
+                                                                        <button id="StudSanctionModalClick" value="<?php echo $stud_row['Stud_NO']; ?>" class="btn btn-info " data-toggle="modal" href="#studSanction"> <i class="fa  fa-info-circle"></i> </button>
+                                                                    </center>
+                                                                </td>
+                                                    </tr>
+                                                    <?php }?>
                                             </tbody>
                                             <tfoot>
                                                 <tr>
                                                     <th>Student Number</th>
                                                     <th>Full Name</th>
-                                                    <th>Course year and Section</th>
+                                                    <th>Course</th>
                                                     <th>Status</th>
                                                     <th>Progress</th>
                                                     <th>Last Modified</th>
@@ -159,7 +149,7 @@ include('../config/connection.php');
             <!-- Modal Sanction-->
             <!-- Modal Dest-->
             <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="AddDest" class="modal fade">
-                <div class="modal-dialog"  style="width: 700px;">
+                <div class="modal-dialog" style="width: 700px;">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -187,9 +177,9 @@ include('../config/connection.php');
                 </div>
             </div>
             <!-- Modal Dest-->
-            <div id="studSanction" class="modal fade content-sanction " role="dialog "> </div> 
+            <div id="studSanction" class="modal fade content-sanction " role="dialog "> </div>
             <!--Core js-->
-            <?php include('footer.php')?> 
+            <?php include('footer.php')?>
     </body>
 
 </html>
@@ -198,14 +188,14 @@ include('../config/connection.php');
         var dataSrc = [];
         var table = $('#dynamic-table').DataTable({
             'initComplete': function () {
-                var api = this.api(); 
-                api.cells('tr', [0, 1, 2]).every(function () { 
+                var api = this.api();
+                api.cells('tr', [0, 1, 2]).every(function () {
                     var data = $('<div>').html(this.data()).text();
                     if (dataSrc.indexOf(data) === -1) {
                         dataSrc.push(data);
                     }
-                }); 
-                dataSrc.sort(); 
+                });
+                dataSrc.sort();
                 $('.dataTables_filter input[type="search"]', api.table().container()).typeahead({
                     source: dataSrc
                     , afterSelect: function (value) {

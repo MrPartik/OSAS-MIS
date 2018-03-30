@@ -130,7 +130,7 @@
                                             <center>
                                                 <input id="checkFinished" checkStatus="<?php echo  $SancDetrow[ 'FINISHED'] ?>" <?php if( $SancDetrow[ 'FINISHED']==='Finished' ) {echo 'checked';} ?> type="checkbox" /></center>
                                         </td>
-                                         <td> <center><input id="tobeDone" class="form-control" type="Date" >
+                                         <td> <center><input id="tobeDone" class="form-control" type="Date" value=<?php echo $SancDetrow['Done'] ?>>
                                             </center>  </td>
                                         <td class="actionDes">
                                             <center><i title="Delete" style='cursor:pointer;font-size: 20px; ' id='deletemotoInside' class='fa fa-minus-circle  '></i> </center> 
@@ -190,31 +190,9 @@
             </div>
         </div>
     </div>
-    <script>
-        $(document).ready(function() {
-            var dataSrc = [];
-            var table = $('#dynamic-table-modal').DataTable({
-                'initComplete': function() {
-                    var api = this.api();
-                    api.cells('tr', [1]).every(function() {
-                        var data = $('<div>').html(this.data()).text();
-                        if (dataSrc.indexOf(data) === -1) {
-                            dataSrc.push(data);
-                        }
-                    });
-                    dataSrc.sort();
-                    $('.dataTables_filter input[type="search"]', api.table().container()).typeahead({
-                        source: dataSrc,
-                        afterSelect: function(value) {
-                            api.search(value).draw();
-                        }
-                    });
-                },
-                bDestroy: true,
-                iDisplayLength: 3
-            });
-        });
- 
+    <script> 
+
+        var table = $('#dynamic-table-modal').DataTable(); 
         $('#assignSanction').on("click", function() {
             if ($('#sanctionDiv:visible').length) {
                 $("#sanctionDiv").slideToggle(500);
@@ -226,6 +204,13 @@
 
         });
         $("#tbodySanctions").on('input', "textarea[id='sancRemarks']", function() {
+            if ($(this).val() == $(this).attr("value")) {
+                $(this).closest("tr").removeClass("updatingRow");
+            } else {
+                $(this).closest("tr").addClass("updatingRow");
+            }
+        });
+        $("#tbodySanctions").on("change","input[id='tobeDone']",function(){ 
             if ($(this).val() == $(this).attr("value")) {
                 $(this).closest("tr").removeClass("updatingRow");
             } else {
@@ -255,10 +240,17 @@
                 DesignatedOfficeCode = $('#officesSelection option:selected').attr("value"),
                 DesignatedOfficeName = $('#officesSelection option:selected').text(),
                 currDate = "<?php echo dateNow(); ?>",
-                Remaining = $('#sanctionSelection option:selected').attr("sanctionTimeValue");
+                Remaining = $('#sanctionSelection option:selected').attr("sanctionTimeValue"),
+                date = new Date();
+                date.setDate(date.getDate() + 2);
 
+                var dd = ('0' + date.getDate()).slice(-2),
+                mm = ('0' + (date.getMonth()+1)).slice(-2),
+                y = date.getFullYear(),
+                someFormattedDate = y + '-' + mm + '-' +dd ;
+            
             $("#tbodySanctions").find(".dataTables_empty").closest("tr ").remove();
-            $("#tbodySanctions").prepend("<tr id='newSanction'> <td class='hidden'>" + SanctionCode + "</td><td class='hidden'>" + DesignatedOfficeCode + "</td><td><span class='label label-success'>NEW</span><strong> " + SanctionName + '<br></strong>Time Value:  ' + Hrs + ' Hours' + "<br/><br/><i style='font-size:10px'>Date Added:" + currDate + "</i></td><td><textarea id='sancRemarks' style='resize:vertical; width:100%;height:100px'></textarea></td><td class='numeric'>  <center><input id='inputConsume' type='text' value='0' maxVal='" + Hrs + "' style='width:50px; text-align:center;' /> </center></td><td class='timeRemaining numeric'>" + Remaining + "</td><td> <center> <input id='checkFinished' type='checkbox'  /></center><td> <center><input id='tobeDone' class='form-control' type='Date' > </center></td></td> <td><center> <i title='Delete' style='cursor:pointer;font-size: 20px; ' id='deletemoto' class='fa fa-minus-circle '></i> </center></td>< /tr>  ");
+            $("#tbodySanctions").prepend("<tr id='newSanction'> <td class='hidden'>" + SanctionCode + "</td><td class='hidden'>" + DesignatedOfficeCode + "</td><td><span class='label label-success'>NEW</span><strong> " + SanctionName + '<br></strong>Time Value:  ' + Hrs + ' Hours' + "<br/><br/><i style='font-size:10px'>Date Added:" + currDate + "</i></td><td><textarea id='sancRemarks' style='resize:vertical; width:100%;height:100px'></textarea></td><td class='numeric'>  <center><input id='inputConsume' type='text' value='0' maxVal='" + Hrs + "' style='width:50px; text-align:center;' /> </center></td><td class='timeRemaining numeric'>" + Remaining + "</td><td> <center> <input id='checkFinished' type='checkbox'  /></center><td> <center><input id='tobeDone' class='form-control' type='Date' value="+ someFormattedDate+" > </center></td></td> <td><center> <i title='Delete' style='cursor:pointer;font-size: 20px; ' id='deletemoto' class='fa fa-minus-circle '></i> </center></td>< /tr>  ");
         });
         $("#tbodySanctions").on("click", "i[id='deletemoto']", function(e) {
             $(this).closest('tr').remove();
@@ -318,9 +310,9 @@
                                     StudNumber = "<?php echo $_GET['StudNo']?>",
                                     Cons = $tds.eq(4).find("input[id='inputConsume']").val(),
                                     Finish = $tds.eq(6).find("input[id='checkFinished']").is(':checked') ? 'Finished' : 'Processing', 
-                                    Done = $tds.eq(6).find("input[id='tobeDone']").val(),
+                                    Donee = $tds.eq(7).find("input[id='tobeDone']").val(),
                                     sancRemarks = $tds.eq(3).find("textarea[id='sancRemarks']").val();
-                                    alert(Done);
+                                
                                 $.ajax({
                                     type: 'post',
                                     url: 'studSanctionSave.php',
@@ -331,10 +323,11 @@
                                         StudNumber: StudNumber,
                                         SancRemarks: sancRemarks,
                                         Cons: Cons,
-                                        Finish: Finish
+                                        Finish: Finish,
+                                        Done:Donee
                                     },
                                     success: function(result) {
-
+                                        alert(result);
                                         window.location.reload();
                                     },
                                     error: function(result) {
@@ -427,7 +420,8 @@
                                     UpdateMax = $tds.eq(3).find("input[id='inputConsume']").attr('maxVal'),
                                     Remaining = $tds.eq(4).html(),
                                     Finish = $tds.eq(5).find("input[id='checkFinished']").is(':checked') ? 'Finished' : 'Processing',
-                                    sancRemarks = $tds.eq(2).find("textarea[id='sancRemarks']").val();
+                                    sancRemarks = $tds.eq(2).find("textarea[id='sancRemarks']").val(),
+                                    Donee = $tds.eq(6).find("input[id='tobeDone']").val(); 
                                 $.ajax({
                                     type: 'post',
                                     url: 'studSanctionSave.php',
@@ -437,11 +431,10 @@
                                         Cons: UpdateConsumed,
                                         max: UpdateMax,
                                         finish: Finish,
-                                        SancRemarks: sancRemarks
+                                        SancRemarks: sancRemarks,
+                                        Done:Donee
                                     },
-                                    success: function(result) {
-
-                                        window.location.reload();
+                                    success: function(result) {  
                                     },
                                     error: function(result) {
                                         alert('Error')

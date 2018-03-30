@@ -57,7 +57,7 @@
                         <div id="FinanDiv" class="row collapse panel-body">
                             <div class="col-md-6">Financial Assistance
                                 <select id="finanDesc" class="form-control m-bot15">
-                                    <?php $querySanc =mysqli_query($con,"select * from r_financial_assistance_title where FinAssiTitle_DISPLAY_STAT<>'Inactive'"); 
+                                    <?php $querySanc =mysqli_query($con,"select * from r_financial_assistance_title where FinAssiTitle_DISPLAY_STAT<>'Inactive'  and `FinAssiTitle_NAME` NOT in (SELECT `AssStudFinanAssistance_FINAN_NAME` FROM t_assign_stud_finan_assistance WHERE  `AssStudFinanAssistance_DISPLAY_STAT` ='Active' AND `AssStudFinanAssistance_STUD_NO` ='$data') ORDER BY `r_financial_assistance_title`.`FinAssiTitle_CODE` "); 
                                           while($row =mysqli_fetch_array($querySanc)) { ?>
                                         <option desc="<?php echo $row['FinAssiTitle_DESC']?>" value="<?php echo $row['FinAssiTitle_NAME']?>">
                                             <?php echo $row['FinAssiTitle_NAME']?>

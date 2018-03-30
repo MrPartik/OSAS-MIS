@@ -130,6 +130,7 @@ $view_studLossCond="";
                                     ,B.AssSancStudStudent_DATE_ADD Start
                                     ,B.AssSancStudStudent_DATE_MOD Mods
                                     ,B.AssSancStudStudent_REMARKS Remarks
+                                    ,B.AssSancStudStudent_TO_BE_DONE Done
                                     FROM r_stud_profile A
                                     INNER JOIN  t_assign_stud_saction B ON
                                         A.Stud_NO = B.AssSancStudStudent_STUD_NO
