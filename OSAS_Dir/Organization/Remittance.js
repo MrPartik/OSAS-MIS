@@ -129,7 +129,7 @@ var EditableTable = function () {
                 swal({
 
                         title: "Are you sure?",
-                        text: "The record will be save and will be use for further transaction",
+                        text: "The record will be permanently deleted?",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: '#DD6B55',

@@ -125,12 +125,12 @@ $user_check = $_SESSION['logged_user']['username'];
                                             <thead>
                                                 <tr>
                                                     <th class="hidden">id</th>
-                                                    <th>Remittance No.</th>
+                                                    <th >Remittance No.</th>
                                                     <th>Organization</th>
                                                     <th>Overview</th>
                                                     <th>Description</th>
                                                     <th>Date Issued</th>
-                                                    <th>Action</th>
+                                                    <th style="width:1%"><center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -153,16 +153,16 @@ $user_check = $_SESSION['logged_user']['username'];
                                                         echo "
                                                         <tr class=''>
                                                             <td class='hidden'>$id</td>
-                                                            <td ><label>$number</label></td>
-                                                            <td style='width:200px'><label>$name</label></td>
+                                                            <td><center>$number</center></td>
+                                                            <td style='width:200px'>$name</td>
                                                             <td style='width:280px'><label>Send by: </label> $send<br/>
                                                                 <label>Receive by: </label> $rec</td>
                                                             <td><label>Amount: </label> $amount<br/><label>Description: </label> $desc</td>
                                                             <td><label>$date</label></td>
                                                             <td style='width:150px'>
                                                                 <center>
-                                                                    <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-edit'></i></a>
-                                                                    <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>
+                                                                    <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-edit'></i></a> 
+                                                                    <!--<a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>-->
                                                                 </center>
                                                             </td>
                                                         </tr>
@@ -175,12 +175,12 @@ $user_check = $_SESSION['logged_user']['username'];
                                             <tfoot>
                                                 <tr>
                                                     <th class="hidden">id</th>
-                                                    <th>Remittance No.</th>
+                                                    <th >Remittance No.</th>
                                                     <th>Organization</th>
                                                     <th>Overview</th>
                                                     <th>Description</th>
                                                     <th>Date Issued</th>
-                                                    <th>Action</th>
+                                                    <th  style="width:1%"><center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -232,14 +232,14 @@ $user_check = $_SESSION['logged_user']['username'];
                                     Organization Name
                                     <select class="form-control input-sm" id="drporg">
                                     <?php
-                                        $view_query = mysqli_query($con," SELECT OrgForCompliance_ORG_CODE,CONCAT(OrgForCompliance_ORG_CODE,' - ',OrgAppProfile_NAME) AS NAME,(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) AS STAT FROM `t_org_for_compliance` INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR= '$current_acadyear' AND (SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) = 'TRUE'
+                                        $view_query = mysqli_query($con," SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME,(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) AS STAT FROM `t_org_for_compliance` INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR= '$current_acadyear' AND (SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) = 'TRUE'
                                         ");
                                 
                                         $fillorg = ' <option disable selected value="default" >Please choose an Organization</option>';
                                         while($row = mysqli_fetch_assoc($view_query))
                                         {
                                             $val = $row['OrgForCompliance_ORG_CODE'];
-                                            $name = $row['NAME'];
+                                            $name = $row['OrgAppProfile_NAME'];
                                             $fillorg = $fillorg . " <option value='".$val."' >".$name."</option>";
 
                                         }
@@ -261,7 +261,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                 </div>
                             </div>
                             <div class="row" style="padding-top:10px">
-                                <div class="col-lg-8 " style="padding-top:10px">
+                                <div class="col-lg-12 " style="padding-top:10px">
                                     Description<textarea class="form-control" placeholder="ex. Description" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
                                 </div>
                             </div>
@@ -279,16 +279,16 @@ $user_check = $_SESSION['logged_user']['username'];
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Remittance</h4>
+                        <h4 class="modal-title"><i class="fa fa-money"></i>   Edit Remittance</h4>
                     </div>
                     <div class="modal-body">
                         <form method="post" id="updform-data">
                             <div class="row">
-                                <div class="col-lg-6 form-group">
+                                <div class="col-lg-12 form-group">
                                     Organization Name
-                                    <select class="form-control input-sm" id="upddrporg">
+                                    <select disabled class="form-control input-sm" id="upddrporg">
                                     <?php
-                                        $view_query = mysqli_query($con," SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME FROM `t_org_for_compliance` INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE WHERE OrgForCompliance_DISPAY_STAT = 'Active' ");
+                                        $view_query = mysqli_query($con,"SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME,(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) AS STAT FROM `t_org_for_compliance` INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR= '$current_acadyear' AND (SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) = 'TRUE'");
                                 
                                         $fillorg = ' <option disable selected value="default" >Please choose an Organization</option>';
                                         while($row = mysqli_fetch_assoc($view_query))
@@ -312,7 +312,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                 </div>
                             </div>
                             <div class="row" style="padding-top:10px">
-                                <div class="col-lg-8 " style="padding-top:10px">
+                                <div class="col-lg-12 " style="padding-top:10px">
                                     Description<textarea class="form-control" placeholder="ex. Description" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="updtxtdesc"></textarea>
                                 </div>
                             </div>
