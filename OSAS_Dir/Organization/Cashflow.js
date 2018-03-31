@@ -98,9 +98,10 @@ var EditableTable = function () {
                         var table = $('#editable-sample').DataTable();
                         jQuery(table.fnGetNodes()).each(function () {
                             oTable.fnDeleteRow(0);
-
+                            alert(data);
                         });
                         $.each(data, function (key, val) {
+                            
                             var aiNew = oTable.fnAddData(['<label>' + val.ref + '</label>', '<label>' + val.desc + '</label>', '<label>' + val.col + '</label>', '<label>' + val.exp + '</label>', '<label>' + val.bal + '</label>', '<label>' + val.rem + '</label>', '<label>' + val.dat + '</label>']);
                             var nRow = oTable.fnGetNodes(aiNew[0]);
                         });
