@@ -60,7 +60,7 @@ table td, table th { border: 1px solid black; padding: 5px; }
 .edit #image, #save-logo, #cancel-logo, .edit #change-logo, .edit #delete-logo { display: none; }
 #eventname { font-size: 15px; font-weight: bold; float: left; }
 
-#meta { margin-bottom: 10px; margin-right:-15px; width: 350px; float: right; }
+#meta { margin-bottom: 10px; margin-right:-15px; width: 400px; float: right; }
 #meta td { text-align: center;  }
 #meta td.meta-head { text-align: left; background: #eee; padding-left: 10px; }
 #meta td textarea { width: 100%; height: 20px; text-align: right; }
@@ -146,7 +146,7 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
 
                                         <?php  while($vouch=mysqli_fetch_array($view_orgVoucher)) { ?>
                                         <tr><td>
-                                                <center>#<?php echo $vouch['OrgVoucher_CASH_VOUCHER_NO'];?></center>
+                                                <center><?php echo $vouch['OrgVoucher_CASH_VOUCHER_NO'];?></center>
                                             </td>
                                         <td>
                                                 <?php echo $vouch['OrgForCompliance_ORG_CODE']." - ".$vouch['OrgAppProfile_NAME'];?>
@@ -194,16 +194,14 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
     </section>
     <!-- Modal -->
     <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Add" class="modal fade">
-        <div class="modal-dialog" style="width:700px">
+        <div class="modal-dialog" style="width:900px">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Add Student</h4>
+                    <h4 class="modal-title">Requesting Voucher</h4>
                 </div>
                 <div class="modal-body">
-                    <br>
-                    <p>You are now adding organization voucher</p>
-                    <br>
+                     
                     <div class="row">
                         <div class="col-md-12">
 <table id="meta">
@@ -212,10 +210,13 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
     <td class="AddOrgCode"><select id="Addorgcode" class="form-control m-bot10"><?php  while($code=mysqli_fetch_assoc($view_availOrgVouch)){?>
         <option value="<?php echo $code['OrgForCompliance_ORG_CODE']?>"><?php echo $code["OrgAppProfile_NAME"]?></option>
     <?php }?><select></td>
-</tr>
+</tr>                   <?php  
+                        $VouchNo_query = mysqli_query($con," (SELECT CONCAT('Vouch #', RIGHT(((SELECT COUNT(*) + 1 from t_org_voucher where OrgVoucher_DISPLAY_STAT ='active' )+100000),5) ) AS Vouch) ");
+                        $VouchNo = mysqli_fetch_array($VouchNo_query);
+                        ?>
                         <tr>
                             <td class="meta-head">Voucher Number:</td>
-                            <td class="AddVoucherNo" value="<?php echo mysqli_num_rows(mysqli_query($con,"select *  from t_org_voucher where OrgVoucher_DISPLAY_STAT ='active'"))+1;  ?>">#<?php echo mysqli_num_rows(mysqli_query($con,"select *  from t_org_voucher where OrgVoucher_DISPLAY_STAT ='active'"))+1;  ?></td>
+                            <td class="AddVoucherNo" value="<?php echo $VouchNo["Vouch"];?>"><?php echo $VouchNo["Vouch"]?></td>
                         </tr>
                         <tr> 
                         <td class="meta-head">Date Issued</td>
@@ -226,7 +227,7 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                     <td><input id="AddVouchBy"class="form-control" type="text"></td>
                 </tr>   <tr> 
                             <td class="meta-head">Total Vouch</td>
-                            <td><p id="cash"></p></td>
+                            <td><p id="cash" amount="">₱ 0</p></td>
                         </tr>
                          
         
@@ -234,15 +235,12 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                 
                 </div>
                 
-                <br><br>
-                <br>
-                   <button id="addItem" class="btnInsert btn btn-success" type="submit">Add Item</button>
                 <center>
                 <table id="items">
                 
                                         <tr>  
                                             <th style="width:2%"></th>
-                                            <th style="width:100%">Item Description</th>
+                                            <th style="width:80%">Item Description</th>
                                             <th class="numeric ">Amount</th> 
                                         </tr> 
                                     <tbody id="tbodyvoucher">
@@ -257,9 +255,10 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                                 </center>
                         </div> 
                     </div> 
-                    <div class="modal-footer">
-                        <button id="insertVoucher" class="btnInsert btn btn-success" type="submit">Submit</button>
+                    <div class="modal-footer">    
+                    <button id="addItem" class="btnInsert btn btn-info" type="submit" style="float: left;">Add Item</button>
                         <button data-dismiss="modal" class="btn btn-cancel" type="button">Cancel</button>
+                        <button id="insertVoucher" class="btnInsert btn btn-success" type="submit">Submit</button>
                     </div>
                 </div>
             </div>
@@ -272,51 +271,11 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
     <!--Core js-->
     <?php include('footer.php')?>
     <script>
-        $(document).ready(function() {
-            $('#btnprint').click(function() {
-                var items = [];
-                var rows = $('#dynamic-table').dataTable()
-                    .$('tr', {
-                        "filter": "applied"
-                    });
-                $(rows).each(function(index, el) {
-                    items.push($(this).closest('tr').children('td:first').attr("studno"));
-
-                })
-                window.open('Print/StudentProfile_Print.php?items=' + items, '_blank');
-            });
-            var dataSrc = [];
-            var table = $('#dynamic-table').DataTable({
-                'initComplete': function() {
-                    var api = this.api();
-                    api.cells('tr', [0, 1, 2, 3, 4]).every(function() {
-                        var data = $('<div>').html(this.data()).text();
-                        if (dataSrc.indexOf(data) === -1) {
-                            dataSrc.push(data);
-                        }
-                    });
-                    dataSrc.sort();
-                    $('.dataTables_filter input[type="search"]', api.table().container()).typeahead({
-                        source: dataSrc,
-                        afterSelect: function(value) {
-                            api.search(value).draw();
-                        }
-                    });
-                },
-                bDestroy: true,
-                aaSorting: [
-                    [0, "asc"]
-                ]
-            });
-        });
-        
-        $(".btnInsert").on("click", function() {
-            
-        });
-
+       var rows = $('#dynamic-table').dataTable();
+      
         $("#addItem").on("click",function(){
             
-            $("#tbodyvoucher").append("<tr class='newItem'><td><i id='deletemoto' class='fa fa-minus-circle  '></i></td><td><input id='AddDesc' type='text' style='width:100%'></td> <td><input id='AddAmo' type='text' style='width:100%'></td> </tr>");
+            $("#tbodyvoucher").append("<tr class='newItem'><td><i id='deletemoto' style='font-size:20px' class='fa fa-minus-circle  '></i></td><td><input id='AddDesc' class='form-control' type='text' style='width:100%'></td> <td><input id='AddAmo' type='number'  class='form-control' style='width:100%'></td> </tr>");
         });
         $("#tbodyvoucher").on("click","#deletemoto",function(){
             
@@ -331,9 +290,17 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                 ,datee = $(this).closest("tr").find("td[id='datee']").text();
                
             $.ajax({
-                url: "OrganizationVoucherModal.php?orgcode=" + orgcode+"&vouch="+vouch+"&amo="+amo+"&datee="+datee+"&byyy="+byyy,
+                url: "OrganizationVoucherModal.php",
                 cache: false,
                 async: false,
+                type:"GET"
+                ,data:{
+                    orgcode:orgcode
+                    ,vouch:vouch
+                    ,amo:amo
+                    ,datee:datee
+                    ,byyy:byyy
+                },
                 success: function(result) {
                     $(".content-voucher").html(result);
                 }
@@ -372,12 +339,12 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
 
                                         }
                                         ,success:function(response){
-                                           alert(response);
-                            location.reload();
+                                           alert(response+desc+amou+vouch);
+                                            location.reload();
 
 
-                                        },error:function(){
-
+                                        },error:function(response){
+                                            alert(response);
                                         }
 
                                     });
@@ -390,6 +357,15 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                      });
         });
 
+        $("tbody[id='tbodyvoucher']").on("input","input[id='AddAmo']",function(){
+            var sum=0;
+            $("input[id='AddAmo']").each(function(){
+                sum += +$(this).val();
+             }) .promise().done(function () {
+                $("#cash").attr("amount",sum);
+                $("#cash").html("₱ "+sum);
+            });
+        });
     </script>
 </body> 
 </html>
