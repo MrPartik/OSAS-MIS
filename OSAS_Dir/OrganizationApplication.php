@@ -209,12 +209,10 @@ $user_check = $_SESSION['logged_user']['username'];
                                         ,OrgAppProfile_STATUS
                                         ,(SELECT COUNT(*) FROM r_org_accreditation_details WHERE OrgAccrDetail_DISPLAY_STAT = 'Active') AS A1
                                         , (SELECT COUNT(*) FROM t_org_accreditation_process A WHERE OrgAccrProcess_ORG_CODE = OFC.OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_DISPLAY_STAT='Active')  as A2 
-                                        ,(SELECT IFNULL((SELECT WIZARD_CURRENT_STEP FROM r_application_wizard A WHERE A.WIZARD_ORG_CODE = OrgForCompliance_ORG_CODE),'1') ) AS STEP
+                                        ,(SELECT IFNULL((SELECT distinct WIZARD_CURRENT_STEP FROM r_application_wizard A WHERE A.WIZARD_ORG_CODE = OrgForCompliance_ORG_CODE),'1') ) AS STEP
                                         ,(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OFC.OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 ) = (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) AS TR,
                                         
-                                        (SELECT COUNT(*) FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgAppProfile_APPL_CODE = (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` AS AZ WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR = '$current_acadyear' AND AZ.OrgForCompliance_ORG_CODE = OFC.OrgForCompliance_ORG_CODE  )) AS MYSTAT
-                                        
-                                        
+                                        (SELECT COUNT(*) FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgAppProfile_APPL_CODE = (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` AS AZ WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR = '$current_acadyear' AND AZ.OrgForCompliance_ORG_CODE = OFC.OrgForCompliance_ORG_CODE  )) AS MYSTAT 
                                         FROM `r_org_applicant_profile` AS OAP 
                                         INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE 
                                         WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active' ");
@@ -260,7 +258,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                                 <td><center style='padding-top:10px'>$curstep</center></td>
                                                 <td style='width:200px'>
                                                     <center>
-                                                         <a class='btn btn-info' href='javascript:;'><i class='fa fa-flag' onClick='alert('Session Expired');'></i></a>
+                                                         <a class='btn btn-info' href='javascript:;'  onClick='expiredSession()'><i class='fa fa-flag '></i></a>
                                                     </center>
                                                 </td>
                                             </tr>
@@ -718,6 +716,9 @@ $user_check = $_SESSION['logged_user']['username'];
 
         <!-- END JAVASCRIPTS -->
         <script>
+        function expiredSession(){
+                swal('Expired', 'Session is Expired', 'error');
+            }
             $(document).ready(function() {
                 $('#wizardForm').hide();
                 $('.hidethis').hide();
@@ -823,7 +824,8 @@ $user_check = $_SESSION['logged_user']['username'];
                 EditableTable2.init();
                 EditableTable3.init();
             });
-
+            
+            window.alert = function(){};
         </script>
 
     </body>
