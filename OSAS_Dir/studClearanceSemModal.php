@@ -78,16 +78,17 @@
         $("#saveClearanceSemSave").on("click", function () {
             swal({
                 title: "Are you sure?"
-                , text: "This data will be added  and used for further transaction"
+                , text: "This record will be saved  and used for further transaction"
                 , type: "warning"
                 , showCancelButton: true
                 , confirmButtonColor: '#9DD656'
-                , confirmButtonText: 'Yes, Add it!'
+                , confirmButtonText: 'Yes, save it!'
                 , cancelButtonText: "No, cancel it!"
                 , closeOnConfirm: false
-                , closeOnCancel: false
+                , closeOnCancel: false 
+                , showLoaderOnConfirm: true
             }, function (isConfirm) {
-                if (isConfirm) {
+                if (isConfirm) { 
                     var $studno = $("#studentnumber").text()
                         , $acady = "<?php echo $current_acadyear?>"
                         , $sem = "<?php echo $current_semster?>";
@@ -101,12 +102,8 @@
                             , acady: $acady
                             , sem: $sem
                         }
-                        , success: function (result) {}
-                        , error: function (result) {
-                            swal("Error encountered while adding data", "Please try again", "error");
-                        }
-                    });
-                    $("#e9 option:selected").each(function () {
+                        , success: function (result) {
+                            $("#e9 option:selected").each(function () {
                         var $sigcode = $(this).val();
                         $.ajax({
                             type: 'POST'
@@ -121,21 +118,29 @@
                             }
                             , success: function (result) {}
                             , error: function (result) {
-                                swal("Error encountered while adding data", "Please try again", "error");
+                                swal("Error encountered while saving record", "Please try again", "error");
                             }
                         });
                     }).promise().done(function () {
+                        setTimeout(function(){
                         swal({
                             title: "Woaah, that's neat!"
-                            , text: "The Loss of ID or Regicard record is added"
+                            , text: "The record has been successfully updated!"
                             , type: "success"
                             , showCancelButton: false
                             , confirmButtonColor: '#9DD656'
                             , confirmButtonText: 'Ok'
                         }, function (isConfirm) {
                             location.reload();
-                        });
+                        })}, 1000)
+                      
                     });
+                        }
+                        , error: function (result) {
+                            swal("Error encountered while saving record", "Please try again", "error");
+                        }
+                    });
+                    
                 }
                 else {
                     swal("Cancelled", "The transaction is cancelled", "error");
