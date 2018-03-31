@@ -8,10 +8,10 @@ $currentPage ='Admin_Account';
 $breadcrumbs="
 <div class='col-md-12'><ul class='breadcrumbs-alt'>
 <li>
-    <a class='current' href='#'>User Management</a>
+    <a  href='#'>User Management</a>
 </li>
 <li>
-    <a href='#'>User Setup</a>
+    <a class='current' href='#'>User Setup</a>
 </li>  
 </ul></div>";
 include('header.php');  

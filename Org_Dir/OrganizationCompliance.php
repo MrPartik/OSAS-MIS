@@ -62,7 +62,7 @@ include('../config/connection.php');
                                                         <th>Organization Name</th>
                                                         <th>Organization Adviser</th>
                                                         <th>Organization Category</th>
-                                                        <th style="width:15%"> <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -104,7 +104,7 @@ include('../config/connection.php');
                                                         <th>Organization Name</th>
                                                         <th>Organization Adviser</th>
                                                         <th>Organization Category</th>
-                                                        <th style="width:15%"> <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </tfoot>
                                             </table>

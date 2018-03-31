@@ -52,7 +52,7 @@ include('../config/connection.php');
                                                 <th>Organization Name</th>
                                                 <th>Progress</th>
                                                 <th>Accreditation Status</th>
-                                                <th style="width:1%"> <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
+                                                <th>Action</th>
 
                                             </tr>
                                         </thead>
@@ -107,16 +107,7 @@ include('../config/connection.php');
 
 									?>
 
-                                        </tbody><tfoot>
-                                            <tr>
-                                                <th>Organization Code</th>
-                                                <th>Organization Name</th>
-                                                <th>Progress</th>
-                                                <th>Accreditation Status</th>
-                                                <th style="width:1%"> <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
-
-                                            </tr>
-                                        </tfoot>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -151,7 +142,7 @@ include('../config/connection.php');
     </section>
     <!-- Modal -->
     <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Add" class="modal fade">
-        <div class="modal-dialog" style="width:700">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -163,7 +154,7 @@ include('../config/connection.php');
                             <section class="panel">
                                 <div class="panel-body">
                                     <div class="row" id="profile">
-                                        <div class="col-lg-12 form-group">
+                                        <div class="col-lg-6 form-group">
                                             Organization Name
                                             <select class="form-control input-sm m-bot15 selectAppCode" style="width:100%" id="drpappcode">
                                                 <option selected disabled>Choose Organization...</option>
@@ -237,7 +228,7 @@ include('../config/connection.php');
         </div>
     </div>
     <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Edit" class="modal fade">
-        <div class="modal-dialog" style="width:700px">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -249,9 +240,10 @@ include('../config/connection.php');
                             <section class="panel">
                                 <div class="panel-body">
                                     <div class="row" id="profile">
-                                        <div class="col-lg-12 form-group">
+                                        <div class="col-lg-6 form-group">
                                             Organization Name
-                                            <h4 id="orgname">asd</h4> 
+                                            <h4 id="orgname">asd</h4>
+                                            <h4 id="orgcode">asd</h4>
 
                                         </div>
                                         <form method="post" id="form-data4">

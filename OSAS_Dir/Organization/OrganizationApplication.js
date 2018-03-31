@@ -81,9 +81,12 @@ var EditableTable = function () {
 
             jQuery('#editable-sample_wrapper .dataTables_filter input').addClass("form-control medium"); // modify table search input
             jQuery('#editable-sample_wrapper .dataTables_length select').addClass("form-control xsmall"); // modify table per page dropdown
-         
-            var oTable2 = $('#editable-sample2').dataTable();
-            var oTable3 = $('#editable-sample3').dataTable();
+            var oTable2 = $('#editable-sample2').dataTable({
+
+            });
+            var oTable3 = $('#editable-sample3').dataTable({
+
+            });
 
             function fillstep5() {
 
@@ -680,21 +683,18 @@ var EditableTable = function () {
 
                         if (curstep == 1 || curstep == -1) {
                             $('#step-1').css("display", "block");
-                            $('#step-2').css("display", "none");
                             $('#step-3').css("display", "none");
                             $('#step-4').css("display", "none");
                             $('#step-5').css("display", "none");
                             $('#step-6').css("display", "none");
 
                             $('#aStep1').removeAttr('disabled');
-                            $('#aStep2').attr('disabled', true);
                             $('#aStep3').attr('disabled', true);
                             $('#aStep4').attr('disabled', true);
                             $('#aStep5').attr('disabled', true);
                             $('#aStep6').attr('disabled', true);
 
                             $('#aStep1').addClass('btn-success');
-                            $('#aStep2').removeClass('btn-success');
                             $('#aStep3').removeClass('btn-success');
                             $('#aStep4').removeClass('btn-success');
                             $('#aStep5').removeClass('btn-success');
@@ -703,110 +703,95 @@ var EditableTable = function () {
                         if (curstep == 2) {
 
                             $('#step-1').css("display", "none");
-                            $('#step-2').css("display", "block");
-                            $('#step-3').css("display", "none");
-                            $('#step-4').css("display", "none");
-                            $('#step-5').css("display", "none");
-                            $('#step-6').css("display", "none");
-
-                            $('#aStep1').removeAttr('disabled');
-                            $('#aStep2').removeAttr('disabled');
-                            $('#aStep3').attr('disabled', true);
-                            $('#aStep4').attr('disabled', true);
-                            $('#aStep5').attr('disabled', true);
-                            $('#aStep6').attr('disabled', true);
-
-                            $('#aStep1').removeClass('btn-success');
-                            $('#aStep2').addClass('btn-success');
-                            $('#aStep3').removeClass('btn-success');
-                            $('#aStep4').removeClass('btn-success');
-                            $('#aStep5').removeClass('btn-success');
-                            $('#aStep6').removeClass('btn-success');
-                        }
-                        if (curstep == 3) {
-                            $('#step-1').css("display", "none");
-                            $('#step-2').css("display", "none");
                             $('#step-3').css("display", "block");
                             $('#step-4').css("display", "none");
                             $('#step-5').css("display", "none");
                             $('#step-6').css("display", "none");
 
                             $('#aStep1').removeAttr('disabled');
-                            $('#aStep2').removeAttr('disabled');
                             $('#aStep3').removeAttr('disabled');
                             $('#aStep4').attr('disabled', true);
                             $('#aStep5').attr('disabled', true);
                             $('#aStep6').attr('disabled', true);
 
                             $('#aStep1').removeClass('btn-success');
-                            $('#aStep2').removeClass('btn-success');
                             $('#aStep3').addClass('btn-success');
                             $('#aStep4').removeClass('btn-success');
                             $('#aStep5').removeClass('btn-success');
                             $('#aStep6').removeClass('btn-success');
-
                         }
-                        if (curstep == 4) {
+                        if (curstep == 3) {
                             $('#step-1').css("display", "none");
-                            $('#step-2').css("display", "none");
                             $('#step-3').css("display", "none");
                             $('#step-4').css("display", "block");
                             $('#step-5').css("display", "none");
                             $('#step-6').css("display", "none");
 
                             $('#aStep1').removeAttr('disabled');
-                            $('#aStep2').removeAttr('disabled');
                             $('#aStep3').removeAttr('disabled');
                             $('#aStep4').removeAttr('disabled');
                             $('#aStep5').attr('disabled', true);
                             $('#aStep6').attr('disabled', true);
 
                             $('#aStep1').removeClass('btn-success');
-                            $('#aStep2').removeClass('btn-success');
                             $('#aStep3').removeClass('btn-success');
                             $('#aStep4').addClass('btn-success');
                             $('#aStep5').removeClass('btn-success');
                             $('#aStep6').removeClass('btn-success');
+
                         }
-                        if (curstep == 5) {
+                        if (curstep == 4) {
                             $('#step-1').css("display", "none");
-                            $('#step-2').css("display", "none");
                             $('#step-3').css("display", "none");
                             $('#step-4').css("display", "none");
                             $('#step-5').css("display", "block");
                             $('#step-6').css("display", "none");
 
                             $('#aStep1').removeAttr('disabled');
-                            $('#aStep2').removeAttr('disabled');
                             $('#aStep3').removeAttr('disabled');
                             $('#aStep4').removeAttr('disabled');
                             $('#aStep5').removeAttr('disabled');
-                            $('#aStep6').attr('disabled');
+                            $('#aStep6').attr('disabled', true);
 
                             $('#aStep1').removeClass('btn-success');
-                            $('#aStep2').removeClass('btn-success');
                             $('#aStep3').removeClass('btn-success');
                             $('#aStep4').removeClass('btn-success');
-                            $('#aStep5').addClass('btn-success')
-                            $('#aStep6').removeClass('btn-success')
+                            $('#aStep5').addClass('btn-success');
+                            $('#aStep6').removeClass('btn-success');
                         }
-                        if (curstep == 6) {
+                        if (curstep == 5) {
                             $('#step-1').css("display", "none");
-                            $('#step-2').css("display", "none");
                             $('#step-3').css("display", "none");
                             $('#step-4').css("display", "none");
                             $('#step-5').css("display", "none");
                             $('#step-6').css("display", "block");
 
                             $('#aStep1').removeAttr('disabled');
-                            $('#aStep2').removeAttr('disabled');
                             $('#aStep3').removeAttr('disabled');
                             $('#aStep4').removeAttr('disabled');
                             $('#aStep5').removeAttr('disabled');
                             $('#aStep6').removeAttr('disabled');
 
                             $('#aStep1').removeClass('btn-success');
-                            $('#aStep2').removeClass('btn-success');
+                            $('#aStep3').removeClass('btn-success');
+                            $('#aStep4').removeClass('btn-success');
+                            $('#aStep5').removeClass('btn-success')
+                            $('#aStep6').addClass('btn-success')
+                        }
+                        if (curstep == 6) {
+                            $('#step-1').css("display", "none");
+                            $('#step-3').css("display", "none");
+                            $('#step-4').css("display", "none");
+                            $('#step-5').css("display", "none");
+                            $('#step-6').css("display", "block");
+
+                            $('#aStep1').removeAttr('disabled');
+                            $('#aStep3').removeAttr('disabled');
+                            $('#aStep4').removeAttr('disabled');
+                            $('#aStep5').removeAttr('disabled');
+                            $('#aStep6').removeAttr('disabled');
+
+                            $('#aStep1').removeClass('btn-success');
                             $('#aStep3').removeClass('btn-success');
                             $('#aStep4').removeClass('btn-success');
                             $('#aStep5').removeClass('btn-success')
@@ -855,68 +840,68 @@ var EditableTable = function () {
                         }
                         //END NG FILL NG STEP1
                         //DITO NASGSTART YUNG PAGFILL SA STEP2
-                        if (curstep > 2) {
-                            $.ajax({
-                                type: 'GET',
-                                url: 'Organization/OrganizationProfile/fillSteps.php',
-                                dataType: 'json',
-                                async: true,
-                                cache: false,
-                                data: {
-                                    _appcode: latcode
-                                },
-                                success: function (step) {
-                                    if (step.catname != 'Academic Organization') {
-                                        $('#course').addClass('hidden');
-                                    } else {
-                                        $('#course').removeClass('hidden');
-                                    }
-                                    $('#drpcat option').each(function (index, brand) {
-                                        if (brand.value == step.catcode) {
-                                            fillcat = fillcat + '<option value="' + step.catcode + '" selected >' + step.catname + '</option>';
-
-                                        } else {
-                                            fillcat = fillcat + '<option value="' + brand.value + '" >' + brand.text + '</option>';
-                                        }
-
-
-
-                                    });
-
-                                    var item = [];
-                                    var i = 0;
-                                    $.ajax({
-                                        type: 'GET',
-                                        url: 'Organization/OrganizationProfile/fillCourse.php',
-                                        dataType: 'json',
-                                        async: true,
-                                        cache: false,
-                                        data: {
-                                            _appcode: latcode
-                                        },
-                                        success: function (data2) {
-                                            $.each(data2, function (key, val) {
-                                                item.push(val.course);
-                                            });
-                                            $("#e9").select2("val", item);
-
-                                        },
-                                        error: function (response2) {
-                                            swal(response2, "Please try again", "error");
-                                        }
-
-                                    });
-
-                                    document.getElementById('drpcat').innerHTML = fillcat;
-
-                                },
-                                error: function (errorfill) {
-                                    swal(errorfill, "Please try again", "error");
-                                }
-
-                            });
-
-                        }
+//                        if (curstep > 2) {
+//                            $.ajax({
+//                                type: 'GET',
+//                                url: 'Organization/OrganizationProfile/fillSteps.php',
+//                                dataType: 'json',
+//                                async: true,
+//                                cache: false,
+//                                data: {
+//                                    _appcode: latcode
+//                                },
+//                                success: function (step) {
+//                                    if (step.catname != 'Academic Organization') {
+//                                        $('#course').addClass('hidden');
+//                                    } else {
+//                                        $('#course').removeClass('hidden');
+//                                    }
+//                                    $('#drpcat option').each(function (index, brand) {
+//                                        if (brand.value == step.catcode) {
+//                                            fillcat = fillcat + '<option value="' + step.catcode + '" selected >' + step.catname + '</option>';
+//
+//                                        } else {
+//                                            fillcat = fillcat + '<option value="' + brand.value + '" >' + brand.text + '</option>';
+//                                        }
+//
+//
+//
+//                                    });
+//
+//                                    var item = [];
+//                                    var i = 0;
+//                                    $.ajax({
+//                                        type: 'GET',
+//                                        url: 'Organization/OrganizationProfile/fillCourse.php',
+//                                        dataType: 'json',
+//                                        async: true,
+//                                        cache: false,
+//                                        data: {
+//                                            _appcode: latcode
+//                                        },
+//                                        success: function (data2) {
+//                                            $.each(data2, function (key, val) {
+//                                                item.push(val.course);
+//                                            });
+//                                            $("#e9").select2("val", item);
+//
+//                                        },
+//                                        error: function (response2) {
+//                                            swal(response2, "Please try again", "error");
+//                                        }
+//
+//                                    });
+//
+//                                    document.getElementById('drpcat').innerHTML = fillcat;
+//
+//                                },
+//                                error: function (errorfill) {
+//                                    swal(errorfill, "Please try again", "error");
+//                                }
+//
+//                            });
+//
+//                        }
                         //END NG FILL NG STEP2
                         //DITO NASGSTART YUNG PAGFILL SA STEP3
                         if (curstep > 3) {

@@ -57,6 +57,7 @@ $user_check = $_SESSION['logged_user']['username'];
                 </div>
             </div>
             <div class="top-nav clearfix">
+
                 <!--search & user info start-->
                 <ul class="nav pull-right top-menu">
                     <li>
@@ -171,7 +172,11 @@ $user_check = $_SESSION['logged_user']['username'];
                                 <div class="panel-body">
                                     <div class="adv-table editable-table ">
                                         <div class="clearfix">
-
+                                            <div class="btn-group">
+                                                <button id="editable-sample_new" data-toggle="modal" id="openAddmodal" href="#Add" class="btn btn-success">
+                                        Application <i class="fa fa-plus"></i>
+                                    </button>
+                                            </div>
                                             <div class="btn-group">
                                                 <button id="editable-sample_new" data-toggle="modal" id="openAddmodal" href="#Add" class="btn btn-success">Renew organization <i class="fa fa-plus"></i>
                                     </button>
@@ -190,93 +195,61 @@ $user_check = $_SESSION['logged_user']['username'];
                                         <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                             <thead>
                                                 <tr>
-                                                    <th>Organization Code</th>
+                                                    <th>Application Code</th>
                                                     <th>Organization Name</th>
                                                     <th>Organization Description</th>
-                                                    <th>Renewal Status</th>
                                                     <th style="width:100px">Status</th>
-                                                    <th style="width:1%"> <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="tbodyedit">
-                                                <?php 
-                                        $view_query = mysqli_query($con,"SELECT  
-                                        OrgAppProfile_APPL_CODE
-                                        ,OrgAppProfile_DESCRIPTION
-                                        ,OrgForCompliance_ORG_CODE
-                                        ,OrgAppProfile_NAME
-                                        ,OrgForCompliance_ADVISER
-                                        ,OrgAppProfile_STATUS
-                                        ,(SELECT COUNT(*) FROM r_org_accreditation_details WHERE OrgAccrDetail_DISPLAY_STAT = 'Active') AS A1
-                                        , (SELECT COUNT(*) FROM t_org_accreditation_process A WHERE OrgAccrProcess_ORG_CODE = OFC.OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_DISPLAY_STAT='Active')  as A2 
-                                        ,(SELECT IFNULL((SELECT WIZARD_CURRENT_STEP FROM r_application_wizard A WHERE A.WIZARD_ORG_CODE = OrgForCompliance_ORG_CODE),'1') ) AS STEP
-                                        ,(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OFC.OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 ) = (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) AS TR,
-                                        
-                                        (SELECT COUNT(*) FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgAppProfile_APPL_CODE = (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` AS AZ WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR = '$current_acadyear' AND AZ.OrgForCompliance_ORG_CODE = OFC.OrgForCompliance_ORG_CODE  )) AS MYSTAT
-                                        
-                                        
-                                        FROM `r_org_applicant_profile` AS OAP 
-                                        INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE 
-                                        WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active' ");
+                                            <tbody>
+                                                <?php
+
+
+                                        $view_query = mysqli_query($con," SELECT OrgAppProfile_APPL_CODE,OrgAppProfile_NAME,OrgAppProfile_DESCRIPTION, (SELECT IFNULL((SELECT WIZARD_CURRENT_STEP FROM r_application_wizard WHERE WIZARD_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE )),'1') ) AS STEP, (SELECT COUNT(*) FROM r_org_accreditation_details WHERE OrgAccrDetail_DISPLAY_STAT = 'Active') AS A1, (SELECT COUNT(*) FROM t_org_accreditation_process WHERE OrgAccrProcess_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE) AND OrgAccrProcess_DISPLAY_STAT = 'Active' ) as A2 ,
+(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process WHERE OrgAccrProcess_ORG_CODE = (SELECT OrgForCompliance_ORG_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE) AND OrgAccrProcess_IS_ACCREDITED = 1 ) = (SELECT COUNT(*) FROM r_org_accreditation_details WHERE OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE' ) ) AS TR
+
+
+FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' ");
                                         while($row = mysqli_fetch_assoc($view_query))
                                         {
-                                            $code = $row["OrgForCompliance_ORG_CODE"];
+                                            $code = $row["OrgAppProfile_APPL_CODE"];
                                             $name = $row["OrgAppProfile_NAME"];
                                             $desc = $row["OrgAppProfile_DESCRIPTION"];
                                             $accstat = $row["TR"];
                                             $step = $row["STEP"];
-                                            $mystat = $row["MYSTAT"];
                                             $curstep = '';
                                             if($step == 1)
                                                 $curstep = '<span class="label label-primary">Newly Applicant</span>';
-                                            else if($step == -1)
-                                                $curstep = '<span class="label " style="background-color:#24F">Renewed Application</span>';
                                             else if($step == 2)
-                                                $curstep = '<span class="label label-warning">Setting Mission and Vision</span>';
+                                                $curstep = '<span class="label label-info">Setting Organization Category</span>';
                                             else if($step == 3)
-                                                $curstep = '<span class="label label-default">Setting Position</span>';
+                                                $curstep = '<span class="label label-warning">Setting Adviser</span>';
                                             else if($step == 4)
-                                                $curstep = '<span class="label label-default" style="background-color:#286090">Setting Officer</span>';
+                                                $curstep = '<span class="label label-default">Setting Mission and Vision</span>';
                                             else if($step == 5)
                                             {
                                                 if($accstat == 'TRUE' )
                                                     $curstep = '<span class="label label-success">Accredited</span>';
-                                                else  if($accstat == 'FALSE' )
+                                                else
                                                     $curstep = '<span class="label " style="background-color:#41CAC0">Completing Accreditation</span>';
                                             }
-/// <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-edit'></i></a>
-                                            //<a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>
+
                                             echo "
                                             <tr class=''>
                                                 <td>$code</td>
                                                 <td>$name</td>
-                                                <td>$desc</td>";
-                                            
-                                            if($mystat == 0)
-                                            echo "
-                                                <td><center><span class='label label-danger'>Expired</span></center></td>
+                                                <td>$desc</td>
                                                 <td><center style='padding-top:10px'>$curstep</center></td>
                                                 <td style='width:200px'>
                                                     <center>
-                                                         <a class='btn btn-info' href='javascript:;'  onClick='expiredSession()'><i class='fa fa-flag '></i></a>
-                                                    </center>
-                                                </td>
-                                            </tr>
-                                                    ";
-                                            else
-                                            echo "
-                                                <td><center><span class='label label-success'>Active</span></center></td>
-                                                <td><center style='padding-top:10px'>$curstep</center></td>
-                                                <td style='width:200px'>
-                                                    <center>
-                                                       
+                                                        <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-edit'></i></a>
                                                          <a class='btn btn-info wizardOpen' href='javascript:;'><i class='fa fa-flag'></i></a>
-                                                        
+                                                        <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>
                                                     </center>
                                                 </td>
                                             </tr>
                                                     ";
-                                                
                                         }
 
 
@@ -286,12 +259,11 @@ $user_check = $_SESSION['logged_user']['username'];
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th>Organization Code</th>
+                                                    <th>Application Code</th>
                                                     <th>Organization Name</th>
                                                     <th>Organization Description</th>
-                                                    <th>Renewal Status</th>
                                                     <th style="width:100px">Status</th>
-                                                    <th style="width:1%"> <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -319,22 +291,22 @@ $user_check = $_SESSION['logged_user']['username'];
                                             <center>
                                                 <div class="stepwizard-step col-xs-2">
                                                     <a href="#step-1" id="aStep1" type="button" class="btn btn-success btn-circle">1</a>
+                                                    <p><small>Academic Year</small></p>
+                                                </div>
+                                                <div class="stepwizard-step col-xs-2">
+                                                    <a href="#step-2" id="aStep2" type="button" class="btn btn-default btn-circle" disabled>2</a>
+                                                    <p><small>Category</small></p>
+                                                </div>
+                                                <div class="stepwizard-step col-xs-2">
+                                                    <a href="#step-3" id="aStep3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
                                                     <p><small>Adviser</small></p>
                                                 </div>
                                                 <div class="stepwizard-step col-xs-2">
-                                                    <a href="#step-3" id="aStep3" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+                                                    <a href="#step-4" id="aStep4" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
                                                     <p><small>Mission & Vision</small></p>
                                                 </div>
                                                 <div class="stepwizard-step col-xs-2">
-                                                    <a href="#step-4" id="aStep4" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
-                                                    <p><small>Position</small></p>
-                                                </div>
-                                                <div class="stepwizard-step col-xs-2">
-                                                    <a href="#step-5" id="aStep5" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
-                                                    <p><small>Officer</small></p>
-                                                </div>
-                                                <div class="stepwizard-step col-xs-2">
-                                                    <a href="#step-6" id="aStep6" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
+                                                    <a href="#step-5" id="aStep5" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
                                                     <p><small>Accreditation</small></p>
                                                 </div>
                                             </center>
@@ -343,6 +315,75 @@ $user_check = $_SESSION['logged_user']['username'];
                                     <form role="form">
                                         <div class="panel panel-primary setup-content" id="step-1">
                                             <div class="panel-heading">
+                                                <h3 class="panel-title" style="color:white">For what academic year? </h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <label class="control-label">Academic Year</label>
+                                                    <select class="form-control input-sm m-bot15 selectYear" style="width:100%" id="drpyear">
+                                                        <?php
+
+                                                            $view_query = mysqli_query($con,"SELECT Batch_YEAR AS YEAR FROM `r_batch_details` WHERE Batch_DISPLAY_STAT = 'Active' ORDER BY Batch_YEAR DESC ");
+                                                            while($row = mysqli_fetch_assoc($view_query))
+                                                            {
+                                                                $year = $row["YEAR"];
+
+                                                                echo "<option value='$year'>$year</option>";
+                                                            }
+                                                        ?>
+                                                 </select>
+                                                </div>
+                                                <button class="btn btn-primary nextBtn pull-right" type="button" id="btnStep1">Next</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-primary setup-content" id="step-2">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title" style="color:white">What category the organization belong?</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="col-lg-6 form-group">
+                                                    <label class="control-label">Organization Category</label>
+                                                    <select class="form-control input-sm m-bot15 selectYear" id="drpcat">
+                                                        <?php
+
+                                                            $view_query = mysqli_query($con,"SELECT OrgCat_CODE AS CODE , OrgCat_NAME AS NAME FROM `r_org_category` WHERE OrgCat_DISPLAY_STAT = 'Active'");
+                                                            while($row = mysqli_fetch_assoc($view_query))
+                                                            {
+                                                                $catcode = $row["CODE"];
+                                                                $catname = $row["NAME"];
+
+                                                                echo "
+                                                                    <option value='$catcode'>$catname</option>
+                                                                        ";
+                                                            }
+                                                        ?>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-lg-6 form-group" id="course">
+
+                                                    <label class="control-label">Course</label>
+                                                    <select multiple name="e9" id="e9" style="width:100%" class="populate">
+                                                        <?php
+                                                            $view_query = mysqli_query($con,"SELECT Course_CODE as CODE FROM `r_courses` WHERE Course_DISPLAY_STAT = 'Active'");
+                                                            while($row = mysqli_fetch_assoc($view_query))
+                                                            {
+                                                                $coucode = $row["CODE"];
+
+                                                                echo "
+                                                                    <option value='$coucode'>$coucode</option>
+                                                                        ";
+                                                            }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                                <button class="btn btn-primary nextBtn pull-right" id="btnStep2" type="button">Next</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-primary setup-content" id="step-3">
+                                            <div class="panel-heading">
                                                 <h3 class="panel-title" style="color:white">Who is the Adviser?</h3>
                                             </div>
                                             <div class="panel-body">
@@ -350,18 +391,16 @@ $user_check = $_SESSION['logged_user']['username'];
                                                     <label class="control-label">Adviser Name</label>
                                                     <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Adviser Name" id="txtadvname" />
                                                 </div>
-                                                <div class="col-lg-12">
-                                                    <button class="btn btn-primary nextBtn pull-right" type="button" id="next1">Next</button>
-                                                    <button class="btn btn-info " type="button" id="btnStep1">Save for Now?</button>
-                                                </div>
+                                                <button class="btn btn-primary nextBtn pull-right" type="button" id="btnStep3">Next</button>
                                             </div>
                                         </div>
 
-                                        <div class="panel panel-primary setup-content" id="step-3">
+                                        <div class="panel panel-primary setup-content" id="step-4">
                                             <div class="panel-heading">
                                                 <h3 class="panel-title" style="color:white">What do they Visualize?</h3>
                                             </div>
                                             <div class="panel-body">
+
                                                 <div class="row">
                                                     <div class="form-group col-md-6">
                                                         <label class="control-label">Mission</label>
@@ -371,66 +410,11 @@ $user_check = $_SESSION['logged_user']['username'];
                                                         <label class="control-label">Vision</label>
                                                         <textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtvision" style="roverflow:auto;resize:none"></textarea>
                                                     </div>
-                                                    <div class="col-lg-12">
-                                                        <button class="btn btn-primary nextBtn pull-right" type="button" id="next3">Next</button>
-                                                        <button class="btn btn-info " type="button" id="btnStep3">Save for Now?</button>
-                                                    </div>
+                                                    <button class="btn btn-primary nextBtn pull-right" type="button" id="btnStep4">Next</button>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-primary setup-content" id="step-4">
-                                            <div class="panel-heading">
-                                                <h3 class="panel-title" style="color:white">What are the position in the organization?</h3>
-                                            </div>
-                                            <div class="panel-body">
-                                                <div class="clearfix">
-                                                    <div class="btn-group" id="btnposadd">
-                                                        <button id="editable-sample_new2" data-toggle="modal" href="#AddPos" class="btn btn-success" type="button"> Add <i class="fa fa-plus"></i> </button>
-                                                    </div>
-
-                                                </div>
-                                                <table class="table table-striped table-hover table-bordered" id="editable-sample2">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Officer Position</th>
-                                                            <th>Ocurrence</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="tblpos"> </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <button class="btn btn-primary nextBtn pull-right" type="button" id="next4">Next</button>
                                             </div>
                                         </div>
                                         <div class="panel panel-primary setup-content" id="step-5">
-                                            <div class="panel-heading">
-                                                <h3 class="panel-title" style="color:white">Who are the officer in the organization?</h3>
-                                            </div>
-                                            <div class="panel-body">
-                                                <div class="clearfix">
-                                                    <div class="btn-group" id="btnoffadd">
-                                                        <button id="editable-sample_new3" data-toggle="modal" href="#AddOff" class="btn btn-success" type="button"> Add <i class="fa fa-plus"></i> </button>
-                                                    </div>
-
-                                                </div>
-                                                <table class="table table-striped table-hover table-bordered" id="editable-sample3">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Officer Position</th>
-                                                            <th>Name</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="tblpos"> </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <button class="btn btn-primary nextBtn pull-right" type="button" id="next5">Next</button>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-primary setup-content" id="step-6">
                                             <div class="panel-heading">
                                                 <h3 class="panel-title" style="color:white">What requirement do they have?</h3>
                                             </div>
@@ -470,10 +454,8 @@ $user_check = $_SESSION['logged_user']['username'];
                                                         </table>
                                                     </form>
                                                 </div>
-                                                <div class="col-lg-12">
-                                                    <button class="btn btn-success pull-right" type="button" id="next6">Finish!</button>
-                                                    <button class="btn btn-info " type="button" id="btnFinish">Save for Now?</button>
-                                                </div>
+                                                <button class="btn btn-success pull-right" type="button" id="btnFinish">Finish!</button>
+                                                <h4 id="orgcode" style="display:none">asd</h4>
 
                                             </div>
                                         </div>
@@ -515,36 +497,21 @@ $user_check = $_SESSION['logged_user']['username'];
         </section>
         <!-- Modal -->
         <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Add" class="modal fade">
-            <div class="modal-dialog" style="width:500px">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Renewal</h4>
+                        <h4 class="modal-title">Organization Profile</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <form method="post" id="form-data">
                                     <div class="row" id="profile">
-                                        <div class="col-lg-12 form-group">
-                                            Organization
-                                            <select class="form-control input-sm" id="drporg">
-                                            <?php
-                                                $view_query = mysqli_query($con,"SELECT OrgAppProfile_APPL_CODE,OrgAppProfile_NAME FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgAppProfile_APPL_CODE NOT IN ((SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR = '$current_acadyear'))");
-                                                $fillorg = ' <option disable selected value="default" >Please choose an Organization</option>';
-                                                while($row = mysqli_fetch_assoc($view_query))
-                                                {
-                                                    $val = $row['OrgAppProfile_APPL_CODE'];
-                                                    $name = $row['OrgAppProfile_NAME'];
-                                                    $fillorg = $fillorg . " <option value='".$val."' >".$name."</option>";
-
-                                                }
-                                                
-                                                echo $fillorg;
-                                            ?>
-                                            </select>
+                                        <div class="col-lg-6 form-group">
+                                            Organization Name<input name="emailadd" type="text" class="form-control" placeholder="ex. COMMITS Pioneer" id="txtname">
                                         </div>
-                                        <div class="col-lg-12 form-group desc">
+                                        <div class="col-lg-12 form-group">
                                             Organization Description<textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
                                         </div>
                                         <div class="col-lg-3 form-group hidethis">
@@ -601,83 +568,53 @@ $user_check = $_SESSION['logged_user']['username'];
                 </div>
             </div>
         </div>
-        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="AddPos" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Add Officer Position</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" id="posform-data">
-                            <div class="row" style="padding-left:15px;padding-top:10px">
-                                <div class="col-lg-6"> Officer Position
-                                    <input type="text" class="form-control" placeholder="ex. President" id="txtposcode"> </div>
-                                <div class="col-lg-6"> Occurence
-                                    <input type="number" class="form-control" placeholder="1" id="txtocc"> </div>
-                                <div class="col-lg-8 " style="padding-top:10px"> Description
-                                    <textarea class="form-control" placeholder="ex. Leader of the Organization" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtposdesc"></textarea>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button data-dismiss="modal" class="btn btn-default" id="close2" type="button">Close</button>
-                        <button class="btn btn-success " id="submit-data2" type="button">Save</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="AddOff" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Add Organization Officer</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" id="offform-data">
-                            <div class="row" style="padding-left:15px;padding-top:10px">
-                                <div class="col-lg-8 " style="padding-top:10px"> Student
-                                    <select class="form-control input-sm m-bot15 selectYear" id="drpstud">
-                                    </select>
-                                </div>
-                                <div class="col-lg-8 " style="padding-top:10px"> Position
-                                    <select class="form-control input-sm m-bot15 selectYear" id="drppos">
-                                    </select>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button data-dismiss="modal" class="btn btn-default" id="close3" type="button">Close</button>
-                        <button class="btn btn-success " id="btnsubmitoff" type="button">Save</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!-- modal -->
         <!-- Placed js at the end of the document so the pages load faster -->
-        <?php include('footer.php')?>
+
+        <!--Core js-->
+        <script src="../js/jquery-1.8.3.min.js"></script>
+        <script src="../bs3/js/bootstrap.min.js"></script>
+        <script class="include" type="text/javascript" src="../js/jquery.dcjqaccordion.2.7.js"></script>
+        <script src="../js/jquery.scrollTo.min.js"></script>
+        <script src="../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
+        <script src="../js/jquery.nicescroll.js"></script>
+        <!--Easy Pie Chart-->
+        <script src="../js/easypiechart/jquery.easypiechart.js"></script>
+        <!--Sparkline Chart-->
+        <script src="../js/sparkline/jquery.sparkline.js"></script>
+        <!--jQuery Flot Chart-->
+        <script src="../js/flot-chart/jquery.flot.js"></script>
+        <script src="../js/flot-chart/jquery.flot.tooltip.min.js"></script>
+        <script src="../js/flot-chart/jquery.flot.resize.js"></script>
+        <script src="../js/flot-chart/jquery.flot.pie.resize.js"></script>
+
+        <script type="text/javascript" src="../js/data-tables/jquery.dataTables.js"></script>
+        <script type="text/javascript" src="../js/data-tables/DT_bootstrap.js"></script>
+        <script type="text/javascript" src="../js/sweetalert/sweetalert.min.js"></script>
+        <script src="../js/select2/select2.js"></script>
+        <script src="../js/select-init.js"></script>
+
+        <!--common script init for all pages-->
+        <script src="../js/scripts.js"></script>
 
         <!--script for this page only-->
         <script src="Organization/OrganizationApplication.js"></script>
 
         <!-- END JAVASCRIPTS -->
         <script>
-        function expiredSession(){
-                swal('Expired', 'Session is Expired, you can`t modify the transaction here! It should remain as is', 'error');
-            }
             $(document).ready(function() {
                 $('#wizardForm').hide();
                 $('.hidethis').hide();
-                $('.desc').hide();
+
+
                 wizardOpen = $('.wizardOpen');
-                wizardOpen.on('click', function() {
+                wizardOpen.click(function() {
                     $('#tableForm').slideToggle();
                     $('#wizardForm').slideToggle();
 
                 });
+
+
                 $('#closewizardForm').click(function() {
                     $('#tableForm').slideToggle();
                     $('#wizardForm').slideToggle();
@@ -687,7 +624,8 @@ $user_check = $_SESSION['logged_user']['username'];
                 var navListItems = $('div.setup-panel div a'),
                     allWells = $('.setup-content'),
                     allNextBtn = $('.nextBtn');
-                allWells.hide(100);
+
+                allWells.hide();
 
                 navListItems.click(function(e) {
                     e.preventDefault();
@@ -723,58 +661,10 @@ $user_check = $_SESSION['logged_user']['username'];
 
                 $('div.setup-panel div a.btn-success').trigger('click');
             });
-
-            $("button[id='savemuna']").on('click', function() {
-                swal({
-                    title: "Are you sure?",
-                    text: "You want to temporarily save the steps?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: '#9DD656',
-                    confirmButtonText: 'Yes, Save it!',
-                    cancelButtonText: "No, cancel it!",
-                    closeOnConfirm: false,
-                    closeOnCancel: false
-                }, function(isConfirm) {
-                    if (isConfirm) {
-                        swal({
-                            title: "Woaah, that's neat!",
-                            text: "You have successfully save the current step. please continue it if you are ready.",
-                            type: "success",
-                            showCancelButton: false,
-                            confirmButtonColor: '#9DD656',
-                            confirmButtonText: 'Ok'
-                        }, function(isConfirm) {
-                            if ($("#step-1").css("display") == 'block') {
-                                $("#btnStep1").trigger("click");
-                            } else if ($("#step-2").css("display") == 'block') {
-                                $("#btnStep2").trigger("click");
-
-                            } else if ($("#step-3").css("display") == 'block') {
-                                $("#btnStep3").trigger("click");
-
-                            } else if ($("#step-4").css("display") == 'block') {
-                                $("#btnStep4").trigger("click");
-
-                            } else if ($("#step-5").css("display") == 'block') {
-                                $("#btnFinish").trigger("click");
-
-                            }
-                            location.reload();
-                        });
-                    } else {
-                        swal("Cancelled", "The transaction is cancelled", "error");
-                    }
-                });
-            });
-
             jQuery(document).ready(function() {
                 EditableTable.init();
-                EditableTable2.init();
-                EditableTable3.init();
             });
 
-            window.alert = function(){};
         </script>
 
     </body>

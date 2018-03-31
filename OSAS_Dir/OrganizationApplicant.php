@@ -135,7 +135,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                                     <th>Organization Name</th>
                                                     <th>Organization Description</th>
                                                     <th>Status</th>
-                                                    <th>Action</th>
+                                                    <th style="width:10%"> <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -153,7 +153,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                                         if($disstat == 'Active'){
                                                             $display = "<center><span class='badge bg-success ' style='padding:10px;'>Active</span></center>";
                                                             $button = "<center>
-                                                                            <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa   fa-edit'></i></a>                                                        
+                                                                            <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Add' href='javascript:;'><i class='fa   fa-edit'></i></a>                                                        
                                                                             <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right '></i></a>	
                                                                         </center>";
                                                         }
@@ -187,7 +187,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                                     <th>Organization Name</th>
                                                     <th>Organization Description</th>
                                                     <th>Status</th>
-                                                    <th>Action</th>
+                                                    <th style="width:10%"> <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -226,7 +226,7 @@ $user_check = $_SESSION['logged_user']['username'];
         </section>
         <!-- Modal -->
         <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Add" class="modal fade">
-            <div class="modal-dialog">
+            <div class="modal-dialog" style="width:700px">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -234,27 +234,81 @@ $user_check = $_SESSION['logged_user']['username'];
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-12">
-                                <form method="post" id="form-data">
-                                    <div class="row" id="profile">
-                                        <div class="col-lg-6 form-group">
-                                            Organization Name<input name="emailadd" type="text" class="form-control" placeholder="ex. CIT2017" id="txtname">
-                                        </div>
-                                        <div class="col-lg-12 form-group">
-                                            Organization Description<textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
-                                        </div>
-                                        <div class="col-lg-3 form-group hidethis">
-                                            <input type="checkbox" id="chkacc" name="chkacc" class="checkbox form-control" style="width: 20px">
-                                            <label for="chkacc">Accredited</label>
-                                        </div>
-                                    </div>
-                                </form>
+                            <div class="col-lg-12 form-group" id="formcode">
+                                Organization Application Code <input name="studno" disabled type="text" class="form-control" placeholder="ex. CIT2017" id="txtupdcode">
                             </div>
+                            <div class="col-lg-12 form-group">
+                                Organization Name<input name="emailadd" type="text" class="form-control" placeholder="ex. CIT2017" id="txtname">
+                            </div>
+                            <div class="col-lg-12 form-group">
+                                <label class="control-label">Organization Category</label>
+                                <select class="form-control input-sm m-bot15 selectYear" id="drpcat">
+                                        <?php
+
+                                            $view_query = mysqli_query($con,"SELECT OrgCat_CODE AS CODE , OrgCat_NAME AS NAME FROM `r_org_category` WHERE OrgCat_DISPLAY_STAT = 'Active'");
+                                            while($row = mysqli_fetch_assoc($view_query))
+                                            {
+                                                $catcode = $row["CODE"];
+                                                $catname = $row["NAME"];
+
+                                                echo "
+                                                    <option value='$catcode'>$catname</option>
+                                                        ";
+                                            }
+                                        ?>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 form-group" id="course">
+                                <label class="control-label">Course</label>
+                                <select multiple name="e9" id="e9" style="width:100%" class="populate">
+                                    <?php
+                                        $view_query = mysqli_query($con,"SELECT Course_CODE as CODE FROM `r_courses` WHERE Course_DISPLAY_STAT = 'Active'");
+                                        while($row = mysqli_fetch_assoc($view_query))
+                                        {
+                                            $coucode = $row["CODE"];
+
+                                            echo "
+                                                <option value='$coucode'>$coucode</option>
+                                                    ";
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-lg-12 form-group" id="drpnon">
+                                <label class="control-label">Non Academic Category</label>
+                                <select class="form-control input-sm m-bot15 selectYear" id="nonacad">
+                                    <?php
+
+                                        $view_query = mysqli_query($con,"SELECT OrgNonAcad_CODE AS CODE , OrgNonAcad_NAME AS NAME FROM `r_org_non_academic_details` WHERE OrgNonAcad_DISPLAY_STAT = 'Active'");
+                                        while($row = mysqli_fetch_assoc($view_query))
+                                        {
+                                            $catcode = $row["CODE"];
+                                            $catname = $row["NAME"];
+
+                                            echo "
+                                                <option value='$catcode'>$catname</option>
+                                                    ";
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 form-group">
+                                Organization Description<textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
+                            </div>
+                            <!-- <div class="col-lg-3 form-group hidethis">
+                                <input type="checkbox" id="chkacc" name="chkacc" class="checkbox form-control" style="width: 20px">
+                                <label for="chkacc">Accredited</label>
+                            </div> -->
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button data-dismiss="modal" id="close" class="btn btn-default" type="button">Close</button>
                         <button class="btn btn-success " id="submit-data" type="button">Save</button>
+                        <button class="btn btn-success " id="updsubmit-data" type="button">Save</button>
                     </div>
                 </div>
             </div>
@@ -272,11 +326,61 @@ $user_check = $_SESSION['logged_user']['username'];
                                 <form method="post" id="form-data2">
                                     <div class="row" id="profile">
                                         <div class="col-lg-6 form-group">
-                                            Organization Application Code <input name="studno" disabled type="text" class="form-control" placeholder="ex. CIT2017" id="txtupdcode">
-                                        </div>
-                                        <div class="col-lg-6 form-group">
                                             Organization Name<input name="emailadd" type="text" class="form-control" placeholder="ex. email@email.com" id="txtupdname">
                                         </div>
+                                        <div class="col-lg-6 form-group">
+                                            <label class="control-label">Organization Category</label>
+                                            <select class="form-control input-sm m-bot15 selectYear" id="upddrpcat">
+                                                <?php
+
+                                                    $view_query = mysqli_query($con,"SELECT OrgCat_CODE AS CODE , OrgCat_NAME AS NAME FROM `r_org_category` WHERE OrgCat_DISPLAY_STAT = 'Active'");
+                                                    while($row = mysqli_fetch_assoc($view_query))
+                                                    {
+                                                        $catcode = $row["CODE"];
+                                                        $catname = $row["NAME"];
+
+                                                        echo "
+                                                            <option value='$catcode'>$catname</option>
+                                                                ";
+                                                    }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6 form-group" id="updcourse">
+                                            <label class="control-label">Course</label>
+                                            <select multiple name="e9" id="e9" style="width:100%" class="populate">
+                                                <?php
+                                                    $view_query = mysqli_query($con,"SELECT Course_CODE as CODE FROM `r_courses` WHERE Course_DISPLAY_STAT = 'Active'");
+                                                    while($row = mysqli_fetch_assoc($view_query))
+                                                    {
+                                                        $coucode = $row["CODE"];
+
+                                                        echo "
+                                                            <option value='$coucode'>$coucode</option>
+                                                                ";
+                                                    }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6 form-group" id="upddrpnon">
+                                            <label class="control-label">Non Academic Category</label>
+                                            <select class="form-control input-sm m-bot15 selectYear" id="nonacad">
+                                                <?php
+
+                                                    $view_query = mysqli_query($con,"SELECT OrgNonAcad_CODE AS CODE , OrgNonAcad_NAME AS NAME FROM `r_org_non_academic_details` WHERE OrgNonAcad_DISPLAY_STAT = 'Active'");
+                                                    while($row = mysqli_fetch_assoc($view_query))
+                                                    {
+                                                        $catcode = $row["CODE"];
+                                                        $catname = $row["NAME"];
+
+                                                        echo "
+                                                            <option value='$catcode'>$catname</option>
+                                                                ";
+                                                    }
+                                                ?>
+                                            </select>
+                                        </div>
+
                                         <div class="col-lg-12 form-group">
                                             Organization Description<textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtupddesc"></textarea>
                                         </div>
@@ -307,8 +411,36 @@ $user_check = $_SESSION['logged_user']['username'];
         <!-- END JAVASCRIPTS -->
         <script>
             $(document).ready(function() {
+                $('#editable-sample_new').on('click', function() {
+                    $('#updsubmit-data').hide();
+                    $('#submit-data').show();
+                    document.getElementById("form-data").reset();
+
+
+                });
+
                 $('.hidethis').hide();
-                alert($('#editable-sample').attr('batch-year'));
+                $('#drpnon').hide();
+                $('#upddrpnon').hide();
+                $('#updcourse').hide();
+                $('#formcode').hide();
+                $('#updsubmit-data').hide();
+                $('#drpcat').change(function() {
+                    var e = document.getElementById("drpcat");
+                    var getcat = e.options[e.selectedIndex].text;
+                    if (getcat == 'Academic Organization') {
+                        $('#course').show();
+                        $('#drpnon').hide();
+                    } else if (getcat == 'Non-academic Organization') {
+                        $('#course').hide();
+                        $('#drpnon').show();
+                    } else {
+                        $('#course').hide();
+                        $('#drpnon').hide();
+                    }
+
+                });
+
 
             });
             jQuery(document).ready(function() {

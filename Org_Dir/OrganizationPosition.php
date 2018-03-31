@@ -39,44 +39,26 @@ include('../config/connection.php');
                                     <div class="btn-group" id="btnoffadd">
                                         <button id="editable-sample_new" data-toggle="modal" id="openAddmodal" class="btn btn-success"> Add <i class="fa fa-plus"></i> </button>
                                     </div>
+                                    <div class="btn-group pull-right">
+                                        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i> </button>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="#">Print</a></li>
+                                            <li><a href="#">Save as PDF</a></li>
+                                            <li><a href="#">Export to Excel</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div class="space15" style="padding-top:15px"></div>
-                                <div class="btn-group">
-                                    <select class="form-control m-bot15" id="selOrg">
-                                            <option selected disabled>Please Select an Organization</option>
-                                            <?php
-
-
-                                                    $view_query = mysqli_query($con,"SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME,OrgForCompliance_ADVISER,OrgAppProfile_STATUS,OC.OrgCat_NAME FROM `r_org_applicant_profile` AS OAP INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE INNER JOIN t_assign_org_category AOC ON AOC.AssOrgCategory_ORG_CODE = OFC.OrgForCompliance_ORG_CODE INNER JOIN r_org_category OC ON OC.OrgCat_CODE = AOC.AssOrgCategory_ORGCAT_CODE WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active'");
-                                                    while($row = mysqli_fetch_assoc($view_query))
-                                                    {
-                                                        $code = $row["OrgForCompliance_ORG_CODE"];
-                                                        $name = $row["OrgAppProfile_NAME"];
-                                                        echo '<option value="'.$code.'">' .$code.'-  '.$name.'</option>';
-                                                    }
-
-
-                                                ?>
-                                        </select>
-                                </div>
+                                
                                 <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                     <thead>
                                         <tr>
                                             <th>Officer Position</th>
                                             <th>Description</th>
-                                            <th style="width:10%"> <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody> 
-                                    
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Officer Position</th>
-                                            <th>Description</th>
-                                            <th style="width:10%"> <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
-                                        </tr>
-                                    </tfoot>
+                                    <tbody> </tbody>
                                 </table>
                             </div>
                         </div>
@@ -108,20 +90,18 @@ include('../config/connection.php');
     <!--right sidebar end-->
     <!-- Modal -->
     <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Add" class="modal fade">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="width:500px">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Add Officer Position</h4>
+                    <h4 class="modal-title">Add Officer Position - <?php echo $referenced_user?></h4>
                 </div>
                 <div class="modal-body">
                     <form method="post" id="form-data">
                         <div class="row" style="padding-left:15px;padding-top:10px">
-                            <div class="col-lg-6"> Officer Position
+                            <div class="col-lg-12"> Officer Position
                                 <input type="text" class="form-control" placeholder="ex. President" id="txtcode"> </div>
-                            <div class="col-lg-6"> Occurence
-                                <input type="number" class="form-control" placeholder="1" id="txtocc"> </div>
-                            <div class="col-lg-8 " style="padding-top:10px"> Description
+                            <div class="col-lg-12 " style="padding-top:10px"> Description
                                 <textarea class="form-control" placeholder="ex. Leader of the Organization" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
                             </div>
                         </div>

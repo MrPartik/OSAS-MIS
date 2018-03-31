@@ -13,9 +13,9 @@
           
         }
 
-        if($cur < 6 )
+        if($cur < 5 )
         {
-             $query = mysqli_query($con,"UPDATE r_application_wizard SET WIZARD_CURRENT_STEP = 6 WHERE WIZARD_ORG_CODE = '$appcode' ");
+             $query = mysqli_query($con,"UPDATE r_application_wizard SET WIZARD_CURRENT_STEP = 5 WHERE WIZARD_ORG_CODE = '$appcode' ");
 
         }       
 

@@ -21,13 +21,14 @@
                     </ul>
                 </li>
                 <li class="sub-menu">
-                    <a <?php if( $currentPage==='Admin_AccrReq' || $currentPage==='Admin_Course' || $currentPage==='Admin_OfficerPos' || $currentPage==='Admin_OrgCat' ) { echo 'class="active"';} ?> href="javascript:;">
+                    <a <?php if( $currentPage==='Admin_AccrReq' || $currentPage==='Admin_Course' || $currentPage==='Admin_OfficerPos' || $currentPage==='Admin_OrgCat' || $currentPage==='Admin_NonAcad' ) { echo 'class="active"';} ?> href="javascript:;">
                         <i class="fa fa-users"></i>
                         <span>Organization Setup</span>
                     </a>
                     <ul class="sub">
                         <li <?php if( $currentPage==='Admin_AccrReq' ) { echo 'class="active"';} ?> ><a href="AccreditationRequirement.php">Accreditation Requirement</a></li>
                         <li <?php if( $currentPage==='Admin_Course' ) { echo 'class="active"';} ?>><a href="Course.php">Course</a></li>
+                        <li <?php if( $currentPage==='Admin_NonAcad' ) { echo 'class="active"';} ?>><a href="NonAcademicOrganization.php">Non Academic Category </a></li>
                         <li <?php if( $currentPage==='Admin_OrgCat' ) { echo 'class="active"';} ?>><a href="OrganizationCategory.php">Organization Category</a></li>
                     </ul>
                 </li>

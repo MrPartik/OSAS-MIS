@@ -46,7 +46,7 @@ include('../config/connection.php');
                                                 <th>Organization Name</th>
                                                 <th>Organization Category</th>
                                                 <th>Number of Members</th>
-                                                <th>Action</th>
+                                                <th style="width:1%"> <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -80,7 +80,15 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
 
 
 
-									?>
+									?>  <tfoot>
+                                    <tr>
+                                        <th class='hidden'>Organization Code</th>
+                                        <th>Organization Name</th>
+                                        <th>Organization Category</th>
+                                        <th>Number of Members</th>
+                                        <th style="width:1%"> <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
+                                    </tr>
+                                </tfoot>
                                         </tbody>
                                     </table>
                                 </div>

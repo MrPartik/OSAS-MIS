@@ -36,7 +36,7 @@
 
         }
 
-        $query = mysqli_query($con,"UPDATE r_application_wizard SET WIZARD_CURRENT_STEP = 4 WHERE WIZARD_ORG_CODE = '$appcode'");
+        $query = mysqli_query($con,"UPDATE r_application_wizard SET WIZARD_CURRENT_STEP = 3 WHERE WIZARD_ORG_CODE = '$appcode'");
 
 
 ?>

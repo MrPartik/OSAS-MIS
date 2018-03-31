@@ -9,10 +9,10 @@ $breadcrumbs = '                    <div class="col-md-12  ">
                         <!--breadcrumbs start -->
                         <ul class="breadcrumbs-alt ">
                             <li>
-                                <a class="current" href="#">Admin Setup</a>
+                                <a  href="#">Admin Setup</a>
                             </li>
                             <li>
-                                <a href="#">Active Academic Year</a>
+                                <a class="current" href="#">Active Academic Year</a>
                             </li>
                         </ul>
                         <!--breadcrumbs end -->

@@ -9,6 +9,7 @@ include('../../../config/connection.php');
 		$name = $_POST['_name'];
 		$desc = $_POST['_desc'];
 		$batchyear = $_POST['_year'];
+		$catcode = $_POST['_catcode'];
         
         $split = str_split($name);
         $acr = '';
@@ -32,6 +33,11 @@ include('../../../config/connection.php');
 
         $query = mysqli_query($con,"INSERT INTO t_org_for_compliance (OrgForCompliance_ORG_CODE,OrgForCompliance_OrgApplProfile_APPL_CODE,OrgForCompliance_BATCH_YEAR) VALUES ('$acr',(SELECT OrgAppProfile_APPL_CODE FROM `r_org_applicant_profile` WHERE OrgAppProfile_ID = (SELECT MAX(OrgAppProfile_ID) FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active')),'$batchyear')  ");       
 
+                    
+        $query = mysqli_query($con,"INSERT INTO t_assign_org_category (AssOrgCategory_ORG_CODE,AssOrgCategory_ORGCAT_CODE) 
+                                            VALUES ('$acr','$catcode')  ");            
+
+        
         $query = mysqli_query($con,"INSERT INTO r_org_officer_position_details (OrgOffiPosDetails_ORG_CODE,OrgOffiPosDetails_NAME,OrgOffiPosDetails_NumOfOcc) VALUES ('$acr','President','1')  ");       
         
         $query = mysqli_query($con,"INSERT INTO r_org_officer_position_details (OrgOffiPosDetails_ORG_CODE,OrgOffiPosDetails_NAME,OrgOffiPosDetails_NumOfOcc) VALUES ('$acr','Vice-President of internal affair','1')  ");       
@@ -42,7 +48,7 @@ include('../../../config/connection.php');
         $query = mysqli_query($con,"INSERT INTO r_org_officer_position_details (OrgOffiPosDetails_ORG_CODE,OrgOffiPosDetails_NAME,OrgOffiPosDetails_NumOfOcc) VALUES ('$acr','Auditor','1')  ");       
         
         
-        
+        echo $acr;
         
 	}
     
