@@ -310,7 +310,9 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
         $("#insertVoucher").on("click",function(){
             var orgcode=($("table[id='meta']").find("tbody").find("tr").find(".AddOrgCode").find("#Addorgcode option:selected").val())
             ,vouchBy=($("table[id='meta']").find("tbody").find("tr").find("#AddVouchBy").val())
-            ,vouch= ($("table[id='meta']").find("tbody").find("tr").find(".AddVoucherNo").attr("value"));
+            ,vouch= ($("table[id='meta']").find("tbody").find("tr").find(".AddVoucherNo").attr("value"))
+            ,amount = $("#cash").attr("amount")
+            ,remarks = "<?php echo $user_check; ?>" ;
                     $.ajax({
                         url: "OrganizationVoucherSave.php"
                         ,type:"POST"
@@ -319,6 +321,8 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                             ,orgcode:orgcode
                             ,vouchBy:vouchBy
                             ,vouch:vouch
+                            ,amount:amount
+                            ,remarks:remarks
 
                         }
                         ,success:function(response){

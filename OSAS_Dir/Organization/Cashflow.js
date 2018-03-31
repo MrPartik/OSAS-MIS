@@ -71,7 +71,7 @@ var EditableTable = function () {
                 },
                 "aoColumnDefs": [{
                         'bSortable': false,
-                        'aTargets': [0]
+                        'aTargets': [0,1,2,3,4,5,6]
                     }
                 ]
             });
@@ -97,12 +97,11 @@ var EditableTable = function () {
                     success: function (data) {
                         var table = $('#editable-sample').DataTable();
                         jQuery(table.fnGetNodes()).each(function () {
-                            oTable.fnDeleteRow(0);
-                            alert(data);
+                            oTable.fnDeleteRow(0); 
                         });
                         $.each(data, function (key, val) {
                             
-                            var aiNew = oTable.fnAddData(['<label>' + val.ref + '</label>', '<label>' + val.desc + '</label>', '<label>' + val.col + '</label>', '<label>' + val.exp + '</label>', '<label>' + val.bal + '</label>', '<label>' + val.rem + '</label>', '<label>' + val.dat + '</label>']);
+                            var aiNew = oTable.fnAddData(['<label cashID ='+val.id+ '>' + val.ref + '</label>', '<label>' + val.desc + '</label>', '<label>' + val.col + '</label>', '<label>' + val.exp + '</label>', '<label>' + val.bal + '</label>', '<label>' + val.rem + '</label>', '<label>' + val.dat + '</label>']);
                             var nRow = oTable.fnGetNodes(aiNew[0]);
                         });
                     },

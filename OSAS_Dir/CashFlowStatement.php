@@ -138,8 +138,12 @@ include('../config/dashboard/count.php');
                     var items = [];
                     var table = $('#editable-sample').DataTable();
                     jQuery(table.fnGetNodes()).each(function() {
-                        items.push($(this).closest('tr').children('td:first').text());
+                        items.push($(this).closest('tr').children('td:first').find('label').attr("cashid"));
                     });
+
+                    $.ajax({
+
+                    })
                     window.open('Print/CashflowStatement_Print.php?items=' + items, '_blank');
                 });
 

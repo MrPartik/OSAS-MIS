@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" >
+<html>
 
 <head>
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
@@ -10,27 +10,21 @@
                 include('../../config/connection.php');
 
                 $item = '';    
+                $totcol ='NN';
+                $totexp ='NN';
+                $totbal ='NN';
+                $osas ='NN';
+                $name ='NN';
                 foreach (explode(',', $_GET['items']) as $data) {
                     $item = $item . ",'".$data."'";
-                }
-                $view_query = mysqli_query($con,"SELECT OrgForCompliance_ORG_CODE as CODE,IF(OrgCashFlowStatement_COLLECTION IS NULL,'A',
-        (SELECT OrgRemittance_DESC FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = OrgCashFlowStatement_ITEM )) 		 AS DESCRIPTION,IF(OrgCashFlowStatement_COLLECTION IS NULL,'A',
-        (SELECT OrgCashFlowStatement_ITEM FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = OrgCashFlowStatement_ITEM ))   AS REF ,IF(OrgCashFlowStatement_COLLECTION IS NOT 
-                                                                                                             	             NULL,CONCAT('₱',FORMAT(OrgCashFlowStatement_COLLECTION,3)),'') AS COLLECTION,IF(OrgCashFlowStatement_EXPENSES IS NOT 
-                                                                                                             	             NULL,CONCAT('₱',FORMAT(OrgCashFlowStatement_EXPENSES,3)),'') AS EXPENSES,
-       		CONCAT('₱',FORMAT((SELECT IFNULL(SUM(OrgRemittance_AMOUNT),0) FROM t_org_remittance WHERE OrgRemittance_DISPLAY_STAT = 'Active' AND OrgRemittance_ORG_CODE = OrgCashFlowStatement_ORG_CODE AND OrgRemittance_DATE_ADD <= OrgCashFlowStatement_DATE_ADD) - (SELECT IFNULL(SUM(OrgVouchItems_AMOUNT),0) FROM `t_org_voucher_items` 
-	INNER JOIN t_org_voucher ON OrgVoucher_CASH_VOUCHER_NO = OrgVouchItems_VOUCHER_NO
-    WHERE OrgVoucher_ORG_CODE = OrgCashFlowStatement_ORG_CODE AND OrgVouchItems_DATE_ADD <= OrgCashFlowStatement_DATE_ADD AND OrgVoucher_DISPLAY_STAT = 'Active' AND OrgVouchItems_DISPLAY_STAT = 'Active' ),3)) AS BALANCE,OrgCashFlowStatement_REMARKS AS REMARKS,DATE_FORMAT(OrgCashFlowStatement_DATE_ADD,'%M %d, %Y') AS DATEISSUED                                                                                                                     
+                } 
+                $view_query = mysqli_query($con,"SELECT OrgForCompliance_ORG_CODE as CODE
         FROM `t_org_cash_flow_statement`
 		INNER JOIN t_org_for_compliance ON OrgCashFlowStatement_ORG_CODE = OrgForCompliance_ORG_CODE
-        WHERE OrgCashFlowStatement_DISPLAY_STAT = 'Active' AND IF(OrgCashFlowStatement_COLLECTION IS NULL,'A',
-        (SELECT OrgCashFlowStatement_ITEM FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = OrgCashFlowStatement_ITEM )) IN ('1'".$item.") ORDER BY OrgCashFlowStatement_DATE_ADD DESC  ") ;
-                while($row = mysqli_fetch_assoc($view_query))
-                {
-                        
+        WHERE OrgCashFlowStatement_DISPLAY_STAT = 'Active' AND 
+        OrgCashFlowStatement_ID  IN ('0'".$item.") ORDER BY OrgCashFlowStatement_DATE_ADD DESC  ") ;
+            $row = mysqli_fetch_assoc($view_query);
                     $code = $row["CODE"];
-
-                }
     
                 $view_query = mysqli_query($con," SELECT UPPER(OrgAppProfile_NAME) AS NA,(SELECT UPPER(OSASHead_NAME) FROM `r_osas_head` WHERE OSASHead_DISPLAY_STAT = 'Active') AS NAME FROM t_org_for_compliance 
                INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
@@ -39,10 +33,7 @@
                 {
 
                     $name = $row["NA"];
-                    $osas = $row["NAME"];
-
-
-
+                    $osas = $row["NAME"]; 
 
                 }
 
@@ -97,7 +88,7 @@
         <table id="items">
 
             <tr>
-                <th>Date</th>
+                <th style="width:20%">Date</th>
                 <th>Description</th>
                 <th>Collection</th>
                 <th>Expense</th>
@@ -113,8 +104,12 @@
                     $item = $item . ",'".$data."'";
                 }
             
-                $view_query = mysqli_query($con,"SELECT OrgForCompliance_ORG_CODE as CODE,IF(OrgCashFlowStatement_COLLECTION IS NULL,'A',
-        (SELECT OrgRemittance_DESC FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = OrgCashFlowStatement_ITEM )) 		 AS DESCRIPTION,IF(OrgCashFlowStatement_COLLECTION IS NULL,'A',
+                $view_query = mysqli_query($con,"SELECT OrgForCompliance_ORG_CODE as CODE,
+                IF(OrgCashFlowStatement_COLLECTION IS NULL,
+CONCAT('Voucher Item/s: ',(SELECT GROUP_CONCAT(OrgVouchItems_ITEM_NAME SEPARATOR ', ')
+FROM t_org_voucher_items WHERE OrgVouchItems_VOUCHER_NO=OrgCashFlowStatement_ITEM
+GROUP BY OrgVouchItems_VOUCHER_NO)),
+CONCAT('Remit Description: ',(SELECT OrgRemittance_DESC FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = OrgCashFlowStatement_ITEM ))) AS DESCRIPTION,IF(OrgCashFlowStatement_COLLECTION IS NULL,'A',
         (SELECT OrgCashFlowStatement_ITEM FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = OrgCashFlowStatement_ITEM ))   AS REF ,IF(OrgCashFlowStatement_COLLECTION IS NOT 
                                                                                                              	             NULL,CONCAT('₱',FORMAT(OrgCashFlowStatement_COLLECTION,3)),'') AS COLLECTION,IF(OrgCashFlowStatement_EXPENSES IS NOT 
                                                                                                              	             NULL,CONCAT('₱',FORMAT(OrgCashFlowStatement_EXPENSES,3)),'') AS EXPENSES,
@@ -144,8 +139,8 @@
         
         FROM `t_org_cash_flow_statement`
 		INNER JOIN t_org_for_compliance ON OrgCashFlowStatement_ORG_CODE = OrgForCompliance_ORG_CODE
-        WHERE OrgCashFlowStatement_DISPLAY_STAT = 'Active' AND IF(OrgCashFlowStatement_COLLECTION IS NULL,'A',
-        (SELECT OrgCashFlowStatement_ITEM FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = OrgCashFlowStatement_ITEM )) IN ('1'".$item.") ORDER BY OrgCashFlowStatement_DATE_ADD DESC ");
+        WHERE OrgCashFlowStatement_DISPLAY_STAT = 'Active' AND 
+        OrgCashFlowStatement_ID  IN ('0'".$item.")  ORDER BY OrgCashFlowStatement_DATE_ADD DESC ");
                 while($row = mysqli_fetch_assoc($view_query))
                 {
                         
@@ -179,7 +174,7 @@
 
             ?>
 
-                <td colspan="5">
+                <td colspan="5" style="background:#EEEEEE">
                     <center>
                         <h4> Summary
                         </h4>
