@@ -240,7 +240,7 @@ include('../config/connection.php');
 
                     },
                     success: function(response) {
-                        swal("Record Added!", "The data is successfully added!", "success");
+                        swal("Updated!", "The active academic year is successfully updated!", "success");
                         e.preventDefault();
                         var aiNew = oTable.fnAddData([latcode, txtreqname, txtreqdesc, '<center><a class="btn btn-success  edit" href="">Edit</a> <a class="btn btn-danger delete" href="javascript:;">Delete</a>	</center>', ]);
                         var nRow = oTable.fnGetNodes(aiNew[0]);
@@ -249,7 +249,7 @@ include('../config/connection.php');
 
                     },
                     error: function(response) {
-                        swal("Error encountered while adding data", "Please try again", "error");
+                        swal("Error encountered while updating active acdemic year", "Please try again", "error");
                         $("#editable-sample_new").click();
                     }
 
@@ -268,7 +268,7 @@ include('../config/connection.php');
 
                     },
                     success: function(response) {
-                        swal("Record Added!", "The data is successfully added!", "success");
+                        swal("Update!", "The active semester is successfully updated!", "success");
                         e.preventDefault();
                         var aiNew = oTable.fnAddData([latcode, txtreqname, txtreqdesc, '<center><a class="btn btn-success  edit" href="">Edit</a> <a class="btn btn-danger delete" href="javascript:;">Delete</a>	</center>', ]);
                         var nRow = oTable.fnGetNodes(aiNew[0]);
@@ -277,7 +277,7 @@ include('../config/connection.php');
 
                     },
                     error: function(response) {
-                        swal("Error encountered while adding data", "Please try again", "error");
+                        swal("Error encountered while updating active semester", "Please try again", "error");
                         $("#editable-sample_new").click();
                     }
 
