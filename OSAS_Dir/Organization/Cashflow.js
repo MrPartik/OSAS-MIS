@@ -75,6 +75,7 @@ var EditableTable = function () {
                     }
                 ]
             });
+            oTable.fnSort( [ ] );
 
 
             jQuery('#editable-sample_wrapper .dataTables_filter input').addClass("form-control medium"); // modify table search input
