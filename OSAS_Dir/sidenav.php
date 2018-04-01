@@ -39,8 +39,8 @@
                     <ul class="sub">
                         <li <?php if( $currentPage==='OSAS_OrgApplicant' ) { echo 'class="active"';} ?> ><a href="OrganizationApplicant.php">Applicant</a></li>
                         <li <?php if( $currentPage==='OSAS_OrgApplication' ) { echo 'class="active"';} ?> ><a href="OrganizationApplication.php">Application Process</a></li>
-                        <li <?php if( $currentPage==='OSAS_OrgCompliance' ) { echo 'class="active"';} ?> ><a href="OrganizationCompliance.php">Organization Profile</a></li>
-                        <li <?php if( $currentPage==='OSAS_OrgAccreditation' ) { echo 'class="active"';} ?> ><a href="OrganizationAccreditation.php">Accreditation</a></li>
+                        <!-- <li <?php if( $currentPage==='OSAS_OrgCompliance' ) { echo 'class="active"';} ?> ><a href="OrganizationCompliance.php">Organization Profile</a></li> -->
+                        <!-- <li <?php if( $currentPage==='OSAS_OrgAccreditation' ) { echo 'class="active"';} ?> ><a href="OrganizationAccreditation.php">Accreditation</a></li> -->
                         <li <?php if( $currentPage==='OSAS_OrgMem' ) { echo 'class="active"';} ?> ><a href="OrganizationMembers.php">Organization Members</a></li>
                         <li <?php if( $currentPage==='OSAS_OrgPos' ) { echo 'class="active"';} ?> ><a href="OrganizationPosition.php">Officer Position</a></li>
                         <li><a href="#">Financial Statement</a></li>

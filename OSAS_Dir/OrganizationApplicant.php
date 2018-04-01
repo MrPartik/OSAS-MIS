@@ -414,7 +414,7 @@ $user_check = $_SESSION['logged_user']['username'];
                 $('#editable-sample_new').on('click', function() {
                     $('#updsubmit-data').hide();
                     $('#submit-data').show();
-                    document.getElementById("form-data").reset();
+                    document.getElementById("form-data2").reset();
 
 
                 });

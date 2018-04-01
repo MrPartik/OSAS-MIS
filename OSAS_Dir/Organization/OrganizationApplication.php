@@ -51,7 +51,7 @@ $user_check = $_SESSION['logged_user']['username'];
         <header class="header fixed-top clearfix">
             <!--logo start-->
             <div class="brand">
-                <a href="dashboard.php" class="logo"> <img src="../images/logo.png" alt=""> </a>
+                <a href="dashboard.php" class="logo"> <img id="logoOrg" src="../images/logo.png" alt=""> </a>
                 <div class="sidebar-toggle-box">
                     <div class="fa fa-bars"></div>
                 </div>

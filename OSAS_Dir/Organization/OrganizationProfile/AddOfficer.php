@@ -4,6 +4,7 @@
 
     $studno = $_POST['_studno'];
     $pos = $_POST['_pos'];
+    
     $view_query = mysqli_query($con," SELECT COUNT(*) AS COU FROM `t_org_officers` WHERE OrgOffi_OrgOffiPosDetails_ID = '$pos' AND OrgOffi_STUD_NO = '$studno' ");
     while($row = mysqli_fetch_assoc($view_query))
     {

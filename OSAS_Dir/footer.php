@@ -41,5 +41,16 @@
 <script type="text/javascript" src="../js/fuelux/js/spinner.min.js"></script>
 <script type="text/javascript" src="../js/advanced-datatable/js/jquery.dataTables.js"></script>
 
-    <script type="text/javascript" src="../js/data-tables/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="../js/data-tables/DT_bootstrap.js"></script>
+<script type="text/javascript" src="../js/data-tables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../js/data-tables/DT_bootstrap.js"></script>
+
+<script src="../js/mini-upload-form/assets/js/jquery.knob.js"></script>
+
+    <!-- jQuery File Upload Dependencies -->
+<script src="../js/mini-upload-form/assets/js/jquery.ui.widget.js"></script>
+<script src="../js/mini-upload-form/assets/js/jquery.iframe-transport.js"></script>
+<script src="../js/mini-upload-form/assets/js/jquery.fileupload.js"></script>
+
+<!-- Our main JS file -->
+<script src="../js/mini-upload-form/assets/js/script.js"></script>
+

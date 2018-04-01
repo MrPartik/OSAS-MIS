@@ -99,61 +99,31 @@ include('../config/connection.php');
             </section>
             <!-- Modal -->
             <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Add" class="modal fade">
-                <div class="modal-dialog">
+                <div class="modal-dialog" style="width:700px">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Add Student</h4> </div>
+                            <h4 class="modal-title">Archive Document</h4> </div>
                         <div class="modal-body">
                             <br>
-                            <p>You are now adding student data</p>
+                            <p>You are now archiving a document</p>
                             <br>
                             <div class="row">
-                                <div class="col-md-4 form-group"> *Student Number
-                                    <input id="studno" type="text" class="form-control" placeholder="ex. 2015-00001-CM-0" required/> </div>
-                                <div class="col-md-4 form-group"> *Email Address
-                                    <input id="emailadd" type="text" class="form-control" placeholder="ex. email@email.com" required/> </div>
-                                <div class="col-md-4 form-group"> *Contact Number
-                                    <input id="contact" type="text" class="form-control" placeholder="ex. 099999999" required/> </div>
-                                <div class="col-md-4 form-group"> *First Name
-                                    <input id="fname" type="text" class="form-control" placeholder="First Name" required/> </div>
-                                <div class="col-md-4 form-group"> Middle Name
-                                    <input id="mname" type="text" class="form-control" placeholder="Middle Name"> </div>
-                                <div class="col-md-4 form-group"> *Last Name
-                                    <input id="lname" type="text" class="form-control" placeholder="Last Number" required/> </div>
-                                <div class="col-md-4 form-group"> *Course
-                                    <select id="course" type="text" class="form-control m-bot15" required>
-                                        <?php   
-                                    while($course_row =mysqli_fetch_array($view_course)){?>
-                                            <option value="<?php echo $course_row['Course_CODE'] ?>">
-                                                <?php echo $course_row['Course_CODE'] ?>
-                                            </option>
-                                            <?php }?>
-                                    </select>
+                                <div class="col-md-12 form-group"> 
+                                <form id="upload" method="post" action="upload.php" enctype="multipart/form-data">
+                            <div id="drop">
+                                Drop Here
+
+                                <a>Browse</a>
+                                <input type="file" name="upl" multiple />
+                            </div>
+
+                            <ul>
+                                <!-- The file uploads will be shown here -->
+                            </ul>
+
+                        </form>
                                 </div>
-                                <div class="col-md-4 form-group"> *Section
-                                    <input id="section" type="number" class="form-control" placeholder="Section" required/> </div>
-                                <div class="col-md-4 form-group"> *Gender
-                                    <select id="gender" type="text" class="form-control m-bot15">
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4 form-group"> *Birth Date
-                                    <input id="bdate" type="Date" class="form-control" required/> </div>
-                                <div class="col-md-4 form-group"> Birth Place
-                                    <input id="bplace" type="text" class="form-control" placeholder="ex. Quezon City"> </div>
-                                <div class="col-md-4 form-group"> *Student Status
-                                    <select id="studStat" class="form-control" required>
-                                        <option value="Regular">Regular Student</option>
-                                        <option value="Irregular">Irregular Student</option>
-                                        <option value="Disqualified">Disqualified Student</option>
-                                        <option value="LOA">Leave of Absence</option>
-                                        <option value="Transferee">Transferee Student</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-12 form-group"> *Address
-                                    <input id="address" type="text" class="form-control" placeholder="enter your home/ permanent address"> </div>
                             </div>
                             <div class="modal-footer">
                                 <button name="insert" class="btnInsert btn btn-success" type="submit">Submit</button>

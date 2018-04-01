@@ -75,6 +75,7 @@ var EditableTable = function () {
                 "aoColumnDefs": [{
                         'bSortable': false,
                         'aTargets': [0]
+                        
                     }
                 ]
             });
@@ -173,8 +174,27 @@ var EditableTable = function () {
                                         success: function (response) {
                                             swal("Record Added!", "The data is successfully Added!", "success");
                                             fillstep5();
-                                            var aiNew = oTable3.fnAddData([drpposname, drpstudname, "<center> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-trash-o'></i></a></center>"]);
-                                            var nRow = oTable3.fnGetNodes(aiNew[0]);
+                                            $.ajax({
+                                                type: "GET",
+                                                url: 'Organization/OrganizationProfile/FillStep5c.php',
+                                                dataType: 'json',
+                                                data: {
+                                                    _code: latcode
+                                                },
+                                                success: function (data2) {
+                                                    oTable3.fnClearTable();
+                                                    $.each(data2, function (key, val) { 
+                                                        var aiNew = oTable3.fnAddData(["<span posID='"+val.posID+"' studno='"+val.studno+"'>"+val.pos+"</span>",val.studno+" - "+ val.name, '<center><a class="btn btn-danger delete" href="javascript:;"><i class="fa fa-trash-o" ></i></a></center>', ]);
+                                                        var nRow = oTable3.fnGetNodes(aiNew[0]);
+                
+                
+                                                    });
+                                                },
+                                                error: function (response) {
+                                                    swal("Error encountered while adding data", "Please try again", "error");
+                                                }
+                
+                                            });
 
                                         },
                                         error: function (response) {
@@ -199,6 +219,10 @@ var EditableTable = function () {
                     swal("Please fill the member", "The transaction is cancelled", "error");
 
             });
+
+
+
+
             $('#submit-data2').on('click', function (e) {
                 e.preventDefault();
                 var pos = document.getElementById('txtposcode').value;
@@ -231,7 +255,7 @@ var EditableTable = function () {
                                 success: function (response) {
                                     swal("Record Added!", "The data is successfully Added!", "success");
 
-                                    var aiNew = oTable2.fnAddData([pos, desc, occ, "<center> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-trash-o'></i></a></center>"]);
+                                    var aiNew = oTable2.fnAddData([pos, occ, "<center> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-trash-o'></i></a></center>"]);
                                     var nRow = oTable2.fnGetNodes(aiNew[0]);
 
                                 },
@@ -257,120 +281,105 @@ var EditableTable = function () {
 
             var nEditing = null;
             $('#btnStep1').click(function (e) {
-                e.preventDefault();
 
-                var advname = document.getElementById('txtadvname').value;
+                e.preventDefault(); 
+                swal({
+                    title: "Are you sure?"
+                    , text: "This data will be added  and used for further transaction"
+                    , type: "warning"
+                    , showCancelButton: true
+                    , confirmButtonColor: '#9DD656'
+                    , confirmButtonText: 'Yes, Add it!'
+                    , cancelButtonText: "No, cancel it!"
+                    , closeOnConfirm: false
+                    , closeOnCancel: false
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                            var advname = document.getElementById('txtadvname').value; 
+                            $.ajax({
+                                type: 'post',
+                                url: 'Organization/OrganizationProfile/Step1.php',
+                                data: {
+                                    _appcode: latcode,
+                                    _advname: advname 
+                                },
+                                success: function (response) { 
+                                    swal({
+                                        title: "Woaah, that's neat!"
+                                        , text: "The organization adviser is saved"
+                                        , type: "success" 
+                                        , confirmButtonColor: '#9DD656'
+                                        , confirmButtonText: 'Ok' 
+                                        , closeOnConfirm: false
+                                    }, function (isConfirm) {
+                                            location.reload();
 
+                                    })
+
+                                  },
+                                error: function (response) {
+                                    swal(response, "Please try again", "error");
+                                }
+                            });
+                    }
+                    else {
+                        swal("Cancelled", "The transaction is cancelled", "error");
+                    }
+                }); 
+                
+            });
+            $('#next1').click(function(e){
+               
+                e.preventDefault(); 
+                var advname = document.getElementById('txtadvname').value; 
                 $.ajax({
                     type: 'post',
                     url: 'Organization/OrganizationProfile/Step1.php',
                     data: {
                         _appcode: latcode,
-                        _advname: advname
-
-
+                        _advname: advname 
                     },
                     success: function (response) {
-
-                    },
+                     },
                     error: function (response) {
                         swal(response, "Please try again", "error");
                     }
                 });
-                swal("Woaah, that's neat!", "The organization adviser is saved", "success");
-
-                //$('#next1').click();
-
-
-            });
-            $('#btnStep2').click(function (e) {
-                e.preventDefault();
-
-                var drpcate = document.getElementById('drpcat');
-                var drpcatname = drpcate.options[drpcate.selectedIndex].text;
-                var drpcatcode = drpcate.options[drpcate.selectedIndex].value;
+                
+            }); 
 
 
-                if (drpcatname == 'Academic Organization') {
-                    $.ajax({
-                        type: 'post',
-                        url: 'Organization/OrganizationProfile/pre_Step2.php',
-                        data: {
-                            _appcode: latcode
-
-                        },
-                        success: function (response) {},
-                        error: function (response) {
-                            swal(response, "Please try again", "error");
-                        }
-                    });
-                    $('#e9 option:selected').each(function (index, brand) {
-                        $.ajax({
-                            type: 'post',
-                            url: 'Organization/OrganizationProfile/Step2.php',
-                            async: true,
-                            data: {
-                                _appcode: latcode,
-                                _catcode: drpcatcode,
-                                _coucode: brand.value
-
-
-                            },
-                            success: function (response) {
-
-
-                            },
-                            error: function (response) {
-                                swal(response, "Please try again", "error");
-                            }
-                        });
-
-                    });
-                    swal("Woaah, that's neat!", "The organization category is saved", "success");
-                    //$('#next2').click();
-
-
-                } else {
-                    $.ajax({
-                        type: 'post',
-                        url: 'Organization/OrganizationProfile/pre_Step2.php',
-                        data: {
-                            _appcode: latcode
-
-                        },
-                        success: function (response) {},
-                        error: function (response) {
-                            swal(response, "Please try again", "error");
-                        }
-                    });
-                    $.ajax({
-                        type: 'post',
-                        url: 'Organization/OrganizationProfile/Step2-b.php',
-                        async: true,
-                        data: {
-                            _appcode: latcode,
-                            _catcode: drpcatcode
-
-                        },
-                        success: function (response) {
-
-                        },
-                        error: function (response) {
-                            swal(response, "Please try again", "error");
-                        }
-                    });
-                    swal("Woaah, that's neat!", "The organization category is saved", "success");
-                    //$('#next2').click();
-
-
-                }
-
-
-
-
-            });
 
             $('#btnStep3').click(function (e) {
+                e.preventDefault();
+
+                var mission = document.getElementById('txtmission').value;
+                var vision = document.getElementById('txtvision').value;
+
+                $.ajax({
+                    type: 'post',
+                    url: 'Organization/OrganizationProfile/Step3.php',
+                    data: {
+                        _appcode: latcode,
+                        _mission: mission,
+                        _vision: vision
+
+
+                    },
+                    success: function (response) {
+                        swal("Woaah, that's neat!", "The organization mission and vision is saved", "success");},
+                    error: function (response) {
+                        swal(response, "Please try again", "error");
+                    }
+                });
+  
+                   
+                upload();
+
+
+            });
+            
+            $('#next3').click(function(e){
                 e.preventDefault();
 
                 var mission = document.getElementById('txtmission').value;
@@ -391,11 +400,28 @@ var EditableTable = function () {
                         swal(response, "Please try again", "error");
                     }
                 });
-                //$('#next3').click();
-                swal("Woaah, that's neat!", "The organization mission and vision is saved", "success");
-
+  
+                   
+                upload();
 
             });
+
+            function upload(){
+                var file_data = $('#fileupload').prop('files')[0];   
+                var form_data = new FormData();                  
+                form_data.append('file', file_data);
+                $.ajax({
+                    url: "../config/Upload_Avatar.php?Username=" + latcode,
+                    type: "POST",
+                    data:  form_data,
+                    contentType: false,
+                    cache: false,
+                    processData:false,
+                    success: function(data){
+                        console.log(data);
+                    }
+                });   
+            }
             $('#next4').click(function (e) {
                 e.preventDefault();
                 $.ajax({
@@ -403,8 +429,6 @@ var EditableTable = function () {
                     url: 'Organization/OrganizationProfile/Step4.php',
                     data: {
                         _appcode: latcode
-
-
                     },
                     success: function (response) {},
                     error: function (response) {
@@ -430,17 +454,7 @@ var EditableTable = function () {
                     }
                 });
             });
-            $('#btnStep5').click(function (e) {
-                e.preventDefault();
-                alert(latcode);
-
-
-                swal("Woaah, that's neat!", "The organization officer is saved", "success");
-                //$('#next4').click();
-
-
-
-            });
+         
             var finflag = 0;
             $('#btnFinish').click(function (e) {
                 e.preventDefault();
@@ -659,6 +673,7 @@ var EditableTable = function () {
             });
             $('#editable-sample').on('click', ' a.wizardOpen', function (e) {
                 e.preventDefault();
+
                 if (initFlag == 0) {
                     initFlag = 1;
                     oldWizard = document.getElementById('asteps').innerHTML;
@@ -806,6 +821,7 @@ var EditableTable = function () {
                                 _code: latcode
                             },
                             success: function (data2) {
+                                oTable2.fnClearTable();
                                 $.each(data2, function (key, val) {
                                     var aiNew = oTable2.fnAddData([val.name, val.occ, '<center><a class="btn btn-danger delete" href="javascript:;"><i class="fa fa-trash-o" ></i></a></center>', ]);
                                     var nRow = oTable2.fnGetNodes(aiNew[0]);
@@ -839,6 +855,86 @@ var EditableTable = function () {
 
                         }
                         //END NG FILL NG STEP1
+                        
+
+            // $('#btnStep2').click(function (e) {
+            //     e.preventDefault();
+
+            //     var drpcate = document.getElementById('drpcat');
+            //     var drpcatname = drpcate.options[drpcate.selectedIndex].text;
+            //     var drpcatcode = drpcate.options[drpcate.selectedIndex].value;
+
+
+            //     if (drpcatname == 'Academic Organization') {
+            //         $.ajax({
+            //             type: 'post',
+            //             url: 'Organization/OrganizationProfile/pre_Step2.php',
+            //             data: {
+            //                 _appcode: latcode
+
+            //             },
+            //             success: function (response) {},
+            //             error: function (response) {
+            //                 swal(response, "Please try again", "error");
+            //             }
+            //         });
+            //         $('#e9 option:selected').each(function (index, brand) {
+            //             $.ajax({
+            //                 type: 'post',
+            //                 url: 'Organization/OrganizationProfile/Step2.php',
+            //                 async: true,
+            //                 data: {
+            //                     _appcode: latcode,
+            //                     _catcode: drpcatcode,
+            //                     _coucode: brand.value  
+            //                 },
+            //                 success: function (response) {
+
+
+            //                 },
+            //                 error: function (response) {
+            //                     swal(response, "Please try again", "error");
+            //                 }
+            //             });
+
+            //         });
+            //         swal("Woaah, that's neat!", "The organization category is saved", "success");
+            //         $('#next2').click();
+
+
+            //     } else {
+            //         $.ajax({
+            //             type: 'post',
+            //             url: 'Organization/OrganizationProfile/pre_Step2.php',
+            //             data: {
+            //                 _appcode: latcode
+
+            //             },
+            //             success: function (response) {},
+            //             error: function (response) {
+            //                 swal(response, "Please try again", "error");
+            //             }
+            //         });
+            //         $.ajax({
+            //             type: 'post',
+            //             url: 'Organization/OrganizationProfile/Step2-b.php',
+            //             async: true,
+            //             data: {
+            //                 _appcode: latcode,
+            //                 _catcode: drpcatcode
+
+            //             },
+            //             success: function (response) {
+
+            //             },
+            //             error: function (response) {
+            //                 swal(response, "Please try again", "error");
+            //             }
+            //         });
+            //         swal("Woaah, that's neat!", "The organization category is saved", "success");
+            //         $('#next2').click(); 
+            //     } 
+            // });
                         //DITO NASGSTART YUNG PAGFILL SA STEP2
 //                        if (curstep > 2) {
 //                            $.ajax({
@@ -904,7 +1000,7 @@ var EditableTable = function () {
 //                        }
                         //END NG FILL NG STEP2
                         //DITO NASGSTART YUNG PAGFILL SA STEP3
-                        if (curstep > 3) {
+                        if (curstep >= 3) {
 
                             $.ajax({
                                 type: 'GET',
@@ -930,33 +1026,8 @@ var EditableTable = function () {
                         //END NG FILL NG STEP3
 
                         //DITO NASGSTART YUNG PAGFILL SA STEP4
+
                         if (curstep >= 4) {
-
-                            //                            $.ajax({
-                            //                                type: "GET",
-                            //                                url: 'Organization/OrganizationProfile/FillStep4.php',
-                            //                                dataType: 'json',
-                            //                                data: {
-                            //                                    _code: latcode
-                            //                                },
-                            //                                success: function (data2) {
-                            //                                    $.each(data2, function (key, val) {
-                            //                                        var aiNew = oTable2.fnAddData([val.name, val.occ, val.desc, '<center><a class="btn btn-danger delete" href="javascript:;"><i class="fa fa-trash-o" ></i></a></center>', ]);
-                            //                                        var nRow = oTable2.fnGetNodes(aiNew[0]);
-                            //                                    });
-                            //                                },
-                            //                                error: function (response) {
-                            //                                    swal("Error encountered while adding data", "Please try again", "error");
-                            //                                }
-                            //
-                            //                            });
-
-
-
-                        }
-
-
-                        if (curstep >= 5) {
                             fillstep5();
                             $.ajax({
                                 type: "GET",
@@ -966,8 +1037,9 @@ var EditableTable = function () {
                                     _code: latcode
                                 },
                                 success: function (data2) {
-                                    $.each(data2, function (key, val) {
-                                        var aiNew = oTable3.fnAddData([val.pos, val.name, '<center><a class="btn btn-danger delete" href="javascript:;"><i class="fa fa-trash-o" ></i></a></center>', ]);
+                                    oTable3.fnClearTable();
+                                    $.each(data2, function (key, val) { 
+                                        var aiNew = oTable3.fnAddData(["<span posID='"+val.posID+"' studno='"+val.studno+"'>"+val.pos+"</span>",val.studno+" - "+ val.name, '<center><a class="btn btn-danger delete" href="javascript:;"><i class="fa fa-trash-o" ></i></a></center>', ]);
                                         var nRow = oTable3.fnGetNodes(aiNew[0]);
 
 
@@ -984,7 +1056,7 @@ var EditableTable = function () {
                         }
                         //END NG FILL NG STEP4
                         //DITO NASGSTART YUNG PAGFILL SA STEP5
-                        if (curstep == 6) {
+                        if (curstep == 5) {
 
                             $('#updaccreqlist tr ').each(function (index, brand) {
                                 index++;
@@ -1022,6 +1094,9 @@ var EditableTable = function () {
                 });
 
 
+                $(".fileupload-new .thumbnail").find("img").attr("src","../avatar/"+latcode+".png");
+
+                $("#fileupload").val("../avatar/"+latcode+".png");
             });
             $('#editable-sample a.delete').on('click', function (e) {
                 e.preventDefault();
@@ -1326,11 +1401,13 @@ var EditableTable3 = function () {
             var nEditing = null;
 
 
-            $('#tblpos').on('click', 'a.delete', function (e) {
+            $('#tbloff').on('click', 'a.delete', function (e) {
                 e.preventDefault();
 
                 var nRow = $(this).parents('tr')[0];
-                var getcode = $(this).closest('tr').children('td:first').text();
+                var id = $(this).closest('tr').children('td:first').find("span").attr("posID");
+                var studno = $(this).closest('tr').children('td:first').find("span").attr("studno");
+               
                 swal({
 
                         title: "Are you sure?",
@@ -1347,18 +1424,18 @@ var EditableTable3 = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'Organization/OrganizationProfile/DeletePosition.php',
+                                url: 'Organization/OrganizationProfile/DeleteOfficer.php',
                                 data: {
-                                    _orgcode: latcode,
-                                    _code: getcode
+                                    _studno: studno,
+                                    _posid: id
                                 },
                                 success: function (response) {
                                     swal("Record Deleted!", "The data is successfully deleted!", "success");
-                                    oTable.fnDeleteRow(nRow);
+                                    $('#editable-sample3').dataTable({}).fnDeleteRow(nRow);
                                 },
                                 error: function (response) {
                                     swal(response + "Error encountered while adding data", "Please try again", "error");
-                                    oTable.fnDeleteRow(nRow);
+                                   
                                 }
 
                             });
@@ -1384,6 +1461,7 @@ var EditableTable3 = function () {
                 }
             });
 
+ 
 
 
 

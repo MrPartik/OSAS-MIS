@@ -176,20 +176,16 @@ var EditableTable = function () {
                     data: {
                         _username: username
                     },
-                    success: function (getcount) {
-                        document.getElementById('getstat2').value = getcount;
+                    success: function (getcount) { 
 
                     }
-                });
-                alert(document.getElementById('getstat2').value);
+                }); 
 
-                if (username.length) {
-                    if (document.getElementById('getstat2').value == '0') {
-                        if (role != '-1')
+                if (username.length) { 
                             if (password.length) {
 
                                 $.ajax({
-                                    url: "Upload_Avatar.php?Username=" + username, // Url to which the request is send
+                                    url: "../config/Upload_Avatar.php?Username=" + username, // Url to which the request is send
                                     type: "POST", // Type of request to be send, called as method
                                     data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
                                     contentType: false, // The content type used when sending data to the server.
@@ -226,9 +222,7 @@ var EditableTable = function () {
                                                     _reference: reference,
                                                     _password: password
                                                 },
-                                                success: function (response) {
-                                                    document.getElementById('getstat').value = '1';
-                                                    alert(document.getElementById('getstat').value);
+                                                success: function (response) { 
                                                     swal("Record Added!", "The data is successfully added!", "success");
 
                                                     if (role == 'OSAS HEAD')
@@ -265,34 +259,27 @@ var EditableTable = function () {
                             }
                         else
                             swal("Please Fill the password field", "Please try again", "error");
-                        else
-                            swal("Please Fill the role field", "Please try again", "error");
 
                     } else
                         swal("Username already Exist", "Please try again", "error");
 
 
 
-
-                } else
-                    swal("Please Fill the username field", "Please try again", "error");
+ 
 
 
 
 
             });
-            $('#updsubmit-data').click(function (e) {
+            $('#updform-data').on('submit',function (e) {
                 e.preventDefault();
                 alert(latcode);
                 var username = document.getElementById("updtxtusername").value;
                 var role = document.getElementById("updselRole").value;
                 var password = document.getElementById("updtxtpassword").value;
                 var reference = document.getElementById("updselRef").value;
-                if (username.length)
-                    if (role != '-1') {
-                        $("#updclose").click();
-
-
+                alert(username);
+                if (username.length)  
                         swal({
                                 title: "Are you sure?",
                                 text: "The record will be save and will be use for further transaction",
@@ -306,6 +293,19 @@ var EditableTable = function () {
                             },
                             function (isConfirm) {
                                 if (isConfirm) {
+                                    $.ajax({
+                                        url: "../config/Upload_Avatar.php?Username=" + username, // Url to which the request is send
+                                        type: "POST", // Type of request to be send, called as method
+                                        data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+                                        contentType: false, // The content type used when sending data to the server.
+                                        cache: false, // To unable request pages to be cached
+                                        processData: false, // To send DOMDocument or non processed data file it is set to false
+                                        success: function (data) // A function to be called if request succeeds
+                                        {
+                                            alert(data);
+                                        }
+                                    });
+    
                                     $.ajax({
                                         type: 'post',
                                         url: 'SystemSetup/UserAccount/Update_UserAccount.php',
@@ -343,12 +343,7 @@ var EditableTable = function () {
                                 }
 
                             });
-
-                    }
-                else
-                    swal("Please Fill the role field", "Please try again", "error");
-                else
-                    swal("Please Fill the username field", "Please try again", "error");
+ 
 
 
 

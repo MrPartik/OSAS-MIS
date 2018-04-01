@@ -36,8 +36,7 @@ $user_check = $_SESSION['logged_user']['username'];
         <link rel="stylesheet" type="text/css" href="../js/jquery-tags-input/jquery.tagsinput.css" />
     <link rel="stylesheet" type="text/css" href="../js/bootstrap-datepicker/css/datepicker.css" /> 
         
-    <link href="../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-    <link href="../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+
 </head>
     
 

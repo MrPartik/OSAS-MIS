@@ -11,14 +11,9 @@ $breadcrumbs="<div class='col-md-12'>
 $currentPage ='OSAS_OrgMem';  
 include('header.php'); 
 include('../config/connection.php');
-?>
-<link href="../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-<link href="../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
-<link rel="stylesheet" href="../js/data-tables/DT_bootstrap.css" />
+?> 
 <link rel="stylesheet" type="text/css" href="../js/bootstrap-fileupload/bootstrap-fileupload.css" />
-<!-- Custom styles for this template -->
-<link href="../css/style.css" rel="stylesheet">
-<link href="../css/style-responsive.css" rel="stylesheet" />
+<!-- Custom styles for this template --> 
 
 <body>
     <section id="container">
