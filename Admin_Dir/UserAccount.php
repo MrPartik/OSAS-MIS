@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>OSAS - Semester</title>
+    <title>Admin - User Account</title>
     <?php    
 $currentPage ='Admin_Account'; 
 $breadcrumbs="
