@@ -297,7 +297,7 @@ var EditableTable = function () {
                 } else if (nEditing == nRow && this.innerText == "") {
                     /* Editing this row and want to save it */
                     var jqInputs = $('input', nRow);
-                    if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 5 && jqInputs[2].value.length < 100 && jqInputs[2].value.length > 5) {
+                    if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 0 && jqInputs[2].value.length < 100 && jqInputs[2].value.length > 0) {
                         $.ajax({
                             type: 'post',
                             url: 'OrganizationSetup/OrganizationCategory/Update-ajax.php',
@@ -322,19 +322,19 @@ var EditableTable = function () {
 
                     } else if (jqInputs[1].value.length > 100) {
 
-                        swal("Error", "The Office name must be less than 100 characters", "error");
+                        swal("Error", "The Office must be less than 100 characters", "error");
 
                     } else if (jqInputs[1].value.length < 5) {
 
-                        swal("Error", "Please enter a valid Office name", "error");
+                        swal("Error", "Please enter a valid name", "error");
 
                     } else if (jqInputs[2].value.length > 100) {
 
-                        swal("Error", "The Office description must be less than 100 characters", "error");
+                        swal("Error", "The description must be less than 100 characters", "error");
 
                     } else if (jqInputs[2].value.length < 5) {
 
-                        swal("Error", "Please enter a valid Office description", "error");
+                        swal("Error", "Please enter a valid description", "error");
 
                     }
                 } else {

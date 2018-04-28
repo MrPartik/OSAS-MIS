@@ -28,7 +28,7 @@ var EditableTable = function () {
                 getcode = aData[0];
                 if (getcode != '') {
 
-                    jqTds[0].innerHTML = '<input type="text" class="form-control small " value="' + aData[0] + '" disabled style="width:100%" >';
+                    jqTds[0].innerHTML = '<input type="text" class="form-control small " value="' + aData[0] + '" style="width:100%" >';
                     jqTds[1].innerHTML = '<input type="text" class="form-control small" value="' + aData[1] + '" style="width:100%">';
                     jqTds[2].innerHTML = '<center><a class="btn btn-success  edit" href=""><i class="fa fa-save"></i></a> <a class="btn btn-danger cancel" href=""><i class="fa fa-ban"></i></a></center>';
 
@@ -105,7 +105,6 @@ var EditableTable = function () {
                 }*/
                 var txtname = document.getElementById("txtname").value;
                 var txtdesc = document.getElementById("txtdesc").value;
-                var latcode = document.getElementById("latcode").innerText;
 
 
                 $("#close").click();
@@ -113,7 +112,7 @@ var EditableTable = function () {
 
                 swal({
                         title: "Are you sure?",
-                        text: "The record will be save and will be use for Designated Office",
+                        text: "The record will be save and will be use for further transaction",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: '#DD6B55',
@@ -133,7 +132,7 @@ var EditableTable = function () {
                                 },
                                 success: function (response) {
                                     swal("Record Added!", "The data is successfully added!", "success");
-                                    var aiNew = oTable.fnAddData([latcode, txtname, txtdesc, '<center><a class="btn btn-success  edit" href="">Edit</a> <a class="btn btn-danger delete" href="javascript:;">Delete</a>	</center>', '']);
+                                    var aiNew = oTable.fnAddData([ txtname, txtdesc, "<center><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a></center>", '']);
                                     var nRow = oTable.fnGetNodes(aiNew[0]);
                                     document.getElementById("form-data").reset();
                                 },
@@ -298,14 +297,14 @@ var EditableTable = function () {
                 } else if (nEditing == nRow && this.innerText == "") {
                     /* Editing this row and want to save it */
                     var jqInputs = $('input', nRow);
-                    if (jqInputs[0].value.length < 100 && jqInputs[0].value.length > 5 && jqInputs[1].value.length < 100 && jqInputs[1].value.length > 5) {
+                    if (jqInputs[0].value.length < 100 && jqInputs[0].value.length > 0 && jqInputs[1].value.length < 100 && jqInputs[1].value.length > 0) {
                         $.ajax({
                             type: 'post',
                             url: 'StudentSetup/Semester/Update-ajax.php',
                             data: {
                                 _name: jqInputs[0].value,
                                 _desc: jqInputs[1].value,
-                                _code: jqInputs[0].value
+                                _code: getcode
 
                             },
                             success: function (response) {

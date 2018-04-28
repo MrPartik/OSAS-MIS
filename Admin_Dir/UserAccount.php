@@ -8,7 +8,7 @@ $currentPage ='Admin_Account';
 $breadcrumbs="
 <div class='col-md-12'><ul class='breadcrumbs-alt'>
 <li>
-    <a  href='#'>User Management</a>
+    <a  href='#'>Admin Setup</a>
 </li>
 <li>
     <a class='current' href='#'>User Setup</a>
