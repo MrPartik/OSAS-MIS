@@ -9,7 +9,7 @@
     
     $view_query = mysqli_query($con,"select (@exsum := @exsum + IFNull( OrgCashFlowStatement_EXPENSES,0)) as exSum
     ,(@colsum := @colsum + IFNull( OrgCashFlowStatement_COLLECTION,0)) as colSum
-    ,CONCAT('₱ ',FORMAT(((@balsum := @colsum - @exsum)),3)) AS AMOUNT
+    ,FORMAT(((@balsum := @colsum - @exsum)),3) AS AMOUNT
     from t_org_cash_flow_statement
     cross join 
     (select @exsum := 0,@colsum := 0,@balsum := 0) params

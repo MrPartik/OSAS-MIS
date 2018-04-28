@@ -204,14 +204,5 @@ INNER JOIN r_org_applicant_profile OP on OP.OrgAppProfile_APPL_CODE = OC.OrgForC
 INNER JOIN active_academic_year AY on AY.ActiveAcadYear_Batch_YEAR = OC.OrgForCompliance_BATCH_YEAR
 AND ay.ActiveAcadYear_IS_ACTIVE = 1 AND ay.ActiveAcadYear_ID = (SELECT MAX(ay.ActiveAcadYear_ID)) 
 WHERE (SELECT COUNT(AAP.OrgAccrProcess_IS_ACCREDITED) FROM t_org_accreditation_process AAP WHERE AAP.OrgAccrProcess_IS_ACCREDITED=1 AND AAP.OrgAccrProcess_DISPLAY_STAT='Active' AND AAP.OrgAccrProcess_ORG_CODE = OC.OrgForCompliance_ORG_CODE)=(SELECT COUNT(ad.OrgAccrDetail_CODE) FROM r_org_accreditation_details AD )");
-$registered_org_query =mysqli_fetch_assoc(mysqli_query($con,"SELECT COUNT(a.OrgForCompliance_ORG_CODE) as counts FROM t_org_for_compliance a WHERE a.OrgForCompliance_BATCH_YEAR ='$current_acadyear' and a.OrgForCompliance_DISPAY_STAT='Active'"));
-$count_registered_org = $registered_org_query["counts"];
-$pending_acc_query = mysqli_fetch_assoc(mysqli_query($con,"SELECT COUNT(a.OrgForCompliance_ORG_CODE) as counts FROM t_org_for_compliance a 
-WHERE a.OrgForCompliance_BATCH_YEAR ='$current_acadyear' AND a.OrgForCompliance_DISPAY_STAT='Active' 
-AND (SELECT COUNT(b.OrgAccrProcess_ORG_CODE) FROM t_org_accreditation_process b WHERE b.OrgAccrProcess_IS_ACCREDITED=1 AND b.OrgAccrProcess_DISPLAY_STAT ='Active' AND a.OrgForCompliance_ORG_CODE = b.OrgAccrProcess_ORG_CODE) = (SELECT COUNT(c.OrgAccrDetail_CODE) FROM r_org_accreditation_details c WHERE c.OrgAccrDetail_DISPLAY_STAT='Active')"));
-$count_pending_acc = $pending_acc_query["counts"];
-
-$financial_ass_query = mysqli_fetch_assoc(mysqli_query($con,"SELECT COUNT(a.AssStudFinanAssistance_STUD_NO) as countss FROM t_assign_stud_finan_assistance a WHERE a.AssStudFinanAssistance_DISPLAY_STAT='Active'"));
-$count_finan_ass = $financial_ass_query["countss"];
 
 ?>
