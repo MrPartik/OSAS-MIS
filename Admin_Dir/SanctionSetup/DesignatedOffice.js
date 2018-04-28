@@ -234,7 +234,7 @@ var EditableTable = function () {
 
                 swal({
                         title: "Are you sure?",
-                        text: "The record will be save and will be use for Designated Office",
+                        text: "The record will be save and will be use for further transaction",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: '#DD6B55',
@@ -254,7 +254,7 @@ var EditableTable = function () {
                                 },
                                 success: function (response) {
                                     swal("Record Added!", "The data is successfully added!", "success");
-                                    var aiNew = oTable.fnAddData([latcode, txtname, txtdesc, '<center><a class="btn btn-success  edit" href="">Edit</a> <a class="btn btn-danger delete" href="javascript:;">Delete</a>	</center>', '']);
+                                    var aiNew = oTable.fnAddData([latcode, txtname, txtdesc, "<center><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a><center>", '']);
                                     var nRow = oTable.fnGetNodes(aiNew[0]);
                                     document.getElementById("form-data").reset();
                                 },
@@ -289,7 +289,7 @@ var EditableTable = function () {
                 } else if (nEditing == nRow && this.innerText == "") {
                     /* Editing this row and want to save it */
                     var jqInputs = $('input', nRow);
-                    if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 5 && jqInputs[2].value.length < 100 && jqInputs[2].value.length > 5) {
+                    if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 0 && jqInputs[2].value.length < 100 && jqInputs[2].value.length > 0) {
                         $.ajax({
                             type: 'post',
                             url: 'SanctionSetup/DesignatedOffice/Update-ajax.php',
@@ -332,10 +332,10 @@ var EditableTable = function () {
                 } else if (nEditing == nRow && this.innerHTML == "Add") {
                     /* Editing this row and want to save it */
                     var jqInputs = $('input', nRow);
-                    if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 5 && jqInputs[2].value.length < 100 && jqInputs[2].value.length > 5) {
+                    if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 0 && jqInputs[2].value.length < 100 && jqInputs[2].value.length > 0) {
                         swal({
                                 title: "Are you sure?",
-                                text: "The record will be save and will be use for Designated Office",
+                                text: "The record will be save and will be use for further transaction",
                                 type: "warning",
                                 showCancelButton: true,
                                 confirmButtonColor: '#DD6B55',
@@ -376,19 +376,19 @@ var EditableTable = function () {
 
                     } else if (jqInputs[1].value.length > 100) {
 
-                        swal("Error", "The Office name must be less than 100 characters", "error");
+                        swal("Error", "The name must be less than 100 characters", "error");
 
                     } else if (jqInputs[1].value.length < 5) {
 
-                        swal("Error", "Please enter a valid Office name", "error");
+                        swal("Error", "Please enter a valid  name", "error");
 
                     } else if (jqInputs[2].value.length > 100) {
 
-                        swal("Error", "The Office description must be less than 100 characters", "error");
+                        swal("Error", "The description must be less than 100 characters", "error");
 
                     } else if (jqInputs[2].value.length < 5) {
 
-                        swal("Error", "Please enter a valid Office description", "error");
+                        swal("Error", "Please enter a valid  description", "error");
 
                     }
                 } else {

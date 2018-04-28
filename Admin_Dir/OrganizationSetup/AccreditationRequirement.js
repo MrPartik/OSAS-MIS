@@ -119,7 +119,7 @@ var EditableTable = function () {
                                 success: function (response) {
                                     swal("Record Added!", "The data is successfully added!", "success");
                                     e.preventDefault();
-                                    var aiNew = oTable.fnAddData([latcode, txtreqname, txtreqdesc, '<center><a class="btn btn-success  edit" href="">Edit</a> <a class="btn btn-danger delete" href="javascript:;">Delete</a>	</center>', ]);
+                                    var aiNew = oTable.fnAddData([latcode, txtreqname, txtreqdesc, "<center><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a><center>", ]);
                                     var nRow = oTable.fnGetNodes(aiNew[0]);
                                     document.getElementById("form-data").reset();
 

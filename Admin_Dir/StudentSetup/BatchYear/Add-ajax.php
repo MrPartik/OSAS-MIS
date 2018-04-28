@@ -1,19 +1,20 @@
 <?php
 	
 	include('../../../config/connection.php');
-	if(isset($_POST['_name']) && isset($_POST['_desc']) )
+	if(isset($_POST['_name']) && isset($_POST['_desc']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' )
 	{
 		$name = $_POST['_name'];
 		$desc = $_POST['_desc'];
 		
-		$view_query = mysqli_query($con,"select CONCAT('BAT',RIGHT(100000+count(Batch_ID)+1,5)) CODE from `r_batch_details`");
-		while($row = mysqli_fetch_assoc($view_query))
-		{
-			$code = $row["CODE"];
-		}
-
-		$query = mysqli_query($con,"INSERT INTO `r_batch_details` (Batch_YEAR,Batch_DESC) VALUES ('$name','$desc')");
-
+        $query = mysqli_prepare($con, "INSERT INTO `r_batch_details` (Batch_YEAR,Batch_DESC) VALUES (?,?)");
+        mysqli_stmt_bind_param($query, 'ss', $name, $desc);
+        mysqli_stmt_execute($query);
+        
 	}
-
+    else
+    {
+        
+        include('../../../Retrict.php');
+        
+    }
 ?>

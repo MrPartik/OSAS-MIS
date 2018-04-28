@@ -177,12 +177,6 @@ include('../config/connection.php');
                 </div>
                 <div class="modal-body">
                     <form method="post" id="form-data">
-                        <div class="row">
-                            <header class="panel-heading">
-                                Semester Code:
-                                <asd id='latcode'></asd>
-                            </header>
-                        </div>
                         <div class="row" style="padding-left:15px;padding-top:10px">
                             <div class="col-lg-6">
                                 Semester Name <input type="text" class="form-control" placeholder="ex. First Semester" id="txtname">

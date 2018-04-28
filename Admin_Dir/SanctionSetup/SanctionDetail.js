@@ -27,11 +27,12 @@ var EditableTable = function () {
                 getcode = aData[0];
                 if (getcode != '') {
 
-                    jqTds[0].innerHTML = '<input type="text" class="form-control small " value="' + aData[0] + '" disabled style="width:100%" >';
+                    jqTds[0].innerHTML = '<input type="text" class="form-control small " value="' + aData[0] + '" style="width:100%" >';
                     jqTds[1].innerHTML = '<input type="text" class="form-control small" value="' + aData[1] + '" style="width:100%">';
                     jqTds[2].innerHTML = '<input type="text" class="form-control small" value="' + aData[2] + '" style="width:100%">';
                     jqTds[3].innerHTML = '<input type="text" class="form-control small" value="' + aData[3] + '" style="width:100%">';
-                    jqTds[4].innerHTML = '<center><a class="btn btn-success  edit" href="">Save</a> <a class="btn btn-danger cancel" href="">Cancel</a></center>';
+                    jqTds[4].innerHTML = '<center><a class="btn btn-success  edit" href=""><i class="fa fa-save"></i></a> <a class="btn btn-danger cancel" href=""><i class="fa fa-ban"></i></a></center>';
+
 
                 }
 
@@ -44,7 +45,7 @@ var EditableTable = function () {
                 oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
                 oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
                 oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
-                oTable.fnUpdate('<center><a class="btn btn-success edit" href="">Edit</a> <a class="btn btn-danger delete" href="">Delete</a></center>', nRow, 4, false);
+                oTable.fnUpdate("<center><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a><center>", nRow, 4, false);
                 oTable.fnDraw();
 
 
@@ -88,6 +89,64 @@ var EditableTable = function () {
 
             var nEditing = null;
 
+            $('#editable-sample a.retrieve').live('click', function (e) {
+                e.preventDefault();
+
+                var nRow = $(this).parents('tr')[0];
+                var getval = $(this).closest('tr').children('td:first').text();;
+
+                swal({
+
+                        title: "Are you sure?",
+                        text: "The record will be save and will be use for further transaction",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: '#DD6B55',
+                        confirmButtonText: 'Yes, do it!',
+                        cancelButtonText: "No, cancel it!",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                type: 'post',
+                                url: 'SanctionSetup/Sanction/Retrieve-ajax.php',
+                                data: {
+                                    _code: getval
+                                },
+                                success: function (response) {
+                                    swal({
+
+                                            title: "Record Retrieve!",
+                                            text: "The data is successfully retrieve!",
+                                            type: "success",
+                                            confirmButtonColor: '#86CCEB',
+                                            confirmButtonText: 'Okay',
+                                            closeOnConfirm: false
+                                        },
+                                        function (isConfirm) {
+                                            if (isConfirm) {
+                                                window.location.reload();
+
+                                            } else
+                                                swal("Cancelled", "The transaction is cancelled", "error");
+
+                                        });
+
+                                },
+                                error: function (response) {
+                                    swal("Error encountered while adding data", "Please try again", "error");
+                                }
+
+                            });
+
+                        } else
+                            swal("Cancelled", "The transaction is cancelled", "error");
+
+                    });
+            });
+            
             $('#editable-sample a.delete').live('click', function (e) {
                 e.preventDefault();
 
@@ -97,7 +156,7 @@ var EditableTable = function () {
                 swal({
 
                         title: "Are you sure?",
-                        text: "The record will be save and will be use for Semester",
+                        text: "The record will be save and will be use for further transaction",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: '#DD6B55',
@@ -164,7 +223,7 @@ var EditableTable = function () {
 
                 swal({
                         title: "Are you sure?",
-                        text: "The record will be save and will be use for Designated Office",
+                        text: "The record will be save and will be use for further transaction",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: '#DD6B55',
@@ -186,7 +245,7 @@ var EditableTable = function () {
                                 },
                                 success: function (response) {
                                     swal("Record Added!", "The data is successfully added!", "success");
-                                    var aiNew = oTable.fnAddData([txtcode, txtname, txthour, txtdesc, '<center><a class="btn btn-success  edit" href="">Edit</a> <a class="btn btn-danger delete" href="javascript:;">Delete</a>	</center>', '']);
+                                    var aiNew = oTable.fnAddData([txtcode, txtname, txthour, txtdesc, "<center><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a><center>", '']);
                                     var nRow = oTable.fnGetNodes(aiNew[0]);
                                     document.getElementById("form-data").reset();
                                 },
@@ -219,10 +278,10 @@ var EditableTable = function () {
                     restoreRow(oTable, nEditing);
                     editRow(oTable, nRow);
                     nEditing = nRow;
-                } else if (nEditing == nRow && this.innerHTML == "Save") {
+                } else if (nEditing == nRow && this.innerText == "") {
                     /* Editing this row and want to save it */
                     var jqInputs = $('input', nRow);
-                    if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 5 && jqInputs[3].value.length < 100 && jqInputs[3].value.length > 5 && jqInputs[2].value.length > 0) {
+                    if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 0 && jqInputs[3].value.length < 100 && jqInputs[3].value.length > 0 && jqInputs[2].value.length > 0) {
                         $.ajax({
                             type: 'post',
                             url: 'SanctionSetup/Sanction/Update-ajax.php',
@@ -266,10 +325,10 @@ var EditableTable = function () {
                 } else if (nEditing == nRow && this.innerHTML == "Add") {
                     /* Editing this row and want to save it */
                     var jqInputs = $('input', nRow);
-                    if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 5 && jqInputs[3].value.length < 100 && jqInputs[3].value.length > 5) {
+                    if (jqInputs[1].value.length < 100 && jqInputs[1].value.length > 0 && jqInputs[3].value.length < 100 && jqInputs[3].value.length > 0) {
                         swal({
                                 title: "Are you sure?",
-                                text: "The record will be save and will be use for Designated Office",
+                                text: "The record will be save and will be use for further transaction",
                                 type: "warning",
                                 showCancelButton: true,
                                 confirmButtonColor: '#DD6B55',

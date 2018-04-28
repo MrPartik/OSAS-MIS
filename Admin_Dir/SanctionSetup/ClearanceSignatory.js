@@ -49,6 +49,7 @@ var EditableTable = function () {
 
             }
 
+            
             function cancelEditRow(oTable, nRow) {
                 var jqInputs = $('input', nRow);
                 oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
@@ -106,7 +107,7 @@ var EditableTable = function () {
 
                 swal({
                         title: "Are you sure?",
-                        text: "The record will be save and will be use for Designated Office",
+                        text: "The record will be save and will be use for further transaction",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: '#DD6B55',
@@ -126,7 +127,7 @@ var EditableTable = function () {
                                 },
                                 success: function (response) {
                                     swal("Record Added!", "The data is successfully added!", "success");
-                                    var aiNew = oTable.fnAddData([latcode, txtname, txtdesc, '<center><a class="btn btn-success  edit" href="">Edit</a> <a class="btn btn-danger delete" href="javascript:;">Delete</a>	</center>', '']);
+                                    var aiNew = oTable.fnAddData([latcode, txtname, txtdesc, "<center><a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a><center>", '']);
                                     var nRow = oTable.fnGetNodes(aiNew[0]);
                                     document.getElementById("form-data").reset();
                                 },
