@@ -178,10 +178,10 @@ include('../config/connection.php');
                 <div class="modal-body">
                     <form method="post" id="form-data">
                         <div class="row" style="padding-left:15px;padding-top:10px">
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 Semester Name <input type="text" class="form-control" placeholder="ex. First Semester" id="txtname">
                             </div>
-                            <div class="col-lg-8 " style="padding-top:10px">
+                            <div class="col-lg-12 " style="padding-top:10px">
                                 Semester Description<textarea class="form-control" placeholder="ex. Semester Description" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
                             </div>
                         </div>

@@ -166,24 +166,24 @@ include('../config/connection.php');
     </section>
     <!-- Modal -->
     <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Add" class="modal fade">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="width:700px">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Add Organization Category</h4>
+                    <h4 class="modal-title">Add Non - Academic Organization Category</h4>
                 </div>
                 <div class="modal-body">
                     <form method="post" id="form-data">
 
                         <div class="row" style="padding-left:15px;padding-top:10px">
-                            <div class="col-lg-6">
+                            <div class="col-lg-12" style="padding-top:10px">
                                 Category Code <input type="text" class="form-control" placeholder="ex. REL_ORG" id="txtcode">
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-12"  style="padding-top:10px">
                                 Category Name <input type="text" class="form-control" placeholder="ex. Religious Organization" id="txtname">
                             </div>
 
-                            <div class="col-lg-8 " style="padding-top:10px">
+                            <div class="col-lg-12" style="padding-top:10px">
                                 Category Description<textarea class="form-control" placeholder="ex. For Religion Purpose" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
                             </div>
                         </div>

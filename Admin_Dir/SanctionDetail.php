@@ -168,7 +168,7 @@ include('../config/connection.php');
 
     </section>
     <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Add" class="modal fade">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="width:700px">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -180,13 +180,13 @@ include('../config/connection.php');
 
                         </div>
                         <div class="row" style="padding-left:15px;padding-top:10px">
-                            <div class="col-md-4">
+                            <div class="col-md-12" >
                                 Sanction Code <input type="text" class="form-control" placeholder="ex. Sanction Code" id="txtcode">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-12"  style="padding-top:10px">
                                 Sanction Name <input type="text" class="form-control" placeholder="ex. Sanction" id="txtname">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-12"  style="padding-top:10px">
                                 Time Value (hour/s) <input type="text" class="form-control" placeholder="ex. 8" id="txthour">
                             </div>
                             <div class="col-md-12 " style="padding-top:10px">
