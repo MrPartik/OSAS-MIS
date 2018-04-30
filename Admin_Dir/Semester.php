@@ -169,7 +169,7 @@ include('../config/connection.php');
     </section>
     <!-- Modal -->
     <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Add" class="modal fade">
-        <div class="modal-dialog">
+        <div class="modal-dialog"  style=" width:700px">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

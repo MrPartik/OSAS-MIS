@@ -60,9 +60,9 @@ $user_check = $_SESSION['logged_user']['username'];
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <img alt="" src="../images/OSAS/MAAM%20DEM.jpg"> <span class="username"><?php echo $user_check; ?> </span> <b class="caret"></b> </a>
                         <ul class="dropdown-menu extended logout">
-                            <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                            <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                            <li><a href="../config/logout.php"><i class="fa fa-key"></i> Log Out</a></li>
+                            <!-- <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li> -->
+                            <li ><a href="#Change" data-toggle="modal"><i class="fa fa-key"></i> Change Password</a></li>
+                            <li><a href="../config/logout.php"><i class="fa fa-sign-out"></i> Log Out</a></li>
                         </ul>
                     </li>
                     <!-- user login dropdown end -->
@@ -75,4 +75,26 @@ $user_check = $_SESSION['logged_user']['username'];
             </ul>
             </div>
         </header>
+        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Change" class="modal fade">
+        <div class="modal-dialog" style="width:500px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Change Password</h4>
+                </div>
+                <div class="modal-body"> 
+                        <div class="row">
+                            <div class="col-md-12">Current Password<input id="address" type="text" class="form-control" placeholder="enter your home/ permanent address"> </div>
+                            <div class="col-md-12" style="padding-top:10px">Verify Password<input id="address" type="text" class="form-control" placeholder="enter your home/ permanent address"> </div>
+                            <div class="col-md-12" style="padding-top:10px">New Password<input id="address" type="text" class="form-control" placeholder="enter your home/ permanent address"> </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-cancel" type="button">Cancel</button> 
+                        <button name="insert" class="btnInsert btn btn-success" type="submit">Update Password</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
         <!--header end-->

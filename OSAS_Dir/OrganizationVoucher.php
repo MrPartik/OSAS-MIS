@@ -207,7 +207,7 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
 <table id="meta">
 <tr>
     <td class="meta-head">Organization:</td>
-    <td class="AddOrgCode"><select id="Addorgcode" class="form-control m-bot10"><?php  while($code=mysqli_fetch_assoc($view_availOrgVouch)){?>
+    <td class="AddOrgCode"><select id="Addorgcode" class="form-control m-bot10"> <option disabled selected value="default" >Please choose an Organization</option><?php  while($code=mysqli_fetch_assoc($view_availOrgVouch)){?>
         <option value="<?php echo $code['OrgForCompliance_ORG_CODE']?>"><?php echo $code["OrgAppProfile_NAME"]?></option>
     <?php }?><select></td>
 </tr>                   <?php  
@@ -223,11 +223,16 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                         <td class="AddDateIssue"><?php echo dateNow(); ?></td>
                     </tr>
                     <tr> 
-                    <td class="meta-head">Vouch by</td>
+                    <td class="meta-head">Vouched by</td>
                     <td><input id="AddVouchBy"class="form-control" type="text"></td>
-                </tr>   <tr> 
-                            <td class="meta-head">Total Vouch</td>
+                    </tr>
+                    <tr> 
+                            <td class="meta-head">Total Vouched</td>
                             <td><p id="cash" amount="">₱ 0</p></td>
+                        </tr>
+                        <tr> 
+                            <td class="meta-head">Balance</td>
+                            <td><p id="balanse" vall="" amount="">₱ 0</p></td>
                         </tr>
                          
         
@@ -313,52 +318,163 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
             ,vouch= ($("table[id='meta']").find("tbody").find("tr").find(".AddVoucherNo").attr("value"))
             ,amount = $("#cash").attr("amount")
             ,remarks = "<?php echo $user_check; ?>" ;
-                    $.ajax({
-                        url: "OrganizationVoucherSave.php"
-                        ,type:"POST"
-                        ,data:{
-                            insertVouch:"insert"
-                            ,orgcode:orgcode
-                            ,vouchBy:vouchBy
-                            ,vouch:vouch
-                            ,amount:amount
-                            ,remarks:remarks
+            swal({
+                        title: "Are you sure?",
+                        text: "your balance will be deducted according to your total amount in voucher",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: '#9DD656',
+                        confirmButtonText: 'Yes, Add it!',
+                        cancelButtonText: "No, cancel it!",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    }, function(isConfirm) {
 
-                        }
-                        ,success:function(response){
+                       if(isConfirm){
+                       
+                         if($("#balanse").attr("vall") <0){
+                                        swal({
+                                        title: "Are you sure?",
+                                        text: "your insufficient balance",
+                                        type: "warning",
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#9DD656',
+                                        confirmButtonText: 'Yes, Add it!',
+                                        cancelButtonText: "No, cancel it!",
+                                        closeOnConfirm: false,
+                                        closeOnCancel: false
+                                    }, function(isConfirm) {
+                                    if(isConfirm){
+                                        
+                                        
+                                        
+                        $.ajax({
+                            url: "OrganizationVoucherSave.php"
+                            ,type:"POST"
+                            ,data:{
+                                insertVouch:"insert"
+                                ,orgcode:orgcode
+                                ,vouchBy:vouchBy
+                                ,vouch:vouch
+                                ,amount:amount
+                                ,remarks:remarks
 
-                            alert(response);
-                            $("#tbodyvoucher").find("tr[class='newItem']").each(function(){
-                            var desc= ($(this).find("#AddDesc").val())
-                            ,amou =($(this).find("#AddAmo").val());
-                                    $.ajax({
+                            }
+                            ,success:function(response){ 
+                                $("#tbodyvoucher").find("tr[class='newItem']").each(function(){
+                                var desc= ($(this).find("#AddDesc").val())
+                                ,amou =($(this).find("#AddAmo").val());
+                                        $.ajax({
 
-                                        url:"OrganizationVoucherSave.php"
-                                        ,type:"POST"
-                                        ,data:{
-                                            insertVouchItem:"insert"
-                                            ,desc:desc
-                                            ,amou:amou
-                                            ,vouch:vouch
-
-                                        }
-                                        ,success:function(response){
-                                           alert(response+desc+amou+vouch);
-                                            location.reload();
+                                            url:"OrganizationVoucherSave.php"
+                                            ,type:"POST"
+                                            ,data:{
+                                                insertVouchItem:"insert"
+                                                ,desc:desc
+                                                ,amou:amou
+                                                ,vouch:vouch 
+                                            }
+                                            ,success:function(response){
 
 
-                                        },error:function(response){
-                                            alert(response);
-                                        }
+                                            },error:function(response){
+                                                alert(response);
+                                            }
 
+                                        });
+                                }).promise().done(function(){
+                                    swal({
+                                        title: "Woaah, that's neat!",
+                                        text: "The Voucher is added, deduction to your balance is expected",
+                                        type: "success",
+                                        showCancelButton: false,
+                                        confirmButtonColor: '#9DD656',
+                                        confirmButtonText: 'Ok'
+                                    }, function(isConfirm) {
+                                        location.reload();
                                     });
-                            });
+                                });
 
-                        },error:function(error){
-                            alert(error);
+                            },error:function(error){
+                                alert(error);
+                            }
+
+                         });
+
+                                    }
+                                        else {
+                                            swal("Cancelled", "The transaction is cancelled", "error");
+                                        }
+                                    
+                                    
+                                    })
+
+
+
+                           //
+                       } else {
+                           
+                        $.ajax({
+                            url: "OrganizationVoucherSave.php"
+                            ,type:"POST"
+                            ,data:{
+                                insertVouch:"insert"
+                                ,orgcode:orgcode
+                                ,vouchBy:vouchBy
+                                ,vouch:vouch
+                                ,amount:amount
+                                ,remarks:remarks
+
+                            }
+                            ,success:function(response){ 
+                                $("#tbodyvoucher").find("tr[class='newItem']").each(function(){
+                                var desc= ($(this).find("#AddDesc").val())
+                                ,amou =($(this).find("#AddAmo").val());
+                                        $.ajax({
+
+                                            url:"OrganizationVoucherSave.php"
+                                            ,type:"POST"
+                                            ,data:{
+                                                insertVouchItem:"insert"
+                                                ,desc:desc
+                                                ,amou:amou
+                                                ,vouch:vouch 
+                                            }
+                                            ,success:function(response){
+
+
+                                            },error:function(response){
+                                                alert(response);
+                                            }
+
+                                        });
+                                }).promise().done(function(){
+                                    swal({
+                                        title: "Woaah, that's neat!",
+                                        text: "The Voucher is added, deduction to your balance is expected",
+                                        type: "success",
+                                        showCancelButton: false,
+                                        confirmButtonColor: '#9DD656',
+                                        confirmButtonText: 'Ok'
+                                    }, function(isConfirm) {
+                                        location.reload();
+                                    });
+                                });
+
+                            },error:function(error){
+                                alert(error);
+                            }
+
+                         });
+
+                           
                         }
-
-                     });
+                    } else {
+                            swal("Cancelled", "The transaction is cancelled", "error");
+                        }
+                       
+                    })
+                     
         });
 
         $("tbody[id='tbodyvoucher']").on("input","input[id='AddAmo']",function(){
@@ -366,10 +482,35 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
             $("input[id='AddAmo']").each(function(){
                 sum += +$(this).val();
              }) .promise().done(function () {
-                $("#cash").attr("amount",sum);
-                $("#cash").html("₱ "+sum);
+                $("#cash").attr("amount",(sum).toFixed(3));
+                $("#cash").html("₱ "+(sum).toFixed(3))  
+                $("#balanse").attr('vall',((($("#balanse").attr("amount")-((sum).toFixed(3)))).toFixed(3)));
+                $("#balanse").html("₱ "+(($("#balanse").attr("amount")-((sum).toFixed(3)))).toFixed(3));
             });
         });
+        $('#Addorgcode').change(function (e) {
+                var _drporg = document.getElementById('Addorgcode');
+                var drporgname = _drporg.options[_drporg.selectedIndex].text;
+                var drporgvalue = _drporg.options[_drporg.selectedIndex].value;
+                $.ajax({
+                    type: "GET",
+                    url: 'Organization/Remittance/GetOrgMoney.php',
+                    dataType: 'json',
+                    data: {
+                        _id: drporgvalue
+                    },
+                    success: function (data) {
+                        $("#balanse").attr("amount",parseFloat((data.amount).replace(/,/g, '')));
+                        $('#balanse').html("₱ "+(data.amount));
+                    },
+                    error: function (response) {
+                        swal("Error encountered while adding data", "Please try again", "error");
+                    }
+
+                });
+
+
+            }); 
     </script>
 </body> 
 </html>

@@ -299,7 +299,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                         $view_query = mysqli_query($con," SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME,(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) AS STAT FROM `t_org_for_compliance` INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR= '$current_acadyear' AND (SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) = 'TRUE'
                                         ");
                                 
-                                        $fillorg = ' <option disable selected value="default" >Please choose an Organization</option>';
+                                        $fillorg = ' <option disabled selected value="default" >Please choose an Organization</option>';
                                         while($row = mysqli_fetch_assoc($view_query))
                                         {
                                             $val = $row['OrgForCompliance_ORG_CODE'];
