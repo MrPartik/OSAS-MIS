@@ -80,36 +80,54 @@ var EditableTable = function () {
             jQuery('#editable-sample_wrapper .dataTables_filter input').addClass("form-control medium"); // modify table search input
             jQuery('#editable-sample_wrapper .dataTables_length select').addClass("form-control xsmall"); // modify table per page dropdown
 
-            var oTable2 = $('#editable-sample2').dataTable({
-
-            });
-
             var nEditing = null;
 
 
-            $('#drporg').change(function (e) {
-                var _drporg = document.getElementById('drporg');
-                var drporgname = _drporg.options[_drporg.selectedIndex].text;
-                var drporgvalue = _drporg.options[_drporg.selectedIndex].value;
-                $.ajax({
-                    type: "GET",
-                    url: 'Organization/Remittance/GetOrgMoney.php',
-                    dataType: 'json',
-                    data: {
-                        _id: drporgvalue
-                    },
-                    success: function (data) {
-                        document.getElementById('txtcurmon').value = data.amount;
-                    },
-                    error: function (response) {
-                        swal("Error encountered while adding data", "Please try again", "error");
-                    }
+            $('#btnsync').click(function (e) {
+                e.preventDefault();
 
-                });
+                swal({
+                        title: "Are you sure?",
+                        text: "You want to sync the data of students into the table",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: '#DD6B55',
+                        confirmButtonText: 'Yes, do it!',
+                        cancelButtonText: "No, cancel it!",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                type: "GET",
+                                url: 'OrganizationMembers/Syncdata.php',
+                                dataType: 'json',
+                                data: {
+                                    _code: $(".username").attr("code")
+                                },
+                                success: function (data) {
+                                    // alert(data.list);
+                                    swal("Record Synchronize!", "The data is successfully sync!", "success");
+                                    //                                    window.location.reload();
+                                },
+                                error: function (response) {
+                                    swal("Error encountered while adding data", "Please try again", "error");
+                                }
 
+                            });
+
+
+
+                        } else {
+
+                            swal("Cancelled", "The transaction is cancelled", "error");
+                            $("#editable-sample_new").click();
+                        }
+
+                    });
 
             });
-
             var result = 0;
 
 
@@ -133,7 +151,7 @@ var EditableTable = function () {
                 swal({
 
                         title: "Are you sure?",
-                        text: "The record will be permanently deleted?",
+                        text: "The record will be save and will be use for further transaction",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: '#DD6B55',
@@ -168,8 +186,6 @@ var EditableTable = function () {
 
                     });
             });
-            
-
 
             $('#submit-data').click(function (e) {
                 e.preventDefault();
@@ -204,8 +220,7 @@ var EditableTable = function () {
                                                 _sendby: txtname,
                                                 _recby: $(".username").attr("code"),
                                                 _amount: txtamount,
-                                                _desc: txtdesc,
-                                                _remarks: $('.username').attr('code')
+                                                _desc: txtdesc
                                             },
                                             success: function (response) {
                                                 swal({
@@ -375,198 +390,13 @@ var EditableTable = function () {
 
 
             });
-            
-            $('#editable-sample2').on('click','a.approved',function (e) {
-                var getval = $(this).closest('tr').children('td:first').text();
-                var nRow = $(this).parents('tr')[0];
-
-                swal({
-
-                        title: "Are you sure?",
-                        text: "You want to approved this remittance?",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: '#DD6B55',
-                        confirmButtonText: 'Yes, do it!',
-                        cancelButtonText: "No, cancel it!",
-                        closeOnConfirm: false,
-                        closeOnCancel: false
-                    },
-                    function (isConfirm) {
-                        if (isConfirm) {
-
-                            $.ajax({
-                                type: 'post',
-                                url: 'Organization/Remittance/ApproveRemittance.php',
-                                data: {
-                                    _code: getval
-                                },
-                                success: function (response) {
-                                    oTable2.fnDeleteRow(nRow);
-                                    swal({
-                                        title: "Remittance Approved!",
-                                        text: "The data is successfully approved!",
-                                        type: "success",
-                                        confirmButtonColor: '#88A755',
-                                        confirmButtonText: 'Okay',
-                                        closeOnConfirm: false
-                                    }, function (isConfirm) {
-                                        window.location.reload();
-
-                                    });
-                                    
-                                },
-                                error: function (response) {
-                                    swal("Error encountered while approving the remittance", "Please try again", "error");
-                                }
-
-                            });
 
 
 
-                        } else
-                            swal("Cancelled", "The transaction is cancelled", "error");
-
-                    });
-            });
-            
-            $('#editable-sample2').on('click','a.reject',function (e) {
-                var getval = $(this).closest('tr').children('td:first').text();
-                var nRow = $(this).parents('tr')[0];
-
-                swal({
-
-                        title: "Are you sure?",
-                        text: "You want to rejected this remittance?",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: '#DD6B55',
-                        confirmButtonText: 'Yes, do it!',
-                        cancelButtonText: "No, cancel it!",
-                        closeOnConfirm: false,
-                        closeOnCancel: false
-                    },
-                    function (isConfirm) {
-                        if (isConfirm) {
-
-                            $.ajax({
-                                type: 'post',
-                                url: 'Organization/Remittance/RejectRemittance.php',
-                                data: {
-                                    _code: getval
-                                },
-                                success: function (response) {
-                                    oTable2.fnDeleteRow(nRow);
-                                    swal({
-                                        title: "Remittance Rejected!",
-                                        text: "The data is successfully rejected!",
-                                        type: "success",
-                                        confirmButtonColor: '#88A755',
-                                        confirmButtonText: 'Okay',
-                                        closeOnConfirm: false
-                                    }, function (isConfirm) {
-                                        window.location.reload();
-
-                                    });
-                                    
-                                },
-                                error: function (response) {
-                                    swal("Error encountered while rejecting the remittance", "Please try again", "error");
-                                }
-
-                            });
 
 
-
-                        } else
-                            swal("Cancelled", "The transaction is cancelled", "error");
-
-                    });
-            });
-            
         }
+
     };
 
 }();
-//
-//var EditableTable2 = function () {
-//
-//    return {
-//
-//        //main function to initiate the module
-//        init: function () {
-//            function restoreRow(oTable, nRow) {
-//                var aData = oTable.fnGetData(nRow);
-//                var jqTds = $('>td', nRow);
-//
-//                for (var i = 0, iLen = jqTds.length; i < iLen; i++) {
-//                    oTable.fnUpdate(aData[i], nRow, i, false);
-//                }
-//
-//                oTable.fnDraw();
-//
-//            }
-//
-//            function editRow(oTable, nRow) {
-//                var aData = oTable.fnGetData(nRow);
-//                var jqTds = $('>td', nRow);
-//            }
-//
-//            function saveRow(oTable, nRow) {
-//                var jqInputs = $('input', nRow);
-//
-//                oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
-//                oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
-//                oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
-//                oTable.fnUpdate('<center><a class="btn btn-success edit" href="">Edit</a> <a class="btn btn-danger delete" href="">Delete</a></center>', nRow, 3, false);
-//                oTable.fnDraw();
-//
-//
-//            }
-//
-//            function cancelEditRow(oTable, nRow) {
-//                var jqInputs = $('input', nRow);
-//                oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
-//                oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
-//                oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
-//                oTable.fnUpdate('<a class="btn btn-success edit" href="">Edit</a>', nRow, 3, false);
-//                oTable.fnDraw();
-//            }
-//
-//            var oTable = $('#editable-sample2').dataTable({
-//                "aLengthMenu": [
-//                    [5, 15, 20, -1],
-//                    [5, 15, 20, "All"] // change per page values here
-//                ],
-//                // set the initial value
-//                "iDisplayLength": 5,
-//                "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
-//                "sPaginationType": "bootstrap",
-//                "oLanguage": {
-//                    "sLengthMenu": "_MENU_ records per page",
-//                    "oPaginate": {
-//                        "sPrevious": "Prev",
-//                        "sNext": "Next"
-//                    }
-//                },
-//                "aoColumnDefs": [{
-//                        'bSortable': false,
-//                        'aTargets': [0]
-//                    }
-//                ]
-//            });
-//
-//            jQuery('#editable-sample2_wrapper .dataTables_filter input').addClass("form-control medium"); // modify table search input
-//            jQuery('#editable-sample2_wrapper .dataTables_length select').addClass("form-control xsmall"); // modify table per page dropdown
-//
-//            var nEditing = null;
-//
-//
-
-//
-//        }
-//
-//    };
-//
-//}();
-

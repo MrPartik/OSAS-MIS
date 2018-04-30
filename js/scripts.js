@@ -282,6 +282,185 @@
         // popovers
 
         $('.popovers').popover();
+        
+        //pinakelam ko to ihhhhh
+        $('#btnnotif').on('click',function(){            
+            $.ajax({
+                type: "GET",
+                url: '../config/NotificationSeen.php',
+                dataType: 'json',
+                success: function (data) {
+                    $('#noticationCount').hide();                    
+                    
+                },
+                error: function (response) {
+                }
+
+            });
+        });
+        
+        function fill_notification(){
+            if(document.getElementById('notificationContainer') != null){
+                $.ajax({
+                    type: "GET",
+                    url: '../config/FillNotification.php',
+                    success: function (data) {
+                        document.getElementById('notificationContainer').innerHTML = data;
+
+                    },
+                    error: function (response) {
+                    }
+
+                });
+                
+            }
+            
+        }
+        
+        function fill_notificationCount(){
+            if(document.getElementById('notificationContainer') != null){
+                $.ajax({
+                    type: "GET",
+                    url: '../config/NotificationCount.php',
+                    success: function (data) {
+                        document.getElementById('notificationCount').innerHTML = data;
+
+                    },
+                    error: function (response) {
+                    }
+
+                });
+                
+            }
+            
+        }
+        
+        setInterval(function(){ 
+            fill_notification();
+            fill_notificationCount();
+        }, 500);
+        
+        $('#notificationlist').on('click','a.notif',function(){
+            
+            $.ajax({
+                type: "POST",
+                url: '../config/NotificationClick.php',
+                data:{ item : $(this).attr('item')},
+                success: function (data) {                    
+
+                    
+                },
+                error: function (response) {
+                }
+
+            });
+            $.ajax({
+                type: "POST",
+                url: '../config/NotificationApprovalFillBody.php',
+                data:{ remitnum : $(this).attr('item')},
+                success: function (modalBody) {
+                    document.getElementById('approvalBody').innerHTML = modalBody;
+
+                },
+                error: function (response) {
+                }
+
+            });
+            
+        });        
+        
+        $('#approvalBody').on('click','a.approvedModal',function(){
+            swal({
+                title: "Are you sure?",
+                text: "Remittance will be approved after you do this",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Yes, Add it!',
+                cancelButtonText: "No, cancel it!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        type: "POST",
+                        url: '../config/NotificationApproved.php',
+                        data:{ item : $('#lblremitnum').attr('item')},
+                        success: function (data) {
+                            swal({
+                                title: "Record Approved!",
+                                text: "Remittance request is successfully approved!",
+                                type: "success",
+                                confirmButtonColor: '#88A755',
+                                confirmButtonText: 'Okay',
+                                closeOnConfirm: false
+                            }, function (isConfirm) {
+                                window.location.reload();
+
+                            });
+                            
+
+
+                        },
+                        error: function (response) {
+                        }
+
+                    });
+
+                } else {
+                    swal("Cancelled", "The transaction is cancelled", "error");
+                }
+            });
+            
+
+            
+        }); 
+        $('#approvalBody').on('click','a.rejectModal',function(){
+            swal({
+                title: "Are you sure?",
+                text: "Remittance will be rejected after you do this",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Yes, Add it!',
+                cancelButtonText: "No, cancel it!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        type: "POST",
+                        url: '../config/NotificationRejected.php',
+                        data:{ item : $('#lblremitnum').attr('item')},
+                        success: function (data) {
+                            swal({
+                                title: "Record Rejected!",
+                                text: "Remittance request is successfully rejected!",
+                                type: "success",
+                                confirmButtonColor: '#88A755',
+                                confirmButtonText: 'Okay',
+                                closeOnConfirm: false
+                            }, function (isConfirm) {
+                                window.location.reload();
+
+                            });
+
+
+                        },
+                        error: function (response) {
+                        }
+
+                    });
+
+                } else {
+                    swal("Cancelled", "The transaction is cancelled", "error");
+                }
+            });
+            
+
+            
+        });
+        
 
 
     });

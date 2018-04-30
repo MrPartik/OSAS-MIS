@@ -95,8 +95,11 @@ var EditableTable = function () {
                 var e = document.getElementById("drpcat");
                 var getcat = e.options[e.selectedIndex].text;
                 var getcatval = e.options[e.selectedIndex].value;
-                var f = document.getElementById("nonacad");
-                var nonacad = f.options[f.selectedIndex].value;
+                if(document.getElementById("nonacad") != null){
+                    var f = document.getElementById("nonacad");
+                    var nonacad = f.options[f.selectedIndex].value;
+                    
+                }
                 var accstat = '';
                 var chkstat = '';
                 var chkcode = '';

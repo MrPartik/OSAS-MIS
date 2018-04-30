@@ -13,11 +13,23 @@
                         <span>Org Officers and Members</span>
                     </a>
                 </li>
-                <li> <a <?php if( $currentPage==='Org_Remit' ) {echo 'class="active"';} ?> href="Remittance.php">
+                <li> <a <?php if( $currentPage==='Org_OrgOff' ) {echo 'class="active"';} ?> href="OrganizationOfficer.php">
                         <i class="fa fa-group"></i>
-                        <span>Remitance</span>
+                        <span>Organization Officers</span>
                     </a>
                 </li>
+                <li> <a <?php if( $currentPage==='Org_OrgMems' ) {echo 'class="active"';} ?> href="OrganizationMember.php">
+                        <i class="fa fa-group"></i>
+                        <span>Organization Members</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a <?php if( $currentPage==='Org_RemReq' || $currentPage==='Org_Remit' ) { echo 'class="active"';}?>  href="javascript:;" > <i class="fa fa-tag"></i> <span>Remittance</span> </a>
+                    <ul class="sub">
+                        <li <?php if( $currentPage==='Org_RemReq' ) {echo 'class="active"';} ?>><a href="RemittanceRequest.php">Remittance Request</a></li>
+                        <li <?php if( $currentPage==='Org_Remit' ) {echo 'class="active"';} ?>><a  href="Remittance.php">Remittance History</a></li>
+                    </ul>
+                </li>                
                 <li> <a <?php if( $currentPage==='Org_Cflow' ) {echo 'class="active"';} ?> href="CashFlowStatement.php">
                         <i class="fa fa-group"></i>
                         <span>Cashflow statement</span>
