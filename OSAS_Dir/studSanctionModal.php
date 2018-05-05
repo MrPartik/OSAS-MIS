@@ -190,8 +190,19 @@
             </div>
         </div>
     </div>
-    <script> 
-
+    <script>  
+    $("tbody").find("tr").find("input[id='tobeDone']").each(function(){
+        var  date = new Date()
+     dd = ('0' + date.getDate()).slice(-2),
+                mm = ('0' + (date.getMonth()+1)).slice(-2),
+                y = date.getFullYear(),
+                someFormattedDate = y + '-' + mm + '-' +dd ; 
+        if($(this).attr("value")==someFormattedDate)
+        {
+            $(this).css("color","red");
+        }
+    });
+    
         var table = $('#dynamic-table-modal').DataTable({iDisplayLength:3}); 
         $('#assignSanction').on("click", function() {
             if ($('#sanctionDiv:visible').length) {
@@ -211,11 +222,25 @@
             }
         });
         $("#tbodySanctions").on("change","input[id='tobeDone']",function(){ 
+
             if ($(this).val() == $(this).attr("value")) {
                 $(this).closest("tr").removeClass("updatingRow");
             } else {
                 $(this).closest("tr").addClass("updatingRow");
             }
+ 
+        var  date = new Date()
+     dd = ('0' + date.getDate()).slice(-2),
+                mm = ('0' + (date.getMonth()+1)).slice(-2),
+                y = date.getFullYear(),
+                someFormattedDate = y + '-' + mm + '-' +dd ; 
+               
+        if($(this).val()==someFormattedDate)
+        {
+            $(this).css("color","red");
+        } 
+    
+            
         });
         $("#tbodySanctions").on('change', "input[id='checkFinished']", function() {
             var checkStatus = $(this).closest('tr').find('#checkFinished').attr('checkStatus'),

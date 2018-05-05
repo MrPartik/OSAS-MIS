@@ -2,11 +2,19 @@
 <html>
 <title>OSAS - Remittance</title>
 <?php
+<<<<<<< HEAD
 //$breadcrumbs  ="<div class='col-md-12'>
 //<ul class='breadcrumbs-alt'>
 //     <li> <a  href='#'>Remittance </a>  </li>
 //<li><a class='current'' href='#'>Remittance Request</a></li> </ul></div>";
 $currentPage ='Org_RemReq';
+=======
+$breadcrumbs  ="<div class='col-md-12'>
+<ul class='breadcrumbs-alt'>
+     <li> <a  href='#'>Remittance </a>  </li>
+<li><a class='current'' href='#'>Remittance Request</a></li> </ul></div>";
+$currentPage ='OSAS_Remittance';
+>>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
 include('../config/connection.php');
     session_start();
 include('../config/dashboard/count.php'); 
@@ -56,6 +64,7 @@ $user_check = $_SESSION['logged_user']['username'];
                     <div class="fa fa-bars"></div>
                 </div>
             </div>
+<<<<<<< HEAD
             <div class="nav notify-row" id="top_menu">
             <!--  notification start -->
                 <ul class="nav top-menu">
@@ -65,6 +74,8 @@ $user_check = $_SESSION['logged_user']['username'];
                 </ul>
             <!--  notification end -->
             </div>
+=======
+>>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
             <div class="top-nav clearfix">
 
                 <!--search & user info start-->
@@ -83,6 +94,14 @@ $user_check = $_SESSION['logged_user']['username'];
                     <!-- user login dropdown end -->
                 </ul>
                 <!--search & user info end-->
+<<<<<<< HEAD
+=======
+                <ul class="nav top-menu">
+                    <li>
+                        <?php echo $breadcrumbs ?>
+                    </li>
+                </ul>
+>>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
             </div>
         </header>
     </section>
@@ -142,7 +161,11 @@ $user_check = $_SESSION['logged_user']['username'];
                                                     $view_query = mysqli_query($con," SELECT OrgRemittance_NUMBER,OrgRemittance_ID,OrgAppProfile_NAME,OrgRemittance_SEND_BY,OrgRemittance_REC_BY,CONCAT('₱', FORMAT(OrgRemittance_AMOUNT, 3)) AS AMOUNT  ,OrgRemittance_DESC,DATE_FORMAT(OrgRemittance_DATE_ADD, '%M %d, %Y') AS DATE,OrgRemittance_APPROVED_STATUS AS APSTAT  FROM t_org_remittance
                                                     INNER JOIN t_org_for_compliance ON OrgRemittance_ORG_CODE = OrgForCompliance_ORG_CODE
                                                     INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
+<<<<<<< HEAD
                                                     WHERE OrgRemittance_DISPLAY_STAT = 'Active' AND OrgForCompliance_DISPAY_STAT = 'Active' AND OrgAppProfile_DISPLAY_STAT = 'Active' AND r_org_applicant_profile.OrgAppProfile_APPL_CODE = (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_ORG_CODE = '$user_check' ) ORDER BY OrgRemittance_NUMBER ASC ");
+=======
+                                                    WHERE OrgRemittance_DISPLAY_STAT = 'Active' AND OrgForCompliance_DISPAY_STAT = 'Active' AND OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgRemittance_ORG_CODE = '$user_check' ORDER BY OrgRemittance_NUMBER ASC ");
+>>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
                                                     while($row = mysqli_fetch_assoc($view_query))
                                                     {
                                                         $id = $row["OrgRemittance_ID"];
@@ -167,7 +190,11 @@ $user_check = $_SESSION['logged_user']['username'];
                                                                 <td><label>$date</label></td>
                                                                 <td style='width:150px'>
                                                                     <center>
+<<<<<<< HEAD
                                                                         <a class='btn btn-default ' style='background-color:#c7cbd6' href='javascript:;'><i class='fa fa-edit'></i></a> 
+=======
+                                                                        <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-edit'></i></a> 
+>>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
                                                                         <!--<a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>-->
                                                                     </center>
                                                                 </td>
@@ -355,8 +382,11 @@ $user_check = $_SESSION['logged_user']['username'];
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
         <?php  include('../config/NotificationRemittanceApproval.php') ?>
 
+=======
+>>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
         <!-- Placed js at the end of the document so the pages load faster -->
 
         <!--Core js-->

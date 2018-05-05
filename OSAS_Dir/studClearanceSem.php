@@ -73,9 +73,11 @@ include('../config/connection.php');
                                                             <td>
                                                                 <?php  
                                                             $studNo = $stud_row['Stud_NO'];
-                                                            $noRow = mysqli_fetch_array(mysqli_query($con,"SELECT (SELECT COUNT(`AssSancStudStudent_STUD_NO`) FROM `t_assign_stud_saction` WHERE `AssSancStudStudent_STUD_NO` = '$studNo' and `AssSancStudStudent_DISPLAY_STAT` <> 'Inactive'  and `AssSancStudStudent_IS_FINISH` <>'finished')")); ?>
+                                                            $noRow = mysqli_fetch_array(mysqli_query($con,"SELECT `AssSancStudStudent_STUD_NO` FROM `t_assign_stud_saction` WHERE `AssSancStudStudent_STUD_NO` = '$studNo' and `AssSancStudStudent_DISPLAY_STAT` <> 'Inactive'  and `AssSancStudStudent_IS_FINISH` <>'finished'")); 
+                                                            $countSanc = mysqli_num_rows(mysqli_query($con,"SELECT `AssSancStudStudent_STUD_NO` FROM `t_assign_stud_saction` WHERE `AssSancStudStudent_STUD_NO` = '$studNo' and `AssSancStudStudent_DISPLAY_STAT` <> 'Inactive'  and `AssSancStudStudent_IS_FINISH` <>'finished'"));
+                                                            ?> 
                                                         
-                                                        <center> <span class="label label-danger label-mini"> <?php echo $noRow[0] ?>  </span></center>
+                                                        <center> <a id="StudSanctionModalClick" value="<?php echo $noRow[0] ; ?>" data-toggle="modal" href="#studSanction"  class="label label-danger label-mini"> <?php echo  $countSanc ?></a></center>
                                                             </td>
                                                             <td style="width:20%;"> 
                                                             <center> <strong>
@@ -192,14 +194,29 @@ include('../config/connection.php');
             </div>
             <!-- Modal Dest-->
             <div id="studSemClearance" class="modal fade content-sanction " role="dialog "> </div>
+
+    <div id="studSanction" class="modal fade content-sanction " role="dialog "> </div>
             <!--main content end-->
             <!-- Placed js at the end of the document so the pages load faster -->
             <!--Core js-->
+            
             <?php include('footer.php')?>
     </body>
 
 </html>
 <script>   
+
+    $("#StudSanctionModalClick ").on("click ", function () {
+        var datas = $(this).attr("value");
+        $.ajax({
+            url: "studSanctionModal.php?StudNo=" + datas
+            , cache: false
+            , async: false
+            , success: function (result) {
+                $(".content-sanction ").html(result);
+            }
+        });
+    });
     $(document).ready(function () {
         var dataSrc = [];
         var table = $('#dynamic-table').DataTable({

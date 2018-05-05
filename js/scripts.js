@@ -354,6 +354,7 @@
                 }
 
             });
+<<<<<<< HEAD
             if($(this).attr('item').substring(0,5) == 'Remit'){
                 $.ajax({
                     type: "POST",
@@ -384,6 +385,21 @@
                 });
                 
             }            
+=======
+            $.ajax({
+                type: "POST",
+                url: '../config/NotificationApprovalFillBody.php',
+                data:{ remitnum : $(this).attr('item')},
+                success: function (modalBody) {
+                    document.getElementById('approvalBody').innerHTML = modalBody;
+
+                },
+                error: function (response) {
+                }
+
+            });
+            
+>>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
         });        
         
         $('#approvalBody').on('click','a.approvedModal',function(){
@@ -405,7 +421,11 @@
                         data:{ item : $('#lblremitnum').attr('item')},
                         success: function (data) {
                             swal({
+<<<<<<< HEAD
                                 title: "Remittance Approved!",
+=======
+                                title: "Record Approved!",
+>>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
                                 text: "Remittance request is successfully approved!",
                                 type: "success",
                                 confirmButtonColor: '#88A755',
@@ -451,7 +471,11 @@
                         data:{ item : $('#lblremitnum').attr('item')},
                         success: function (data) {
                             swal({
+<<<<<<< HEAD
                                 title: "Remittance Rejected!",
+=======
+                                title: "Record Rejected!",
+>>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
                                 text: "Remittance request is successfully rejected!",
                                 type: "success",
                                 confirmButtonColor: '#88A755',
@@ -477,6 +501,7 @@
 
             
         });
+<<<<<<< HEAD
         $('#EventApprovalBody').on('click','a.EventRejectModal',function(){
             swal({
                 title: "Are you sure?",
@@ -567,6 +592,9 @@
 
             
         });        
+=======
+        
+>>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
 
 
     });

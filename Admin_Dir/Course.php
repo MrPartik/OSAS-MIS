@@ -186,7 +186,7 @@ include('../config/connection.php');
     
     ?>
         <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Add" class="modal fade">
-            <div class="modal-dialog">
+            <div class="modal-dialog" style="width:700px">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -196,21 +196,23 @@ include('../config/connection.php');
                         <form method="post" id="form-data">
                             <div class="row" style="padding-top:10px">
                                 <div class="row" style="padding-left:15px">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-12">
                                         Course Code <input type="text" class="form-control" placeholder="ex. BSIT" id="txtcode">
                                     </div>
                                 </div>
                                 <div class="row" style="padding-top:10px">
                                     <div class="col-lg-12">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             Course Name <input type="text" class="form-control" placeholder="ex. Bachelor of science in Information Technology" id="txtname">
                                         </div>
-                                        <div class="col-lg-4">
-                                            Batch Year<select class="form-control input-sm m-bot15 selectYear" style="width:100%" id="selcode"> <?php echo $option; ?></select>
+                                        <div class="col-lg-12">
+                                            Academic Year<select class="form-control input-sm m-bot15 selectYear" style="width:100%" id="selcode"> 
+                                            <option selected disabled>Please Select Academic Year</option>
+                                            <?php echo $option; ?></select>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-8 " style="padding-top:10px">
+                                <div class="col-lg-12 " style="padding-top:10px">
                                     Course Description<textarea class="form-control" placeholder="ex. Bachelor of science in Information Technology" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
                                 </div>
                             </div>

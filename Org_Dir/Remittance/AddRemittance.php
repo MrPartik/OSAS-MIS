@@ -1,9 +1,14 @@
 <?php
 	
+<<<<<<< HEAD
 //    $con = mysqli_connect("localhost","root","","osas"); 
     include('../../config/connection.php');     
 
 //$orgcode = $_POST['_orgcode'];
+=======
+    $con = mysqli_connect("localhost","root","","osas"); 
+    //$orgcode = $_POST['_orgcode'];
+>>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
     session_start();
     $orgcode = $_SESSION['logged_user']['username'];
     $sendby = $_POST['_sendby'];
@@ -19,8 +24,13 @@
     mysqli_stmt_bind_param($query, 'sssss', $remit, $orgcode,$sendby,$amount,$desc);
     mysqli_stmt_execute($query);
     
+<<<<<<< HEAD
     $query = mysqli_prepare($con, "INSERT INTO r_notification (Notification_ITEM,Notification_USERROLE,Notification_SENDER,Notification_RECEIVER) VALUES (?,'Organization',?,(SELECT OSASHead_CODE FROM `r_osas_head` WHERE OSASHead_DISPLAY_STAT = 'Active'))");
     mysqli_stmt_bind_param($query, 'ss', $remit,$orgcode);
+=======
+    $query = mysqli_prepare($con, "INSERT INTO r_notification (Notification_ITEM) VALUES (?)");
+    mysqli_stmt_bind_param($query, 's', $remit);
+>>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
     mysqli_stmt_execute($query);
     
 

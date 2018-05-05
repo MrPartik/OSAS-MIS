@@ -11927,7 +11927,7 @@ td.details table tr td,
 
 .adv-table .dataTables_filter label {
     line-height: 33px;
-    width: 100%;
+    width: 300PX;
 }
 
 .adv-table .dataTables_length select {

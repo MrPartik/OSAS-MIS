@@ -28,6 +28,7 @@ include('../config/connection.php');
                                 <li> <a href="dashboard.php" class="current">Dashboard</a> </li>
                             </ul>
                         </div> -->
+                        
                 <div class="col-md-6">
                     <div class="mini-stat clearfix"> <span class="mini-stat-icon tar"><i class="fa  fa-chain"></i></span>
                         <div class="mini-stat-info"> <span> <?php echo $current_acadyear;?></span> Activated Academic Year </div>
@@ -38,7 +39,7 @@ include('../config/connection.php');
                         <div class="mini-stat-info"> <span><?php echo $current_semster;?></span> Activated Semester </div>
                     </div>
                 </div>
-               
+
 
                 <div class="col-md-3">
                     <div class="mini-stat clearfix"> <span class="mini-stat-icon blue"><i class="fa fa-user"></i></span>
@@ -47,7 +48,7 @@ include('../config/connection.php');
                 </div>
                 <div class="col-md-3">
                     <div class="mini-stat clearfix"> <span class="mini-stat-icon blue"><i class="fa fa-users"></i></span>
-                        <div class="mini-stat-info"> <span><?php echo $count_registered_org ?></span> Registered Organization </div>
+                        <div class="mini-stat-info"> <span>450</span> Registered Organization </div>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -67,13 +68,13 @@ include('../config/connection.php');
                 </div>
                 <div class="col-md-3">
                     <div class="mini-stat clearfix"> <span class="mini-stat-icon orange"><i class="fa fa-users"></i></span>
-                        <div class="mini-stat-info"> <span><?php echo $count_pending_acc ?></span> Organization/s who is peding for accreditation </div>
+                        <div class="mini-stat-info"> <span>20</span> Organization/s who is peding for accreditation </div>
                     </div>
                 </div>
 
                 <div class="col-md-3">
                     <div class="mini-stat clearfix"> <span class="mini-stat-icon tar"><i class="fa fa-paperclip"></i></span>
-                        <div class="mini-stat-info"> <span><?php echo $count_finan_ass?></span>Number of Student who has financial assistance</div>
+                        <div class="mini-stat-info"> <span>0</span>Number of Student who has financial assistance</div>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -81,52 +82,8 @@ include('../config/connection.php');
                         <div class="mini-stat-info"> <span>100</span> Number of Archived Documents </div>
                     </div>
                 </div>
-                <!-- <div class="col-md-4">
-        <div class="profile-nav alt">
-            <section class="panel">
-                <div class="user-heading alt clock-row terques-bg">
-                    <h1><?php echo date('M')?></h1>
-                    <p class="text-left"><?php echo date('Y, D')?></p>
-                    <p class="text-left"><?php echo date('h:i A')?></p>
-                </div>
-                <ul id="clock">
-                    <li id="sec"></li>
-                    <li id="hour"></li>
-                    <li id="min"></li>
-                </ul>
-
                 
-            </section>
-
-        </div> -->
-        <center>
-    </div><div class="col-md-12" >
-        <div class="event-calendar clearfix">
-            <div class="col-lg-7 calendar-block">
-                <div class="cal1 ">
-                </div>
-            </div>
-            <div class="col-lg-5 event-list-block">
-                <div class="cal-day">
-                    <span>Today</span>
-                    <?php echo date('D')?>
-                </div>
-                <ul class="event-list">
-                    <?php $sanc_query = mysqli_query($con,"SELECT A.AssSancStudStudent_STUD_NO StudNo, CONCAT(B.Stud_LNAME,', ',B.Stud_FNAME,' ',COALESCE(B.Stud_MNAME,'')) AS FullName, A.AssSancStudStudent_SancDetails_CODE  AS SANC, ((C.SancDetails_TIMEVAL)-(A.AssSancStudStudent_CONSUMED_HOURS)) as remaining FROM t_assign_stud_saction A 
-INNER JOIN  r_stud_profile B on a.AssSancStudStudent_STUD_NO = a.AssSancStudStudent_STUD_NO
-INNER JOIN r_sanction_details C on A.AssSancStudStudent_SancDetails_CODE = C.SancDetails_CODE
-WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_STUD_NO = B.Stud_NO AND a.AssSancStudStudent_DISPLAY_STAT='Active' AND A.AssSancStudStudent_IS_FINISH <> 'Finish' AND a.AssSancStudStudent_CONSUMED_HOURS<>c.SancDetails_TIMEVAL");
-                    while($row=mysqli_fetch_assoc($sanc_query)){ ?>
-                
-                <li><?php echo '<strong>'.$row["StudNo"].'</strong> <br> '.$row["FullName"].'<br> Sanction: '.$row["SANC"]."<br>Remaining Hours:".$row["remaining"]."hrs<br><i style='color:red'> Exceeding the sanction duedate</i>" ?><a id="StudSanctionModalClick" value="<?php echo $row["StudNo"]; ?>" data-toggle="modal" href="#studSanction" class="event-close"><i class="fa fa-bolt"></i></a></li>
-                   
-                    <?php }?>
-
-                </ul>
-            </div>
-        </div>
-    </div>
-                <div class="col-md-6" style="padding-top:10px">
+                <div class="col-md-6">
                     <section class="panel">
                         <div class="panel-body">
                             <div id="sanctions" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -187,7 +144,7 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                         </div>
                     </section>
                 </div>
-                <div class="col-md-6" style="padding-top:10px">
+                <div class="col-md-6">
                     <section class="panel">
                         <div class="panel-body">
                             <div id="FinancialAssistance" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -260,6 +217,28 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                     </section>
                 </div>
 
+    <div class="col-md-8">
+        <div class="event-calendar clearfix">
+            <div class="col-lg-7 calendar-block">
+                <div class="cal1 ">
+                </div>
+            </div>
+            <div class="col-lg-5 event-list-block">
+                <div class="cal-day">
+                    <span>Today</span>
+                    <?php echo  dateNow();?>
+                </div>
+                <ul class="event-list">
+                    <li>Lunch with jhon @ 3:30 <a href="#" class="event-close"><i class="ico-close2"></i></a></li>
+                    <li>Coffee meeting with Lisa @ 4:30 <a href="#" class="event-close"><i class="ico-close2"></i></a></li>
+                    <li>Skypee conf with patrick @ 5:45 <a href="#" class="event-close"><i class="ico-close2"></i></a></li>
+                    <li>Gym @ 7:00 <a href="#" class="event-close"><i class="ico-close2"></i></a></li>
+                    <li>Dinner with daniel @ 9:30 <a href="#" class="event-close"><i class="ico-close2"></i></a></li>
+
+                </ul> 
+            </div>
+        </div>
+    </div>
             </div>
         </section>
     </section>
@@ -267,8 +246,6 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
     <!-- Placed js at the end of the document so the pages load faster -->
     <!--Core js-->
     <?php include('footer.php')?>
-    
-    <div id="studSanction" class="modal fade content-sanction " role="dialog "> </div>
     <script src="../js/morris-chart/morris.js"></script>
     <script src="../js/morris-chart/raphael-min.js"></script>
     <script src="../js/highcharts.js"></script>
@@ -284,17 +261,6 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
 
 
     <script>
-    $("#StudSanctionModalClick ").on("click ", function () {
-        var datas = $(this).attr("value");
-        $.ajax({
-            url: "studSanctionModal.php?StudNo=" + datas
-            , cache: false
-            , async: false
-            , success: function (result) {
-                $(".content-sanction ").html(result);
-            }
-        });
-    });
         $(document).ready(function() {
             $('#tblSanction').hide();
             $('#tblFinAss').hide();
