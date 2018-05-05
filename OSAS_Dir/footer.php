@@ -13,7 +13,7 @@
 <script src="../js/skycons/skycons.js"></script>
 <script src="../js/jquery.scrollTo/jquery.scrollTo.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-<script type="text/javascript" src="../js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<!--<script type="text/javascript" src="../js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>-->
 <script src="../js/jquery-tags-input/jquery.tagsinput.js"></script>
 <script src="../js/calendar/clndr.js"></script>
 <script src="../js/underscore-min.js"></script>

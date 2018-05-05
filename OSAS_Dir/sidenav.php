@@ -47,6 +47,7 @@
                         <li <?php if( $currentPage==='OSAS_OrgVouch' ) { echo 'class="active"';} ?> ><a href="OrganizationVoucher.php">Voucher</a></li>
                         <li <?php if( $currentPage==='OSAS_Remittance' ) { echo 'class="active"';} ?>><a href="Remittance.php">Remittance</a></li>
                         <li <?php if( $currentPage==='OSAS_Cflow' ) { echo 'class="active"';} ?>><a href="CashFlowStatement.php">Cashflow Statement</a></li>
+                        <li <?php if( $currentPage==='OSAS_Event' ) { echo 'class="active"';} ?>><a href="Event.php">Event</a></li>
                     </ul>
                 </li>
                 <li> <a <?php if( $currentPage==='OSAS_Financial' ) {echo 'class="active"';} ?> href="finanAssign.php">

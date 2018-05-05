@@ -91,19 +91,10 @@ var EditableTable = function () {
                 //                var code = document.getElementById('txtcode').value;
                 var name = document.getElementById('txtname').value;
                 var desc = document.getElementById('txtdesc').value;
-                var year = $('#editable-sample').attr('batch-year');
-                var e = document.getElementById("drpcat");
+                var date = document.getElementById('txtdate').value;
+                var e = document.getElementById("drporg");
                 var getcat = e.options[e.selectedIndex].text;
                 var getcatval = e.options[e.selectedIndex].value;
-                if(document.getElementById("nonacad") != null){
-                    var f = document.getElementById("nonacad");
-                    var nonacad = f.options[f.selectedIndex].value;
-                    
-                }
-                var accstat = '';
-                var chkstat = '';
-                var chkcode = '';
-                var stat = 0;
 
                 $("#close").click();
 
@@ -121,66 +112,17 @@ var EditableTable = function () {
                     if (isConfirm) {
                         $.ajax({
                             type: 'post',
-                            url: 'Organization/Applicant/Add-ajax.php',
+                            url: 'Organization/Event/Add-ajax.php',
                             data: {
                                 _name: name,
                                 _desc: desc,
-                                _catcode: getcatval,
-                                _year: year
+                                _org: getcatval,
+                                _date: date
 
                             },
-                            success: function (compcode) {
-                                if (getcatval == 'ACAD_ORG') {
-
-                                    $('#e9 option:selected').each(function (index, brand) {
-                                        $.ajax({
-                                            type: 'post',
-                                            url: 'Organization/Applicant/AcadOrg.php',
-                                            async: true,
-                                            data: {
-                                                _appcode: compcode,
-                                                _catcode: getcatval,
-                                                _coucode: brand.value
-
-                                            },
-                                            success: function (response) {
-                                                swal("Record Added!", "The data is successfully Added!", "success");
-                                                document.getElementById("form-data").reset();
-
-
-                                            },
-                                            error: function (response) {
-                                                swal(response, "Please try again", "error");
-                                            }
-                                        });
-
-                                    });
-
-                                } else if (getcatval == 'NONACAD_ORG') {
-                                    $.ajax({
-                                        type: 'post',
-                                        url: 'Organization/Applicant/NonAcadOrg.php',
-                                        async: true,
-                                        data: {
-                                            _appcode: compcode,
-                                            _catcode: nonacad
-                                        },
-                                        success: function (response) {
-                                            swal("Record Added!", "The data is successfully Added!", "success");
-                                            document.getElementById("form-data").reset();
-
-
-                                        },
-                                        error: function (response) {
-                                            swal(response, "Please try again", "error");
-                                        }
-                                    });
-
-
-                                }
-
-
-
+                            success: function (response) {
+                                alert(date)
+                                
                             },
                             error: function (response) {
                                 swal("Error encountered while adding data", "Please try again", "error");
@@ -198,22 +140,13 @@ var EditableTable = function () {
 
             $('#updsubmit-data').click(function (e) {
                 e.preventDefault();
-                var code = document.getElementById('txtupdcode').value;
-                var name = document.getElementById('txtname').value;
-                var desc = document.getElementById('txtdesc').value;
-                var e = document.getElementById("drpcat");
+                var date = document.getElementById('txtupddate').value;
+                var name = document.getElementById('txtupdname').value;
+                var desc = document.getElementById('txtupddesc').value;
+                var e = document.getElementById("drupdporg");
                 var getcat = e.options[e.selectedIndex].text;
                 var getcatval = e.options[e.selectedIndex].value;
-                var f = document.getElementById("nonacad");
-                var nonacad = f.options[f.selectedIndex].value;
-
-                var accstat = '';
-                var getid = document.getElementById('txtgetid').value;
-                var chkstat = '';
-                var chkcode = '';
-                var stat = 0;
                 $("#updclose").click();
-                //                $("#updclose").click();
 
                 swal({
                     title: "Are you sure?",
@@ -229,130 +162,36 @@ var EditableTable = function () {
                     if (isConfirm) {
                         $.ajax({
                             type: 'post',
-                            url: 'Organization/Applicant/Update-ajax.php',
+                            url: 'Organization/Event/Update-ajax.php',
                             data: {
-                                _id: getid,
-                                _code: code,
+                                _code: latcode,
                                 _name: name,
                                 _desc: desc,
-                                _catcode: getcatval,
-                                _accstat: accstat
-
-
+                                _date: date,
+                                _org: getcatval
                             },
                             success: function (response) {
+                                swal({
+                                    title: "Record Updated!",
+                                    text: "The data is successfully Added!",
+                                    type: "success",
+                                    confirmButtonColor: '#88A755',
+                                    confirmButtonText: 'Okay',
+                                    closeOnConfirm: false
+                                }, function (isConfirm) {
+                                    if (isConfirm) {
+                                        window.location.reload();
 
+
+                                    }
+                                });
 
                             },
                             error: function (response) {
                                 swal("Error encountered while adding data", "Please try again", "error");
-                                $("#openModalupd").click();
                             }
                         });
-                        $.ajax({
-                            type: 'GET',
-                            url: 'Organization/Applicant/Pre_acad.php',
-                            data: {
-                                _appcode: code
-                            },
-                            success: function (data2) {
-
-                            },
-                            error: function (response2) {
-                                swal("error", "Please try again", "error");
-                            }
-
-                        });
-
-                        if (getcatval == 'ACAD_ORG') {
-
-                            $.ajax({
-                                type: 'post',
-                                url: 'Organization/Applicant/Pre_acad.php',
-                                data: {
-                                    _appcode: code
-                                },
-                                success: function (response) {},
-                                error: function (response) {
-                                    swal("Error encountered while adding data", "Please try again", "error");
-                                    $("#openAddmodal").click();
-                                }
-                            });
-
-                            $('#e9 option:selected').each(function (index, brand) {
-                                $.ajax({
-                                    type: 'post',
-                                    url: 'Organization/Applicant/UpdAcadOrg.php',
-                                    async: true,
-                                    data: {
-                                        _appcode: code,
-                                        _catcode: getcatval,
-                                        _coucode: brand.value
-
-                                    },
-                                    success: function (response) {
-                                        swal({
-                                            title: "Record Updated!",
-                                            text: "The data is successfully Added!",
-                                            type: "success",
-                                            confirmButtonColor: '#88A755',
-                                            confirmButtonText: 'Okay',
-                                            closeOnConfirm: false
-                                        }, function (isConfirm) {
-                                            if (isConfirm) {
-                                                window.location.reload();
-
-
-                                            }
-                                        });
-
-                                    },
-                                    error: function (response) {
-                                        swal(response, "Please try again", "error");
-                                    }
-                                });
-
-                            });
-
-                        } else if (getcatval == 'NONACAD_ORG') {
-                            $.ajax({
-                                type: 'post',
-                                url: 'Organization/Applicant/NonAcadOrg.php',
-                                async: true,
-                                data: {
-                                    _appcode: code,
-                                    _catcode: nonacad
-                                },
-                                success: function (response) {
-                                    swal({
-                                        title: "Record Updated!",
-                                        text: "The data is successfully Added!",
-                                        type: "success",
-                                        confirmButtonColor: '#88A755',
-                                        confirmButtonText: 'Okay',
-                                        closeOnConfirm: false
-                                    }, function (isConfirm) {
-                                        if (isConfirm) {
-                                            window.location.reload();
-
-
-                                        }
-                                    });
-
-                                },
-                                error: function (response) {
-                                    swal(response, "Please try again", "error");
-                                }
-                            });
-
-
-                        }
-
-
-
-
-
-
+                        
                     } else {
                         swal("Cancelled", "The transaction is cancelled", "error");
                     }
@@ -384,7 +223,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'Organization/Applicant/Delete-ajax.php',
+                                url: 'Organization/Event/Delete-ajax.php',
                                 data: {
                                     _code: getval
                                 },
@@ -436,7 +275,7 @@ var EditableTable = function () {
                         if (isConfirm) {
                             $.ajax({
                                 type: 'post',
-                                url: 'Organization/Applicant/Retrieve-ajax.php',
+                                url: 'Organization/Event/Retrieve-ajax.php',
                                 data: {
                                     _code: getval
                                 },
@@ -481,62 +320,21 @@ var EditableTable = function () {
 
             $('#editable-sample a.edit').on('click', function (e) {
                 e.preventDefault();
-                $('#updsubmit-data').show();
-                $('#submit-data').hide();
                 var id = $(this).closest('tr').children('td:first').text();
-                document.getElementById('txtgetid').value = $(this).closest('tr').children('td:first').text();
-                $('#formcode').show();
+                latcode = id;
                 $.ajax({
                     type: "GET",
-                    url: 'Organization/Applicant/GetData-ajax.php',
+                    url: 'Organization/Event/GetData-ajax.php',
                     dataType: 'json',
                     data: {
                         _id: id
                     },
                     success: function (data) {
-                        document.getElementById('txtupdcode').value = data.code;
-                        document.getElementById('txtname').value = data.name;
-                        document.getElementById('txtdesc').value = data.desc;
-                        document.getElementById('drpcat').value = data.catcode;
-                        if (data.catcode == 'ACAD_ORG') {
-                            $('#drpnon').hide();
-                            $('#course').show();
-                            var item = [];
-                            var i = 0;
-
-                            $.ajax({
-                                type: 'GET',
-                                url: 'Organization/Applicant/fillcourse.php',
-                                dataType: 'json',
-                                async: true,
-                                cache: false,
-                                data: {
-                                    _appcode: data.code
-                                },
-                                success: function (data2) {
-                                    alert(data2)
-                                    $.each(data2, function (key, val) {
-                                        item.push(val.course);
-                                        alert(val.course)
-                                    });
-                                    $("#e9").select2("val", item);
-
-                                },
-                                error: function (response2) {
-                                    swal("error", "Please try again", "error");
-                                }
-
-                            });
-
-
-                        } else if (data.catcode == 'NONACAD_ORG') {
-                            $('#drpnon').show();
-                            $('#course').hide();
-                        } else {
-                            $('#drpnon').hide();
-                            $('#course').hide();
-                        }
-
+                        document.getElementById('txtupddate').value = data.date;
+                        document.getElementById('txtupdname').value = data.name;
+                        document.getElementById('txtupddesc').value = data.desc;
+                        document.getElementById('drupdporg').value = data.orgname;
+                        
                     },
                     error: function (response) {
                         swal("Error encountered while adding data", "Please try again", "error");

@@ -1,14 +1,14 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html>
 <title>OSAS - Remittance</title>
 <?php
-$breadcrumbs  ="<div class='col-md-12'>
-<ul class='breadcrumbs-alt'>
-     <li> <a  href='#'>Organization Management</a>  </li>
-<li><a class='current'' href='#'>Remittance</a></li> </ul></div>";
-$currentPage ='OSAS_Remittance';
+//$breadcrumbs  ="<div class='col-md-12'>
+//<ul class='breadcrumbs-alt'>
+//     <li> <a  href='#'>Remittance </a>  </li>
+//<li><a class='current'' href='#'>Remittance Request</a></li> </ul></div>";
+$currentPage ='Org_RemReq';
 include('../config/connection.php');
-session_start();
+    session_start();
 include('../config/dashboard/count.php'); 
 include('../config/query.php');
 if($_SESSION['logged_user']['role']=="Organization")
@@ -56,7 +56,6 @@ $user_check = $_SESSION['logged_user']['username'];
                     <div class="fa fa-bars"></div>
                 </div>
             </div>
-           
             <div class="nav notify-row" id="top_menu">
             <!--  notification start -->
                 <ul class="nav top-menu">
@@ -69,11 +68,7 @@ $user_check = $_SESSION['logged_user']['username'];
             <div class="top-nav clearfix">
 
                 <!--search & user info start-->
-                
                 <ul class="nav pull-right top-menu">
-                    <!-- notification dropdown start-->
-                    
-                    <!-- notification dropdown end-->
                     <li>
                         <input type="text" class="form-control search" placeholder=" Search"> </li>
                     <!-- user login dropdown start-->
@@ -88,9 +83,6 @@ $user_check = $_SESSION['logged_user']['username'];
                     <!-- user login dropdown end -->
                 </ul>
                 <!--search & user info end-->
-   
-               
-
             </div>
         </header>
     </section>
@@ -126,8 +118,6 @@ $user_check = $_SESSION['logged_user']['username'];
                                         <div class="clearfix">
                                             <div class="btn-group">
                                                 <button id="editable-sample_new" data-toggle="modal" id="openAddmodal" href="#Add" class="btn btn-success">Add <i class="fa fa-plus"></i>
-                                                </button> 
-                                                <button id="btnrequest" data-toggle="modal" id="openAddmodal" href="#Request" class="btn btn-info" style="margin-left:5px">Request <i class="fa fa-folder-open"></i>
                                                 </button>
                                             </div>
                                             <div class="btn-group pull-right">
@@ -138,8 +128,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                         <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                             <thead>
                                                 <tr>
-                                                    <th class="hidden">id</th>
-                                                    <th >Remittance No.</th>
+                                                    <th>Remittance No.</th>
                                                     <th>Organization</th>
                                                     <th>Overview</th>
                                                     <th>Description</th>
@@ -153,7 +142,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                                     $view_query = mysqli_query($con," SELECT OrgRemittance_NUMBER,OrgRemittance_ID,OrgAppProfile_NAME,OrgRemittance_SEND_BY,OrgRemittance_REC_BY,CONCAT('₱', FORMAT(OrgRemittance_AMOUNT, 3)) AS AMOUNT  ,OrgRemittance_DESC,DATE_FORMAT(OrgRemittance_DATE_ADD, '%M %d, %Y') AS DATE,OrgRemittance_APPROVED_STATUS AS APSTAT  FROM t_org_remittance
                                                     INNER JOIN t_org_for_compliance ON OrgRemittance_ORG_CODE = OrgForCompliance_ORG_CODE
                                                     INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
-                                                    WHERE OrgRemittance_DISPLAY_STAT = 'Active' AND OrgForCompliance_DISPAY_STAT = 'Active' AND OrgAppProfile_DISPLAY_STAT = 'Active' ORDER BY OrgRemittance_NUMBER ASC ");
+                                                    WHERE OrgRemittance_DISPLAY_STAT = 'Active' AND OrgForCompliance_DISPAY_STAT = 'Active' AND OrgAppProfile_DISPLAY_STAT = 'Active' AND r_org_applicant_profile.OrgAppProfile_APPL_CODE = (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` WHERE OrgForCompliance_ORG_CODE = '$user_check' ) ORDER BY OrgRemittance_NUMBER ASC ");
                                                     while($row = mysqli_fetch_assoc($view_query))
                                                     {
                                                         $id = $row["OrgRemittance_ID"];
@@ -169,7 +158,6 @@ $user_check = $_SESSION['logged_user']['username'];
                                                         if($stat == 'Approved'){
                                                             echo "
                                                             <tr class=''>
-                                                                <td class='hidden'>$id</td>
                                                                 <td><center>$number</center></td>
                                                                 <td style='width:200px'>$name</td>
                                                                 <td style='width:280px'><label>Send by: </label> $send<br/>
@@ -179,7 +167,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                                                 <td><label>$date</label></td>
                                                                 <td style='width:150px'>
                                                                     <center>
-                                                                        <a class='btn btn-default edit' style='background-color:#c7cbd6' href='javascript:;'><i class='fa fa-edit'></i></a> 
+                                                                        <a class='btn btn-default ' style='background-color:#c7cbd6' href='javascript:;'><i class='fa fa-edit'></i></a> 
                                                                         <!--<a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>-->
                                                                     </center>
                                                                 </td>
@@ -190,7 +178,6 @@ $user_check = $_SESSION['logged_user']['username'];
                                                         else if($stat == 'Rejected'){
                                                             echo "
                                                             <tr class=''>
-                                                                <td class='hidden'>$id</td>
                                                                 <td><center>$number</center></td>
                                                                 <td style='width:200px'>$name</td>
                                                                 <td style='width:280px'><label>Send by: </label> $send<br/>
@@ -211,7 +198,6 @@ $user_check = $_SESSION['logged_user']['username'];
                                                         else{
                                                             echo "
                                                             <tr class=''>
-                                                                <td class='hidden'>$id</td>
                                                                 <td><center>$number</center></td>
                                                                 <td style='width:200px'>$name</td>
                                                                 <td style='width:280px'><label>Send by: </label> $send</td>                                                            
@@ -237,14 +223,13 @@ $user_check = $_SESSION['logged_user']['username'];
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th class="hidden">id</th>
-                                                    <th >Remittance No.</th>
+                                                    <th>Remittance No.</th>
                                                     <th>Organization</th>
                                                     <th>Overview</th>
                                                     <th>Description</th>
                                                     <th>Status</th>
                                                     <th>Date Issued</th>
-                                                    <th  style="width:1%"><center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
+                                                    <th style="width:1%"><center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -292,26 +277,7 @@ $user_check = $_SESSION['logged_user']['username'];
                     <div class="modal-body">
                         <form method="post" id="form-data">
                             <div class="row">
-                                <div class="col-lg-6 form-group">
-                                    Organization Name
-                                    <select class="form-control input-sm" id="drporg">
-                                    <?php
-                                        $view_query = mysqli_query($con," SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME,(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) AS STAT FROM `t_org_for_compliance` INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR= '$current_acadyear' AND (SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) = 'TRUE'
-                                        ");
-                                
-                                        $fillorg = ' <option disable selected value="default" >Please choose an Organization</option>';
-                                        while($row = mysqli_fetch_assoc($view_query))
-                                        {
-                                            $val = $row['OrgForCompliance_ORG_CODE'];
-                                            $name = $row['OrgAppProfile_NAME'];
-                                            $fillorg = $fillorg . " <option value='".$val."' >".$name."</option>";
-
-                                        }
-                                        echo $fillorg;
-                                    ?>
-                                    </select>
-                                </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     Current Money <input type="text" min="1" class="form-control" disabled id="txtcurmon">
                                 </div>
                             </div>
@@ -389,84 +355,8 @@ $user_check = $_SESSION['logged_user']['username'];
                 </div>
             </div>
         </div>
-        
-        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Request" class="modal fade">
-            <div class="modal-dialog" style="width:70%">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"><i class="fa fa-money"></i> Remittance Request</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <table class="table table-striped table-hover table-bordered" id="editable-sample2">
-                                <thead>
-                                    <tr>
-                                        <th >Remittance No.</th>
-                                        <th>Organization</th>
-                                        <th>Overview</th>
-                                        <th>Description</th>
-                                        <th>Date Issued</th>
-                                        <th style='width:130px'><center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                        $view_query = mysqli_query($con," SELECT OrgRemittance_NUMBER,OrgRemittance_ID,OrgAppProfile_NAME,OrgRemittance_SEND_BY,OrgRemittance_REC_BY,CONCAT('₱', FORMAT(OrgRemittance_AMOUNT, 3)) AS AMOUNT  ,OrgRemittance_DESC,DATE_FORMAT(OrgRemittance_DATE_ADD, '%M %d, %Y') AS DATE  FROM t_org_remittance
-                                        INNER JOIN t_org_for_compliance ON OrgRemittance_ORG_CODE = OrgForCompliance_ORG_CODE
-                                        INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
-                                        WHERE OrgRemittance_DISPLAY_STAT = 'Active' AND OrgForCompliance_DISPAY_STAT = 'Active' AND OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgRemittance_APPROVED_STATUS = 'Pending' ORDER BY OrgRemittance_NUMBER ASC ");
-                                        while($row = mysqli_fetch_assoc($view_query))
-                                        {
-                                            $number = $row["OrgRemittance_NUMBER"];
-                                            $name = $row["OrgAppProfile_NAME"];
-                                            $send = $row["OrgRemittance_SEND_BY"];
-                                            $rec = $row["OrgRemittance_REC_BY"];
-                                            $amount = $row["AMOUNT"];
-                                            $desc = $row["OrgRemittance_DESC"];
-                                            $date = $row["DATE"];
-
-                                            echo "
-                                            <tr class=''>
-                                                <td><center>$number</center></td>
-                                                <td style='width:200px'>$name</td>
-                                                <td style='width:280px'><label>Send by: </label> $send<br/>
-                                                    <label>Receive by: </label> $rec</td>
-                                                <td><label>Amount: </label> $amount<br/><label>Description: </label> $desc</td>
-                                                <td><label>$date</label></td>
-                                                <td>
-                                                    <center>
-                                                        <a class='btn btn-success approved' style='color:white' href='javascript:;'><i class='fa fa-thumbs-o-up'></i></a> 
-                                                        <a class='btn btn-danger reject' style='color:white' href='javascript:;'><i class='fa fa-thumbs-o-down'></i></a> 
-                                                    </center>
-                                                </td>
-                                            </tr>
-                                                    ";
-                                        }
-
-                                    ?>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th >Remittance No.</th>
-                                        <th>Organization</th>
-                                        <th>Overview</th>
-                                        <th>Description</th>
-                                        <th>Date Issued</th>
-                                        <th style='width:100px'><center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button data-dismiss="modal" class="btn btn-default" id="updclose" type="button">Close</button>
-                        <button class="btn btn-success " id="updsubmit-data" type="button">Save</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <?php  include('../config/NotificationRemittanceApproval.php') ?>
+
         <!-- Placed js at the end of the document so the pages load faster -->
 
         <!--Core js-->
@@ -487,7 +377,7 @@ $user_check = $_SESSION['logged_user']['username'];
         <script src="../js/scripts.js"></script>
 
         <!--script for this page only-->
-        <script src="Organization/Remittance.js"></script>
+        <script src="Remittance/RemittanceRequest.js"></script>
 
         <!-- END JAVASCRIPTS -->
         <script>

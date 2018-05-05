@@ -10,20 +10,24 @@
                 </li>
                 <li> <a <?php if( $currentPage==='Org_OrgMem' ) {echo 'class="active"';} ?> href="OrganizationMembers.php">
                         <i class="fa fa-group"></i>
-                        <span>Org Officers and Members</span>
+                        <span>Officers and Members</span>
                     </a>
                 </li>
-                <li> <a <?php if( $currentPage==='Org_Remit' ) {echo 'class="active"';} ?> href="Remittance.php">
-                        <i class="fa fa-group"></i>
-                        <span>Remitance</span>
+                <li> <a <?php if( $currentPage==='Org_RemReq' ) {echo 'class="active"';} ?> href="RemittanceRequest.php">
+                        <i class="fa fa-tag"></i>
+                        <span>Remittance</span>
                     </a>
-                </li>
+                </li>                          
                 <li> <a <?php if( $currentPage==='Org_Cflow' ) {echo 'class="active"';} ?> href="CashFlowStatement.php">
                         <i class="fa fa-group"></i>
                         <span>Cashflow statement</span>
                     </a>
                 </li>
-            </ul>
+                <li> <a <?php if( $currentPage==='Org_Event' ) {echo 'class="active"';} ?> href="Event.php">
+                        <i class="fa fa-group"></i>
+                        <span>Event</span>
+                    </a>
+                </li>            </ul>
         </div>
         <!-- sidebar menu end-->
     </div>

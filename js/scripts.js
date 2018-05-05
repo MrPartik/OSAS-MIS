@@ -282,6 +282,291 @@
         // popovers
 
         $('.popovers').popover();
+        
+        //pinakelam ko to ihhhhh
+        $('#btnnotif').on('click',function(){            
+            $.ajax({
+                type: "GET",
+                url: '../config/NotificationSeen.php',
+                dataType: 'json',
+                success: function (data) {
+                    $('#noticationCount').hide();                    
+                    
+                },
+                error: function (response) {
+                }
+
+            });
+        });
+        
+        function fill_notification(){
+            if(document.getElementById('notificationContainer') != null){
+                $.ajax({
+                    type: "GET",
+                    url: '../config/FillNotification.php',
+                    success: function (data) {
+                        document.getElementById('notificationContainer').innerHTML = data;
+
+                    },
+                    error: function (response) {
+                    }
+
+                });
+                
+            }
+            
+        }
+        
+        function fill_notificationCount(){
+            if(document.getElementById('notificationContainer') != null){
+                $.ajax({
+                    type: "GET",
+                    url: '../config/NotificationCount.php',
+                    success: function (data) {
+                        document.getElementById('notificationCount').innerHTML = data;
+
+                    },
+                    error: function (response) {
+                    }
+
+                });
+                
+            }
+            
+        }
+        
+        setInterval(function(){ 
+            fill_notification();
+            fill_notificationCount();
+        }, 500);
+        
+        $('#notificationlist').on('click','a.notif',function(){
+            
+            $.ajax({
+                type: "POST",
+                url: '../config/NotificationClick.php',
+                data:{ item : $(this).attr('item')},
+                success: function (data) {                    
+
+                    
+                },
+                error: function (response) {
+                }
+
+            });
+            if($(this).attr('item').substring(0,5) == 'Remit'){
+                $.ajax({
+                    type: "POST",
+                    url: '../config/NotificationApprovalFillBody.php',
+                    data:{ remitnum : $(this).attr('item')},
+                    success: function (modalBody) {
+                        document.getElementById('approvalBody').innerHTML = modalBody;
+
+                    },
+                    error: function (response) {
+                    }
+
+                });
+                
+            }
+            else if($(this).attr('item').substring(0,4) == 'EVNT'){
+                $.ajax({
+                    type: "POST",
+                    url: '../config/NotificationEventApprovalFillBody.php',
+                    data:{ event : $(this).attr('item')},
+                    success: function (modalBody) {
+                        document.getElementById('EventApprovalBody').innerHTML = modalBody;
+
+                    },
+                    error: function (response) {
+                    }
+
+                });
+                
+            }            
+        });        
+        
+        $('#approvalBody').on('click','a.approvedModal',function(){
+            swal({
+                title: "Are you sure?",
+                text: "Remittance will be approved after you do this",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Yes, Add it!',
+                cancelButtonText: "No, cancel it!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        type: "POST",
+                        url: '../config/NotificationApproved.php',
+                        data:{ item : $('#lblremitnum').attr('item')},
+                        success: function (data) {
+                            swal({
+                                title: "Remittance Approved!",
+                                text: "Remittance request is successfully approved!",
+                                type: "success",
+                                confirmButtonColor: '#88A755',
+                                confirmButtonText: 'Okay',
+                                closeOnConfirm: false
+                            }, function (isConfirm) {
+                                window.location.reload();
+
+                            });
+                            
+
+
+                        },
+                        error: function (response) {
+                        }
+
+                    });
+
+                } else {
+                    swal("Cancelled", "The transaction is cancelled", "error");
+                }
+            });
+            
+
+            
+        }); 
+        $('#approvalBody').on('click','a.rejectModal',function(){
+            swal({
+                title: "Are you sure?",
+                text: "Remittance will be rejected after you do this",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Yes, Add it!',
+                cancelButtonText: "No, cancel it!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        type: "POST",
+                        url: '../config/NotificationRejected.php',
+                        data:{ item : $('#lblremitnum').attr('item')},
+                        success: function (data) {
+                            swal({
+                                title: "Remittance Rejected!",
+                                text: "Remittance request is successfully rejected!",
+                                type: "success",
+                                confirmButtonColor: '#88A755',
+                                confirmButtonText: 'Okay',
+                                closeOnConfirm: false
+                            }, function (isConfirm) {
+                                window.location.reload();
+
+                            });
+
+
+                        },
+                        error: function (response) {
+                        }
+
+                    });
+
+                } else {
+                    swal("Cancelled", "The transaction is cancelled", "error");
+                }
+            });
+            
+
+            
+        });
+        $('#EventApprovalBody').on('click','a.EventRejectModal',function(){
+            swal({
+                title: "Are you sure?",
+                text: "Event will be rejected after you do this",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Yes, Add it!',
+                cancelButtonText: "No, cancel it!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        type: "POST",
+                        url: '../config/NotificationEventRejected.php',
+                        data:{ item : $('#lbleventcode').attr('item')},
+                        success: function (data) {
+                            swal({
+                                title: "Event Rejected!",
+                                text: "Event request is successfully rejected!",
+                                type: "success",
+                                confirmButtonColor: '#88A755',
+                                confirmButtonText: 'Okay',
+                                closeOnConfirm: false
+                            }, function (isConfirm) {
+                                window.location.reload();
+
+                            });
+
+
+                        },
+                        error: function (response) {
+                        }
+
+                    });
+
+                } else {
+                    swal("Cancelled", "The transaction is cancelled", "error");
+                }
+            });
+            
+
+            
+        });
+        $('#EventApprovalBody').on('click','a.EventApprovedModal',function(){
+            swal({
+                title: "Are you sure?",
+                text: "Event will be approved after you do this",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Yes, Add it!',
+                cancelButtonText: "No, cancel it!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        type: "POST",
+                        url: '../config/NotificationEventApproved.php',
+                        data:{ item : $('#lbleventcode').attr('item')},
+                        success: function (data) {
+                            swal({
+                                title: "Event Approved!",
+                                text: "Event request is successfully approved!",
+                                type: "success",
+                                confirmButtonColor: '#88A755',
+                                confirmButtonText: 'Okay',
+                                closeOnConfirm: false
+                            }, function (isConfirm) {
+                                window.location.reload();
+
+                            });
+
+
+                        },
+                        error: function (response) {
+                        }
+
+                    });
+
+                } else {
+                    swal("Cancelled", "The transaction is cancelled", "error");
+                }
+            });
+            
+
+            
+        });        
 
 
     });

@@ -66,6 +66,7 @@ include('../config/connection.php');
                                 </section>
                             </div>
                         </div>
+<!--
                         <div class="row">
                             <div class="col-lg-12">
                                 <section class="panel">
@@ -75,6 +76,7 @@ include('../config/connection.php');
                                 </section>
                             </div>
                         </div>
+-->
                     </div>
                 </section>
             </div>
@@ -97,72 +99,72 @@ include('../config/connection.php');
         $(document).ready(function() {
             var series_array = [];
             var drilldown_array = [];
-            $.ajax({
-                type: "GET",
-                url: 'Dashboard/Remittance_Series.php',
-                dataType: 'json',
-                success: function(data) {
-                    var i = 0;
-
-
-                    $.each(data, function(key, val) {
-                        series_array.push({
-                            name: val.name,
-                            y: parseFloat(val.percent),
-                            drilldown: val.orgcode
-                        });
-
-                        var drilldown = {};
-                        drilldown.id = val.orgcode;
-                        drilldown.name = val.name;
-                        drilldown.data = [];
-
-                        $.each(val.data, function(key2, val2) {
-                            drilldown.data.push([val2.text, parseFloat(val2.per)]);
-                            //                            drilldown_user.data.push([123]);
-                            //alert(val2.amount)
-                        });
-
-
-                        drilldown_array.push(drilldown);
-
-
-                    });
-                    Highcharts.chart('Remittance', {
-                        chart: {
-                            type: 'pie'
-                        },
-                        plotOptions: {
-                            series: {
-                                dataLabels: {
-                                    enabled: true,
-                                    format: '{point.name}: {point.y:.1f}%'
-                                }
-                            }
-                        },
-
-                        tooltip: {
-                            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
-                        },
-
-                        "series": [{
-                            "name": "Organization",
-                            "colorByPoint": true,
-                            "data": series_array
-                        }],
-                        "drilldown": {
-                            "series": drilldown_array
-                        }
-                    });
-
-
-                },
-                error: function(response) {
-                    swal("Error encountered while adding data", "Please try again", "error");
-                }
-
-            });
+//            $.ajax({
+//                type: "GET",
+//                url: 'Dashboard/Remittance_Series.php',
+//                dataType: 'json',
+//                success: function(data) {
+//                    var i = 0;
+//
+//
+//                    $.each(data, function(key, val) {
+//                        series_array.push({
+//                            name: val.name,
+//                            y: parseFloat(val.percent),
+//                            drilldown: val.orgcode
+//                        });
+//
+//                        var drilldown = {};
+//                        drilldown.id = val.orgcode;
+//                        drilldown.name = val.name;
+//                        drilldown.data = [];
+//
+//                        $.each(val.data, function(key2, val2) {
+//                            drilldown.data.push([val2.text, parseFloat(val2.per)]);
+//                            //                            drilldown_user.data.push([123]);
+//                            //alert(val2.amount)
+//                        });
+//
+//
+//                        drilldown_array.push(drilldown);
+//
+//
+//                    });
+//                    Highcharts.chart('Remittance', {
+//                        chart: {
+//                            type: 'pie'
+//                        },
+//                        plotOptions: {
+//                            series: {
+//                                dataLabels: {
+//                                    enabled: true,
+//                                    format: '{point.name}: {point.y:.1f}%'
+//                                }
+//                            }
+//                        },
+//
+//                        tooltip: {
+//                            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+//                            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+//                        },
+//
+//                        "series": [{
+//                            "name": "Organization",
+//                            "colorByPoint": true,
+//                            "data": series_array
+//                        }],
+//                        "drilldown": {
+//                            "series": drilldown_array
+//                        }
+//                    });
+//
+//
+//                },
+//                error: function(response) {
+//                    swal("Error encountered while adding data", "Please try again", "error");
+//                }
+//
+//            });
             $.ajax({
                 type: "GET",
                 url: 'Dashboard/Officer.php',
