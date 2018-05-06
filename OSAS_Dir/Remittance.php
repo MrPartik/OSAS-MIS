@@ -380,8 +380,7 @@ include ('header.php');
                     </div>
                 </div>
             </div>
-        </div>
-        <?php  include('../config/NotificationRemittanceApproval.php') ?>
+        </div> 
         <!-- Placed js at the end of the document so the pages load faster -->
 
         <!--Core js-->

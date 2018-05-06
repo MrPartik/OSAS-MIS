@@ -106,5 +106,5 @@ $user_check = $_SESSION['logged_user']['username'];
                 </div>
             </div>
         </div>
-    </div>
+    </div><?php  include('../config/NotificationRemittanceApproval.php') ?>
         <!--header end-->

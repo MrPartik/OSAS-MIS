@@ -53,6 +53,6 @@
 <!-- Our main JS file -->
 <script src="../js/mini-upload-form/assets/js/script.js"></script> 
 
-<script src="../js/jquery.nicescroll.js">
-<script></script>
+<script src="../js/jquery.nicescroll.js"></script>
+ 
 
