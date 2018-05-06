@@ -13,7 +13,6 @@
             $query = mysqli_prepare($con, " UPDATE t_org_remittance SET OrgRemittance_APPROVED_STATUS = 'Rejected',OrgRemittance_REC_BY = '$id' WHERE OrgRemittance_NUMBER = ? ");
             mysqli_stmt_bind_param($query, 's', $item);
             mysqli_stmt_execute($query);
-<<<<<<< HEAD
             
             $query = mysqli_prepare($con, "SELECT OrgRemittance_ORG_CODE FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = ?");
             mysqli_stmt_bind_param($query, 's', $item);
@@ -28,8 +27,6 @@
             mysqli_stmt_bind_param($query, 'ss', $item,$rec);
             mysqli_stmt_execute($query);
             
-=======
->>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
         }
         
     }

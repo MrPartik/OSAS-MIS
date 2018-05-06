@@ -7400,6 +7400,7 @@ ul.top-menu > li {
     float: left;
     margin-top: 23px;
     margin-left: 25px;
+    margin-right: -30px;
 }
 
 ul.top-menu {

@@ -7,16 +7,10 @@
         session_start();
         
         $role = $_SESSION['logged_user']['role'];
-<<<<<<< HEAD
         $username = $_SESSION['logged_user']['username'];
         
         if($role == 'OSAS HEAD'){
             $view_query = mysqli_query($con,"SELECT COUNT(*) AS COU FROM r_notification WHERE Notification_RECEIVER = (SELECT OSASHead_CODE FROM `r_osas_head` WHERE OSASHead_DISPLAY_STAT = 'Active') AND Notification_SEEN = 'Unseen'  ");
-=======
-        
-        if($role == 'OSAS HEAD'){
-            $view_query = mysqli_query($con,"SELECT COUNT(*) AS COU FROM r_notification WHERE Notification_USERROLE = 'OSAS HEAD' AND Notification_SEEN = 'Unseen'  ");
->>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
             while($row = mysqli_fetch_assoc($view_query)){
                 $notification = $row['COU'];
             }
@@ -27,7 +21,6 @@
                         $notification . '
                         </span>';
 
-<<<<<<< HEAD
             }
                       
         }
@@ -49,9 +42,6 @@
                     </span>';
 
             }
-=======
-                }
->>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
                       
         }
         

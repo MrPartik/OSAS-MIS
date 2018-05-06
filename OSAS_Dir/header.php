@@ -49,13 +49,23 @@ $user_check = $_SESSION['logged_user']['username'];
                 <div class="sidebar-toggle-box">
                     <div class="fa fa-bars"></div>
                 </div>
+            </div> 
+             
+            <div class="nav notify-row" id="top_menu">
+            <!--  notification start -->
+                <ul class="nav top-menu">
+                    <!-- notification dropdown start-->
+                    <?php include('../config/Notification.php'); ?>
+                    <!-- notification dropdown end -->
+                </ul>
+            <!--  notification end -->
             </div>
-            <div class="top-nav clearfix">
-           
+            <div class="top-nav clearfix"> 
+            
                 <!--search & user info start-->
-                <ul class="nav pull-right top-menu"> 
+                <ul class="nav pull-right top-menu">  
                     <li>
-                        <input type="text" class="form-control search" placeholder=" Search"> </li>
+                        <input type="text" class="form-control search"  placeholder="Search" autocomplete="off" > </li>
                     <!-- user login dropdown start-->
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <img alt="" src="../images/OSAS/MAAM%20DEM.jpg"> <span class="username"><?php echo $user_check; ?> </span> <b class="caret"></b> </a>

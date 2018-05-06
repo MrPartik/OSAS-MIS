@@ -19,7 +19,6 @@
         $desc = '';
         
         if($role == 'OSAS HEAD'){
-<<<<<<< HEAD
             $query = mysqli_prepare($con, "SELECT OrgRemittance_APPROVED_STATUS,OrgAppProfile_NAME,OrgAppProfile_DESCRIPTION,OrgRemittance_ORG_CODE,OrgRemittance_SEND_BY,OrgRemittance_REC_BY,CONCAT('₱', FORMAT(OrgRemittance_AMOUNT, 3)) AS AMOUNT ,OrgRemittance_DESC FROM `t_org_remittance` 
             INNER JOIN t_org_for_compliance ON OrgForCompliance_ORG_CODE = OrgRemittance_ORG_CODE
             INNER JOIN r_org_applicant_profile ON OrgAppProfile_APPL_CODE = OrgForCompliance_OrgApplProfile_APPL_CODE
@@ -28,14 +27,6 @@
             mysqli_stmt_execute($query);
             $result = mysqli_stmt_get_result($query);
             while($row = mysqli_fetch_assoc($result)){
-=======
-            
-            $view_query = mysqli_query($con,"SELECT OrgRemittance_APPROVED_STATUS,OrgAppProfile_NAME,OrgAppProfile_DESCRIPTION,OrgRemittance_ORG_CODE,OrgRemittance_SEND_BY,OrgRemittance_REC_BY,CONCAT('₱', FORMAT(OrgRemittance_AMOUNT, 3)) AS AMOUNT ,OrgRemittance_DESC FROM `t_org_remittance` 
-            INNER JOIN t_org_for_compliance ON OrgForCompliance_ORG_CODE = OrgRemittance_ORG_CODE
-            INNER JOIN r_org_applicant_profile ON OrgAppProfile_APPL_CODE = OrgForCompliance_OrgApplProfile_APPL_CODE
-            WHERE OrgRemittance_NUMBER = '$remitnum' ");
-            while($row = mysqli_fetch_assoc($view_query)){
->>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
                 $status = $row['OrgRemittance_APPROVED_STATUS'];
                 $orgname = $row['OrgAppProfile_NAME'];
                 $orgdesc = $row['OrgAppProfile_DESCRIPTION'];
@@ -117,7 +108,6 @@
                             
             echo $container;   
         }
-<<<<<<< HEAD
         else if($role == 'Organization'){
             $query = mysqli_prepare($con, "SELECT OrgRemittance_APPROVED_STATUS,OrgAppProfile_NAME,OrgAppProfile_DESCRIPTION,OrgRemittance_ORG_CODE,OrgRemittance_SEND_BY,OrgRemittance_REC_BY,CONCAT('₱', FORMAT(OrgRemittance_AMOUNT, 3)) AS AMOUNT ,OrgRemittance_DESC FROM `t_org_remittance` 
             INNER JOIN t_org_for_compliance ON OrgForCompliance_ORG_CODE = OrgRemittance_ORG_CODE
@@ -188,8 +178,6 @@
             echo $container;   
             
         }
-=======
->>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
                         
 
                         

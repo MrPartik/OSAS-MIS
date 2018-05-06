@@ -29,15 +29,14 @@
             
         </div>
     </a>
-    <ul class="dropdown-menu extended notification" id="notificationlist">
+    <ul class="dropdown-menu extended notification" id="notificationlist" >
         <li>
             <p>Notifications</p>
         </li>
-        <div id="notificationContainer">
+        <div id="notificationContainer" style="overflow-y:scroll; height: 400px;" ">
             
         </div>
         
     </ul>
-</li>
-
+</li> 
 

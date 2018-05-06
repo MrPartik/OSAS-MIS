@@ -19,7 +19,6 @@
             $query = mysqli_prepare($con, "INSERT INTO t_org_cash_flow_statement (OrgCashFlowStatement_ORG_CODE,OrgCashFlowStatement_ITEM,OrgCashFlowStatement_REMARKS) VALUES ((SELECT OrgRemittance_ORG_CODE FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = ?),?,?)");
             mysqli_stmt_bind_param($query, 'sss', $item, $item,$id);
             mysqli_stmt_execute($query);
-<<<<<<< HEAD
             
             $query = mysqli_prepare($con, "SELECT OrgRemittance_ORG_CODE FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = ?");
             mysqli_stmt_bind_param($query, 's', $item);
@@ -34,8 +33,6 @@
             mysqli_stmt_bind_param($query, 'ss', $item,$rec);
             mysqli_stmt_execute($query);
             
-=======
->>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
 
         }
         

@@ -7,7 +7,6 @@
 <script src="../js/jquery.dcjqaccordion.2.7.js"></script>
 <script src="../js/jquery.scrollTo.min.js"></script>
 <script src="../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-<script src="../js/jquery.nicescroll.js">
 </script>
 <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
 <script src="../js/skycons/skycons.js"></script>
@@ -52,5 +51,8 @@
 <script src="../js/mini-upload-form/assets/js/jquery.fileupload.js"></script>
 
 <!-- Our main JS file -->
-<script src="../js/mini-upload-form/assets/js/script.js"></script>
+<script src="../js/mini-upload-form/assets/js/script.js"></script> 
+
+<script src="../js/jquery.nicescroll.js">
+<script></script>
 

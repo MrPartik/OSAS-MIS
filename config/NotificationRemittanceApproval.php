@@ -17,7 +17,6 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
 </div>
 <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="EventApproval" class="modal fade">
     <div class="modal-dialog" style="width:50%">
@@ -32,6 +31,4 @@
             </div>
         </div>
     </div>
-=======
->>>>>>> e5642f42baf974fe8cbd016478bb82bcfd5d637b
 </div>
