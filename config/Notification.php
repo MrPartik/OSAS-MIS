@@ -31,7 +31,7 @@
     </a>
     <ul class="dropdown-menu extended notification" id="notificationlist" >
         <li>
-            <p> Notifications <i style="font-size:10px; float:right;"><?php echo '  count: '.$count_notif ?></i></p>
+            <p> Notifications (<?php echo $count_notif ?>)</p>
         </li>
         <div id="notificationContainer" style="overflow-y:scroll; height: 400px;" ">
             
