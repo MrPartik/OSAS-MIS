@@ -7,7 +7,12 @@
         $username = $_SESSION['logged_user']['username'];
         
         if($role == 'OSAS HEAD'){
-            $view_query = mysqli_query($con,"SELECT *,DATE_FORMAT(Notification_DATE_SEEN, '%M %d, %Y %l:%i %p ') AS DATESEEN,DATE_FORMAT(Notification_DATE_CLICKED, '%M %d, %Y %l:%i %p ') AS DATECLICK, IF(LEFT(Notification_ITEM,5) = 'Remit',(SELECT OrgRemittance_ORG_CODE FROM t_org_remittance WHERE OrgRemittance_NUMBER = Notification_ITEM ),'') AS SENDBY FROM `r_notification` WHERE Notification_RECEIVER = (SELECT OSASHead_CODE FROM `r_osas_head` WHERE OSASHead_DISPLAY_STAT = 'Active') ORDER BY Notification_DATE_ADDED DESC ");
+            $view_query = mysqli_query($con,"SELECT *,DATE_FORMAT(Notification_DATE_SEEN, '%M %d, %Y %l:%i %p ') AS DATESEEN,DATE_FORMAT(Notification_DATE_CLICKED, '%M %d, %Y %l:%i %p ') AS DATECLICK, IF(LEFT(Notification_ITEM,5) = 'Remit',(SELECT OrgRemittance_ORG_CODE FROM t_org_remittance WHERE OrgRemittance_NUMBER = Notification_ITEM ),'') AS SENDBY FROM `r_notification` 
+            WHERE Notification_RECEIVER = (SELECT OSASHead_CODE FROM `r_osas_head` WHERE OSASHead_DISPLAY_STAT = 'Active')
+            AND 
+            (SELECT OrgRemittance_APPROVED_STATUS FROM T_ORG_REMITTANCE WHERE OrgRemittance_NUMBER = Notification_ITEM) = 'Pending' 
+            OR (SELECT OrgEvent_STATUS FROM r_org_event_management WHERE OrgEvent_Code = Notification_ITEM) = 'Pending'
+            ORDER BY Notification_DATE_ADDED DESC ");
             $container = '';
             while($row = mysqli_fetch_assoc($view_query)){
                 $container = $container. '<li>';
@@ -29,9 +34,9 @@
                     $view_query2 = mysqli_query($con,"SELECT OrgEvent_NAME,OrgAppProfile_NAME FROM `r_org_event_management` AS E
                     INNER JOIN t_org_for_compliance AS R ON E.OrgEvent_OrgCode = R.OrgForCompliance_ORG_CODE
                     INNER JOIN r_org_applicant_profile AS I ON I.OrgAppProfile_APPL_CODE = R.OrgForCompliance_OrgApplProfile_APPL_CODE
-                    WHERE OrgEvent_Code = '$event' ");
+                    WHERE OrgEvent_Code = '$event'");
                     while($row2 = mysqli_fetch_assoc($view_query2)){
-                        $container = $container. '<span class="alert-icon"><i class="fa fa-money"></i></span>
+                        $container = $container. '<span class="alert-icon"><i class="fa fa-bookmark"></i></span>
                                         <div class="noti-info">
                         <a class="notif" data-toggle="modal" href="#EventApproval" href="javascript:;" item="'.$row['Notification_ITEM'].'"> '.$row2['OrgEvent_NAME'].'</a><br/>
                         <label class="" style="font-size:10px"> '. $row2['OrgAppProfile_NAME'] .'</label>' ;

@@ -406,8 +406,8 @@
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: '#DD6B55',
-                confirmButtonText: 'Yes, Add it!',
-                cancelButtonText: "No, cancel it!",
+                confirmButtonText: 'Yes!',
+                cancelButtonText: "No!",
                 closeOnConfirm: false,
                 closeOnCancel: false
             }, function (isConfirm) {
@@ -452,8 +452,8 @@
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: '#DD6B55',
-                confirmButtonText: 'Yes, Add it!',
-                cancelButtonText: "No, cancel it!",
+                confirmButtonText: 'Yes!',
+                cancelButtonText: "No!",
                 closeOnConfirm: false,
                 closeOnCancel: false
             }, function (isConfirm) {
@@ -497,8 +497,8 @@
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: '#DD6B55',
-                confirmButtonText: 'Yes, Add it!',
-                cancelButtonText: "No, cancel it!",
+                confirmButtonText: 'Yes!',
+                cancelButtonText: "No!",
                 closeOnConfirm: false,
                 closeOnCancel: false
             }, function (isConfirm) {
@@ -542,8 +542,8 @@
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: '#DD6B55',
-                confirmButtonText: 'Yes, Add it!',
-                cancelButtonText: "No, cancel it!",
+                confirmButtonText: 'Yes!',
+                cancelButtonText: "No!",
                 closeOnConfirm: false,
                 closeOnCancel: false
             }, function (isConfirm) {
