@@ -14,13 +14,8 @@ if($_SESSION['logged_user']['role']=="Organization")
 $user_check = $_SESSION['logged_user']['username']; 
  ?>
     <!DOCTYPE html>
-<head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="ThemeBucket">
-        <link rel="shortcut icon" href="../images/favicon.png">
-        <link rel="stylesheet" type="text/css" href="../js/select2/select2.css" />
+<head> 
+        <link rel="shortcut icon" href="../images/favicon.png"> 
         <link href="../bs3/css/bootstrap.min.css" rel="stylesheet">
         <link href="../js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet">
         <link href="../css/bootstrap-reset.css" rel="stylesheet">
