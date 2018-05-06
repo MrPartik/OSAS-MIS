@@ -1,4 +1,4 @@
-<?php 
+<?php  
     $notification = '';
     $role = $_SESSION['logged_user']['role'];
     if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in'])){ 
@@ -31,7 +31,7 @@
     </a>
     <ul class="dropdown-menu extended notification" id="notificationlist" >
         <li>
-            <p>Notifications</p>
+            <p> Notifications <i style="font-size:10px; float:right;"><?php echo '  count: '.$count_notif ?></i></p>
         </li>
         <div id="notificationContainer" style="overflow-y:scroll; height: 400px;" ">
             

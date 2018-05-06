@@ -65,7 +65,7 @@ $user_check = $_SESSION['logged_user']['username'];
                 <!--search & user info start-->
                 <ul class="nav pull-right top-menu">  
                     <li>
-                        <input type="text" class="form-control search"  placeholder="Search" autocomplete="off" > </li>
+                        <input type="text" class="form-control search" name="search" placeholder="Search" autocomplete="off" > </li>
                     <!-- user login dropdown start-->
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <img alt="" src="../images/OSAS/MAAM%20DEM.jpg"> <span class="username"><?php echo $user_check; ?> </span> <b class="caret"></b> </a>

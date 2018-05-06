@@ -214,4 +214,13 @@ $count_pending_acc = $pending_acc_query["counts"];
 $financial_ass_query = mysqli_fetch_assoc(mysqli_query($con,"SELECT COUNT(a.AssStudFinanAssistance_STUD_NO) as countss FROM t_assign_stud_finan_assistance a WHERE a.AssStudFinanAssistance_DISPLAY_STAT='Active'"));
 $count_finan_ass = $financial_ass_query["countss"];
 
+$count_notif_query = mysqli_fetch_assoc(mysqli_query($con,"SELECT  count(Notification_RECEIVER) as countt FROM `r_notification` 
+WHERE Notification_RECEIVER = (SELECT OSASHead_CODE FROM `r_osas_head` WHERE OSASHead_DISPLAY_STAT = 'Active')
+AND 
+(SELECT OrgRemittance_APPROVED_STATUS FROM T_ORG_REMITTANCE WHERE OrgRemittance_NUMBER = Notification_ITEM) = 'Pending' 
+OR (SELECT OrgEvent_STATUS FROM r_org_event_management WHERE OrgEvent_Code = Notification_ITEM) = 'Pending'
+ORDER BY Notification_DATE_ADDED DESC"));
+$count_notif = $count_notif_query["countt"];
+
+
 ?>
