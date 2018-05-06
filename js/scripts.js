@@ -34,13 +34,19 @@
 
 
             $("body").niceScroll({
-                cursorcolor: "gray",
+                cursorcolor: "#C80932",
                             cursorborder: "0px solid #fff",
                             cursorborderradius: "10px",
-                            cursorwidth: "10px"
+                            cursorwidth: "5px"
+            });
+            $(".modal").niceScroll({
+                cursorcolor: "#C80932",
+                            cursorborder: "0px solid #fff",
+                            cursorborderradius: "10px",
+                            cursorwidth: "5px"
             });
             $("div#notificationContainer").niceScroll({
-                cursorcolor: "black",
+                cursorcolor: "#C80932",
                             cursorborder: "0px solid #fff",
                             cursorborderradius: "0px",
                             cursorwidth: "3px"
