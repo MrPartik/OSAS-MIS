@@ -24,9 +24,9 @@
                 }
                 
                 if(substr($row['Notification_ITEM'],0,5) == 'Remit'){
-                    $container = $container. '<span class="alert-icon"><i class="fa fa-money"></i></span>
-                                                <div class="noti-info">
-                                <a class="notif" data-toggle="modal" href="#RemittanceApproval" href="javascript:;" item="'.$row['Notification_ITEM'].'"> '.$row['Notification_ITEM']. ' - ' .$row['SENDBY'].'</a>';
+                    $container = $container. '<span  class="alert-icon"><i class="fa fa-money"></i></span>
+                                                <div  class="noti-info">
+                                <a class="notif" data-toggle="modal" href="#RemittanceApproval"   item="'.$row['Notification_ITEM'].'"> '.$row['Notification_ITEM']. ' - ' .$row['SENDBY'].'</a>';
 
                 }
                 else if(substr($row['Notification_ITEM'],0,4) == 'EVNT'){

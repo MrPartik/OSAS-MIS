@@ -49,8 +49,8 @@
                     '
                         <div class="user-heading alt gray-bg">
                             <a href="#">';
-            $file = "../Avatar/".$orgcode.".png";
-            if(file_exists(basename($file))) {
+            $file = glob ( "../Avatar/".$orgcode.".*");
+            if($file) {
                 $container = $container . '<img alt="" src="../Avatar/'.$orgcode.'.png">';
             }
             else{
