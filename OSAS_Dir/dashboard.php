@@ -112,6 +112,20 @@ include('../config/connection.php');
                     <?php echo date('D')?>
                 </div>
                 <ul class="event-list">
+                <?php
+                                                    $view_query = mysqli_query($con,"SELECT OrgEvent_NAME,OrgEvent_OrgCode, DATE_FORMAT(OrgEvent_PROPOSED_DATE, '%M %d, %Y') as PROPDATE FROM r_org_event_management WHERE concat(Month(OrgEvent_PROPOSED_DATE),'-',year(OrgEvent_PROPOSED_DATE)) = concat(Month(Current_date),'-',year(Current_date)) AND OrgEvent_STATUS = 'Approved' ");
+                                                    while($row = mysqli_fetch_assoc($view_query))
+                                                    {
+                                                        $name = $row["OrgEvent_NAME"];
+                                                        $date = $row["PROPDATE"];
+                                                        $org  = $row["OrgEvent_OrgCode"];
+                                                        echo '
+                                                            <li>'.$org.' is created an event this month, named as '.$name.' @ ' .$date .' </li>
+
+                                                             ';
+                                                    }	
+
+                                               ?>
                     <?php $sanc_query = mysqli_query($con,"SELECT A.AssSancStudStudent_STUD_NO StudNo, CONCAT(B.Stud_LNAME,', ',B.Stud_FNAME,' ',COALESCE(B.Stud_MNAME,'')) AS FullName, A.AssSancStudStudent_SancDetails_CODE  AS SANC, ((C.SancDetails_TIMEVAL)-(A.AssSancStudStudent_CONSUMED_HOURS)) as remaining FROM t_assign_stud_saction A 
 INNER JOIN  r_stud_profile B on a.AssSancStudStudent_STUD_NO = a.AssSancStudStudent_STUD_NO
 INNER JOIN r_sanction_details C on A.AssSancStudStudent_SancDetails_CODE = C.SancDetails_CODE
@@ -246,6 +260,16 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                     </section>
                 </div>
                 <div class="col-md-12">
+<<<<<<< HEAD
+=======
+                    <section class="panel">
+                        <div class="panel-body">
+                            <div id="Vouch" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                        </div>
+                    </section>
+                </div>                
+                <div class="col-md-6">
+>>>>>>> ab514437291498f0c0fdebce585a66ddc547e171
                     <section class="panel">
                         <div class="panel-body">
                             <div id="Vouch" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -454,7 +478,11 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                         });  
                         var drilldown = {};
                         drilldown.id = val.name;
+<<<<<<< HEAD
                         drilldown.name = val.name ;
+=======
+                        drilldown.name = val.name;
+>>>>>>> ab514437291498f0c0fdebce585a66ddc547e171
                         drilldown.data = [];
                          
                         var series = [];
@@ -474,7 +502,11 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                             });  
                             //drilldown.data.push({series});
                             drilldown.data.push({
+<<<<<<< HEAD
                                 name: val2.vouch + ' - ' + val2.orgname,
+=======
+                                name: val2.vouch,
+>>>>>>> ab514437291498f0c0fdebce585a66ddc547e171
                                 y: parseFloat(val2.amount),
                                 drilldown: val2.vouch
                             });
