@@ -22,11 +22,7 @@
         $container_arr3 = array();
         
         
-<<<<<<< HEAD
         $view_query2 = mysqli_query($con,"SELECT DATE_FORMAT(OrgVoucher_DATE_ADD,'%Y') as PDATE,OrgVoucher_CASH_VOUCHER_NO,SUM(OrgVouchItems_AMOUNT) AS AMO,OrgVoucher_ORG_CODE FROM `t_org_voucher` AS E
-=======
-        $view_query2 = mysqli_query($con,"SELECT DATE_FORMAT(OrgVoucher_DATE_ADD,'%Y') as PDATE,OrgVoucher_CASH_VOUCHER_NO,SUM(OrgVouchItems_AMOUNT) AS AMO FROM `t_org_voucher` AS E
->>>>>>> ab514437291498f0c0fdebce585a66ddc547e171
 		INNER JOIN t_org_voucher_items AS R ON R.OrgVouchItems_VOUCHER_NO = E.OrgVoucher_CASH_VOUCHER_NO
         WHERE DATE_FORMAT(OrgVoucher_DATE_ADD,'%Y') = '$ser' GROUP BY OrgVouchItems_VOUCHER_NO ");
         while($row2 = mysqli_fetch_assoc($view_query2))
@@ -34,10 +30,7 @@
             $vouch = $row2["OrgVoucher_CASH_VOUCHER_NO"];
             $amount = $row2["AMO"];
             $pdate = $row2["PDATE"];
-<<<<<<< HEAD
             $orgname = $row2["OrgVoucher_ORG_CODE"];
-=======
->>>>>>> ab514437291498f0c0fdebce585a66ddc547e171
             
             $view_query3 = mysqli_query($con,"SELECT '$vouch' as VNUM,OrgVouchItems_ITEM_NAME,OrgVouchItems_AMOUNT FROM `t_org_voucher_items` WHERE OrgVouchItems_VOUCHER_NO = '$vouch' ");
             while($row3 = mysqli_fetch_assoc($view_query3))
@@ -55,11 +48,7 @@
             
             
             
-<<<<<<< HEAD
             $arr = array('orgname' => $orgname,'vouch' => $vouch,'pdate' => $pdate,'amount' => $amount,'data2' => $container_arr3);
-=======
-            $arr = array('vouch' => $vouch,'pdate' => $pdate,'amount' => $amount,'data2' => $container_arr3);
->>>>>>> ab514437291498f0c0fdebce585a66ddc547e171
             array_push(  $container_arr2, (array)$arr );
             $container_arr3 = array();
 

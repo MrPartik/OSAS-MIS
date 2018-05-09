@@ -260,16 +260,6 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                     </section>
                 </div>
                 <div class="col-md-12">
-<<<<<<< HEAD
-=======
-                    <section class="panel">
-                        <div class="panel-body">
-                            <div id="Vouch" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-                        </div>
-                    </section>
-                </div>                
-                <div class="col-md-6">
->>>>>>> ab514437291498f0c0fdebce585a66ddc547e171
                     <section class="panel">
                         <div class="panel-body">
                             <div id="Vouch" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -478,11 +468,7 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                         });  
                         var drilldown = {};
                         drilldown.id = val.name;
-<<<<<<< HEAD
                         drilldown.name = val.name ;
-=======
-                        drilldown.name = val.name;
->>>>>>> ab514437291498f0c0fdebce585a66ddc547e171
                         drilldown.data = [];
                          
                         var series = [];
@@ -502,11 +488,7 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                             });  
                             //drilldown.data.push({series});
                             drilldown.data.push({
-<<<<<<< HEAD
                                 name: val2.vouch + ' - ' + val2.orgname,
-=======
-                                name: val2.vouch,
->>>>>>> ab514437291498f0c0fdebce585a66ddc547e171
                                 y: parseFloat(val2.amount),
                                 drilldown: val2.vouch
                             });
