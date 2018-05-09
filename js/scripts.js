@@ -357,7 +357,7 @@
         setInterval(function(){ 
             fill_notification();
             fill_notificationCount();
-        }, 5000);
+        }, 3000);
         
         $('#notificationlist').on('click','a.notif',function(){
             
