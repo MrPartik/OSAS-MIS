@@ -25,6 +25,7 @@
 <script src="../js/easypiechart/jquery.easypiechart.js"></script>
 <!--Sparkline Chart-->
 <script src="../js/sparkline/jquery.sparkline.js"></script>
+
 <script src="../js/jquery.customSelect.min.js"></script>
 <!--sweet alert -->
 <script src="../js/sweetalert/sweetalert-dev.js"></script>

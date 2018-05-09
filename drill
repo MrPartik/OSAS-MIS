@@ -135,7 +135,6 @@ include('../config/connection.php');
         $(document).ready(function() {
             var series_array = [];
             var drilldown_array = [];
-            var fdrilldown_array = [];
             //event
 //            $.ajax({
 //                type: "GET",
@@ -203,8 +202,6 @@ include('../config/connection.php');
 //                }
 //
 //            });
-            var finalObj;
-            var thirdObj;
             $.ajax({
                 type: "GET",
                 url: 'Dashboard/Event.php',
@@ -220,64 +217,26 @@ include('../config/connection.php');
                         var drilldown = {};
                         drilldown.id = val.name;
                         drilldown.name = val.name;
-                        drilldown.data = [];
-                         
-                        var series = [];
-                        
+                        drilldown.data = [];  
                         
                         var drilldown2 = {};
-                        drilldown2.id = '';
+                        drilldown2.id = val.name;
+                        drilldown2.name = val.name;
                         drilldown2.data = [];
 
-                        var data3 = [];
-
-                        $.each(val.data, function(key2, val2) {   
-                            series.push({
-                                name: val2.vouch,
-                                y: parseFloat(val2.amount),
-                                drilldown: val2.vouch
-                            });  
-                            //drilldown.data.push({series});
-                            drilldown.data.push({
-                                name: val2.vouch,
-                                y: parseFloat(val2.amount),
-                                drilldown: val2.vouch
-                            });
-
-//                            $.each(val2.data2, function(key3, val3) {                        
-//                                drilldown2.id = val3.vouchname;
-//                                drilldown2.data.push([parseFloat(val3.itemamount)]);
-//                                alert(val3.itemamount + val3.vouchname)
-//
-//                            });
-                            var getlatid = '';
-                            $.each(val2, function(key3, val3) {   
-                                data3 = [];
-                                $.each(val2.data2, function(key4, val4) {   
-                                    data3.push({name:val4.itemname,y:parseFloat(val4.itemamount)} );
-                                    getlatid = val4.vouchname;
-    //                               alert(val4.itemamount + val4.itemname)
-
-                                });
-                                drilldown2.id = getlatid;
-                                drilldown2.data = drilldown2.data.concat(data3);
-                                //alert(getlatid)
-                                fdrilldown_array.push(drilldown2);
-                                
-                                drilldown2 = {};
-                                drilldown2.id = '';
-                                drilldown2.data = [];
-
-                                
-                            });
-                                            
+                        $.each(val.data, function(key2, val2) {
+                        
+                            drilldown.data.push([val2.vouch, parseFloat(val2.amount)]);
+                            
+                            
+                            
+                            
+                            
                         });
-                        
+
+
                         drilldown_array.push(drilldown);
-                        
                     }); 
-                    
-                    finalObj = drilldown_array.concat(fdrilldown_array);
                     
                     Highcharts.chart('Vouch', {
                 chart: {
@@ -287,7 +246,7 @@ include('../config/connection.php');
                     text: 'Vouch History'
                 },
                 subtitle: {
-                    text: 'Money Used per Year'
+                    text: 'Money Used for Event per Year'
                 },
                 xAxis: {
                     type: 'category'
@@ -323,33 +282,28 @@ include('../config/connection.php');
                         "data": series_array
                     }
                 ],
-                "drilldown": {
-                    "series": finalObj
-                }
-//                drilldown: {
-//                    series: [{
-//                        id: '2018',
-//                        name: 'Animals',
-//                        data: [{
-//                            name: 'Vouch #0001',
-//                            y: 4,
-//                            drilldown: 'Vouch #0001'
-//                        },{
-//                            name: 'Vouch #0004',
-//                            y: 4,
-//                            drilldown: 'Vouch #0004'
-//                        }, ['Dogs', 2],
-//                            ['Cows', 1],
-//                            ['Sheep', 2],
-//                            ['Pigs', 1]
-//                        ]
-//                    }, {
-//
-//                        id: 'Vouch #0001',
-//                        data: [{id: 'er',y:  1, name:'esr'}]
-//                    }
-//                    ]
+//                "drilldown": {
+//                    "series": drilldown_array
 //                }
+                drilldown: {
+                    series: [{
+                        id: '2018',
+                        name: 'Animals',
+                        data: [{
+                            name: 'Cats',
+                            y: 4,
+                            drilldown: 'cats'
+                        }, ['Dogs', 2],
+                            ['Cows', 1],
+                            ['Sheep', 2],
+                            ['Pigs', 1]
+                        ]
+                    }, {
+
+                        id: 'cats',
+                        data: [1, 2, 3]
+                    }]
+                }
                         
             });
 
@@ -398,3 +352,58 @@ include('../config/connection.php');
 
     </script>
 </body>
+
+
+
+
+
+
+
+
+
+
+
+[{"name":"2013","cat":"15000.000","data":[{"vouch":"Vouch #00003","pdate":"2013","amount":"15000.000","data2":[{"itemname":"asd","vouchname":"Vouch #00003","itemamount":"5000.000"},{"itemname":"qwe","vouchname":"Vouch #00003","itemamount":"5000.000"},{"itemname":"zxc","vouchname":"Vouch #00003","itemamount":"5000.000"}]}]},{"name":"2017","cat":"10500.000","data":[{"vouch":"Vouch #00002","pdate":"2017","amount":"10500.000","data2":[{"itemname":"ericc","vouchname":"Vouch #00002","itemamount":"500.000"},{"itemname":"vad","vouchname":"Vouch #00002","itemamount":"10000.000"}]}]},
+
+{"name":"2018","cat":"22299.000",
+"data":[{"vouch":"Vouch #00001","pdate":"2018","amount":"1000.000",
+"data2":[
+            {"itemname":"enum","vouchname":"Vouch #00001","itemamount":"200.000"},
+            {"itemname":"eutttt","vouchname":"Vouch #00001","itemamount":"300.000"},
+            {"itemname":"ew","vouchname":"Vouch #00001","itemamount":"500.000"}
+        ]
+            },
+            {"vouch":"Vouch #00004","pdate":"2018","amount":"21299.000",
+            "data2":[{"itemname":"enum","vouchname":"Vouch #00001","itemamount":"200.000"},{"itemname":"eutttt","vouchname":"Vouch #00001","itemamount":"300.000"},{"itemname":"ew","vouchname":"Vouch #00001","itemamount":"500.000"},{"itemname":"eric","vouchname":"Vouch #00004","itemamount":"200.000"},{"itemname":"VEY","vouchname":"Vouch #00004","itemamount":"20099.000"},{"itemname":"zxc","vouchname":"Vouch #00004","itemamount":"1000.000"}]}
+            
+            
+            ]}]
+
+
+[{"name":"2013","cat":"15000.000","data":[{"vouch":"Vouch #00003","pdate":"2013","amount":"15000.000","data2":[{"itemname":"asd","vouchname":"Vouch #00003","itemamount":"5000.000"},{"itemname":"qwe","vouchname":"Vouch #00003","itemamount":"5000.000"},{"itemname":"zxc","vouchname":"Vouch #00003","itemamount":"5000.000"}]}]},{"name":"2017","cat":"10500.000","data":[{"vouch":"Vouch #00002","pdate":"2017","amount":"10500.000","data2":[{"itemname":"ericc","vouchname":"Vouch #00002","itemamount":"500.000"},{"itemname":"vad","vouchname":"Vouch #00002","itemamount":"10000.000"}]}]},
+
+{"name":"2018","cat":"22299.000",
+"data":[
+{"vouch":"Vouch #00001","pdate":"2018","amount":"1000.000","data2":[{"itemname":"enum","vouchname":"Vouch #00001","itemamount":"200.000"},{"itemname":"eutttt","vouchname":"Vouch #00001","itemamount":"300.000"},{"itemname":"ew","vouchname":"Vouch #00001","itemamount":"500.000"}]},
+{"vouch":"Vouch #00004","pdate":"2018","amount":"21299.000","data2":[{"itemname":"eric","vouchname":"Vouch #00004","itemamount":"200.000"},{"itemname":"VEY","vouchname":"Vouch #00004","itemamount":"20099.000"},{"itemname":"zxc","vouchname":"Vouch #00004","itemamount":"1000.000"}]}]}]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
