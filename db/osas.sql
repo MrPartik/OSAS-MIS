@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2018 at 02:30 PM
+-- Generation Time: May 09, 2018 at 06:05 PM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -124,20 +124,20 @@ INSERT INTO R_STUD_PROFILE
 ,Stud_ADDRESS
 ,Stud_STATUS)
 VALUES
-(	
+( 
     STUDNO
     ,FNAME
-	,MNAME
-	,LNAME
-	,COUSRE
-	,SECTION
-	,GENDER
-	,EMAIL
-	,CONTACT
-	,BDAY
-	,BPLACE
-	,ADDRESS
-	,STATUS
+  ,MNAME
+  ,LNAME
+  ,COUSRE
+  ,SECTION
+  ,GENDER
+  ,EMAIL
+  ,CONTACT
+  ,BDAY
+  ,BPLACE
+  ,ADDRESS
+  ,STATUS
 )$$
 
 DROP PROCEDURE IF EXISTS `Insert_Users`$$
@@ -220,16 +220,16 @@ select * from r_courses where course_display_stat ='active'$$
 DROP PROCEDURE IF EXISTS `View_StudProfile`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `View_StudProfile` ()  NO SQL
 select 
-	Stud_NO
-	,CONCAT(Stud_LNAME,', ',Stud_FNAME,' ',COALESCE(Stud_MNAME,'')) as FullName
-	,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) as Course
-	,Stud_EMAIL
-	,Stud_CONTACT_NO
-	,Stud_GENDER
-	,Stud_BIRHT_DATE
-	,Stud_BIRTH_PLACE
-	,Stud_STATUS
-	,Stud_ADDRESS
+  Stud_NO
+  ,CONCAT(Stud_LNAME,', ',Stud_FNAME,' ',COALESCE(Stud_MNAME,'')) as FullName
+  ,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) as Course
+  ,Stud_EMAIL
+  ,Stud_CONTACT_NO
+  ,Stud_GENDER
+  ,Stud_BIRHT_DATE
+  ,Stud_BIRTH_PLACE
+  ,Stud_STATUS
+  ,Stud_ADDRESS
 FROM osas.r_stud_profile$$
 
 DROP PROCEDURE IF EXISTS `View_StudSanction`$$
@@ -244,11 +244,11 @@ SELECT B.AssSancStudStudent_ID AssSancID
 ,b.AssSancStudStudent_CONSUMED_HOURS AS Consumed
 FROM r_stud_profile A
 INNER JOIN  t_assign_stud_saction B ON
-	A.Stud_NO = B.AssSancStudStudent_STUD_NO
+  A.Stud_NO = B.AssSancStudStudent_STUD_NO
 INNER JOIN r_sanction_details C ON
-	C.SancDetails_CODE = B.AssSancStudStudent_SancDetails_CODE
+  C.SancDetails_CODE = B.AssSancStudStudent_SancDetails_CODE
 INNER JOIN r_designated_offices_details D ON
-	D.DesOffDetails_CODE = B.AssSancStudStudent_DesOffDetails_CODE 
+  D.DesOffDetails_CODE = B.AssSancStudStudent_DesOffDetails_CODE 
 WHERE A.Stud_DISPLAY_STATUS='ACTIVE'
 AND B.AssSancStudStudent_DISPLAY_STAT='ACTIVE'
 AND C.SancDetails_DISPLAY_STAT='ACTIVE'
@@ -742,6 +742,7 @@ CREATE TABLE `r_org_event_management` (
   `OrgEvent_Code` varchar(15) NOT NULL,
   `OrgEvent_NAME` varchar(50) NOT NULL,
   `OrgEvent_DESCRIPTION` varchar(50) NOT NULL,
+  `OrgEvent_FILES` enum('Ok','Pending') NOT NULL DEFAULT 'Pending',
   `OrgEvent_STATUS` enum('Cancelled','Pending','Approved','Rejected') NOT NULL DEFAULT 'Pending',
   `OrgEvent_PROPOSED_DATE` date NOT NULL,
   `OrgEvent_ReviewdBy` varchar(15) NOT NULL,
@@ -754,9 +755,9 @@ CREATE TABLE `r_org_event_management` (
 -- Dumping data for table `r_org_event_management`
 --
 
-INSERT INTO `r_org_event_management` (`OrgEvent_ID`, `OrgEvent_OrgCode`, `OrgEvent_Code`, `OrgEvent_NAME`, `OrgEvent_DESCRIPTION`, `OrgEvent_STATUS`, `OrgEvent_PROPOSED_DATE`, `OrgEvent_ReviewdBy`, `OrgEvent_DATE_ADD`, `OrgEvent_DATE_MOD`, `OrgEvent_DISPLAY_STAT`) VALUES
-(1, 'QWE2017', 'EVNT00001', 'Commits General Assembly', 'asd', 'Approved', '2018-05-11', 'Demelyn', '2018-05-06 17:56:26', '2018-05-06 18:47:04', 'Active'),
-(2, 'CIT2017', 'EVNT00002', 'Commits General Assembly', 'Event Sample Desc', 'Approved', '2018-05-10', 'Demelyn', '2018-05-09 19:36:49', '2018-05-09 19:37:07', 'Active');
+INSERT INTO `r_org_event_management` (`OrgEvent_ID`, `OrgEvent_OrgCode`, `OrgEvent_Code`, `OrgEvent_NAME`, `OrgEvent_DESCRIPTION`, `OrgEvent_FILES`, `OrgEvent_STATUS`, `OrgEvent_PROPOSED_DATE`, `OrgEvent_ReviewdBy`, `OrgEvent_DATE_ADD`, `OrgEvent_DATE_MOD`, `OrgEvent_DISPLAY_STAT`) VALUES
+(1, 'QWE2017', 'EVNT00001', 'Commits General Assembly', 'asd', 'Ok', 'Approved', '2018-05-11', 'Demelyn', '2018-05-06 17:56:26', '2018-05-06 18:47:04', 'Active'),
+(2, 'CIT2017', 'EVNT00002', 'Commits General Assembly', 'Event Sample Desc', 'Ok', 'Approved', '2018-05-10', 'Demelyn', '2018-05-09 19:36:49', '2018-05-09 19:37:07', 'Active');
 
 -- --------------------------------------------------------
 
@@ -1483,7 +1484,7 @@ CREATE TABLE `t_org_remittance` (
   `OrgRemittance_DATE_ADD` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `OrgRemittance_DATE_MOD` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `OrgRemittance_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active',
-  `OrgRemittance_APPROVED_STATUS` varchar(15) NOT NULL DEFAULT 'Approved'
+  `OrgRemittance_APPROVED_STATUS` enum('Pending','Rejected','Approved') NOT NULL DEFAULT 'Approved'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
