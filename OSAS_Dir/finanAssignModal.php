@@ -352,5 +352,6 @@
                                 swal("Error", "no transaction has been made", "error");
                     }
                 });
-                 
+                
+            $("#finanDesc").select2(); 
             </script>
