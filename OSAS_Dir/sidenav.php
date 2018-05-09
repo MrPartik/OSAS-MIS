@@ -35,7 +35,7 @@
                     </ul>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;" <?php if( $currentPage==='OSAS_OrgAccreditation' || $currentPage==='OSAS_OrgApplication' || $currentPage==='OSAS_OrgCompliance' || $currentPage==='OSAS_OrgPos' || $currentPage==='OSAS_OrgMem' || $currentPage==='OSAS_OrgApplicant' || $currentPage==='OSAS_Remittance' || $currentPage==='OSAS_Cflow' || $currentPage==='OSAS_OrgVouch' ) { echo 'class="active"';} ?> > <i class="fa fa-users"></i> <span>Organization Management</span> </a>
+                    <a href="javascript:;" <?php if( $currentPage==='OSAS_OrgAccreditation' || $currentPage==='OSAS_OrgApplication' || $currentPage==='OSAS_OrgCompliance' || $currentPage==='OSAS_OrgPos' || $currentPage==='OSAS_OrgMem' || $currentPage==='OSAS_OrgApplicant' || $currentPage==='OSAS_Remittance' || $currentPage==='OSAS_Cflow' || $currentPage==='OSAS_OrgVouch' || $currentPage==='OSAS_Event' ) { echo 'class="active"';} ?> > <i class="fa fa-users"></i> <span>Organization Management</span> </a>
                     <ul class="sub">
                         <li <?php if( $currentPage==='OSAS_OrgApplicant' ) { echo 'class="active"';} ?> ><a href="OrganizationApplicant.php">Applicant</a></li>
                         <li <?php if( $currentPage==='OSAS_OrgApplication' ) { echo 'class="active"';} ?> ><a href="OrganizationApplication.php">Application Process</a></li>

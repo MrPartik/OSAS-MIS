@@ -35,16 +35,15 @@
                     INNER JOIN t_org_for_compliance AS R ON E.OrgEvent_OrgCode = R.OrgForCompliance_ORG_CODE
                     INNER JOIN r_org_applicant_profile AS I ON I.OrgAppProfile_APPL_CODE = R.OrgForCompliance_OrgApplProfile_APPL_CODE
                     WHERE OrgEvent_Code = '$event'");
+                    
+                        
                     while($row2 = mysqli_fetch_assoc($view_query2)){
                         $container = $container. '<span class="alert-icon"><i class="fa fa-bookmark"></i></span>
                                         <div class="noti-info">
                         <a class="notif" data-toggle="modal" href="#EventApproval" href="javascript:;" item="'.$row['Notification_ITEM'].'"> '.$row2['OrgEvent_NAME'].'</a><br/>
                         <label class="" style="font-size:10px"> '. $row2['OrgAppProfile_NAME'] .'</label>' ;
 
-                    }
-
-                    
-
+                    } 
                 }
                 else{
                     $container = $container. '<span class="alert-icon"><i class="fa fa-envelope-o"></i></span>
