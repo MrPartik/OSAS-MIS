@@ -389,7 +389,6 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                         
                         var drilldown2 = {};
                         drilldown2.id = '';
-                        drilldown2.name = 'Remittance Description';
                         drilldown2.data = [];
                         
                         var data3 = [];
@@ -413,7 +412,6 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                                     getlatid = val4.vouchname;
                                 });
                                 drilldown2.id = getlatid;
-                                drilldown2.name = 'Remittance Description';
                                 drilldown2.data = drilldown2.data.concat(data3);
                                 fdrilldown_array.push(drilldown2);                                
                                 drilldown2 = {};
@@ -489,13 +487,6 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                 url: 'Dashboard/Event.php',
                 dataType: 'json',
                 success: function(data) {
-                    series_array = [];
-                    series_array2 = [];
-                    drilldown_array = [];
-                    drilldown_array2 = [];
-                    fdrilldown_array = [];
-                    finalObj = '';
-
                     var i = 0;
                     $.each(data, function(key, val) {
                             series_array2.push({
@@ -513,19 +504,9 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                         
                         var drilldown2 = {};
                         drilldown2.id = '';
-                        drilldown2.name = '' ;
                         drilldown2.data = [];
 
                         var data3 = [];
-                        
-                        var layer4 = {};
-                        layer4.id = '';
-                        layer4.data = [];
-                        layer4.name = '';
-
-                        var layer4datacontainer = [];
-//                        layer4.id = '';
-//                        layer4.data = [];
 
                         $.each(val.data, function(key2, val2) {   
                             series.push({
@@ -547,48 +528,24 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
 //
 //                            });
                             var getlatid = '';
-                            var getlay4id = '';
                             $.each(val2, function(key3, val3) {   
                                 data3 = [];
                                 $.each(val2.data2, function(key4, val4) {   
-
-                                    data3.push({name:val4.itemname,y:parseFloat(val4.itemamount),drilldown:val4.itemname} );
+                                    data3.push({name:val4.itemname,y:parseFloat(val4.itemamount)} );
                                     getlatid = val4.vouchname;
-                                    $.each(val4.data3, function(key5, val5) {
-//                                        layer4datacontainer.push({name:val5.layer4name,y:parseFloat(val5.layer4y)} );
-                                        getlay4id = val5.layer4id;
-                                        layer4.data.push({
-                                            name:val5.layer4name,
-                                            y: parseFloat(val5.layer4y)
-                                        });
-                                    layer4.id = getlay4id;
-                                    layer4.name = 'Voucher Item';
-                                        
-                                        
-                                    });
-                                    fdrilldown_array.push(layer4);
-                                    layer4 = {};
-                                    layer4.id = '';
-                                    layer4.name = '';
-                                    layer4.data = [];
-                                    
-//                                    layer4.data = layer4.data.concat(layer4datacontainer);
-//                                    layer4datacontainer = [];
-//                                    alert( getlay4id + ' - ' + val4.itemname )
-                                    
-                                    
+    //                               alert(val4.itemamount + val4.itemname)
+
                                 });
                                 drilldown2.id = getlatid;
                                 drilldown2.data = drilldown2.data.concat(data3);
-                                drilldown2.name = 'Voucher Number';
                                 //alert(getlatid)
                                 fdrilldown_array.push(drilldown2);
                                 
                                 drilldown2 = {};
                                 drilldown2.id = '';
-                                drilldown2.name = '' ;
                                 drilldown2.data = [];
 
+                                
                             });
                                             
                         });
@@ -596,7 +553,6 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                         drilldown_array2.push(drilldown);
                         
                     }); 
-
                     
                     finalObj = drilldown_array2.concat(fdrilldown_array);
                     
@@ -644,41 +600,40 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                         "data": series_array2
                     }
                 ],
-                "drilldown": {
-                    "series": finalObj
-                }
-                        
-//                drilldown: {
-//                    series: [{
-//                        id: '2019-2020',
-//                        name: 'Animals',
-//                        data: [{
-//                            name: 'org1',
-//                            y: 4,
-//                            drilldown: 'org1'
-//                        },{
-//                            name: 'org2',
-//                            y: 4,
-//                            drilldown: 'org2'
-//                        }
-//                        ]
-//                    }, {
-//                        
-//                        id: 'org2',
-//                        data: [{
-//                            name: 'org2',
-//                            y: 4,
-//                            drilldown: 'vouch1'
-//                        }]
-//                        },{
-//                        id: 'vouch1',
-//                        data: [{
-//                            name: 'orzxcg2',
-//                            y: 12
-//                        }]
-//                        }
-//                    ]
+//                "drilldown": {
+//                    "series": finalObj
 //                }
+                drilldown: {
+                    series: [{
+                        id: '2019-2020',
+                        name: 'Animals',
+                        data: [{
+                            name: 'org1',
+                            y: 4,
+                            drilldown: 'org1'
+                        },{
+                            name: 'org2',
+                            y: 4,
+                            drilldown: 'org2'
+                        }
+                        ]
+                    }, {
+                        
+                        id: 'org2',
+                        data: [{
+                            name: 'org2',
+                            y: 4,
+                            drilldown: 'vouch1'
+                        }]
+                        },{
+                        id: 'vouch1',
+                        data: [{
+                            name: 'orzxcg2',
+                            y: 12
+                        }]
+                        }
+                    ]
+                }
                         
             });
 

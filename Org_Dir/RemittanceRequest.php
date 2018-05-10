@@ -73,7 +73,22 @@ $user_check = $_SESSION['logged_user']['username'];
                         <input type="text" class="form-control search" placeholder=" Search"> </li>
                     <!-- user login dropdown start-->
                     <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <img alt="" src="../images/OSAS/MAAM%20DEM.jpg"> <span code="<?php echo $user_check; ?>" class="username"><?php echo $user_check; ?> </span> <b class="caret"></b> </a>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"> 
+                            <?php
+                                $picpath = '../Avatar/'.$user_check.'.png';
+                                                       
+                                
+                                if (file_exists($picpath)) {
+                                    
+                                }
+                                else {
+                                    $picpath = '../Avatar/Default-Organization.png';
+                                }
+                          
+                            ?>
+                            <img src="<?php echo $picpath; ?>" />
+                            <span class="username" code='<?php echo $referenced_user  ?>'>
+                            <?php echo $user_check; ?> </span> <b class="caret"></b> </a>
                         <ul class="dropdown-menu extended logout">
                             <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                             <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
@@ -128,6 +143,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                         <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                             <thead>
                                                 <tr>
+                                                    <th class='hidden'>ekpv</th>
                                                     <th>Remittance No.</th>
                                                     <th>Organization</th>
                                                     <th>Overview</th>
@@ -158,6 +174,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                                         if($stat == 'Approved'){
                                                             echo "
                                                             <tr class=''>
+                                                                <td class='hidden'><center>$id</center></td>
                                                                 <td><center>$number</center></td>
                                                                 <td style='width:200px'>$name</td>
                                                                 <td style='width:280px'><label>Send by: </label> $send<br/>
@@ -167,7 +184,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                                                 <td><label>$date</label></td>
                                                                 <td style='width:150px'>
                                                                     <center>
-                                                                        <a class='btn btn-default ' style='background-color:#c7cbd6' href='javascript:;'><i class='fa fa-edit'></i></a> 
+                                                                        <a class='btn btn-info edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa  fa-info-circle'></i></a> 
                                                                         <!--<a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>-->
                                                                     </center>
                                                                 </td>
@@ -178,6 +195,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                                         else if($stat == 'Rejected'){
                                                             echo "
                                                             <tr class=''>
+                                                                <td class='hidden'><center>$id</center></td>
                                                                 <td><center>$number</center></td>
                                                                 <td style='width:200px'>$name</td>
                                                                 <td style='width:280px'><label>Send by: </label> $send<br/>
@@ -198,6 +216,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                                         else{
                                                             echo "
                                                             <tr class=''>
+                                                                <td class='hidden'><center>$id</center></td>
                                                                 <td><center>$number</center></td>
                                                                 <td style='width:200px'>$name</td>
                                                                 <td style='width:280px'><label>Send by: </label> $send</td>                                                            
@@ -223,6 +242,7 @@ $user_check = $_SESSION['logged_user']['username'];
                                             </tbody>
                                             <tfoot>
                                                 <tr>
+                                                    <th class='hidden'>ekpv</th>
                                                     <th>Remittance No.</th>
                                                     <th>Organization</th>
                                                     <th>Overview</th>
@@ -313,26 +333,6 @@ $user_check = $_SESSION['logged_user']['username'];
                     </div>
                     <div class="modal-body">
                         <form method="post" id="updform-data">
-                            <div class="row">
-                                <div class="col-lg-12 form-group">
-                                    Organization Name
-                                    <select disabled class="form-control input-sm" id="upddrporg">
-                                    <?php
-                                        $view_query = mysqli_query($con,"SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME,(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) AS STAT FROM `t_org_for_compliance` INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR= '$current_acadyear' AND (SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) = 'TRUE'");
-                                
-                                        $fillorg = ' <option disable selected value="default" >Please choose an Organization</option>';
-                                        while($row = mysqli_fetch_assoc($view_query))
-                                        {
-                                            $val = $row['OrgForCompliance_ORG_CODE'];
-                                            $name = $row['OrgAppProfile_NAME'];
-                                            $fillorg = $fillorg . " <option value='".$val."' >".$name."</option>";
-
-                                        }
-                                        echo $fillorg;
-                                    ?>
-                                    </select>
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     Send By <input type="text" class="form-control" placeholder="ex. Juan Dela Cruz" id="updtxtname">

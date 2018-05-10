@@ -137,7 +137,7 @@ var EditableTable = function () {
 
                             $.ajax({
                                 type: 'post',
-                                url: 'Organization/Remittance/DelRemittance.php',
+                                url: 'Remittance/DelRemittance.php',
                                 data: {
                                     _id: getval
                                 },
@@ -252,7 +252,7 @@ var EditableTable = function () {
                                     if (isConfirm) {
                                         $.ajax({
                                             type: 'post',
-                                            url: 'Organization/Remittance/UpdRemittance.php',
+                                            url: 'Remittance/UpdRemittance.php',
                                             data: {
                                                 _id: latcode,
                                                 _orgcode: drporgvalue,
@@ -316,7 +316,7 @@ var EditableTable = function () {
                 var flag = 0;
                 $.ajax({
                     type: "GET",
-                    url: 'Organization/Remittance/GetData.php',
+                    url: 'Remittance/GetData.php',
                     dataType: 'json',
                     data: {
                         _id: getid
@@ -334,8 +334,8 @@ var EditableTable = function () {
 
                 });
 
-                document.getElementById('updtxtname').value = getname;
-                document.getElementById('updtxtamount').value = getnum;
+//                document.getElementById('updtxtname').value = getname;
+//                document.getElementById('updtxtamount').value = getnum;
 
 
             });

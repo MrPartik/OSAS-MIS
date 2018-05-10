@@ -73,7 +73,22 @@ if($_SESSION['logged_user']['role']=="Organization")
                         <input type="text" class="form-control search" placeholder=" Search"> </li>
                     <!-- user login dropdown start-->
                     <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <img alt="" src="../images/OSAS/MAAM%20DEM.jpg"> <span class="username"><?php echo $user_check; ?> </span> <b class="caret"></b> </a>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"> 
+                            <?php
+                                $picpath = '../Avatar/'.$user_check.'.png';
+                                                       
+                                
+                                if (file_exists($picpath)) {
+                                    
+                                }
+                                else {
+                                    $picpath = '../Avatar/Default-Organization.png';
+                                }
+                          
+                            ?>
+                            <img src="<?php echo $picpath; ?>" />
+                            <span class="username" code='<?php echo $referenced_user  ?>'>
+                            <?php echo $user_check; ?> </span> <b class="caret"></b> </a>
                         <ul class="dropdown-menu extended logout">
                             <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                             <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
@@ -169,17 +184,20 @@ if($_SESSION['logged_user']['role']=="Organization")
 
                                                         if($disstat == 'Active' && $stat == 'Approved'){
                                                             $button = "<center>
-                                                                        <a class='btn btn-default edit' style='background-color:#c7cbd6' href='javascript:;'><i class='fa fa-edit'></i></a> 
+                                                                        <a class='btn btn-info edit'  data-toggle='modal' href='#Edit'><i class='fa fa-info-circle'></i></a> 
                                                                         </center>";
                                                         }
                                                         else if($disstat == 'Active' && $stat == 'Rejected'){
+//                                                            $button = "<center>
+//                                                                        <a class='btn btn-default edit' style='background-color:#c7cbd6' href='javascript:;'><i class='fa fa-edit'></i></a> 
+//                                                                        </center>";
                                                             $button = "<center>
-                                                                        <a class='btn btn-default edit' style='background-color:#c7cbd6' href='javascript:;'><i class='fa fa-edit'></i></a> 
+                                                                        <a class='btn btn-info edit'   data-toggle='modal' href='#Edit'><i class='fa fa-info-circle'></i></a> 
                                                                         </center>";
                                                         }
                                                         else if($disstat == 'Active' && $stat == 'Pending'){
                                                             $button = "<center>
-                                                                        <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-edit'></i></a>                                                                         <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>
+                                                                        <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' ><i class='fa fa-edit'></i></a>                                                                         <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>
                                                                         </center>";
                                                         }
                                                         else{

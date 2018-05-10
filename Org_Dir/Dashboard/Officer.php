@@ -23,15 +23,17 @@
         $officerlist = $officerlist . '<div class=" wk-progress tm-membr">
                                             <div class="col-lg-2">
                                                 <div class="tm-avatar">
-                                                    <img src="../images/avatar1.jpg" alt="" />
+                                                    <img src="../images/default.png" alt="" />
                                                 </div>
                                             </div>
                                             <div class="col-lg-7" style="padding-top:10px">
                                                     <span class="label label-primary">'.$name.'</span>
-                                                    <span class="label label-default">'.$cas.'</span>
                                             </div>
                                             <div class="col-lg-3" style="padding-top:10px">
-                                                <span class="label label-success">'.$pos.'</span>
+                                                    <span class="label label-default">'.$cas.'</span>
+                                            </div>
+                                            <div class="col-lg-7" style="padding-top:10px">
+                                                    <span class="label label-success">'.$pos.'</span>
                                             </div>
                                         </div>';
         

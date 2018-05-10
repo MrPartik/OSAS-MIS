@@ -148,7 +148,6 @@ var EditableTable = function () {
                 var date = document.getElementById('txtupddate').value;
                 var name = document.getElementById('txtupdname').value;
                 var desc = document.getElementById('txtupddesc').value;
-                alert
                 $("#updclose").click();
 
                 swal({
@@ -332,7 +331,7 @@ var EditableTable = function () {
                         _id: id
                     },
                     success: function (data) {
-                        alert(data)
+//                        alert(data)
                         document.getElementById('txtupddate').value = data.date;
                         document.getElementById('txtupdname').value = data.name;
                         document.getElementById('txtupddesc').value = data.desc;

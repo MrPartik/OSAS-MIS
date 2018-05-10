@@ -47,6 +47,15 @@ include('../config/connection.php');
                 <div class="fa fa-bars"></div>
             </div>
         </div>
+        <div class="nav notify-row" id="top_menu">
+        <!--  notification start -->
+            <ul class="nav top-menu">
+                <!-- notification dropdown start-->
+                <?php include('../config/Notification.php'); ?>
+                <!-- notification dropdown end -->
+            </ul>
+        <!--  notification end -->
+        </div>
         <div class="top-nav clearfix">
 
             <!--search & user info start-->
@@ -54,22 +63,33 @@ include('../config/connection.php');
                 <li>
                     <input type="text" class="form-control search" placeholder=" Search"> </li>
                 <!-- user login dropdown start-->
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <img alt="" src="../images/OSAS/MAAM%20DEM.jpg"> <span code="<?php echo $user_check; ?>" class="username"><?php echo $user_check; ?> </span> <b class="caret"></b> </a>
-                    <ul class="dropdown-menu extended logout">
-                        <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                        <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                        <li><a href="../config/logout.php"><i class="fa fa-key"></i> Log Out</a></li>
-                    </ul>
-                </li>
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"> 
+                            <?php
+                                $picpath = '../Avatar/'.$user_check.'.png';
+                                                       
+                                
+                                if (file_exists($picpath)) {
+                                    
+                                }
+                                else {
+                                    $picpath = '../Avatar/Default-Organization.png';
+                                }
+                          
+                            ?>
+                            <img src="<?php echo $picpath; ?>" />
+                            <span class="username" code='<?php echo $referenced_user  ?>'>
+                            <?php echo $user_check; ?> </span> <b class="caret"></b> </a>
+                        <ul class="dropdown-menu extended logout">
+                            <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                            <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                            <li><a href="../config/logout.php"><i class="fa fa-key"></i> Log Out</a></li>
+                        </ul>
+                    </li>
                 <!-- user login dropdown end -->
             </ul>
             <!--search & user info end-->
-            <ul class="nav top-menu">
-                <li>
-                    <?php echo $breadcrumbs ?>
-                </li>
-            </ul>
+
         </div>
     </header>
 </section>
@@ -111,6 +131,7 @@ include('../config/connection.php');
                                     <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                         <thead>
                                             <tr>
+                                                <th class="hidden">Reference</th>
                                                 <th>Reference</th>
                                                 <th>Description</th>
                                                 <th>Collection</th>
@@ -123,10 +144,17 @@ include('../config/connection.php');
                                         <tbody>
                                             <?php
     
-                                                    $query = " SELECT
+                                                    $query = " SELECT OrgCashFlowStatement_ID,
     IF(
         OrgCashFlowStatement_COLLECTION IS NULL,
-        'A',
+        (
+        SELECT
+            OrgVoucher_CHECKED_BY
+        FROM
+            `t_org_voucher`
+        WHERE
+            OrgVoucher_CASH_VOUCHER_NO = OrgCashFlowStatement_ITEM
+    ),
         (
         SELECT
             OrgRemittance_DESC
@@ -138,7 +166,14 @@ include('../config/connection.php');
     ) AS DESCRIPTION,
     IF(
         OrgCashFlowStatement_COLLECTION IS NULL,
-        'A',
+        (
+        SELECT
+            OrgCashFlowStatement_ITEM
+        FROM
+            `t_org_voucher`
+        WHERE
+            OrgVoucher_CASH_VOUCHER_NO = OrgCashFlowStatement_ITEM
+    ),
         (
         SELECT
             OrgCashFlowStatement_ITEM
@@ -212,6 +247,7 @@ DESC
                                                 while($row = mysqli_fetch_assoc($view_query))
                                                 {
                                                     $desc = $row["DESCRIPTION"];
+                                                    $id = $row["OrgCashFlowStatement_ID"];
                                                     $ref = $row["REF"];
                                                     $col = $row["COLLECTION"];
                                                     $exp = $row["EXPENSES"];
@@ -221,6 +257,7 @@ DESC
                                                     
                                                     echo '
                                                     <tr>
+                                                            <td class="hidden">'.$id.'</td>
                                                             <td>'.$ref.'</td>
                                                             <td>'.$desc.'</td>
                                                             <td>'.$col.'</td>
@@ -238,7 +275,8 @@ DESC
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th>Reference</th>
+                                                <th class="hidden">Reference</th>
+                                                <th >Reference</th>
                                                 <th>Description</th>
                                                 <th>Collection</th>
                                                 <th>Expense</th>
@@ -316,7 +354,7 @@ DESC
                 });
                 window.open('Print/CashflowStatement_Print.php?items=' + items, '_blank');
             });
-            alert("'<?php echo $compcode; ?>'");
+//            alert("'<?php echo $compcode; ?>'");
 
         });
         jQuery(document).ready(function() {

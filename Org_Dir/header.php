@@ -52,6 +52,15 @@ $referenced_user = $_SESSION['logged_user']['ref'];
                     <div class="fa fa-bars"></div>
                 </div>
             </div>
+            <div class="nav notify-row" id="top_menu">
+            <!--  notification start -->
+                <ul class="nav top-menu">
+                    <!-- notification dropdown start-->
+                    <?php include('../config/Notification.php'); ?>
+                    <!-- notification dropdown end -->
+                </ul>
+            <!--  notification end -->
+            </div>
             <div class="top-nav clearfix">
            
                 <!--search & user info start-->
@@ -60,7 +69,22 @@ $referenced_user = $_SESSION['logged_user']['ref'];
                         <input type="text" class="form-control search" placeholder=" Search"> </li>
                     <!-- user login dropdown start-->
                     <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <img src='../Avatar/<?php echo $user_check; ?>.png'> <span class="username" code='<?php echo $referenced_user  ?>'><?php echo $user_check; ?> </span> <b class="caret"></b> </a>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"> 
+                            <?php
+                                $picpath = '../Avatar/'.$user_check.'.png';
+                                                       
+                                
+                                if (file_exists($picpath)) {
+                                    
+                                }
+                                else {
+                                    $picpath = '../Avatar/Default-Organization.png';
+                                }
+                          
+                            ?>
+                            <img src="<?php echo $picpath; ?>" />
+                            <span class="username" code='<?php echo $referenced_user  ?>'>
+                            <?php echo $user_check; ?> </span> <b class="caret"></b> </a>
                         <ul class="dropdown-menu extended logout">
                             <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                             <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
@@ -70,11 +94,13 @@ $referenced_user = $_SESSION['logged_user']['ref'];
                     <!-- user login dropdown end -->
                 </ul>
                 <!--search & user info end-->
+<!--
                 <ul class="nav top-menu">
              <li>
                     <?php echo $breadcrumbs ?>
             </li>
             </ul>
+-->
             </div>
         </header>
         <!--header end-->

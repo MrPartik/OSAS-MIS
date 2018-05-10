@@ -1,6 +1,6 @@
 <?php
 	
-    include('../../../config/connection.php');     
+    $con = mysqli_connect("localhost","root","","osas"); 
 
     $id = $_GET['_id'];
 

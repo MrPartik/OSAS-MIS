@@ -19,12 +19,12 @@
                     </a>
                 </li>                          
                 <li> <a <?php if( $currentPage==='Org_Cflow' ) {echo 'class="active"';} ?> href="CashFlowStatement.php">
-                        <i class="fa fa-group"></i>
+                        <i class="fa fa-envelope-o"></i>
                         <span>Cashflow statement</span>
                     </a>
                 </li>
                 <li> <a <?php if( $currentPage==='Org_Event' ) {echo 'class="active"';} ?> href="Event.php">
-                        <i class="fa fa-group"></i>
+                        <i class="fa fa-flag-o"></i>
                         <span>Event</span>
                     </a>
                 </li>            </ul>

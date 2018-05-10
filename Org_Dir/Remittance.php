@@ -55,22 +55,32 @@ include('../config/connection.php');
                 <li>
                     <input type="text" class="form-control search" placeholder=" Search"> </li>
                 <!-- user login dropdown start-->
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <img alt="" src="../images/OSAS/MAAM%20DEM.jpg"> <span code="<?php echo $user_check; ?>" class="username"><?php echo $user_check; ?> </span> <b class="caret"></b> </a>
-                    <ul class="dropdown-menu extended logout">
-                        <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                        <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                        <li><a href="../config/logout.php"><i class="fa fa-key"></i> Log Out</a></li>
-                    </ul>
-                </li>
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"> 
+                            <?php
+                                $picpath = '../Avatar/'.$user_check.'.png';
+                                                       
+                                
+                                if (file_exists($picpath)) {
+                                    
+                                }
+                                else {
+                                    $picpath = '../Avatar/Default-Organization.png';
+                                }
+                          
+                            ?>
+                            <img src="<?php echo $picpath; ?>" />
+                            <span class="username" code='<?php echo $referenced_user  ?>'>
+                            <?php echo $user_check; ?> </span> <b class="caret"></b> </a>
+                        <ul class="dropdown-menu extended logout">
+                            <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                            <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                            <li><a href="../config/logout.php"><i class="fa fa-key"></i> Log Out</a></li>
+                        </ul>
+                    </li>
                 <!-- user login dropdown end -->
             </ul>
             <!--search & user info end-->
-            <ul class="nav top-menu">
-                <li>
-                    <?php echo $breadcrumbs ?>
-                </li>
-            </ul>
         </div>
     </header>
 </section>
