@@ -112,6 +112,20 @@ include('../config/connection.php');
                     <?php echo date('D')?>
                 </div>
                 <ul class="event-list">
+                <?php
+                                                    $view_query = mysqli_query($con,"SELECT OrgEvent_NAME,OrgEvent_OrgCode, DATE_FORMAT(OrgEvent_PROPOSED_DATE, '%M %d, %Y') as PROPDATE FROM r_org_event_management WHERE concat(Month(OrgEvent_PROPOSED_DATE),'-',year(OrgEvent_PROPOSED_DATE)) = concat(Month(Current_date),'-',year(Current_date)) AND OrgEvent_STATUS = 'Approved' ");
+                                                    while($row = mysqli_fetch_assoc($view_query))
+                                                    {
+                                                        $name = $row["OrgEvent_NAME"];
+                                                        $date = $row["PROPDATE"];
+                                                        $org  = $row["OrgEvent_OrgCode"];
+                                                        echo '
+                                                            <li>'.$org.' is created an event this month, named as '.$name.' @ ' .$date .' </li>
+
+                                                             ';
+                                                    }	
+
+                                               ?>
                     <?php $sanc_query = mysqli_query($con,"SELECT A.AssSancStudStudent_STUD_NO StudNo, CONCAT(B.Stud_LNAME,', ',B.Stud_FNAME,' ',COALESCE(B.Stud_MNAME,'')) AS FullName, A.AssSancStudStudent_SancDetails_CODE  AS SANC, ((C.SancDetails_TIMEVAL)-(A.AssSancStudStudent_CONSUMED_HOURS)) as remaining FROM t_assign_stud_saction A 
 INNER JOIN  r_stud_profile B on a.AssSancStudStudent_STUD_NO = a.AssSancStudStudent_STUD_NO
 INNER JOIN r_sanction_details C on A.AssSancStudStudent_SancDetails_CODE = C.SancDetails_CODE
@@ -246,6 +260,7 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                     </section>
                 </div>
                 <div class="col-md-12">
+<<<<<<< HEAD
                     <section class="panel">
                         <div class="panel-body">
                             <div id="Vouch" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -255,6 +270,17 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                 <div class="col-md-12">
                     <section class="panel">
                         <div class="panel-body">
+=======
+                    <section class="panel">
+                        <div class="panel-body">
+                            <div id="Vouch" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                        </div>
+                    </section>
+                </div>                
+                <div class="col-md-12">
+                    <section class="panel">
+                        <div class="panel-body">
+>>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
                             <div id="Remittance" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                         </div>
                     </section>
@@ -361,8 +387,11 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
             var drilldown_array = [];
             var drilldown_array2 = [];
             var fdrilldown_array = [];
+<<<<<<< HEAD
             var finalObj;
 
+=======
+>>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
             $.ajax({
                 type: "GET",
                 url: 'Dashboard/Remittance_Series.php',
@@ -375,15 +404,25 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                     fdrilldown_array = [];
                     var i = 0;
                     $.each(data, function(key, val) {
+<<<<<<< HEAD
                             series_array2.push({
                                 name: val.name,
                                 y: parseFloat(val.cat),
                                 drilldown: val.name
                         });  
+=======
+                        series_array.push({
+                            name: val.name,
+                            y: parseFloat(val.buo),
+                            drilldown: val.orgcode
+                        });
+
+>>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
                         var drilldown = {};
                         drilldown.id = val.name;
                         drilldown.name = val.name ;
                         drilldown.data = [];
+<<<<<<< HEAD
                          
                         var series = [];
                         
@@ -423,6 +462,13 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                                 
                             });
                                             
+=======
+
+                        $.each(val.data, function(key2, val2) {
+                            drilldown.data.push([val2.text, parseFloat(val2.pamount)]);
+                            //                            drilldown_user.data.push([123]);
+                            //alert(val2.amount)
+>>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
                         });
                         
                         drilldown_array2.push(drilldown);
@@ -480,6 +526,47 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                 }                        
             });
 
+<<<<<<< HEAD
+=======
+                    });
+                    Highcharts.chart('Remittance', {
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: 'Remittance'
+                        },
+                        subtitle: {
+                            text: 'Remittance per Organization'
+                        },
+                        xAxis: {
+                            type: 'category'
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Total percent market share'
+                            }
+
+                        },
+                        legend: {
+                            enabled: false
+                        },
+
+                        tooltip: {
+                            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>₱{point.y:,.2f}</b> Remit <br/>'
+                        },
+
+                        "series": [{
+                            "name": "Organization",
+                            "colorByPoint": true,
+                            "data": series_array
+                        }],
+                        "drilldown": {
+                            "series": drilldown_array
+                        }
+                    });
+>>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
 
                 }
             });
@@ -677,6 +764,161 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
 //                            y: 12
 //                        }]
 //                        }
+//                    ]
+//                }
+                        
+            });
+
+
+                }
+            });
+            
+
+            var finalObj;
+            var thirdObj;
+            $.ajax({
+                type: "GET",
+                url: 'Dashboard/Event.php',
+                dataType: 'json',
+                success: function(data) {
+                    var i = 0;
+                    $.each(data, function(key, val) {
+                            series_array2.push({
+                                name: val.name,
+                                y: parseFloat(val.cat),
+                                drilldown: val.name
+                        });  
+                        var drilldown = {};
+                        drilldown.id = val.name;
+                        drilldown.name = val.name ;
+                        drilldown.data = [];
+                         
+                        var series = [];
+                        
+                        
+                        var drilldown2 = {};
+                        drilldown2.id = '';
+                        drilldown2.data = [];
+
+                        var data3 = [];
+
+                        $.each(val.data, function(key2, val2) {   
+                            series.push({
+                                name: val2.vouch,
+                                y: parseFloat(val2.amount),
+                                drilldown: val2.vouch
+                            });  
+                            //drilldown.data.push({series});
+                            drilldown.data.push({
+                                name: val2.vouch + ' - ' + val2.orgname,
+                                y: parseFloat(val2.amount),
+                                drilldown: val2.vouch
+                            });
+
+//                            $.each(val2.data2, function(key3, val3) {                        
+//                                drilldown2.id = val3.vouchname;
+//                                drilldown2.data.push([parseFloat(val3.itemamount)]);
+//                                alert(val3.itemamount + val3.vouchname)
+//
+//                            });
+                            var getlatid = '';
+                            $.each(val2, function(key3, val3) {   
+                                data3 = [];
+                                $.each(val2.data2, function(key4, val4) {   
+                                    data3.push({name:val4.itemname,y:parseFloat(val4.itemamount)} );
+                                    getlatid = val4.vouchname;
+    //                               alert(val4.itemamount + val4.itemname)
+
+                                });
+                                drilldown2.id = getlatid;
+                                drilldown2.data = drilldown2.data.concat(data3);
+                                //alert(getlatid)
+                                fdrilldown_array.push(drilldown2);
+                                
+                                drilldown2 = {};
+                                drilldown2.id = '';
+                                drilldown2.data = [];
+
+                                
+                            });
+                                            
+                        });
+                        
+                        drilldown_array2.push(drilldown);
+                        
+                    }); 
+                    
+                    finalObj = drilldown_array2.concat(fdrilldown_array);
+                    
+                    Highcharts.chart('Vouch', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Vouch History'
+                },
+                subtitle: {
+                    text: 'Money Used per Year'
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total percent market share'
+                    }
+
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y:,.2f}'
+                        }
+                    }
+                },
+
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>₱{point.y:,.2f}</b> of total money used<br/>'
+                },
+
+                "series": [
+                    {
+                        "name": "Year of",
+                        "colorByPoint": true,
+                        "data": series_array2
+                    }
+                ],
+                "drilldown": {
+                    "series": finalObj
+                }
+//                drilldown: {
+//                    series: [{
+//                        id: '2018',
+//                        name: 'Animals',
+//                        data: [{
+//                            name: 'Vouch #0001',
+//                            y: 4,
+//                            drilldown: 'Vouch #0001'
+//                        },{
+//                            name: 'Vouch #0004',
+//                            y: 4,
+//                            drilldown: 'Vouch #0004'
+//                        }, ['Dogs', 2],
+//                            ['Cows', 1],
+//                            ['Sheep', 2],
+//                            ['Pigs', 1]
+//                        ]
+//                    }, {
+//
+//                        id: 'Vouch #0001',
+//                        data: [{id: 'er',y:  1, name:'esr'}]
+//                    }
 //                    ]
 //                }
                         

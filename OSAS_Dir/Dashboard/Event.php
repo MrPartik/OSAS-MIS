@@ -3,6 +3,7 @@
     include('../../config/connection.php');     
 
 
+<<<<<<< HEAD
     $view_query = mysqli_query($con,"SELECT K.Batch_YEAR,IFNULL((SELECT SUM(OrgVouchItems_AMOUNT) FROM `t_org_voucher` AS E
 		INNER JOIN t_org_voucher_items AS R ON R.OrgVouchItems_VOUCHER_NO = E.OrgVoucher_CASH_VOUCHER_NO  
        	INNER JOIN t_org_for_compliance AS I ON I.OrgForCompliance_ORG_CODE = E.OrgVoucher_ORG_CODE
@@ -15,6 +16,14 @@
  		INNER JOIN r_batch_details AS C ON C.Batch_YEAR = L.OrgForCompliance_BATCH_YEAR
  			
  			GROUP BY C.Batch_YEAR))");
+=======
+    $view_query = mysqli_query($con,"SELECT DATE_FORMAT(OrgVoucher_DATE_ADD,'%Y') AS CAT,(SELECT SUM(OrgVouchItems_AMOUNT) FROM `t_org_voucher` AS E
+		INNER JOIN t_org_voucher_items AS R ON R.OrgVouchItems_VOUCHER_NO = E.OrgVoucher_CASH_VOUCHER_NO
+        WHERE DATE_FORMAT(E.OrgVoucher_DATE_ADD,'%Y') = DATE_FORMAT(I.OrgVoucher_DATE_ADD,'%Y')
+        GROUP BY DATE_FORMAT(OrgVoucher_DATE_ADD,'%Y')) AS DATAS 
+		FROM `t_org_voucher` AS I WHERE OrgVoucher_DISPLAY_STAT = 'Active'
+        GROUP BY DATE_FORMAT(OrgVoucher_DATE_ADD,'%Y')");
+>>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
     $container_arr = array();
     session_start();
     $username = $_SESSION['logged_user']['username'];
@@ -22,6 +31,7 @@
 
     while($row = mysqli_fetch_assoc($view_query))
     {
+<<<<<<< HEAD
         $ser = $row["Batch_YEAR"];
         $data = $row["AMO"];
         $container_arr2 = array();
@@ -66,6 +76,32 @@
                 $arr = array('itemname' => $itemname,'vouchname' => $vouchname,'itemamount' => $itemamount,'data3' => $container_arr4);
                 array_push(  $container_arr3, (array)$arr );
                 $container_arr4 = array();
+=======
+        $ser = $row["CAT"];
+        $data = $row["DATAS"];
+        $container_arr2 = array();
+        $container_arr3 = array();
+        
+        
+        $view_query2 = mysqli_query($con,"SELECT DATE_FORMAT(OrgVoucher_DATE_ADD,'%Y') as PDATE,OrgVoucher_CASH_VOUCHER_NO,SUM(OrgVouchItems_AMOUNT) AS AMO,OrgVoucher_ORG_CODE FROM `t_org_voucher` AS E
+		INNER JOIN t_org_voucher_items AS R ON R.OrgVouchItems_VOUCHER_NO = E.OrgVoucher_CASH_VOUCHER_NO
+        WHERE DATE_FORMAT(OrgVoucher_DATE_ADD,'%Y') = '$ser' GROUP BY OrgVouchItems_VOUCHER_NO ");
+        while($row2 = mysqli_fetch_assoc($view_query2))
+        {
+            $vouch = $row2["OrgVoucher_CASH_VOUCHER_NO"];
+            $amount = $row2["AMO"];
+            $pdate = $row2["PDATE"];
+            $orgname = $row2["OrgVoucher_ORG_CODE"];
+            
+            $view_query3 = mysqli_query($con,"SELECT '$vouch' as VNUM,OrgVouchItems_ITEM_NAME,OrgVouchItems_AMOUNT FROM `t_org_voucher_items` WHERE OrgVouchItems_VOUCHER_NO = '$vouch' ");
+            while($row3 = mysqli_fetch_assoc($view_query3))
+            {
+                $vouchname = $row3["VNUM"];
+                $itemname = $row3["OrgVouchItems_ITEM_NAME"];
+                $itemamount = $row3["OrgVouchItems_AMOUNT"];
+                $arr = array('itemname' => $itemname,'vouchname' => $vouchname,'itemamount' => $itemamount);
+                array_push(  $container_arr3, (array)$arr );
+>>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
 
 
             }
@@ -74,8 +110,12 @@
             
             
             
+<<<<<<< HEAD
             $arr = array('orgname' => $orgname,'vouch' => $vouch,'amount' => $amount,'data2' => $container_arr3);
 //            $arr = array('orgname' => $orgname,'vouch' => $vouch,'pdate' => $pdate,'amount' => $amount,'data2' => $container_arr3);
+=======
+            $arr = array('orgname' => $orgname,'vouch' => $vouch,'pdate' => $pdate,'amount' => $amount,'data2' => $container_arr3);
+>>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
             array_push(  $container_arr2, (array)$arr );
             $container_arr3 = array();
 

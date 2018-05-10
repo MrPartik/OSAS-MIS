@@ -219,7 +219,7 @@ WHERE Notification_RECEIVER = (SELECT OSASHead_CODE FROM `r_osas_head` WHERE OSA
 AND 
 (SELECT OrgRemittance_APPROVED_STATUS FROM T_ORG_REMITTANCE WHERE OrgRemittance_NUMBER = Notification_ITEM) = 'Pending' 
 OR (SELECT OrgEvent_STATUS FROM r_org_event_management WHERE OrgEvent_Code = Notification_ITEM) = 'Pending'
-ORDER BY Notification_DATE_ADDED DESC"));
+ORDER BY Notification_DATE_ADDED DESC"))or die("0");
 $count_notif = $count_notif_query["countt"];
 
 

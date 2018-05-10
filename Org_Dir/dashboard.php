@@ -263,7 +263,10 @@ include('../config/connection.php');
 
                                 });
                                 drilldown2.id = getlatid;
+<<<<<<< HEAD
                                 drilldown2.name = 'Voucher Item';
+=======
+>>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
                                 drilldown2.data = drilldown2.data.concat(data3);
                                 //alert(getlatid)
                                 fdrilldown_array.push(drilldown2);
