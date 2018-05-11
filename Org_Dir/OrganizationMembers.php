@@ -4,7 +4,7 @@
 $breadcrumbs="<div class='col-md-12'>
 <ul class='breadcrumbs-alt'>
     <li> <a href='dashboard.php'>Home</a> </li>
-    <li> <a class='current' href='OrganizationMembers.php'>Organization Members</a></li>
+    <li> <a class='current' href='OrganizationMembers.php'>Organization Members and Officials</a></li>
 </ul>
 </div>"; 
 $currentPage ='Org_OrgMem'; 
@@ -14,7 +14,7 @@ $compcode = $referenced_user;
 include('../config/connection.php');
 ?>
 <title>
-    <?php echo $compcode ?> - Organization Members</title>
+    <?php echo $compcode ?> - Organization Members and Officials</title>
 <link href="../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
 <link href="../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
 <link rel="stylesheet" href="../js/data-tables/DT_bootstrap.css" />

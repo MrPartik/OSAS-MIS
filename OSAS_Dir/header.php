@@ -32,9 +32,7 @@ $user_check = $_SESSION['logged_user']['username'];
     <link rel="stylesheet" type="text/css" href="../js/bootstrap-datepicker/css/datepicker.css" /> 
         
 
-</head>
-    
-
+</head> 
     <section id="container">
         <!--header start-->
         <header class="header fixed-top clearfix">
@@ -101,5 +99,5 @@ $user_check = $_SESSION['logged_user']['username'];
                 </div>
             </div>
         </div>
-    </div><?php  include('../config/NotificationRemittanceApproval.php') ?>
+    </div><?php  include('../config/NotificationApproval.php') ?>
         <!--header end-->

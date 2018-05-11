@@ -16,12 +16,8 @@ $referenced_user = $_SESSION['logged_user']['ref'];
  ?>
     <!DOCTYPE html>
 <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="ThemeBucket">
-        <link rel="shortcut icon" href="../images/favicon.png">
-        <link rel="stylesheet" type="text/css" href="../js/select2/select2.css" />
+         
+        <link rel="shortcut icon" href="../images/favicon.png"> 
         <link href="../bs3/css/bootstrap.min.css" rel="stylesheet">
         <link href="../js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet">
         <link href="../css/bootstrap-reset.css" rel="stylesheet">
@@ -36,9 +32,6 @@ $referenced_user = $_SESSION['logged_user']['ref'];
         <link rel="stylesheet" type="text/css" href="../js/select2/select2.css" />
         <link rel="stylesheet" type="text/css" href="../js/jquery-tags-input/jquery.tagsinput.css" />
     <link rel="stylesheet" type="text/css" href="../js/bootstrap-datepicker/css/datepicker.css" /> 
-        
-    <link href="../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-    <link href="../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
 </head>
     
 
@@ -94,13 +87,13 @@ $referenced_user = $_SESSION['logged_user']['ref'];
                     <!-- user login dropdown end -->
                 </ul>
                 <!--search & user info end-->
-<!--
+
                 <ul class="nav top-menu">
              <li>
                     <?php echo $breadcrumbs ?>
             </li>
             </ul>
--->
+
             </div>
         </header>
         <!--header end-->

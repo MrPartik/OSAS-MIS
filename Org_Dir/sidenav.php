@@ -8,14 +8,19 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li> <a <?php if( $currentPage==='Org_OrgMem' ) {echo 'class="active"';} ?> href="OrganizationMembers.php">
+                <li> <a <?php if( $currentPage==='Org_OrgMem' ) {echo 'class="active"';} ?> href="Remittance.php">
                         <i class="fa fa-group"></i>
                         <span>Officers and Members</span>
                     </a>
                 </li>
-                <li> <a <?php if( $currentPage==='Org_RemReq' ) {echo 'class="active"';} ?> href="RemittanceRequest.php">
-                        <i class="fa fa-tag"></i>
+                <li> <a <?php if( $currentPage==='Org_RemReq' ) {echo 'class="active"';} ?> href="Remittance.php">
+                        <i class="fa fa-money"></i>
                         <span>Remittance</span>
+                    </a>
+                </li>  
+                <li> <a <?php if( $currentPage==='Org_Voucher' ) {echo 'class="active"';} ?> href="RemittanceRequest.php">
+                        <i class="fa fa-money"></i>
+                        <span>Voucher</span>
                     </a>
                 </li>                          
                 <li> <a <?php if( $currentPage==='Org_Cflow' ) {echo 'class="active"';} ?> href="CashFlowStatement.php">
@@ -24,8 +29,8 @@
                     </a>
                 </li>
                 <li> <a <?php if( $currentPage==='Org_Event' ) {echo 'class="active"';} ?> href="Event.php">
-                        <i class="fa fa-flag-o"></i>
-                        <span>Event</span>
+                        <i class="fa fa-tag"></i>
+                        <span>Event Management</span>
                     </a>
                 </li>            </ul>
         </div>

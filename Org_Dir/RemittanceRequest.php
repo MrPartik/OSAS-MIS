@@ -2,106 +2,13 @@
 <html>
 <title>OSAS - Remittance</title>
 <?php
-//$breadcrumbs  ="<div class='col-md-12'>
-//<ul class='breadcrumbs-alt'>
-//     <li> <a  href='#'>Remittance </a>  </li>
-//<li><a class='current'' href='#'>Remittance Request</a></li> </ul></div>";
+$breadcrumbs  ="<div class='col-md-12'>
+<ul class='breadcrumbs-alt'> <li> <a  href='dashboard.php'>Home </a>  </li>
+    <li> <a  href='#'>Remittance </a>  </li>
+<li><a class='current'' href='#'>Remittance Request</a></li> </ul></div>";
 $currentPage ='Org_RemReq';
-include('../config/connection.php');
-    session_start();
-include('../config/dashboard/count.php'); 
-include('../config/query.php');
-if($_SESSION['logged_user']['role']=="Organization")
-    { }
-    else if($_SESSION['logged_user']['role']=="Administrator")
-    { header("location:../admin_dir/dashboard.php"); }
-    else if($_SESSION['logged_user']['role']=="Student")
-    { }
-    else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
-    { header("location:../");}
-$user_check = $_SESSION['logged_user']['username']; 
-
+include ('header.php');
 ?>
-
-    <head>
-        <link href="../bs3/css/bootstrap.min.css" rel="stylesheet">
-        <link href="../js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet">
-        <link href="../css/bootstrap-reset.css" rel="stylesheet">
-        <link href="../font-awesome/css/font-awesome.css" rel="stylesheet">
-        <link href="../js/jvector-map/jquery-jvectormap-1.2.2.css" rel="stylesheet">
-        <link href="../css/clndr.css" rel="stylesheet">
-        <link href="../js/css3clock/css/style.css" rel="stylesheet">
-        <link rel="stylesheet" href="../js/morris-chart/morris.css">
-        <link href="../css/style.css" rel="stylesheet">
-        <link href="../css/style-responsive.css" rel="stylesheet" />
-        <link href="../js/sweetalert/sweetalert.css" rel="stylesheet">
-        <link href="../js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-        <link href="../js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
-        <link rel="stylesheet" href="../js/data-tables/DT_bootstrap.css" />
-
-        <!-- Custom styles for this template -->
-        <link href="../css/style.css" rel="stylesheet">
-        <link href="../css/style-responsive.css" rel="stylesheet" />
-        <link rel="stylesheet" type="text/css" href="../js/select2/select2.css" />
-        <link rel="stylesheet" type="text/css" href="../js/jquery-multi-select/css/multi-select.css" />
-
-    </head>
-    <section id="container">
-        <!--header start-->
-        <header class="header fixed-top clearfix">
-            <!--logo start-->
-            <div class="brand">
-                <a href="dashboard.php" class="logo"> <img src="../images/logo.png" alt=""> </a>
-                <div class="sidebar-toggle-box">
-                    <div class="fa fa-bars"></div>
-                </div>
-            </div>
-            <div class="nav notify-row" id="top_menu">
-            <!--  notification start -->
-                <ul class="nav top-menu">
-                    <!-- notification dropdown start-->
-                    <?php include('../config/Notification.php'); ?>
-                    <!-- notification dropdown end -->
-                </ul>
-            <!--  notification end -->
-            </div>
-            <div class="top-nav clearfix">
-
-                <!--search & user info start-->
-                <ul class="nav pull-right top-menu">
-                    <li>
-                        <input type="text" class="form-control search" placeholder=" Search"> </li>
-                    <!-- user login dropdown start-->
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"> 
-                            <?php
-                                $picpath = '../Avatar/'.$user_check.'.png';
-                                                       
-                                
-                                if (file_exists($picpath)) {
-                                    
-                                }
-                                else {
-                                    $picpath = '../Avatar/Default-Organization.png';
-                                }
-                          
-                            ?>
-                            <img src="<?php echo $picpath; ?>" />
-                            <span class="username" code='<?php echo $referenced_user  ?>'>
-                            <?php echo $user_check; ?> </span> <b class="caret"></b> </a>
-                        <ul class="dropdown-menu extended logout">
-                            <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                            <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                            <li><a href="../config/logout.php"><i class="fa fa-key"></i> Log Out</a></li>
-                        </ul>
-                    </li>
-                    <!-- user login dropdown end -->
-                </ul>
-                <!--search & user info end-->
-            </div>
-        </header>
-    </section>
-
     <body>
 
         <section id="container">
@@ -355,28 +262,8 @@ $user_check = $_SESSION['logged_user']['username'];
                 </div>
             </div>
         </div>
-        <?php  include('../config/NotificationRemittanceApproval.php') ?>
-
-        <!-- Placed js at the end of the document so the pages load faster -->
-
-        <!--Core js-->
-        <script src="../js/jquery-1.8.3.min.js"></script>
-        <script src="../bs3/js/bootstrap.min.js"></script>
-        <script class="include" type="text/javascript" src="../js/jquery.dcjqaccordion.2.7.js"></script>
-        <script src="../js/jquery.scrollTo.min.js"></script>
-        <script src="../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-        <script src="../js/jquery.nicescroll.js"></script>
-
-        <script type="text/javascript" src="../js/data-tables/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="../js/data-tables/DT_bootstrap.js"></script>
-        <script type="text/javascript" src="../js/sweetalert/sweetalert.min.js"></script>
-        <script src="../js/select2/select2.js"></script>
-        <script src="../js/select-init.js"></script>
-
-        <!--common script init for all pages-->
-        <script src="../js/scripts.js"></script>
-
-        <!--script for this page only-->
+        <?php include("footer.php"); ?>
+        <?php  include('../config/NotificationApproval.php') ?> 
         <script src="Remittance/RemittanceRequest.js"></script>
 
         <!-- END JAVASCRIPTS -->

@@ -114,7 +114,7 @@ include('../config/connection.php');
         </section>
         
     </section>
-    <?php  include('../config/NotificationRemittanceApproval.php') ?>
+    <?php  include('../config/NotificationApproval.php') ?>
 
     <!--main content end-->
     <!-- Placed js at the end of the document so the pages load faster -->

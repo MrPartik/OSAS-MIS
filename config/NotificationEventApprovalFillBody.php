@@ -39,8 +39,7 @@
                 
             }
             $container = $container . 
-                    '
-                        <div class="user-heading alt gray-bg">
+                    '<div class="user-heading alt gray-bg">
                             <a href="#">';
             $file = "../Avatar/".$orgcode.".png";
             if(file_exists(basename($file))) {
@@ -64,8 +63,8 @@
                             <p id="lblorgdesc">'.$orgdesc.'</p>
                         </div>
                         <ul class="nav nav-pills nav-stacked">
-                            <li><a href="javascript:;"> <i class="fa fa-money"></i> Money <span class="badge label-label pull-right r-activity" id="lblmoney">'.$amount2.'</span></a></li>
-                            <li><a href="javascript:;"><i class="fa fa-bookmark"></i>Event Code<span class="badge label-label pull-right r-activity" id="lbleventcode" item="'.$remitnum.'">'.$remitnum.'</span> </a></li>';
+                            <li><a href="javascript:;"> <i class="fa fa-money"></i> Money <span class="label label-success label-success pull-right r-activity" id="lblmoney">'.$amount2.'</span></a></li>
+                            <li><a href="javascript:;"><i class="fa fa-bookmark"></i>Event Code<span class="label label-success label-success pull-right r-activity" id="lbleventcode" item="'.$remitnum.'">'.$remitnum.'</span> </a></li>';
             
             if($status == 'Pending'){
                 $container = $container . '<li><a href="javascript:;"><i class="fa fa-info-circle"></i>Status<span class="badge label-primary pull-right r-activity" id="lblstat">'.$status.'</span> </a></li>

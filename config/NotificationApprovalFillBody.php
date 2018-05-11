@@ -46,26 +46,25 @@
             }
             
             $container = $container . 
-                    '
-                        <div class="user-heading alt gray-bg">
-                            <a href="#">';
-            $file = glob ( "../Avatar/".$orgcode.".*");
-            if($file) {
-                $container = $container . '<img alt="" src="../Avatar/'.$orgcode.'.png">';
-            }
-            else{
-                $container = $container . '<img alt="" src="../Avatar/Default-Organization.png">';
-                
-            }
-                
-                               
-                                    
+            "<div class='twt-feed maroon-bg'>
+                    
+                            <div class='corner-ribon black-ribon'><i class='fa fa-user'></i></div>
+                            <div class='fa fa-user wtt-mark'></div> <a href='#'>";
+                            $file = glob ( "../Avatar/".$orgcode.".*");
+                            if($file) {
+                                $container = $container . '<img alt="" src="../Avatar/'.$orgcode.'.png">';
+                            }
+                            else{
+                                $container = $container . '<img alt="" src="../Avatar/Default-Organization.png">';
+                                
+                            }                            
+                            
+           $container = $container . "</a>
+                            <h1 id='lblorgname'>$orgname - $orgcode </h1>
+                            <p id='lblorgdesc'>$orgdesc</p>
+                            </div>";        
             $container = $container . 
-                                    '
-                            </a>                    
-                            <h1 id="lblorgname">'.$orgname . ' - ' . $orgcode .'</h1>
-                            <p id="lblorgdesc">'.$orgdesc.'</p>
-                        </div>
+                            '  </div>
                         <ul class="nav nav-pills nav-stacked">
                             <li><a href="javascript:;"> <i class="fa fa-money"></i> Money <span class="badge label-label pull-right r-activity" id="lblmoney">'.$amount2.'</span></a></li>
                             <li><a href="javascript:;"><i class="fa fa-bookmark"></i>Remittance Number<span class="badge label-label pull-right r-activity" id="lblremitnum" item="'.$remitnum.'">'.$remitnum.'</span> </a></li>';

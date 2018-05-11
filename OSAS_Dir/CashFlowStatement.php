@@ -7,9 +7,7 @@ $breadcrumbs  ="<div class='col-md-12'>
      <li> <a  href='#'>Organization Management</a>  </li>
 <li><a class='current'' href='#'>Cashflow Statement</a></li> </ul></div>";
 $currentPage ='OSAS_Cflow';
-include('header.php');  
-include('../config/connection.php'); 
-include('../config/dashboard/count.php');   
+include('header.php');   
 
 ?>
     <body>
