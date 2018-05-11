@@ -3,42 +3,22 @@
     include('../../config/connection.php');     
 
 
-<<<<<<< HEAD
     $view_query = mysqli_query($con,"SELECT Batch_YEAR,sum(OrgRemittance_AMOUNT) AS AMO, OrgForCompliance_ORG_CODE FROM `r_batch_details` 
                                             INNER JOIN t_org_for_compliance ON Batch_YEAR = OrgForCompliance_BATCH_YEAR
                                             INNER JOIN t_org_remittance ON OrgRemittance_ORG_CODE = OrgForCompliance_ORG_CODE
                                             INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
                                             WHERE OrgRemittance_DISPLAY_STAT = 'Active' AND OrgForCompliance_DISPAY_STAT = 'Active' AND OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgRemittance_APPROVED_STATUS = 'Approved' AND Batch_DISPLAY_STAT = 'Active' GROUP BY Batch_YEAR");
-=======
-    $view_query = mysqli_query($con,"SELECT  FORMAT((sum(OrgRemittance_AMOUNT) / (SELECT SUM(OrgRemittance_AMOUNT) FROM `t_org_remittance`
-INNER JOIN t_org_for_compliance ON OrgRemittance_ORG_CODE = OrgForCompliance_ORG_CODE
-INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
-WHERE OrgRemittance_DISPLAY_STAT = 'Active' AND OrgForCompliance_DISPAY_STAT = 'Active' AND OrgAppProfile_DISPLAY_STAT = 'Active' )) * 100,2)  AS PERCENT,sum(OrgRemittance_AMOUNT) as buo   ,  OrgAppProfile_NAME,OrgForCompliance_ORG_CODE  FROM t_org_remittance
-                                                    INNER JOIN t_org_for_compliance ON OrgRemittance_ORG_CODE = OrgForCompliance_ORG_CODE
-                                                    INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
-                                                    WHERE OrgRemittance_DISPLAY_STAT = 'Active' AND OrgForCompliance_DISPAY_STAT = 'Active' AND OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgRemittance_APPROVED_STATUS = 'Approved' group by OrgForCompliance_ORG_CODE ");
->>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
     $container_arr = array();
 
 
     while($row = mysqli_fetch_assoc($view_query))
     {
-<<<<<<< HEAD
         $ser = $row["Batch_YEAR"];
         $data = $row["AMO"];
-=======
-//        $name = $row["OrgAppProfile_NAME"];
-        $name = $row["OrgForCompliance_ORG_CODE"];
-        $buo = $row["buo"];
-        $orgcode = $row["OrgForCompliance_ORG_CODE"];
-        $percent = $row["PERCENT"];
-//        $amount = $row["AMOUNT"];
->>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
         $container_arr2 = array();
         $container_arr3 = array();
         
         
-<<<<<<< HEAD
         $view_query2 = mysqli_query($con,"SELECT OrgAppProfile_NAME,OrgRemittance_ORG_CODE,OrgForCompliance_BATCH_YEAR,SUM(OrgRemittance_AMOUNT) AS AMO FROM `r_org_applicant_profile`
 		INNER JOIN t_org_for_compliance ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
         INNER JOIN t_org_remittance ON OrgRemittance_ORG_CODE = OrgForCompliance_ORG_CODE
@@ -73,32 +53,12 @@ WHERE OrgRemittance_DISPLAY_STAT = 'Active' AND OrgForCompliance_DISPAY_STAT = '
             
             
             $arr = array('vouch' => $vouch,'amount' => $amount,'data2' => $container_arr3);
-=======
-        $view_query2 = mysqli_query($con,"SELECT OrgRemittance_NUMBER,CONCAT('₱',FORMAT(OrgRemittance_AMOUNT,3)) AS AMOUNT,FORMAT((OrgRemittance_AMOUNT / ( SELECT SUM(OrgRemittance_AMOUNT)  FROM t_org_remittance
-                                                INNER JOIN t_org_for_compliance ON OrgRemittance_ORG_CODE = OrgForCompliance_ORG_CODE
-                                                INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
-                                                WHERE OrgRemittance_DISPLAY_STAT = 'Active' AND OrgForCompliance_DISPAY_STAT = 'Active' AND OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgRemittance_ORG_CODE  = '$orgcode' ) ) * 100,3) AS PER,OrgRemittance_AMOUNT  FROM t_org_remittance
-                                                INNER JOIN t_org_for_compliance ON OrgRemittance_ORG_CODE = OrgForCompliance_ORG_CODE
-                                                INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
-                                                WHERE OrgRemittance_DISPLAY_STAT = 'Active' AND OrgForCompliance_DISPAY_STAT = 'Active' AND OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgRemittance_ORG_CODE  = '$orgcode' AND OrgRemittance_APPROVED_STATUS = 'Approved' ");
-        while($row2 = mysqli_fetch_assoc($view_query2))
-        {
-            $amount = $row2["OrgRemittance_NUMBER"];
-            $pamount = $row2["OrgRemittance_AMOUNT"];
-            //$amount = $row2["AMOUNT"];
-            $per = $row2["PER"];
-            $arr = array('text' => $amount,'pamount' => $pamount,'per' => $per);
->>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
             array_push(  $container_arr2, (array)$arr );
             $container_arr3 = array();
 
 
         }
-<<<<<<< HEAD
         $arr = array( 'name' => $ser, 'cat' => $data, "data" => $container_arr2);
-=======
-        $arr = array( 'name' => $name,'buo' => $buo, 'orgcode' => $orgcode, 'percent' => $percent,"data" => $container_arr2);
->>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
         array_push(  $container_arr, (array)$arr );
         
 

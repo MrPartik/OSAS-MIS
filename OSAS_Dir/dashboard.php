@@ -260,7 +260,6 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                     </section>
                 </div>
                 <div class="col-md-12">
-<<<<<<< HEAD
                     <section class="panel">
                         <div class="panel-body">
                             <div id="Vouch" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -270,17 +269,6 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                 <div class="col-md-12">
                     <section class="panel">
                         <div class="panel-body">
-=======
-                    <section class="panel">
-                        <div class="panel-body">
-                            <div id="Vouch" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-                        </div>
-                    </section>
-                </div>                
-                <div class="col-md-12">
-                    <section class="panel">
-                        <div class="panel-body">
->>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
                             <div id="Remittance" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                         </div>
                     </section>
@@ -387,11 +375,8 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
             var drilldown_array = [];
             var drilldown_array2 = [];
             var fdrilldown_array = [];
-<<<<<<< HEAD
             var finalObj;
 
-=======
->>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
             $.ajax({
                 type: "GET",
                 url: 'Dashboard/Remittance_Series.php',
@@ -404,25 +389,15 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                     fdrilldown_array = [];
                     var i = 0;
                     $.each(data, function(key, val) {
-<<<<<<< HEAD
                             series_array2.push({
                                 name: val.name,
                                 y: parseFloat(val.cat),
                                 drilldown: val.name
                         });  
-=======
-                        series_array.push({
-                            name: val.name,
-                            y: parseFloat(val.buo),
-                            drilldown: val.orgcode
-                        });
-
->>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
                         var drilldown = {};
                         drilldown.id = val.name;
                         drilldown.name = val.name ;
                         drilldown.data = [];
-<<<<<<< HEAD
                          
                         var series = [];
                         
@@ -462,13 +437,6 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                                 
                             });
                                             
-=======
-
-                        $.each(val.data, function(key2, val2) {
-                            drilldown.data.push([val2.text, parseFloat(val2.pamount)]);
-                            //                            drilldown_user.data.push([123]);
-                            //alert(val2.amount)
->>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
                         });
                         
                         drilldown_array2.push(drilldown);
@@ -526,47 +494,6 @@ WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_ST
                 }                        
             });
 
-<<<<<<< HEAD
-=======
-                    });
-                    Highcharts.chart('Remittance', {
-                        chart: {
-                            type: 'column'
-                        },
-                        title: {
-                            text: 'Remittance'
-                        },
-                        subtitle: {
-                            text: 'Remittance per Organization'
-                        },
-                        xAxis: {
-                            type: 'category'
-                        },
-                        yAxis: {
-                            title: {
-                                text: 'Total percent market share'
-                            }
-
-                        },
-                        legend: {
-                            enabled: false
-                        },
-
-                        tooltip: {
-                            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>₱{point.y:,.2f}</b> Remit <br/>'
-                        },
-
-                        "series": [{
-                            "name": "Organization",
-                            "colorByPoint": true,
-                            "data": series_array
-                        }],
-                        "drilldown": {
-                            "series": drilldown_array
-                        }
-                    });
->>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
 
                 }
             });

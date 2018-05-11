@@ -363,7 +363,6 @@ include('../config/connection.php');
 
 
 
-<<<<<<< HEAD
 
 
 
@@ -385,8 +384,6 @@ include('../config/connection.php');
 
 
 
-=======
->>>>>>> 2c905a5fa140a2e0a012dbbf2724953c30247a93
 [{"name":"2013","cat":"15000.000","data":[{"vouch":"Vouch #00003","pdate":"2013","amount":"15000.000","data2":[{"itemname":"asd","vouchname":"Vouch #00003","itemamount":"5000.000"},{"itemname":"qwe","vouchname":"Vouch #00003","itemamount":"5000.000"},{"itemname":"zxc","vouchname":"Vouch #00003","itemamount":"5000.000"}]}]},{"name":"2017","cat":"10500.000","data":[{"vouch":"Vouch #00002","pdate":"2017","amount":"10500.000","data2":[{"itemname":"ericc","vouchname":"Vouch #00002","itemamount":"500.000"},{"itemname":"vad","vouchname":"Vouch #00002","itemamount":"10000.000"}]}]},
 
 {"name":"2018","cat":"22299.000",
