@@ -42,8 +42,8 @@ include ('header.php');
                                             <div class="btn-group">
                                                 <button id="editable-sample_new" data-toggle="modal" id="openAddmodal" href="#Add" class="btn btn-success">Add <i class="fa fa-plus"></i>
                                                 </button> 
-                                                <button id="btnrequest" data-toggle="modal" id="openAddmodal" href="#Request" class="btn btn-info" style="margin-left:5px">Request <i class="fa fa-folder-open"></i>
-                                                </button>
+                                                <!-- <button id="btnrequest" data-toggle="modal" id="openAddmodal" href="#Request" class="btn btn-info" style="margin-left:5px">Request <i class="fa fa-folder-open"></i>
+                                                </button> -->
                                             </div>
                                             <div class="btn-group pull-right">
                                                 <button class="btn btn-default " id="btnprint">Print <i class="fa fa-print"></i></button>
@@ -58,7 +58,7 @@ include ('header.php');
                                                     <th>Organization</th>
                                                     <th>Overview</th>
                                                     <th>Description</th>
-                                                    <th>Status</th>
+                                                    <!-- <th>Status</th> -->
                                                     <th>Date Issued</th>
                                                     <th style="width:1%"><center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
                                                 </tr>
@@ -81,57 +81,63 @@ include ('header.php');
                                                         $date = $row["DATE"];
                                                         $stat = $row["APSTAT"];
                                                         
-                                                        if($stat == 'Approved'){
-                                                            echo "
-                                                            <tr class=''>
-                                                                <td class='hidden'>$id</td>
-                                                                <td><center>$number</center></td>
-                                                                <td style='width:200px'>$name</td>
-                                                                <td style='width:280px'><label>Send by: </label> $send<br/>
-                                                                <label>Receive by: </label> $rec</td>                                                            
-                                                                <td><label>Amount: </label> $amount<br/><label>Description: </label> $desc</td>
-                                                                <td><center><span class='label label-success'>Approved</span></center></td>
-                                                                <td><label>$date</label></td>
-                                                                <td style='width:150px'>
-                                                                    <center>
-                                                                        <a class='btn btn-default edit' style='background-color:#c7cbd6' href='javascript:;'><i class='fa fa-edit'></i></a> 
-                                                                        <!--<a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>-->
-                                                                    </center>
-                                                                </td>
-                                                            </tr>
-                                                                ";
+                                                        // if($stat == 'Approved'){
+                                                        //     echo "
+                                                        //     <tr class=''>
+                                                        //         <td class='hidden'>$id</td>
+                                                        //         <td><center>$number</center></td>
+                                                        //         <td style='width:200px'>$name</td>
+                                                        //         <td style='width:280px'><label>Send by: </label> $send<br/>
+                                                        //         <label>Receive by: </label> $rec</td>                                                            
+                                                        //         <td><label>Amount: </label> $amount<br/><label>Description: </label> $desc</td>
+                                                        //         <td><center><span class='label label-success'>Approved</span></center></td>
+                                                        //         <td><label>$date</label></td>
+                                                        //         <td style='width:150px'>
+                                                        //             <center>
+                                                        //                 <a class='btn btn-default edit' style='background-color:#c7cbd6' href='javascript:;'><i class='fa fa-edit'></i></a> 
+                                                        //                 <!--<a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>-->
+                                                        //             </center>
+                                                        //         </td>
+                                                        //     </tr>
+                                                        //         ";
                                                             
-                                                        }
-                                                        else if($stat == 'Rejected'){
-                                                            echo "
-                                                            <tr class=''>
-                                                                <td class='hidden'>$id</td>
-                                                                <td><center>$number</center></td>
-                                                                <td style='width:200px'>$name</td>
-                                                                <td style='width:280px'><label>Send by: </label> $send<br/>
-                                                                <label>Receive by: </label> $rec</td>                                                            
-                                                                <td><label>Amount: </label> $amount<br/><label>Description: </label> $desc</td>
-                                                               <td><center><span class='label label-danger'>Rejected</span></center></td>
-                                                                <td><label>$date</label></td>
-                                                                <td style='width:150px'>
-                                                                    <center>
-                                                                        <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-edit'></i></a> 
-                                                                        <!--<a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>-->
-                                                                    </center>
-                                                                </td>
-                                                            </tr>
-                                                                    ";
+                                                        // }
+                                                        // else if($stat == 'Rejected'){
+                                                        //     echo "
+                                                        //     <tr class=''>
+                                                        //         <td class='hidden'>$id</td>
+                                                        //         <td><center>$number</center></td>
+                                                        //         <td style='width:200px'>$name</td>
+                                                        //         <td style='width:280px'><label>Send by: </label> $send<br/>
+                                                        //         <label>Receive by: </label> $rec</td>                                                            
+                                                        //         <td><label>Amount: </label> $amount<br/><label>Description: </label> $desc</td>
+                                                        //        <td><center><span class='label label-danger'>Rejected</span></center></td>
+                                                        //         <td><label>$date</label></td>
+                                                        //         <td style='width:150px'>
+                                                        //             <center>
+                                                        //                 <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-edit'></i></a> 
+                                                        //                 <!--<a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>-->
+                                                        //             </center>
+                                                        //         </td>
+                                                        //     </tr>
+                                                        //             ";
                                                             
-                                                        }
-                                                        else{
+                                                        // }
+                                                        // else
+                                                            // TD ng status ang nasa baba
+                                                        // <td><center>
+                                                        //         <span class='label label-primary'>Pending
+                                                        //         </span></center></td>                    
+                                                        {
                                                             echo "
                                                             <tr class=''>
                                                                 <td class='hidden'>$id</td>
                                                                 <td><center>$number</center></td>
                                                                 <td style='width:200px'>$name</td>
-                                                                <td style='width:280px'><label>Send by: </label> $send</td>                                                            
+                                                                <td style='width:280px'><label>Send by: </label> $send</td>          
+
                                                                 <td><label>Amount: </label> $amount<br/><label>Description: </label> $desc</td>
-                                                                <td><center><span class='label label-primary'>Pending</span></center></td>
+                                                                
                                                                 <td><label>$date</label></td>
                                                                 <td style='width:150px'>
                                                                     <center>
@@ -157,7 +163,7 @@ include ('header.php');
                                                     <th>Organization</th>
                                                     <th>Overview</th>
                                                     <th>Description</th>
-                                                    <th>Status</th>
+                                                    <!-- <th>Status</th> -->
                                                     <th>Date Issued</th>
                                                     <th  style="width:1%"><center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
                                                 </tr>

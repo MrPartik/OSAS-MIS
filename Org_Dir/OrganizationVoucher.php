@@ -4,12 +4,11 @@
 <?php 
 $breadcrumbs =" <div class='col-md-12'>
 <ul class='breadcrumbs-alt'>
-    <li> <a href='dashboard.php'>Home</a> </li>
-    <li> <a href='#'>Organization Management</a> </li>
+    <li> <a href='dashboard.php'>Home</a> </li> 
     <li> <a class='current' href='OrganizationVoucher.php'>Voucher</a> </li>
 </ul>
 </div>";   
-$currentPage ='OSAS_OrgVouch';  
+$currentPage ='Org_Voucher';  
 include('header.php');  
 include('../config/connection.php');     
 
@@ -23,14 +22,12 @@ include('../config/connection.php');
     float: left;
     width: 33.33%;
   
-}
- 
+} 
 .headerrow:after {
     content: "";
     display: table;
     clear: both;
-}
-
+} 
 * { margin: 0; padding: 0; } 
 #page-wrap { width: 800px; margin: 0 auto; } 
 table { border-collapse: collapse; }
@@ -102,8 +99,7 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                                 <li> <a href="#">Student Management</a> </li>
                                 <li> <a class="current" href="studprofile.php">Student Profile</a> </li>
                             </ul>
-                        </div> -->
-
+                        </div> --> 
             </div>
             <div class="row ">
                 <div class="col-md-12">
@@ -116,8 +112,7 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                             <div class="clearfix">
                                 <div class="btn-group">
                                     <button data-toggle="modal" href="#Add" class="btn btn-success"> <i class="fa fa-plus"></i> Add</button>
-                                    <button id="btnrequest" data-toggle="modal" id="openAddmodal" href="#VoucherRequests" class="btn btn-info" style="margin-left:5px">Request <i class="fa fa-folder-open"></i>
-                                                </button>
+                                 
                                 </div>
                                 
                                 <div class="btn-group pull-right">
@@ -203,9 +198,13 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
 <table id="meta">
 <tr>
     <td class="meta-head">Organization:</td>
-    <td class="AddOrgCode"><select id="Addorgcode" class="form-control m-bot10"> <option disabled selected value="default" >Please choose an Organization</option><?php  while($code=mysqli_fetch_assoc($view_availOrgVouch)){?>
+    <td class="AddOrgCode"><?php echo $user_check;?>
+<!--
+        <select id="Addorgcode" class="form-control m-bot10"> <option disabled selected value="default" >Please choose an Organization</option><?php  while($code=mysqli_fetch_assoc($view_availOrgVouch)){?>
         <option value="<?php echo $code['OrgForCompliance_ORG_CODE']?>"><?php echo $code["OrgAppProfile_NAME"]?></option>
-    <?php }?><select></td>
+    <?php }?><select>
+-->
+        </td>
 </tr>                   <?php  
                         $VouchNo_query = mysqli_query($con," (SELECT CONCAT('Vouch #', RIGHT(((SELECT COUNT(*) + 1 from t_org_voucher where OrgVoucher_DISPLAY_STAT ='active' )+100000),5) ) AS Vouch) ");
                         $VouchNo = mysqli_fetch_array($VouchNo_query);
@@ -280,31 +279,7 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
             
             $(this).closest("tr").remove();
         });
-        $("#btnrequest").on("click", function() {
-
-        // var orgcode = $(this).attr("orgcode")
-        //     ,vouch = $(this).attr("vouch")
-        //     ,amo = $(this).closest("tr").find("td[id='amo']").text()
-        //     ,byyy = $(this).closest("tr").find("td[id='byyy']").text()
-        //     ,datee = $(this).closest("tr").find("td[id='datee']").text();
-        
-        $.ajax({
-            url: "OrganizationVoucherRequestModal.php",
-            cache: false,
-            async: false,
-            type:"GET"
-            ,data:{
-                // orgcode:orgcode
-                // ,vouch:vouch
-                // ,amo:amo
-                // ,datee:datee
-                // ,byyy:byyy
-            },
-            success: function(result) {
-                $(".content-voucherRequest").html(result);
-            }
-        });
-        });
+    
         $("#TableStudProfile").on("click", "#btnStudProfile", function() {
 
             var orgcode = $(this).attr("orgcode")
@@ -506,30 +481,24 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                 $("#balanse").attr('vall',((($("#balanse").attr("amount")-((sum).toFixed(3)))).toFixed(3)));
                 $("#balanse").html("₱ "+(($("#balanse").attr("amount")-((sum).toFixed(3)))).toFixed(3));
             });
-        });
-        $('#Addorgcode').change(function (e) {
-                var _drporg = document.getElementById('Addorgcode');
-                var drporgname = _drporg.options[_drporg.selectedIndex].text;
-                var drporgvalue = _drporg.options[_drporg.selectedIndex].value;
-                $.ajax({
-                    type: "GET",
-                    url: 'Organization/Remittance/GetOrgMoney.php',
-                    dataType: 'json',
-                    data: {
-                        _id: drporgvalue
-                    },
-                    success: function (data) {
-                        $("#balanse").attr("amount",parseFloat((data.amount).replace(/,/g, '')));
-                        $('#balanse').html("₱ "+(data.amount));
-                    },
-                    error: function (response) {
-                        swal("Error encountered while adding data", "Please try again", "error");
-                    }
-
-                });
-
-
-            }); 
+        }); 
+                
+          $.ajax({
+                            type: "GET"
+                            , url: 'Remittance/GetOrgMoney.php'
+                            , dataType: 'json'
+                            , data: {
+                                _id: "<?php echo $user_check; ?>"
+                            }
+                            , success: function (data) {
+                                $("#balanse").attr("amount", parseFloat((data.amount).replace(/,/g, '')));
+                                $('#balanse').html("₱ "+data.amount);
+                            }
+                            , error: function (response) {
+                                swal("Error encountered while adding data", "Please try again", "error");
+                            }
+                        }); 
+ 
     </script>
 </body> 
 </html>

@@ -8,7 +8,7 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li> <a <?php if( $currentPage==='Org_OrgMem' ) {echo 'class="active"';} ?> href="Remittance.php">
+                <li> <a <?php if( $currentPage==='Org_OrgMem' ) {echo 'class="active"';} ?> href="OrganizationMembers.php"  >
                         <i class="fa fa-group"></i>
                         <span>Officers and Members</span>
                     </a>
@@ -18,7 +18,7 @@
                         <span>Remittance</span>
                     </a>
                 </li>  
-                <li> <a <?php if( $currentPage==='Org_Voucher' ) {echo 'class="active"';} ?> href="RemittanceRequest.php">
+                <li> <a <?php if( $currentPage==='Org_Voucher' ) {echo 'class="active"';} ?> href="OrganizationVoucher.php">
                         <i class="fa fa-money"></i>
                         <span>Voucher</span>
                     </a>

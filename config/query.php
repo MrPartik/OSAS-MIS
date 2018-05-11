@@ -6,9 +6,26 @@ $view_studSanctionComputation="";
 $view_studSanctionDetails ="";
 $view_studFinanCond ="";
 $view_studLossCond="";
+$view_orgVoucherCustomQuery ="";
+
+
+
                 function dateNow()
                 {
                     return  date('D M d, Y h:i A');
+                }
+                function view_orgVoucherCustom($OrgCode) 
+                {
+                    include ('connection.php');    
+                    global $view_studLossCond;
+                    $view_orgVoucherCustomQuery = mysqli_query($con,"SELECT * FROM t_org_voucher v
+                    INNER JOIN t_org_for_compliance OC on v.OrgVoucher_ORG_CODE = oc.OrgForCompliance_ORG_CODE
+                    INNER JOIN r_org_applicant_profile OP on OP.OrgAppProfile_APPL_CODE = OC.OrgForCompliance_OrgApplProfile_APPL_CODE
+                    INNER JOIN active_academic_year AY on AY.ActiveAcadYear_Batch_YEAR = OC.OrgForCompliance_BATCH_YEAR
+                    AND  ay.ActiveAcadYear_IS_ACTIVE = 1 AND ay.ActiveAcadYear_ID = (SELECT MAX(ay.ActiveAcadYear_ID))");
+                    
+                    
+                    
                 }
                 function viewStud_LossCond($ID,$StudNo) 
                 {
