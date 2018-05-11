@@ -191,6 +191,12 @@
         </div>
     </div>
     <script>  
+       var  date = new Date();
+     dd = ('0' + date.getDate()).slice(-2),
+                mm = ('0' + (date.getMonth()+1)).slice(-2),
+                y = date.getFullYear(),
+                someFormattedDate = y + '-' + mm + '-' +dd ; 
+               
     $("tbody").find("tr").find("input[id='tobeDone']").each(function(){
         var  date = new Date()
      dd = ('0' + date.getDate()).slice(-2),
@@ -229,16 +235,13 @@
                 $(this).closest("tr").addClass("updatingRow");
             }
  
-        var  date = new Date()
-     dd = ('0' + date.getDate()).slice(-2),
-                mm = ('0' + (date.getMonth()+1)).slice(-2),
-                y = date.getFullYear(),
-                someFormattedDate = y + '-' + mm + '-' +dd ; 
-               
+     
         if($(this).val()==someFormattedDate)
         {
             $(this).css("color","red");
-        } 
+        } else{
+            $(this).css("color","black");
+        }
     
             
         });
@@ -321,8 +324,8 @@
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: '#9DD656',
-                        confirmButtonText: 'Yes, Add it!',
-                        cancelButtonText: "No, cancel it!",
+                        confirmButtonText: 'Yes!',
+                        cancelButtonText: "No!",
                         closeOnConfirm: false,
                         closeOnCancel: false
                     }, function(isConfirm) {
@@ -384,7 +387,7 @@
                         showCancelButton: true,
                         confirmButtonColor: '#9DD656',
                         confirmButtonText: 'Yes, Delete  it!',
-                        cancelButtonText: "No, cancel it!",
+                        cancelButtonText: "No!",
                         closeOnConfirm: false,
                         closeOnCancel: false
                     }, function(isConfirm) {
@@ -432,7 +435,7 @@
                         showCancelButton: true,
                         confirmButtonColor: '#9DD656',
                         confirmButtonText: 'Yes, Update  it!',
-                        cancelButtonText: "No, cancel it!",
+                        cancelButtonText: "No!",
                         closeOnConfirm: false,
                         closeOnCancel: false
                     }, function(isConfirm) {

@@ -11953,7 +11953,7 @@ td.details table tr td,
 }
 
 .editable-table .dataTables_filter {
-    width: 80%;
+    /* width: 100%; */
 }
 
 tr.odd.gradeX td.sorting_1,

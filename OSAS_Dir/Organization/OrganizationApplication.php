@@ -746,7 +746,7 @@ $user_check = $_SESSION['logged_user']['username'];
                     showCancelButton: true,
                     confirmButtonColor: '#9DD656',
                     confirmButtonText: 'Yes, Save it!',
-                    cancelButtonText: "No, cancel it!",
+                    cancelButtonText: "No!",
                     closeOnConfirm: false,
                     closeOnCancel: false
                 }, function(isConfirm) {

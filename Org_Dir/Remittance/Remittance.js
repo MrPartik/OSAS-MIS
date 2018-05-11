@@ -93,7 +93,7 @@ var EditableTable = function () {
                         showCancelButton: true,
                         confirmButtonColor: '#DD6B55',
                         confirmButtonText: 'Yes, do it!',
-                        cancelButtonText: "No, cancel it!",
+                        cancelButtonText: "No!",
                         closeOnConfirm: false,
                         closeOnCancel: false
                     },
@@ -156,7 +156,7 @@ var EditableTable = function () {
                         showCancelButton: true,
                         confirmButtonColor: '#DD6B55',
                         confirmButtonText: 'Yes, do it!',
-                        cancelButtonText: "No, cancel it!",
+                        cancelButtonText: "No!",
                         closeOnConfirm: false,
                         closeOnCancel: false
                     },
@@ -206,8 +206,8 @@ var EditableTable = function () {
                                     type: "warning",
                                     showCancelButton: true,
                                     confirmButtonColor: '#DD6B55',
-                                    confirmButtonText: 'Yes, Add it!',
-                                    cancelButtonText: "No, cancel it!",
+                                    confirmButtonText: 'Yes!',
+                                    cancelButtonText: "No!",
                                     closeOnConfirm: false,
                                     closeOnCancel: false
                                 }, function (isConfirm) {
@@ -295,8 +295,8 @@ var EditableTable = function () {
                                     type: "warning",
                                     showCancelButton: true,
                                     confirmButtonColor: '#DD6B55',
-                                    confirmButtonText: 'Yes, Add it!',
-                                    cancelButtonText: "No, cancel it!",
+                                    confirmButtonText: 'Yes!',
+                                    cancelButtonText: "No!",
                                     closeOnConfirm: false,
                                     closeOnCancel: false
                                 }, function (isConfirm) {

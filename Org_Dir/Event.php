@@ -138,7 +138,7 @@ if($_SESSION['logged_user']['role']=="Organization")
                                     </button>
                                             </div>
                                             <div class="btn-group pull-right">
-                                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
+                                                <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
                                     </button>
                                                 <ul class="dropdown-menu pull-right">
                                                     <li><a href="#">Print</a></li>

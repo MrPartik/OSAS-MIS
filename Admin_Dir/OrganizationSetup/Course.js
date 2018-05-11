@@ -138,7 +138,7 @@ var EditableTable = function () {
                         showCancelButton: true,
                         confirmButtonColor: '#DD6B55',
                         confirmButtonText: 'Yes, do it!',
-                        cancelButtonText: "No, cancel it!",
+                        cancelButtonText: "No!",
                         closeOnConfirm: false,
                         closeOnCancel: false
                     },
@@ -190,7 +190,7 @@ var EditableTable = function () {
                         showCancelButton: true,
                         confirmButtonColor: '#DD6B55',
                         confirmButtonText: 'Yes, do it!',
-                        cancelButtonText: "No, cancel it!",
+                        cancelButtonText: "No!",
                         closeOnConfirm: false,
                         closeOnCancel: false
                     },
@@ -249,7 +249,7 @@ var EditableTable = function () {
                         showCancelButton: true,
                         confirmButtonColor: '#DD6B55',
                         confirmButtonText: 'Yes, do it!',
-                        cancelButtonText: "No, cancel it!",
+                        cancelButtonText: "No!",
                         closeOnConfirm: false,
                         closeOnCancel: false
                     },

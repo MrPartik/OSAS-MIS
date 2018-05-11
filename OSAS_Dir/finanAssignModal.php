@@ -205,8 +205,8 @@
                             , type: "warning"
                             , showCancelButton: true
                             , confirmButtonColor: '#9DD656'
-                            , confirmButtonText: 'Yes, Add it!'
-                            , cancelButtonText: "No, cancel it!"
+                            , confirmButtonText: 'Yes!'
+                            , cancelButtonText: "No!"
                             , closeOnConfirm: false
                             , closeOnCancel: false
                         }, function (isConfirm) {
@@ -258,7 +258,7 @@
                             , showCancelButton: true
                             , confirmButtonColor: '#9DD656'
                             , confirmButtonText: 'Yes, delete  it!'
-                            , cancelButtonText: "No, cancel it!"
+                            , cancelButtonText: "No!"
                             , closeOnConfirm: false
                             , closeOnCancel: false
                         }, function (isConfirm) {
@@ -304,7 +304,7 @@
                             , showCancelButton: true
                             , confirmButtonColor: '#9DD656'
                             , confirmButtonText: 'Yes, update it!'
-                            , cancelButtonText: "No, cancel it!"
+                            , cancelButtonText: "No!"
                             , closeOnConfirm: false
                             , closeOnCancel: false
                         }, function (isConfirm) {

@@ -561,7 +561,7 @@ include('../config/connection.php');
                         , showCancelButton: true
                         , confirmButtonColor: '#9DD656'
                         , confirmButtonText: 'Yes, Save it!'
-                        , cancelButtonText: "No, cancel it!"
+                        , cancelButtonText: "No!"
                         , closeOnConfirm: false
                         , closeOnCancel: false
                     }, function (isConfirm) {

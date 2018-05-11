@@ -83,7 +83,7 @@
                 , showCancelButton: true
                 , confirmButtonColor: '#9DD656'
                 , confirmButtonText: 'Yes, save it!'
-                , cancelButtonText: "No, cancel it!"
+                , cancelButtonText: "No!"
                 , closeOnConfirm: false
                 , closeOnCancel: false 
                 , showLoaderOnConfirm: true

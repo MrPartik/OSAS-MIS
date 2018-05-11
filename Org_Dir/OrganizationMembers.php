@@ -40,25 +40,22 @@ include('../config/connection.php');
                          </span> </header>
                             <div class="panel-body">
                                 <div class="clearfix">
-                                    <div class="btn-group">
-                                        <div class="col-lg-12">
+                                    <div class="btn-group"> 
                                             <button id="editable-sample_new" data-toggle="modal" href="#Add" class="btn btn-success">
                                         Add <i class="fa fa-plus"></i>
                                         </button>
-                                            <button class='btn btn-primary ' id="btnsync">Sync <i class='fa fa-refresh' ></i></button>
+                                            <!-- <button class='btn btn-primary ' id="btnssync">Sync <i class='fa fa-refresh' ></i></button> -->
 
                                             <class id="getappcode">
                                                 <?php echo $referenced_user;?>
                                             </class>
-
-                                        </div>
+ 
                                     </div>
                                     <div class="btn-group pull-right">
-                                        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i> </button>
+                                        <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i> </button>
                                         <ul class="dropdown-menu pull-right">
                                             <li><a href="#">Print</a></li>
-                                            <li><a href="#">Save as PDF</a></li>
-                                            <li><a href="#">Export to Excel</a></li>
+                                            <li><a href="#" id="btnsync">Synchronize Student Record.</a></li> 
                                         </ul>
                                     </div>
                                 </div>
@@ -129,6 +126,7 @@ include('../config/connection.php');
                                         </div>
                                     </form>
                                 </div>
+                                
                             </div>
                         </section>
                     </div>

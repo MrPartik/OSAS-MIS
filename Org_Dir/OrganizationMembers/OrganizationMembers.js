@@ -84,16 +84,15 @@ var EditableTable = function () {
 
 
             $('#btnsync').click(function (e) {
-                e.preventDefault();
-
+                e.preventDefault(); 
                 swal({
                         title: "Are you sure?",
                         text: "You want to sync the data of students into the table",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: '#DD6B55',
-                        confirmButtonText: 'Yes, do it!',
-                        cancelButtonText: "No, cancel it!",
+                        confirmButtonText: 'Yes!',
+                        cancelButtonText: "No!",
                         closeOnConfirm: false,
                         closeOnCancel: false
                     },
@@ -121,8 +120,7 @@ var EditableTable = function () {
 
                         } else {
 
-                            swal("Cancelled", "The transaction is cancelled", "error");
-                            $("#editable-sample_new").click();
+                            swal("Cancelled", "The transaction is cancelled", "error"); 
                         }
 
                     });
@@ -153,8 +151,8 @@ var EditableTable = function () {
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: '#DD6B55',
-                        confirmButtonText: 'Yes, do it!',
-                        cancelButtonText: "No, cancel it!",
+                        confirmButtonText: 'Yes!',
+                        cancelButtonText: "No!",
                         closeOnConfirm: false,
                         closeOnCancel: false
                     },
@@ -202,8 +200,8 @@ var EditableTable = function () {
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: '#DD6B55',
-                        confirmButtonText: 'Yes, Add it!',
-                        cancelButtonText: "No, cancel it!",
+                        confirmButtonText: 'Yes!',
+                        cancelButtonText: "No!",
                         closeOnConfirm: false,
                         closeOnCancel: false
                     }, function (isConfirm) {
@@ -293,8 +291,8 @@ var EditableTable = function () {
             //                    type: "warning",
             //                    showCancelButton: true,
             //                    confirmButtonColor: '#DD6B55',
-            //                    confirmButtonText: 'Yes, Add it!',
-            //                    cancelButtonText: "No, cancel it!",
+            //                    confirmButtonText: 'Yes!',
+            //                    cancelButtonText: "No!",
             //                    closeOnConfirm: false,
             //                    closeOnCancel: false
             //                }, function (isConfirm) {
@@ -343,7 +341,7 @@ var EditableTable = function () {
             //
             //            });
 
-            $('#updsubmit-data ').on('click', function (e) {
+            $('#updsubmit-data').on('click', function (e) {
                 var _upddrppos = document.getElementById("upddrppos");
                 var upddrppostext = _upddrppos.options[_upddrppos.selectedIndex].text;
                 var upddrpposval = _upddrppos.options[_upddrppos.selectedIndex].value;
@@ -355,8 +353,8 @@ var EditableTable = function () {
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: '#DD6B55',
-                        confirmButtonText: 'Yes, do it!',
-                        cancelButtonText: "No, cancel it!",
+                        confirmButtonText: 'Yes!',
+                        cancelButtonText: "No!",
                         closeOnConfirm: false,
                         closeOnCancel: false
                     },
@@ -383,9 +381,7 @@ var EditableTable = function () {
                                                 closeOnConfirm: false
                                             },
                                             function (isConfirm) {
-                                                if (isConfirm) {
-
-
+                                                if (isConfirm) { 
                                                     window.location.reload();
 
                                                 }

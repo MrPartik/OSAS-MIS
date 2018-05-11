@@ -429,8 +429,8 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: '#DD6B55',
-                    confirmButtonText: 'Yes, Add it!',
-                    cancelButtonText: "No, cancel it!",
+                    confirmButtonText: 'Yes!',
+                    cancelButtonText: "No!",
                     closeOnConfirm: false,
                     closeOnCancel: false
                 }, function(isConfirm) {
@@ -460,7 +460,7 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                     } else swal("Cancelled", "The transaction is cancelled", "error");
                 });
             });
-            //            $('#updsubmit-data').click(function() { // var compcode = document.getElementById('orgcode').innerText; // var accstat = ''; // var chkstat = ''; // var chkcode = ''; // var stat = 0; // swal({ // title: "Are you sure?", // text: "This data will be saved and used for further transaction", // type: "warning", // showCancelButton: true, // confirmButtonColor: '#DD6B55', // confirmButtonText: 'Yes, Add it!', // cancelButtonText: "No, cancel it!", // closeOnConfirm: false, // closeOnCancel: false // }, function(isConfirm) { // if (isConfirm) {} else swal("Cancelled", "The transaction is cancelled", "error"); // }); // });
+            //            $('#updsubmit-data').click(function() { // var compcode = document.getElementById('orgcode').innerText; // var accstat = ''; // var chkstat = ''; // var chkcode = ''; // var stat = 0; // swal({ // title: "Are you sure?", // text: "This data will be saved and used for further transaction", // type: "warning", // showCancelButton: true, // confirmButtonColor: '#DD6B55', // confirmButtonText: 'Yes!', // cancelButtonText: "No!", // closeOnConfirm: false, // closeOnCancel: false // }, function(isConfirm) { // if (isConfirm) {} else swal("Cancelled", "The transaction is cancelled", "error"); // }); // });
         });
         jQuery(document).ready(function() {
             initproftable.init();
