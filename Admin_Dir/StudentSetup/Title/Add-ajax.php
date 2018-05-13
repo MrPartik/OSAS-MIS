@@ -7,7 +7,7 @@
 		$name = $_POST['_name'];
 		$desc = $_POST['_desc'];
 		
-		$view_query = mysqli_query($con,"select CONCAT('TIT',RIGHT(100000+count(FinAssiTitle_ID)+1,5)) CODE from `r_financial_assistance_title`");
+		$view_query = mysqli_query($con,"select CONCAT('Finan',RIGHT(100000+count(FinAssiTitle_ID)+1,5)) CODE from `r_financial_assistance_title`");
 		while($row = mysqli_fetch_assoc($view_query))
 		{
 			$code = $row["CODE"];

@@ -1,6 +1,6 @@
 <?php
 	
-	include('../../connection.php');
+	include('../../../config/connection.php'); 
 
  
     $id = $_GET['_id'];

@@ -26,7 +26,7 @@
                                     </thead>
                                     <tbody>
 
-                                        <?php  while($vouch=mysqli_fetch_array($view_orgVoucher)) { ?>
+                                        <?php  view_orgVoucherReq(); while($vouch=mysqli_fetch_array($view_orgVoucherReqQuery)) { ?>
                                         <tr><td>
                                                 <center><?php echo $vouch['OrgVoucher_CASH_VOUCHER_NO'];?></center>
                                             </td>
@@ -48,8 +48,8 @@
                                             </td> 
                                             <td>
                                                 <center>
-                                                    <button id="btnStudProfile" orgcode="<?php echo $vouch['OrgForCompliance_ORG_CODE'];?>" vouch="<?php echo $vouch['OrgVoucher_CASH_VOUCHER_NO'];?>"data-toggle="modal" href="#Voucher" class="btn btn-success"> <i class="fa  fa-thumbs-o-up"></i> </button>
-                                                    <button id="btnStudProfile" orgcode="<?php echo $vouch['OrgForCompliance_ORG_CODE'];?>" vouch="<?php echo $vouch['OrgVoucher_CASH_VOUCHER_NO'];?>"data-toggle="modal" href="#Voucher" class="btn btn-danger"> <i class="fa  fa-thumbs-o-down"></i> </button>
+                                                    <button id="btnApprove" orgcode="<?php echo $vouch['OrgForCompliance_ORG_CODE'];?>" vouch="<?php echo $vouch['OrgVoucher_CASH_VOUCHER_NO'];?>"data-toggle="modal" href="#Voucher" class="btn btn-success"> <i class="fa  fa-thumbs-o-up"></i> </button>
+                                                    <button id="btnReject" orgcode="<?php echo $vouch['OrgForCompliance_ORG_CODE'];?>" vouch="<?php echo $vouch['OrgVoucher_CASH_VOUCHER_NO'];?>"data-toggle="modal" href="#Voucher" class="btn btn-danger"> <i class="fa  fa-thumbs-o-down"></i> </button>
                                                 </center>
                                             </td>
                                         </tr>
@@ -74,5 +74,7 @@
                
         </div>
     </div>
+    
+    <script src="Organization/OrganizationVoucher.js"></script>
 <script>
         var table = $('#dynamic-table-modal').DataTable({iDisplayLength:3}); </script>

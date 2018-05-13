@@ -37,7 +37,9 @@
                 cursorcolor: "#C80932",
                             cursorborder: "0px solid #fff",
                             cursorborderradius: "10px",
-                            cursorwidth: "5px"
+                            cursorwidth: "5px",
+                            mousescrollstep:70
+                              
             });
             $(".modal").niceScroll({
                 cursorcolor: "#C80932",

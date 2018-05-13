@@ -1,6 +1,6 @@
 <?php
 	
-	include('../../connection.php');
+	include('../../../../config/connection.php'); 
 	if(isset($_POST['_name']) && isset($_POST['_desc']) && isset($_POST['_code']) )
 	{
 		$name = $_POST['_name'];

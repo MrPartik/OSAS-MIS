@@ -34,7 +34,7 @@
         INNER JOIN r_org_applicant_profile AS TB3 ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
         INNER JOIN r_batch_details AS TB4 ON Batch_YEAR = OrgForCompliance_BATCH_YEAR
         INNER JOIN t_org_voucher_items AS TB5 ON OrgVouchItems_VOUCHER_NO = OrgVoucher_CASH_VOUCHER_NO
-        WHERE Batch_YEAR = '$ser' AND OrgVoucher_DISPLAY_STAT = 'Active' AND OrgForCompliance_DISPAY_STAT = 'Active' AND OrgAppProfile_DISPLAY_STAT = 'Active' AND Batch_DISPLAY_STAT = 'Active'
+        WHERE Batch_YEAR = '$ser' AND OrgVoucher_DISPLAY_STAT = 'Active' AND OrgAppProfile_DISPLAY_STAT = 'Active' AND Batch_DISPLAY_STAT = 'Active'
         GROUP BY OrgForCompliance_ORG_CODE");
         while($row2 = mysqli_fetch_assoc($view_query2))
         {

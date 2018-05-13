@@ -69,7 +69,7 @@ var EditableTable = function () {
                 },
                 "aoColumnDefs": [{
                         'bSortable': false,
-                        'aTargets': [0]
+                        'aTargets': [4]
                     }
                 ]
             });
@@ -333,7 +333,7 @@ var initproftable = function () {
                 },
                 "aoColumnDefs": [{
                         'bSortable': false,
-                        'aTargets': [0]
+                        'aTargets': [4]
                     }
                 ]
             });

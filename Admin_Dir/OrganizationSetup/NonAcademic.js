@@ -73,7 +73,7 @@ var EditableTable = function () {
                 },
                 "aoColumnDefs": [{
                         'bSortable': false,
-                        'aTargets': [0]
+                        'aTargets': [3]
                     }
                 ]
             });

@@ -1,6 +1,6 @@
 <?php
 	
-	include('../../connection.php');
+	include('../../../config/connection.php'); 
 	if(isset($_POST['_code']))
 	{
 		$code = $_POST['_code'];
