@@ -613,11 +613,9 @@
 
         
         $('#VoucherApprovalBody').on('click','a.VouchRejectModal',function(){
-            
-            var $voucherNo = $('#lbleventcode').attr('item');
             swal({
                 title: "Are you sure?",
-                text: $voucherNo+" will be rejected, please make sure that you are aware on what you doing ;)",
+                text: "Event will be rejected after you do this",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: '#DD6B55',
@@ -629,12 +627,12 @@
                 if (isConfirm) {
                     $.ajax({
                         type: "POST",
-                        url: '../config/NotificationVoucherRejected.php',
-                        data:{ item : $voucherNo},
+                        url: '../config/NotificationEventRejected.php',
+                        data:{ item : $('#lbleventcode').attr('item')},
                         success: function (data) {
                             swal({
-                                title: $voucherNo+" Rejected!",
-                                text: "The command is successfully executed!",
+                                title: "Event Rejected!",
+                                text: "Event request is successfully rejected!",
                                 type: "success",
                                 confirmButtonColor: '#88A755',
                                 confirmButtonText: 'Okay',
@@ -660,10 +658,9 @@
             
         });
         $('#VoucherApprovalBody').on('click','a.VouchApprovedModal',function(){
-            var $voucherNo = $('#lbleventcode').attr('item');
             swal({
                 title: "Are you sure?",
-                text: $voucherNo+" will be approved, please make sure that you are aware on what you doing ;)",
+                text: "Event will be approved after you do this",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: '#DD6B55',
@@ -675,12 +672,12 @@
                 if (isConfirm) {
                     $.ajax({
                         type: "POST",
-                        url: '../config/NotificationVoucherApproved.php',
-                        data:{ item : $voucherNo},
+                        url: '../config/NotificationEventApproved.php',
+                        data:{ item : $('#lbleventcode').attr('item')},
                         success: function (data) {
                             swal({
-                                title: $voucherNo+" Approved!",
-                                text: "The data is successfully added!",
+                                title: "Event Approved!",
+                                text: "Event request is successfully approved!",
                                 type: "success",
                                 confirmButtonColor: '#88A755',
                                 confirmButtonText: 'Okay',

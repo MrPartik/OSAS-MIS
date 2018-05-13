@@ -78,8 +78,7 @@ cross join
             'rem'  => $rem,
             'dat' => $dat,
             'id' => $id,
-            'orgCode' =>$OrgCode,
-            'ASD' => $currBalance
+            'orgCode' =>$OrgCode
               );
       array_push(  $container_arr, (array)$arr );
         

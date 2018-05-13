@@ -210,9 +210,7 @@ $view_course = mysqli_query($con,"select * from r_courses where course_display_s
 
 $view_orgVoucher = mysqli_query($con,"SELECT * FROM t_org_voucher v
 INNER JOIN t_org_for_compliance OC on v.OrgVoucher_ORG_CODE = oc.OrgForCompliance_ORG_CODE
-INNER JOIN r_org_applicant_profile OP on OP.OrgAppProfile_APPL_CODE = OC.OrgForCompliance_OrgApplProfile_APPL_CODE
-INNER JOIN active_academic_year AY on AY.ActiveAcadYear_Batch_YEAR = OC.OrgForCompliance_BATCH_YEAR
-AND ay.ActiveAcadYear_IS_ACTIVE = 1 AND ay.ActiveAcadYear_ID = (SELECT MAX(ay.ActiveAcadYear_ID))");
+INNER JOIN r_org_applicant_profile OP on OP.OrgAppProfile_APPL_CODE = OC.OrgForCompliance_OrgApplProfile_APPL_CODE WHERE OrgVoucher_STATUS='Approved'");
 
 $view_availOrgVouch =mysqli_query($con,"SELECT * FROM t_org_for_compliance OC
 INNER JOIN r_org_applicant_profile OP on OP.OrgAppProfile_APPL_CODE = OC.OrgForCompliance_OrgApplProfile_APPL_CODE
@@ -230,10 +228,7 @@ $financial_ass_query = mysqli_fetch_assoc(mysqli_query($con,"SELECT COUNT(a.AssS
 $count_finan_ass = $financial_ass_query["countss"];
 
 $count_notif_query = mysqli_fetch_assoc(mysqli_query($con,"SELECT  count(Notification_RECEIVER) as countt FROM `r_notification` 
-WHERE Notification_RECEIVER = (SELECT OSASHead_CODE FROM `r_osas_head` WHERE OSASHead_DISPLAY_STAT = 'Active')
-AND 
-(SELECT OrgRemittance_APPROVED_STATUS FROM T_ORG_REMITTANCE WHERE OrgRemittance_NUMBER = Notification_ITEM) = 'Pending' 
-OR (SELECT OrgEvent_STATUS FROM r_org_event_management WHERE OrgEvent_Code = Notification_ITEM) = 'Pending'
+WHERE Notification_RECEIVER = (SELECT OSASHead_CODE FROM `r_osas_head` WHERE OSASHead_DISPLAY_STAT = 'Active') 
 ORDER BY Notification_DATE_ADDED DESC"))or die("0");
 $count_notif = $count_notif_query["countt"];
 

@@ -3,6 +3,7 @@
     include('../../config/connection.php');     
     if(isset($_POST['_name']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
         session_start();
+        
         $orgcode = $_SESSION['logged_user']['username'];
         $name = $_POST['_name'];
 		$desc = $_POST['_desc'];

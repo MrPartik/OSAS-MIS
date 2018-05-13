@@ -9,9 +9,7 @@
         if($role == 'OSAS HEAD'){
             $view_query = mysqli_query($con,"SELECT *,DATE_FORMAT(Notification_DATE_SEEN, '%M %d, %Y %l:%i %p ') AS DATESEEN,DATE_FORMAT(Notification_DATE_CLICKED, '%M %d, %Y %l:%i %p ') AS DATECLICK, IF(LEFT(Notification_ITEM,5) = 'Remit',(SELECT OrgRemittance_ORG_CODE FROM t_org_remittance WHERE OrgRemittance_NUMBER = Notification_ITEM ),'') AS SENDBY FROM `r_notification` 
             WHERE Notification_RECEIVER = (SELECT OSASHead_CODE FROM `r_osas_head` WHERE OSASHead_DISPLAY_STAT = 'Active')
-            AND 
-            (SELECT OrgRemittance_APPROVED_STATUS FROM T_ORG_REMITTANCE WHERE OrgRemittance_NUMBER = Notification_ITEM) = 'Pending' 
-            OR (SELECT OrgEvent_STATUS FROM r_org_event_management WHERE OrgEvent_Code = Notification_ITEM) = 'Pending'
+             
             ORDER BY Notification_DATE_ADDED DESC ");
             $container = '';
             while($row = mysqli_fetch_assoc($view_query)){
@@ -45,6 +43,23 @@
 
                     } 
                 }
+                else if(substr($row['Notification_ITEM'],0,5) == 'Vouch'){
+                    $vouch = $row['Notification_ITEM'];
+                    $view_query3 = mysqli_query($con,"SELECT distinct OrgVoucher_ORG_CODE,OrgAppProfile_NAME FROM `r_notification` N
+                    INNER JOIN t_org_voucher OV ON N.Notification_Item = OV.OrgVoucher_CASH_VOUCHER_NO
+                    INNER JOIN t_org_for_compliance AS R ON ov.OrgVoucher_ORG_CODE = R.OrgForCompliance_ORG_CODE
+                    INNER JOIN r_org_applicant_profile AS I ON I.OrgAppProfile_APPL_CODE = R.OrgForCompliance_OrgApplProfile_APPL_CODE
+                    WHERE ov.OrgVoucher_CASH_VOUCHER_NO = '$vouch' ");
+                    
+                        
+                    while($row2 = mysqli_fetch_assoc($view_query3)){
+                        $container = $container. '<span class="alert-icon"><i class="fa fa-money"></i></span>
+                                        <div class="noti-info">
+                        <a class="notif" data-toggle="modal" href="#VoucherApproval" href="javascript:;" item="'. $vouch.'"> '. $vouch .' - '.$row2['OrgVoucher_ORG_CODE'].'</a><br/>
+                        <label class="" style="font-size:10px"> '. $row2['OrgAppProfile_NAME'] .'</label>' ;
+
+                    } 
+                }
                 else{
                     $container = $container. '<span class="alert-icon"><i class="fa fa-envelope-o"></i></span>
                                                 <div class="noti-info">
@@ -70,6 +85,9 @@
             echo $container ;
         
         }
+
+
+
         if($role == 'Organization'){
             $query = mysqli_prepare($con, "SELECT *,DATE_FORMAT(Notification_DATE_SEEN, '%M %d, %Y %l:%i %p ') AS DATESEEN,DATE_FORMAT(Notification_DATE_CLICKED, '%M %d, %Y %l:%i %p ') AS DATECLICK, IF(LEFT(Notification_ITEM,5) = 'Remit',(SELECT OrgRemittance_ORG_CODE FROM t_org_remittance WHERE OrgRemittance_NUMBER = Notification_ITEM ),'') AS SENDBY FROM `r_notification` WHERE Notification_RECEIVER = ? ORDER BY Notification_DATE_ADDED DESC");
             mysqli_stmt_bind_param($query, 's', $username);
@@ -106,6 +124,22 @@
 
                     
 
+                }        else if(substr($row['Notification_ITEM'],0,5) == 'Vouch'){
+                    $vouch = $row['Notification_ITEM'];
+                    $view_query3 = mysqli_query($con,"SELECT distinct OrgVoucher_ORG_CODE,OrgAppProfile_NAME FROM `r_notification` N
+                    INNER JOIN t_org_voucher OV ON N.Notification_Item = OV.OrgVoucher_CASH_VOUCHER_NO
+                    INNER JOIN t_org_for_compliance AS R ON ov.OrgVoucher_ORG_CODE = R.OrgForCompliance_ORG_CODE
+                    INNER JOIN r_org_applicant_profile AS I ON I.OrgAppProfile_APPL_CODE = R.OrgForCompliance_OrgApplProfile_APPL_CODE
+                    WHERE ov.OrgVoucher_CASH_VOUCHER_NO = '$vouch' ");
+                    
+                        
+                    while($row2 = mysqli_fetch_assoc($view_query3)){
+                        $container = $container. '<span class="alert-icon"><i class="fa fa-money"></i></span>
+                                        <div class="noti-info">
+                        <a class="notif" data-toggle="modal" href="#VoucherApproval" href="javascript:;" item="'. $vouch.'"> '. $vouch .' - '.$row2['OrgVoucher_ORG_CODE'].'</a><br/>
+                        <label class="" style="font-size:10px"> '. $row2['OrgAppProfile_NAME'] .'</label>' ;
+
+                    } 
                 }
                 else{
                     $container = $container. '<span class="alert-icon"><i class="fa fa-envelope-o"></i></span>

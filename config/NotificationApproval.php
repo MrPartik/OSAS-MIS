@@ -18,6 +18,21 @@
         </div>
     </div>
 </div>
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="VoucherApproval" class="modal fade">
+    <div class="modal-dialog" style="width:50%">
+        <div class="modal-content">
+            <div class="col-md-12">
+                <!--widget start-->
+                <aside class="profile-nav alt">
+                    <section class="panel" id="VoucherApprovalBody">
+                    </section>
+                </aside>
+                <!--widget end-->
+            </div>
+        </div>
+    </div>
+</div>
+
 <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="EventApproval" class="modal fade">
     <div class="modal-dialog" style="width:50%">
         <div class="modal-content">

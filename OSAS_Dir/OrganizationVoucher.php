@@ -131,6 +131,7 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                                             <th>Voucher No.</th>
                                             <th>Organization Code</th>
                                             <th>Amount</th> 
+                                            <th>Vouched by</th>
                                             <th>Checked by</th>
                                             <th>Date Issue</th> 
                                             <th>
@@ -155,6 +156,9 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                                                 echo "₱ ".$amo['amo'];?>
                                             </td>
                                             <td id="byyy">
+                                                <?php echo $vouch['OrgVoucher_VOUCHED_BY']?>
+                                            </td>
+                                            <td >
                                                 <?php echo $vouch['OrgVoucher_CHECKED_BY']?>
                                             </td>
                                             <td id="datee">
@@ -173,6 +177,7 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                                             <th>Voucher No.</th>
                                             <th>Organization Code</th>
                                             <th>Amount</th> 
+                                            <th>Vouched by</th>
                                             <th>Checked by</th>
                                             <th>Date Issue</th> 
                                             <th>

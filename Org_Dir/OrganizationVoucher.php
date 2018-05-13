@@ -307,7 +307,7 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
         });
         
         $("#insertVoucher").on("click",function(){
-            var orgcode=($("table[id='meta']").find("tbody").find("tr").find(".AddOrgCode").find("#Addorgcode option:selected").val())
+            var orgcode=($("table[id='meta']").find("tbody").find("tr").find(".AddOrgCode").text())
             ,vouchBy=($("table[id='meta']").find("tbody").find("tr").find("#AddVouchBy").val())
             ,vouch= ($("table[id='meta']").find("tbody").find("tr").find(".AddVoucherNo").attr("value"))
             ,amount = $("#cash").attr("amount")

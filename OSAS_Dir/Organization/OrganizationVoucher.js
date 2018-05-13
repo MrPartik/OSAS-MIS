@@ -43,7 +43,62 @@ $('tbody').on('click', "button[id='btnApprove']", function () {
                         });
                     },
                     error: function (response) {
-                        swal("Error encountered while adding data", "Please try again", "error");
+                        swal("Error encountered while executing command", "Please try again", "error");
+                    }
+
+                });
+
+
+
+            } else
+                swal("Cancelled", "The transaction is cancelled", "error");
+
+        });
+});
+
+
+
+$('tbody').on('click', "button[id='btnReject']", function () {
+
+    var voucherNo = $(this).attr("vouch"),
+     OrgCode =  $(this).attr("orgcode");
+
+    swal({ 
+            title: "Are you sure?",
+            text: voucherNo+" will be rejected, please make sure that you are aware on what you doing ;)",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'Yes !',
+            cancelButtonText: "No!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function (isConfirm) {
+            if (isConfirm) { 
+                $.ajax({
+                    type: 'post',
+                    url: 'Organization/OrganizationVoucher/query.php',
+                    data: {
+                        reject: 'reject',
+                        voucherNo: voucherNo,
+                        OrgCode : OrgCode
+                    },
+                    success: function (response) {  
+                        swal({
+                            title: voucherNo+" Rejected!",
+                            text: "The command is successfully executed!",
+                            type: "success",
+                            confirmButtonColor: '#88A755',
+                            confirmButtonText: 'Okay',
+                            closeOnConfirm: false
+                        }, function (isConfirm) {
+                            window.location.reload();
+
+                        });
+                    },
+                    error: function (response) {
+                        swal("Error encountered while executing command", "Please try again", "error");
                     }
 
                 });

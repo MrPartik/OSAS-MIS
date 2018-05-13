@@ -105,7 +105,7 @@ var EditableTable = function () {
 
                         });
                         $.each(data, function (key, val) {
-                            var aiNew = oTable.fnAddData(['<label>' + val.id + '</label>','<label>' + val.ref + '</label>', '<label>' + val.desc + '</label>', '<label>' + val.col + '</label>', '<label>' + val.exp + '</label>', '<label>' + val.bal + '</label>', '<label>' + val.rem + '</label>', '<label>' + val.dat + '</label>']); 
+                            var aiNew = oTable.fnAddData([val.id , val.ref ,val.desc,val.col,val.exp , val.bal ,val.rem,  val.dat]); 
                             var nRow = oTable.fnGetNodes(aiNew[0]);
                         });
                     },

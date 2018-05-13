@@ -6,7 +6,6 @@
         $item = $_POST['item'];
         session_start();
         $id = $_SESSION['logged_user']['username'];
-        
         $role = $_SESSION['logged_user']['role'];
         
         if($role == 'OSAS HEAD'){
