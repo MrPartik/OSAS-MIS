@@ -82,7 +82,7 @@ var EditableTable = function () {
                             oTable.fnDeleteRow(0);
                         });
                         $.each(data, function (key, val) {
-                            var aiNew = oTable.fnAddData(['<label cashID =' + val.id + '>' + val.ref + '</label>', '<label>' + val.desc + '</label>', '<label>' + val.col + '</label>', '<label>' + val.exp + '</label>', '<label>' + val.bal + '</label>', '<label>' + val.rem + '</label>', '<label>' + val.dat + '</label>']);
+                            var aiNew = oTable.fnAddData(['<label cashID =' + val.id + '>' + val.ref + '</label>', '<label>'+ val.orgCode+' - '+ val.desc + '</label>', '<label>' + val.col + '</label>', '<label>' + val.exp + '</label>', '<label>' + val.bal + '</label>', '<label>' + val.rem + '</label>', '<label>' + val.dat + '</label>']);
                             var nRow = oTable.fnGetNodes(aiNew[0]);
                         });
                     }

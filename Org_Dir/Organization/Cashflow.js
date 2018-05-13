@@ -59,7 +59,7 @@ var EditableTable = function () {
                     [5, 15, 20, "All"] // change per page values here
                 ],
                 // set the initial value
-                "iDisplayLength": 5,
+                "iDisplayLength": -1,
                 "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
                 "sPaginationType": "bootstrap",
                 "oLanguage": {
@@ -71,7 +71,10 @@ var EditableTable = function () {
                 },
                 "aoColumnDefs": [{
                         'bSortable': false,
-                        'aTargets': [0]
+                        'aTargets': [0,1,2,3,4,5,6,7]
+                    }, 
+                    { 
+                        "sClass": "hidden", "aTargets": [ 0 ] 
                     }
                 ]
             });
@@ -92,7 +95,8 @@ var EditableTable = function () {
                     url: 'Organization/Cashflow/FillTable.php',
                     dataType: 'json',
                     data: {
-                        _code: drporgvalue
+                        _code: drporgvalue,
+                        ind: drporgname
                     },
                     success: function (data) {
                         var table = $('#editable-sample').DataTable();
@@ -101,7 +105,7 @@ var EditableTable = function () {
 
                         });
                         $.each(data, function (key, val) {
-                            var aiNew = oTable.fnAddData(['<label>' + val.ref + '</label>', '<label>' + val.desc + '</label>', '<label>' + val.col + '</label>', '<label>' + val.exp + '</label>', '<label>' + val.bal + '</label>', '<label>' + val.rem + '</label>', '<label>' + val.dat + '</label>']);
+                            var aiNew = oTable.fnAddData(['<label>' + val.id + '</label>','<label>' + val.ref + '</label>', '<label>' + val.desc + '</label>', '<label>' + val.col + '</label>', '<label>' + val.exp + '</label>', '<label>' + val.bal + '</label>', '<label>' + val.rem + '</label>', '<label>' + val.dat + '</label>']); 
                             var nRow = oTable.fnGetNodes(aiNew[0]);
                         });
                     },

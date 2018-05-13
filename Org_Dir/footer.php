@@ -38,3 +38,5 @@
 
 <script type="text/javascript" src="../js/data-tables/jquery.dataTables.js"></script>
 <script type="text/javascript" src="../js/data-tables/DT_bootstrap.js"></script>
+<script type="text/javascript" src="../js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+<script src="../js/bootstrap-switch.js"></script>

@@ -2,7 +2,7 @@
 	
     include('../../../config/connection.php');     
     $compcode = $_GET['_code'];
-    $query = "SELECT OrgCashFlowStatement_ID ID, IF(OrgCashFlowStatement_COLLECTION IS NULL,
+    $query = "SELECT OrgCashFlowStatement_ID ID,OrgCashFlowStatement_ORG_CODE ORGCODE, IF(OrgCashFlowStatement_COLLECTION IS NULL,
     CONCAT('Voucher Item/s: ',(SELECT GROUP_CONCAT(OrgVouchItems_ITEM_NAME SEPARATOR ', ')
     FROM t_org_voucher_items WHERE OrgVouchItems_VOUCHER_NO=OrgCashFlowStatement_ITEM
     GROUP BY OrgVouchItems_VOUCHER_NO)),
@@ -32,7 +32,7 @@ cross join
         $rem = $row["REMARKS"];
         $dat = $row["DATEISSUED"];
         $id = $row["ID"];
-
+        $OrgCode = $row["ORGCODE"];
        $arr = array(
             'desc'  => $desc,
             'ref'  => $ref,
@@ -41,7 +41,8 @@ cross join
             'bal'  => $bal,
             'rem'  => $rem,
             'dat' => $dat,
-            'id' => $id
+            'id' => $id,
+            'orgCode' =>$OrgCode
               );
       array_push(  $container_arr, (array)$arr );
         

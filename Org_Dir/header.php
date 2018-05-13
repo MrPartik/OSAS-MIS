@@ -32,6 +32,7 @@ $referenced_user = $_SESSION['logged_user']['ref'];
         <link rel="stylesheet" type="text/css" href="../js/select2/select2.css" />
         <link rel="stylesheet" type="text/css" href="../js/jquery-tags-input/jquery.tagsinput.css" />
     <link rel="stylesheet" type="text/css" href="../js/bootstrap-datepicker/css/datepicker.css" /> 
+    <link rel="stylesheet" href="../css/bootstrap-switch.css" />
 </head>
     
 

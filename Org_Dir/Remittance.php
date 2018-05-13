@@ -57,21 +57,25 @@ $compcode = $referenced_user;
                                     <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                         <thead>
                                             <tr>
+                                                <th class="hidden">Remittance ID</th>
+                                                <th>Remittance No</th>
+                                                <th>Description</th>
                                                 <th>Send By</th>
                                                 <th>Received By</th>
                                                 <th>Amount</th>
-                                                <th>Description</th>
                                                 <th>Date Issued</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                                    $view_query = mysqli_query($con," SELECT OrgRemittance_ID,OrgAppProfile_NAME,OrgRemittance_SEND_BY,OrgRemittance_REC_BY,CONCAT('₱', FORMAT(OrgRemittance_AMOUNT, 3)) AS AMOUNT  ,OrgRemittance_DESC,DATE_FORMAT(OrgRemittance_DATE_ADD, '%M %d, %Y') AS DATE  FROM t_org_remittance
+                                                    $view_query = mysqli_query($con," SELECT OrgRemittance_ID,OrgAppProfile_NAME,OrgRemittance_NUMBER,OrgRemittance_SEND_BY,OrgRemittance_REC_BY,CONCAT('₱', FORMAT(OrgRemittance_AMOUNT, 3)) AS AMOUNT  ,OrgRemittance_DESC,DATE_FORMAT(OrgRemittance_DATE_ADD, '%M %d, %Y') AS DATE  FROM t_org_remittance
                                                     INNER JOIN t_org_for_compliance ON OrgRemittance_ORG_CODE = OrgForCompliance_ORG_CODE
                                                     INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
                                                     WHERE OrgRemittance_DISPLAY_STAT = 'Active' AND OrgForCompliance_DISPAY_STAT = 'Active' AND OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgRemittance_ORG_CODE  = '$compcode' ");
                                                     while($row = mysqli_fetch_assoc($view_query))
                                                     {
+                                                        $remID = $row["OrgRemittance_ID"];
+                                                        $remNo = $row["OrgRemittance_NUMBER"];
                                                         $name = $row["OrgAppProfile_NAME"];
                                                         $send = $row["OrgRemittance_SEND_BY"];
                                                         $rec = $row["OrgRemittance_REC_BY"];
@@ -81,10 +85,12 @@ $compcode = $referenced_user;
                                                         
                                                         echo "
                                                         <tr class=''>
-                                                            <td style='width:280px'> $send </td>
-                                                            <td style='width:280px'> $rec </td>
-                                                            <td>$amount </td>
+                                                            <td class='hidden'> $remID </td>
+                                                            <td> $remNo </td>
                                                             <td>$desc </td>
+                                                            <td> $send </td>
+                                                            <td> $rec </td>
+                                                            <td>$amount </td>
                                                             <td>$date </td>
 
                                                         </tr>
@@ -96,10 +102,12 @@ $compcode = $referenced_user;
                                         </tbody>
                                         <tfoot>
                                             <tr>
+                                                <th class="hidden">Remittance ID</th>
+                                                <th>Remittance No</th>
+                                                <th>Description</th>
                                                 <th>Send By</th>
                                                 <th>Received By</th>
                                                 <th>Amount</th>
-                                                <th>Description</th>
                                                 <th>Date Issued</th>
                                             </tr>
                                         </tfoot>
