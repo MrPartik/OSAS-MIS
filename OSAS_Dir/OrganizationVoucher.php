@@ -204,7 +204,7 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
 <tr>
     <td class="meta-head">Organization:</td>
     <td class="AddOrgCode"><select id="Addorgcode" class="form-control m-bot10"> <option disabled selected value="default" >Please choose an Organization</option><?php  while($code=mysqli_fetch_assoc($view_availOrgVouch)){?>
-        <option value="<?php echo $code['OrgForCompliance_ORG_CODE']?>"><?php echo $code["OrgAppProfile_NAME"]?></option>
+        <option value="<?php echo $code['OrgForCompliance_OrgApplProfile_APPL_CODE']?>"><?php echo $code["OrgAppProfile_NAME"]?></option>
     <?php }?><select></td>
 </tr>                   <?php  
                         $VouchNo_query = mysqli_query($con," (SELECT CONCAT('Vouch #', RIGHT(((SELECT COUNT(*) + 1 from t_org_voucher where OrgVoucher_DISPLAY_STAT ='active' )+100000),5) ) AS Vouch) ");

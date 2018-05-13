@@ -19,7 +19,7 @@ IF(OrgCashFlowStatement_COLLECTION IS NOT NULL,CONCAT('₱',FORMAT(OrgCashFlowSt
 cross join
 (select @exsum := 0,@colsum := 0,@balsum := 0) params
     INNER JOIN t_org_for_compliance ON OrgCashFlowStatement_ORG_CODE = OrgForCompliance_ORG_CODE
-    WHERE OrgCashFlowStatement_DISPLAY_STAT = 'Active' AND OrgForCompliance_ORG_CODE = '$compcode' ORDER BY OrgCashFlowStatement_ID asc ";
+    WHERE OrgCashFlowStatement_DISPLAY_STAT = 'Active' AND OrgForCompliance_OrgApplProfile_APPL_CODE = '$compcode' ORDER BY OrgCashFlowStatement_ID asc ";
     $view_query = mysqli_query($con,$query);
     $container_arr = array();
     while($row = mysqli_fetch_assoc($view_query))

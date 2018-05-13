@@ -43,11 +43,11 @@ include('header.php');
                                                 <select class="form-control m-bot15" id="drporg">
                                                     <option selected disabled>Please Select an Organization</option>
                                                     <?php 
-                                                            $view_query = mysqli_query($con,"SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME FROM `t_org_for_compliance` 
+                                                            $view_query = mysqli_query($con,"SELECT OrgForCompliance_ORG_CODE,OrgForCompliance_OrgApplProfile_APPL_CODE,OrgAppProfile_NAME FROM `t_org_for_compliance`
                                                             INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR= '$current_acadyear'  ");
                                                             while($row = mysqli_fetch_assoc($view_query))
                                                             {
-                                                                $code = $row["OrgForCompliance_ORG_CODE"];
+                                                                $code = $row["OrgForCompliance_OrgApplProfile_APPL_CODE"];
                                                                 $name = $row["OrgAppProfile_NAME"];
                                                                 echo '<option value="'.$code.'">' .$name.'</option>';
                                                             }
