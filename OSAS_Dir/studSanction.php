@@ -185,25 +185,21 @@ include('../config/connection.php');
 </html>
 <script>
     $(document).ready(function () {
-        var dataSrc = [];
-        var table = $('#dynamic-table').DataTable({
-            'initComplete': function () {
-                var api = this.api();
-                api.cells('tr', [0, 1, 2]).every(function () {
-                    var data = $('<div>').html(this.data()).text();
-                    if (dataSrc.indexOf(data) === -1) {
-                        dataSrc.push(data);
-                    }
-                });
-                dataSrc.sort();
-                $('.dataTables_filter input[type="search"]', api.table().container()).typeahead({
-                    source: dataSrc
-                    , afterSelect: function (value) {
-                        api.search(value).draw();
-                    }
-                });
+        var oTable = $('#dynamic-table').dataTable({
+            "aLengthMenu": [
+                    [5, 15, 20, -1]
+                    , [5, 15, 20, "All"] // change per page values here
+                ], // set the initial value
+            "iDisplayLength": 5
+            , "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>"
+            , "sPaginationType": "bootstrap"
+            , "oLanguage": {
+                "sLengthMenu": "_MENU_ records per page"
+                , "oPaginate": {
+                    "sPrevious": "Prev"
+                    , "sNext": "Next"
+                }
             }
-            , bDestroy: true
             , aaSorting: [[5, "desc"]]
         });
     });

@@ -5,8 +5,6 @@
 <script src="../js/jquery.scrollTo.min.js"></script>
 <script src="../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
 <script src="../js/jquery.nicescroll.js">
-
-
 </script>
 <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
 <script src="../js/skycons/skycons.js"></script>
@@ -37,6 +35,5 @@
 <script src="../js/scripts.js"></script>
 <!--script for this page-->
 <script type="text/javascript" src="../js/fuelux/js/spinner.min.js"></script>
-
 <script type="text/javascript" src="../js/data-tables/jquery.dataTables.js"></script>
 <script type="text/javascript" src="../js/data-tables/DT_bootstrap.js"></script>

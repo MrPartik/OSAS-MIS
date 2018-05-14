@@ -11,7 +11,6 @@ include ('header.php');
 ?>
 
     <body>
-
         <section id="container">
             <!--header end-->
             <aside>
@@ -40,8 +39,7 @@ include ('header.php');
                                     <div class="adv-table editable-table ">
                                         <div class="clearfix">
                                             <div class="btn-group">
-                                                <button id="editable-sample_new" data-toggle="modal" id="openAddmodal" href="#Add" class="btn btn-success">Add <i class="fa fa-plus"></i>
-                                                </button> 
+                                                <button id="editable-sample_new" data-toggle="modal" id="openAddmodal" href="#Add" class="btn btn-success">Add <i class="fa fa-plus"></i> </button>
                                                 <!-- <button id="btnrequest" data-toggle="modal" id="openAddmodal" href="#Request" class="btn btn-info" style="margin-left:5px">Request <i class="fa fa-folder-open"></i>
                                                 </button> -->
                                             </div>
@@ -54,13 +52,17 @@ include ('header.php');
                                             <thead>
                                                 <tr>
                                                     <th class="hidden">id</th>
-                                                    <th >Remittance No.</th>
+                                                    <th>Remittance No.</th>
                                                     <th>Organization</th>
                                                     <th>Overview</th>
                                                     <th>Description</th>
                                                     <!-- <th>Status</th> -->
                                                     <th>Date Issued</th>
-                                                    <th style="width:1%"><center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
+                                                    <!--
+                                                    <th style="width:1%">
+                                                        <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
+                                                    </th>
+-->
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -80,92 +82,46 @@ include ('header.php');
                                                         $desc = $row["OrgRemittance_DESC"];
                                                         $date = $row["DATE"];
                                                         $stat = $row["APSTAT"];
-                                                        
-                                                        // if($stat == 'Approved'){
-                                                        //     echo "
-                                                        //     <tr class=''>
-                                                        //         <td class='hidden'>$id</td>
-                                                        //         <td><center>$number</center></td>
-                                                        //         <td style='width:200px'>$name</td>
-                                                        //         <td style='width:280px'><label>Send by: </label> $send<br/>
-                                                        //         <label>Receive by: </label> $rec</td>                                                            
-                                                        //         <td><label>Amount: </label> $amount<br/><label>Description: </label> $desc</td>
-                                                        //         <td><center><span class='label label-success'>Approved</span></center></td>
-                                                        //         <td><label>$date</label></td>
-                                                        //         <td style='width:150px'>
-                                                        //             <center>
-                                                        //                 <a class='btn btn-default edit' style='background-color:#c7cbd6' href='javascript:;'><i class='fa fa-edit'></i></a> 
-                                                        //                 <!--<a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>-->
-                                                        //             </center>
-                                                        //         </td>
-                                                        //     </tr>
-                                                        //         ";
-                                                            
-                                                        // }
-                                                        // else if($stat == 'Rejected'){
-                                                        //     echo "
-                                                        //     <tr class=''>
-                                                        //         <td class='hidden'>$id</td>
-                                                        //         <td><center>$number</center></td>
-                                                        //         <td style='width:200px'>$name</td>
-                                                        //         <td style='width:280px'><label>Send by: </label> $send<br/>
-                                                        //         <label>Receive by: </label> $rec</td>                                                            
-                                                        //         <td><label>Amount: </label> $amount<br/><label>Description: </label> $desc</td>
-                                                        //        <td><center><span class='label label-danger'>Rejected</span></center></td>
-                                                        //         <td><label>$date</label></td>
-                                                        //         <td style='width:150px'>
-                                                        //             <center>
-                                                        //                 <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-edit'></i></a> 
-                                                        //                 <!--<a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>-->
-                                                        //             </center>
-                                                        //         </td>
-                                                        //     </tr>
-                                                        //             ";
-                                                            
-                                                        // }
-                                                        // else
-                                                            // TD ng status ang nasa baba
-                                                        // <td><center>
-                                                        //         <span class='label label-primary'>Pending
-                                                        //         </span></center></td>                    
+
                                                         {
                                                             echo "
                                                             <tr class=''>
                                                                 <td class='hidden'>$id</td>
                                                                 <td><center>$number</center></td>
                                                                 <td style='width:200px'>$name</td>
-                                                                <td style='width:280px'><label>Send by: </label> $send</td>          
+                                                                <td style='width:280px'><label>Send by: </label> $send<br><label>Received by: </label> $rec</td>
 
                                                                 <td><label>Amount: </label> $amount<br/><label>Description: </label> $desc</td>
                                                                 
                                                                 <td><label>$date</label></td>
-                                                                <td style='width:150px'>
+                                                               <!-- <td style='width:150px'>
                                                                     <center>
                                                                         <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa fa-edit'></i></a> 
-                                                                        <!--<a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>-->
+                                                                        <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-rotate-right'></i></a>
                                                                     </center>
-                                                                </td>
+                                                                </td>-->
                                                             </tr>
                                                                     ";
                                                             
                                                         }
-                                                        
-                                                        
                                                     }
 
                                                 ?>
-
                                             </tbody>
                                             <tfoot>
                                                 <tr>
                                                     <th class="hidden">id</th>
-                                                    <th >Remittance No.</th>
+                                                    <th style="width:  10%">Remittance No.</th>
                                                     <th>Organization</th>
-                                                    <th>Overview</th>
+                                                    <th style="width:  20%">Overview</th>
                                                     <th>Description</th>
                                                     <!-- <th>Status</th> -->
-                                                    <th>Date Issued</th>
-                                                    <th  style="width:1%"><center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
+                                                    <th style="width:15%">Date Issued</th>
+                                                    <!--
+                                                    <th style="width:1%">
+                                                        <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
+                                                    </th>
+-->
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -173,9 +129,7 @@ include ('header.php');
                                 </div>
                             </section>
                         </div>
-                    </div>
-
-                    <a class='btn btn-cancel tar edit hidden' style='color:white' data-toggle='modal' id="openModalupd" href='#Edit' href='javascript:;'>Profile</a>
+                    </div> <a class='btn btn-cancel tar edit hidden' style='color:white' data-toggle='modal' id="openModalupd" href='#Edit' href='javascript:;'>Profile</a>
                     <!-- page end-->
                 </section>
             </section>
@@ -189,8 +143,7 @@ include ('header.php');
                                 <li>
                                     <div class="prog-row side-mini-stat clearfix">
                                         <div class="side-mini-graph">
-                                            <div class="target-sell">
-                                            </div>
+                                            <div class="target-sell"> </div>
                                         </div>
                                     </div>
                                 </li>
@@ -200,7 +153,6 @@ include ('header.php');
                 </div>
             </div>
             <!--right sidebar end-->
-
         </section>
         <!-- modal -->
         <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Add" class="modal fade">
@@ -208,15 +160,13 @@ include ('header.php');
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="lblremit">Remittance</h4>
-                    </div>
+                        <h4 class="modal-title" id="lblremit">Remittance</h4> </div>
                     <div class="modal-body">
                         <form method="post" id="form-data">
                             <div class="row">
-                                <div class="col-lg-6 form-group">
-                                    Organization Name
+                                <div class="col-lg-6 form-group"> Organization Name
                                     <select class="form-control input-sm" id="drporg">
-                                    <?php
+                                        <?php
                                         $view_query = mysqli_query($con," SELECT OrgForCompliance_ORG_CODE,OrgForCompliance_OrgApplProfile_APPL_CODE,OrgAppProfile_NAME,(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) AS STAT FROM `t_org_for_compliance` INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR= '$current_acadyear' AND (SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) = 'TRUE'
                                         ");
                                 
@@ -232,22 +182,18 @@ include ('header.php');
                                     ?>
                                     </select>
                                 </div>
-                                <div class="col-lg-6">
-                                    Current Money <input type="text" min="1" class="form-control" disabled id="txtcurmon">
-                                </div>
-                            </div>
-
-                            <div class="row" style="padding-top:10px">
-                                <div class="col-lg-6">
-                                    Send By <input type="text" class="form-control" placeholder="ex. Juan Dela Cruz" id="txtname">
-                                </div>
-                                <div class="col-lg-6">
-                                    Amount <input type="number" min="1" class="form-control" placeholder="ex. 500" id="txtamount">
-                                </div>
+                                <div class="col-lg-6"> Current Money
+                                    <input type="text" min="1" class="form-control" disabled id="txtcurmon"> </div>
                             </div>
                             <div class="row" style="padding-top:10px">
-                                <div class="col-lg-12 " style="padding-top:10px">
-                                    Description<textarea class="form-control" placeholder="ex. Description" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
+                                <div class="col-lg-6"> Send By
+                                    <input type="text" class="form-control" placeholder="ex. Juan Dela Cruz" id="txtname"> </div>
+                                <div class="col-lg-6"> Amount
+                                    <input type="number" min="1" class="form-control" placeholder="ex. 500" id="txtamount"> </div>
+                            </div>
+                            <div class="row" style="padding-top:10px">
+                                <div class="col-lg-12 " style="padding-top:10px"> Description
+                                    <textarea class="form-control" placeholder="ex. Description" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
                                 </div>
                             </div>
                         </form>
@@ -264,15 +210,13 @@ include ('header.php');
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"><i class="fa fa-money"></i>   Edit Remittance</h4>
-                    </div>
+                        <h4 class="modal-title"><i class="fa fa-money"></i>   Edit Remittance</h4> </div>
                     <div class="modal-body">
                         <form method="post" id="updform-data">
                             <div class="row">
-                                <div class="col-lg-12 form-group">
-                                    Organization Name
+                                <div class="col-lg-12 form-group"> Organization Name
                                     <select disabled class="form-control input-sm" id="upddrporg">
-                                    <?php
+                                        <?php
                                         $view_query = mysqli_query($con,"SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME,(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) AS STAT FROM `t_org_for_compliance` INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR= '$current_acadyear' AND (SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) = 'TRUE'");
                                 
                                         $fillorg = ' <option disable selected value="default" >Please choose an Organization</option>';
@@ -289,16 +233,14 @@ include ('header.php');
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-6">
-                                    Send By <input type="text" class="form-control" placeholder="ex. Juan Dela Cruz" id="updtxtname">
-                                </div>
-                                <div class="col-lg-6">
-                                    Amount <input type="number" min="1" class="form-control" placeholder="ex. 500" id="updtxtamount">
-                                </div>
+                                <div class="col-lg-6"> Send By
+                                    <input type="text" class="form-control" placeholder="ex. Juan Dela Cruz" id="updtxtname"> </div>
+                                <div class="col-lg-6"> Amount
+                                    <input type="number" min="1" class="form-control" placeholder="ex. 500" id="updtxtamount"> </div>
                             </div>
                             <div class="row" style="padding-top:10px">
-                                <div class="col-lg-12 " style="padding-top:10px">
-                                    Description<textarea class="form-control" placeholder="ex. Description" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="updtxtdesc"></textarea>
+                                <div class="col-lg-12 " style="padding-top:10px"> Description
+                                    <textarea class="form-control" placeholder="ex. Description" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="updtxtdesc"></textarea>
                                 </div>
                             </div>
                         </form>
@@ -310,25 +252,25 @@ include ('header.php');
                 </div>
             </div>
         </div>
-        
         <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Request" class="modal fade">
             <div class="modal-dialog" style="width:70%">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"><i class="fa fa-money"></i> Remittance Request</h4>
-                    </div>
+                        <h4 class="modal-title"><i class="fa fa-money"></i> Remittance Request</h4> </div>
                     <div class="modal-body">
                         <div class="row">
                             <table class="table table-striped table-hover table-bordered" id="editable-sample2">
                                 <thead>
                                     <tr>
-                                        <th >Remittance No.</th>
+                                        <th>Remittance No.</th>
                                         <th>Organization</th>
                                         <th>Overview</th>
                                         <th>Description</th>
                                         <th>Date Issued</th>
-                                        <th style='width:130px'><center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
+                                        <th style='width:130px'>
+                                            <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -369,12 +311,14 @@ include ('header.php');
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th >Remittance No.</th>
+                                        <th>Remittance No.</th>
                                         <th>Organization</th>
                                         <th>Overview</th>
                                         <th>Description</th>
                                         <th>Date Issued</th>
-                                        <th style='width:100px'><center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
+                                        <th style='width:100px'>
+                                            <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
+                                        </th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -386,35 +330,28 @@ include ('header.php');
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
         <!-- Placed js at the end of the document so the pages load faster -->
-
         <!--Core js-->
-        
-        <?php include("footer.php"); ?> 
-
-        <!--script for this page only-->
-        <script src="Organization/Remittance.js"></script>
- 
-        <!-- END JAVASCRIPTS -->
-        <script>
-            $(document).ready(function() {
-                $('#btnprint').click(function() {
-                    var items = [];
-                    var table = $('#editable-sample').DataTable();
-                    jQuery(table.fnGetNodes()).each(function() {
-                        items.push($(this).closest('tr').children('td:first').text());
+        <?php include("footer.php"); ?>
+            <!--script for this page only-->
+            <script src="Organization/Remittance.js"></script>
+            <!-- END JAVASCRIPTS -->
+            <script>
+                $(document).ready(function () {
+                    $('#btnprint').click(function () {
+                        var items = [];
+                        var table = $('#editable-sample').DataTable();
+                        jQuery(table.fnGetNodes()).each(function () {
+                            items.push($(this).closest('tr').children('td:first').text());
+                        });
+                        window.open('Print/Remittance_Print.php?items=' + items, '_blank');
                     });
-                    window.open('Print/Remittance_Print.php?items=' + items, '_blank');
                 });
-
-            });
-            jQuery(document).ready(function() {
-                EditableTable.init();
-            });
-
-        </script>
-
+                jQuery(document).ready(function () {
+                    EditableTable.init();
+                });
+            </script>
     </body>
 
 </html>

@@ -7,7 +7,9 @@
         $username = $_SESSION['logged_user']['username'];
         
         if($role == 'OSAS HEAD'){
-            $view_query = mysqli_query($con,"SELECT *,DATE_FORMAT(Notification_DATE_SEEN, '%M %d, %Y %l:%i %p ') AS DATESEEN,DATE_FORMAT(Notification_DATE_CLICKED, '%M %d, %Y %l:%i %p ') AS DATECLICK, IF(LEFT(Notification_ITEM,5) = 'Remit',(SELECT OrgRemittance_ORG_CODE FROM t_org_remittance WHERE OrgRemittance_NUMBER = Notification_ITEM ),'') AS SENDBY FROM `r_notification` 
+            $view_query = mysqli_query($con,"SELECT *,DATE_FORMAT(Notification_DATE_SEEN, '%M %d, %Y %l:%i %p ') AS DATESEEN,DATE_FORMAT(Notification_DATE_CLICKED, '%M %d, %Y %l:%i %p ') AS DATECLICK
+            , IF(LEFT(Notification_ITEM,5) = 'Remit',(SELECT OrgRemittance_ORG_CODE FROM t_org_remittance WHERE OrgRemittance_NUMBER = Notification_ITEM ),'') AS SENDBY
+            FROM `r_notification`
             WHERE Notification_RECEIVER = (SELECT OSASHead_CODE FROM `r_osas_head` WHERE OSASHead_DISPLAY_STAT = 'Active')
              
             ORDER BY Notification_DATE_ADDED DESC ");
@@ -27,7 +29,8 @@
                                 <a class="notif" data-toggle="modal" href="#RemittanceApproval"   item="'.$row['Notification_ITEM'].'"> '.$row['Notification_ITEM']. ' - ' .$row['SENDBY'].'</a>';
 
                 }
-                else if(substr($row['Notification_ITEM'],0,4) == 'EVNT'){
+                else
+                    if(substr($row['Notification_ITEM'],0,4) == 'EVNT'){
                     $event = $row['Notification_ITEM'];
                     $view_query2 = mysqli_query($con,"SELECT OrgEvent_NAME,OrgAppProfile_NAME FROM `r_org_event_management` AS E
                     INNER JOIN t_org_for_compliance AS R ON E.OrgEvent_OrgCode = R.OrgForCompliance_ORG_CODE
@@ -74,8 +77,8 @@
 
                 }
                 else if($row['Notification_SEEN'] == 'Seen' && $row['Notification_CLICKED'] == 'Clicked'){
-                    $container = $container. '<br/><label class="pull-right" style="font-size:10px">Recent Viewed: '. $row['DATECLICK'] .'</label> 
-                            </div>
+                    $container = $container. '
+                            </div><div class="col-md-12"><span style="font-size:10px">Recent Viewed: '. $row['DATECLICK'] .'</span> </div>
                         </div>
                     </li>';
 
@@ -102,13 +105,14 @@
                 else{
                     $container = $container. '<div class="alert alert-info clearfix">';
                 }
-                if(substr($row['Notification_ITEM'],0,5) == 'Remit'){
-                    $container = $container. '<span class="alert-icon"><i class="fa fa-money"></i></span>
-                                                <div class="noti-info">
-                                <a class="notif" data-toggle="modal" href="#RemittanceApproval" href="javascript:;" item="'.$row['Notification_ITEM'].'"> '.$row['Notification_ITEM']. ' - ' .$row['SENDBY'].'</a>';
-
-                }
-                else if(substr($row['Notification_ITEM'],0,4) == 'EVNT'){
+//                if(substr($row['Notification_ITEM'],0,5) == 'Remit'){
+//                    $container = $container. '<span class="alert-icon"><i class="fa fa-money"></i></span>
+//                                                <div class="noti-info">
+//                                <a class="notif" data-toggle="modal" href="#RemittanceApproval" href="javascript:;" item="'.$row['Notification_ITEM'].'"> '.$row['Notification_ITEM']. ' - ' .$row['SENDBY'].'</a>';
+//
+//                }
+//                else
+                    if(substr($row['Notification_ITEM'],0,4) == 'EVNT'){
                     $event = $row['Notification_ITEM'];
                     $view_query2 = mysqli_query($con,"SELECT OrgEvent_NAME,OrgAppProfile_NAME FROM `r_org_event_management` AS E
                     INNER JOIN t_org_for_compliance AS R ON E.OrgEvent_OrgCode = R.OrgForCompliance_ORG_CODE

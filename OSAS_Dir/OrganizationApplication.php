@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
 <title>OSAS - Application and Compliance</title>
-
-
 <?php
 $breadcrumbs  ="<div class='col-md-12'>
 <ul class='breadcrumbs-alt'>
@@ -12,67 +10,68 @@ $currentPage ='OSAS_OrgApplication';
 include('header.php'); 
 include('../config/connection.php');
 ?>
-<link rel="stylesheet" type="text/css" href="../js/bootstrap-fileupload/bootstrap-fileupload.css" />
-<!-- Custom styles for this template -->     <style>
-            body {
-                margin-top: 30px;
-            }
+    <link rel="stylesheet" type="text/css" href="../js/bootstrap-fileupload/bootstrap-fileupload.css" />
+    <!-- Custom styles for this template -->
+    <style>
+        body {
+            margin-top: 30px;
+        }
 
-            .stepwizard-step p {
-                margin-top: 0px;
-                color: #666;
-            }
+        .stepwizard-step p {
+            margin-top: 0px;
+            color: #666;
+        }
 
-            .stepwizard-row {
-                display: table-row;
-            }
+        .stepwizard-row {
+            display: table-row;
+        }
 
-            .stepwizard {
-                display: table;
-                width: 100%;
-                position: relative;
-            }
+        .stepwizard {
+            display: table;
+            width: 100%;
+            position: relative;
+        }
 
-            .stepwizard-step button[disabled] {
-                /*opacity: 1 !important;
+        .stepwizard-step button[disabled] {
+            /*opacity: 1 !important;
     filter: alpha(opacity=100) !important;*/
-            }
+        }
 
-            .stepwizard .btn.disabled,
-            .stepwizard .btn[disabled],
-            .stepwizard fieldset[disabled] .btn {
-                opacity: 1 !important;
-                color: #bbb;
-            }
+        .stepwizard .btn.disabled,
+        .stepwizard .btn[disabled],
+        .stepwizard fieldset[disabled] .btn {
+            opacity: 1 !important;
+            color: #bbb;
+        }
 
-            .stepwizard-row:before {
-                top: 14px;
-                bottom: 0;
-                position: absolute;
-                content: " ";
-                width: 100%;
-                height: 1px;
-                background-color: #ccc;
-                z-index: 0;
-            }
+        .stepwizard-row:before {
+            top: 14px;
+            bottom: 0;
+            position: absolute;
+            content: " ";
+            width: 100%;
+            height: 1px;
+            background-color: #ccc;
+            z-index: 0;
+        }
 
-            .stepwizard-step {
-                display: table-cell;
-                text-align: center;
-                position: relative;
-            }
+        .stepwizard-step {
+            display: table-cell;
+            text-align: center;
+            position: relative;
+        }
 
-            .btn-circle {
-                width: 30px;
-                height: 30px;
-                text-align: center;
-                padding: 6px 0;
-                font-size: 12px;
-                line-height: 1.428571429;
-                border-radius: 15px;
-            }
+        .btn-circle {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            padding: 6px 0;
+            font-size: 12px;
+            line-height: 1.428571429;
+            border-radius: 15px;
+        }
+    </style>
 
-        </style>
     <body>
         <section id="container">
             <!--header end-->
@@ -143,7 +142,7 @@ include('../config/connection.php');
                                         (SELECT COUNT(*) FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgAppProfile_APPL_CODE = (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` AS AZ WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR = '$current_acadyear' AND AZ.OrgForCompliance_ORG_CODE = OFC.OrgForCompliance_ORG_CODE  )) AS MYSTAT
                                         FROM `r_org_applicant_profile` AS OAP 
                                         INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE 
-                                        WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active' ");
+                                        WHERE   OAP.OrgAppProfile_DISPLAY_STAT = 'Active' ");
                                         while($row = mysqli_fetch_assoc($view_query))
                                         {
                                             $code = $row["OrgForCompliance_ORG_CODE"];
@@ -178,9 +177,16 @@ include('../config/connection.php');
                                                 <td>$name</td>
                                                 <td>$desc</td>";
                                             
-                                            if($mystat == 0)
-                                            echo "
-                                                <td><center><span class='label label-danger'>Expired</span></center></td>
+                                            if($mystat == 0){
+                                            echo "<td><center><span class='label label-danger'>Expired</span> &nbsp;";
+                                                        $ifInactive =mysqli_fetch_assoc(mysqli_query($con,"Select OrgForCompliance_DISPAY_STAT from  t_org_for_compliance where OrgForCompliance_ORG_CODE ='$code' "));
+                                                if($ifInactive['OrgForCompliance_DISPAY_STAT'] !='Active'){
+                                              echo  "<span class='label label-danger'>Deactivated</span></center>";
+                                                }
+
+
+
+                                                echo "</center></td>
                                                 $curstep</center></td>
                                                 <td style='width:200px'>
                                                     <center>
@@ -188,10 +194,10 @@ include('../config/connection.php');
                                                     </center>
                                                 </td>
                                             </tr>
-                                                    ";
+                                                    ";}
                                             else
                                             echo "
-                                                <td><center><span class='label label-success'>Active</span></center></td>
+                                                <td><center><span class='label label-success'>On Going</span></center></td>
                                                 $curstep</center></td>
                                                 <td style='width:200px'>
                                                     <center>
@@ -274,18 +280,18 @@ include('../config/connection.php');
                                             <div class="panel-heading">
                                                 <h3 class="panel-title" style="color:white">What do they Visualize?</h3> </div>
                                             <div class="panel-body">
-                                                <div class="row"> 
-                                                        <div class="form-group col-md-4">
-                                                            <label class="control-label">Upload Logo</label>
-                                                            <div class="fileupload fileupload-new" data-provides="fileupload">
-                                                                <div class="fileupload-new thumbnail"> <img src="../Avatar/pup.png" alt="" style="height: 300px;width: 300px;" /> </div>
-                                                                <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 300px; max-height: 250px;min-width: 300px; min-height: 250px; line-height: 20px;"></div>
-                                                                <div> <span class="btn btn-white btn-file">
+                                                <div class="row">
+                                                    <div class="form-group col-md-4">
+                                                        <label class="control-label">Upload Logo</label>
+                                                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                                                            <div class="fileupload-new thumbnail"> <img src="../Avatar/pup.png" alt="" style="height: 300px;width: 300px;" /> </div>
+                                                            <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 300px; max-height: 250px;min-width: 300px; min-height: 250px; line-height: 20px;"></div>
+                                                            <div> <span class="btn btn-white btn-file">
                                                 
                                                    <span class="fileupload-new"><i class="fa fa-paper-clip" ></i> Select image</span> <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
-                                                                    <input type="file" id ="fileupload" class="default" /> </span> <a href="#" class="btn btn-danger btn-sm fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i>Remove</a> </div>
-                                                            </div>
-                                                        </div> 
+                                                                <input type="file" id="fileupload" class="default" /> </span> <a href="#" class="btn btn-danger btn-sm fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i>Remove</a> </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="form-group col-md-4">
                                                         <label class="control-label">Mission</label>
                                                         <textarea class="form-control" rows="14" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtmission" style="roverflow:auto;resize:none"></textarea>

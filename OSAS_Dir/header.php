@@ -12,7 +12,7 @@ if($_SESSION['logged_user']['role']=="Organization")
     else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
     { header("location:../");}
 $user_check = $_SESSION['logged_user']['username']; 
- ?>
+$referenced_user = $_SESSION['logged_user']['ref']; ?>
     <!DOCTYPE html>
 <head> 
         <link rel="shortcut icon" href="../images/favicon.png"> 
@@ -30,6 +30,8 @@ $user_check = $_SESSION['logged_user']['username'];
         <link rel="stylesheet" type="text/css" href="../js/select2/select2.css" />
         <link rel="stylesheet" type="text/css" href="../js/jquery-tags-input/jquery.tagsinput.css" />
     <link rel="stylesheet" type="text/css" href="../js/bootstrap-datepicker/css/datepicker.css" /> 
+
+    <link rel="stylesheet" href="../js/data-tables/DT_bootstrap.css" />
         
 
 </head> 
@@ -61,7 +63,8 @@ $user_check = $_SESSION['logged_user']['username'];
                         <input type="text" class="form-control search" name="search" placeholder="Search" autocomplete="off" > </li>
                     <!-- user login dropdown start-->
                     <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <img alt="" src="../images/OSAS/MAAM%20DEM.jpg"> <span class="username"><?php echo $user_check; ?> </span> <b class="caret"></b> </a>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <img alt="" src="../images/OSAS/MAAM%20DEM.jpg">
+                             <span class="username" code='<?php echo $referenced_user  ?>'><?php echo $user_check; ?> </span> <b class="caret"></b> </a>
                         <ul class="dropdown-menu extended logout">
                             <!-- <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li> -->
                             <li ><a href="#Change" data-toggle="modal"><i class="fa fa-key"></i> Change Password</a></li>
