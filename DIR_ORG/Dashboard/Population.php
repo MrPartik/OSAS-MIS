@@ -21,7 +21,7 @@
         $population = $population . '<div class=" wk-progress tm-membr">
                                             <div class="col-lg-2">
                                                 <div class="tm-avatar">
-                                                    <img src="../images/default.png" alt="" />
+                                                    <img src="../ASSETS/images/default.png" alt="" />
                                                 </div>
                                             </div>
                                             <div class="col-lg-7" style="padding-top:10px">

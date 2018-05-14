@@ -68,7 +68,7 @@
     <div id="page-wrap">
         <div class="headerrow">
             <div class="column">
-                <img src="../../Report/images/puplogo.png">
+                <img src="../../Report/ASSETS/images/puplogo.png">
             </div>
             <div class="column">
                 <center>
@@ -83,7 +83,7 @@
                 </center>
             </div>
             <div class="column">
-                <img src="../../Report/images/commitslogo.png" style="float:right;display:none"></div>
+                <img src="../../Report/ASSETS/images/commitslogo.png" style="float:right;display:none"></div>
         </div>
         <p id="header">CASH FLOW
         </p>

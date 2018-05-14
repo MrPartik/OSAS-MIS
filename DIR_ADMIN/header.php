@@ -19,7 +19,7 @@ $referenced_user = $_SESSION['logged_user']['ref']; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="ThemeBucket">
-    <link rel="shortcut icon" href="../images/favicon.png">
+    <link rel="shortcut icon" href="../ASSETS/images/favicon.png">
     <link rel="stylesheet" type="text/css" href="../ASSETS/js/select2/select2.css" />
     <link href="../ASSETS/bs3/css/bootstrap.min.css" rel="stylesheet">
     <link href="../ASSETS/js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet">
@@ -47,7 +47,7 @@ $referenced_user = $_SESSION['logged_user']['ref']; ?>
     <header class="header fixed-top clearfix">
         <!--logo start-->
         <div class="brand">
-            <a href="dashboard.php" class="logo"> <img src="../images/logo.png" alt=""> </a>
+            <a href="dashboard.php" class="logo"> <img src="../ASSETS/images/logo.png" alt=""> </a>
             <div class="sidebar-toggle-box">
                 <div class="fa fa-bars"></div>
             </div>

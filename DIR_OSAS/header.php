@@ -15,7 +15,7 @@ $user_check = $_SESSION['logged_user']['username'];
 $referenced_user = $_SESSION['logged_user']['ref']; ?>
     <!DOCTYPE html>
 <head> 
-        <link rel="shortcut icon" href="../images/favicon.png"> 
+        <link rel="shortcut icon" href="../ASSETS/images/favicon.png"> 
         <link href="../ASSETS/bs3/css/bootstrap.min.css" rel="stylesheet">
         <link href="../ASSETS/js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet">
         <link href="../ASSETS/css/bootstrap-reset.css" rel="stylesheet">
@@ -40,7 +40,7 @@ $referenced_user = $_SESSION['logged_user']['ref']; ?>
         <header class="header fixed-top clearfix">
             <!--logo start-->
             <div class="brand">
-                <a href="dashboard.php" class="logo"> <img src="../images/logo.png" alt=""> </a>
+                <a href="dashboard.php" class="logo"> <img src="../ASSETS/images/logo.png" alt=""> </a>
                 <div class="sidebar-toggle-box">
                     <div class="fa fa-bars"></div>
                 </div>
@@ -63,7 +63,7 @@ $referenced_user = $_SESSION['logged_user']['ref']; ?>
                         <input type="text" class="form-control search" name="search" placeholder="Search" autocomplete="off" > </li>
                     <!-- user login dropdown start-->
                     <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <img alt="" src="../images/OSAS/MAAM%20DEM.jpg">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <img alt="" src="../ASSETS/images/OSAS/MAAM%20DEM.jpg">
                              <span class="username" code='<?php echo $referenced_user  ?>'><?php echo $user_check; ?> </span> <b class="caret"></b> </a>
                         <ul class="dropdown-menu extended logout">
                             <!-- <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li> -->

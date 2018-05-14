@@ -25,7 +25,7 @@ $currentPage ='OSAS_StudProfile';
                         <div class="panel-body profile-information">
                             <div class="col-md-3">
                                 <div class="profile-pic text-center">
-                                    <img src="../images/OSAS/MAAM%20DEM.jpg" alt="" />
+                                    <img src="../ASSETS/images/OSAS/MAAM%20DEM.jpg" alt="" />
                                 </div>
                             </div>
                             <div class="col-md-6">

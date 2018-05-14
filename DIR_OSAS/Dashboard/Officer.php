@@ -23,7 +23,7 @@
         $officerlist = $officerlist . '<div class=" wk-progress tm-membr">
                                             <div class="col-lg-2">
                                                 <div class="tm-avatar">
-                                                    <img src="../images/avatar1.jpg" alt="" />
+                                                    <img src="../ASSETS/images/avatar1.jpg" alt="" />
                                                 </div>
                                             </div>
                                             <div class="col-lg-7" style="padding-top:10px">

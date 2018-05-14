@@ -51,7 +51,7 @@ $user_check = $_SESSION['logged_user']['username'];
         <header class="header fixed-top clearfix">
             <!--logo start-->
             <div class="brand">
-                <a href="dashboard.php" class="logo"> <img src="../images/logo.png" alt=""> </a>
+                <a href="dashboard.php" class="logo"> <img src="../ASSETS/images/logo.png" alt=""> </a>
                 <div class="sidebar-toggle-box">
                     <div class="fa fa-bars"></div>
                 </div>
@@ -64,7 +64,7 @@ $user_check = $_SESSION['logged_user']['username'];
                         <input type="text" class="form-control search" placeholder=" Search"> </li>
                     <!-- user login dropdown start-->
                     <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <img alt="" src="../images/OSAS/MAAM%20DEM.jpg"> <span class="username"><?php echo $user_check; ?> </span> <b class="caret"></b> </a>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <img alt="" src="../ASSETS/images/OSAS/MAAM%20DEM.jpg"> <span class="username"><?php echo $user_check; ?> </span> <b class="caret"></b> </a>
                         <ul class="dropdown-menu extended logout">
                             <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                             <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>

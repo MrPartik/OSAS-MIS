@@ -183,7 +183,7 @@ else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
                                 <div class="col-lg-6">
                                     <div class="col-lg-12 ">
                                         <div class="fileupload fileupload-new" data-provides="fileupload">
-                                            <div class="fileupload-new thumbnail"> <img src="../images/gallery/image1.jpg" alt="" /> </div>
+                                            <div class="fileupload-new thumbnail"> <img src="../ASSETS/images/gallery/image1.jpg" alt="" /> </div>
                                             <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 300px; max-height: 250px;min-width: 300px; min-height: 250px; line-height: 20px;"></div>
                                             <div> <span class="btn btn-white btn-file">
                                                 
@@ -239,7 +239,7 @@ else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
                             <div class="col-lg-12 ">
                                 <div class="col-lg-6">
                                     <div class="fileupload fileupload-new" data-provides="fileupload">
-                                        <div class="fileupload-new thumbnail"> <img src="../images/gallery/image1.jpg" alt="" /> </div>
+                                        <div class="fileupload-new thumbnail"> <img src="../ASSETS/images/gallery/image1.jpg" alt="" /> </div>
                                         <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 300px; max-height: 250px;min-width: 300px; min-height: 250px; line-height: 20px;"></div>
                                         <div> <span class="btn btn-white btn-file">
                                                 

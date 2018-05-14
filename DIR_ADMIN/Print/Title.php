@@ -1,6 +1,6 @@
                             <div class="panel-body invoice">
                                 <div class="invoice-title col-md-4 col-xs-2">
-                                    <img class="logo-print" src="../../images/OSAS/logo.png" alt="">
+                                    <img class="logo-print" src="../../ASSETS/images/OSAS/logo.png" alt="">
                                 </div>
                                 <div class="invoice-info col-md-8 col-xs-10">
                                     <p style="font-size:13px;color:black;padding-top:20px" class="title1">Republic of the Philippines</p>

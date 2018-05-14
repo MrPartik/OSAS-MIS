@@ -10,7 +10,7 @@
                 $data =$_GET['StudID'];?>
                         <?php while($profileLayoutRow = mysqli_fetch_array($view_studProfile_cond)){ ?>
                             <div class='corner-ribon black-ribon'><i class='fa fa-user'></i></div>
-                            <div class='fa fa-user wtt-mark'></div> <a href='#'><img alt='<?php echo $profileLayoutRow['FullName']?>' src='../images/Student/Student.png'></a>
+                            <div class='fa fa-user wtt-mark'></div> <a href='#'><img alt='<?php echo $profileLayoutRow['FullName']?>' src='../ASSETS/images/Student/Student.png'></a>
                             <h1>
                     <?php echo $profileLayoutRow['FullName']?>
                             </h1>

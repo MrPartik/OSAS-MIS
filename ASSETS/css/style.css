@@ -203,7 +203,7 @@ a:focus {
     height: 17px;
     width: 17px;
     display: inline-block;
-    background: url(../images/nav-expand.png) no-repeat top;
+    background: url(../ASSETS/images/nav-expand.png) no-repeat top;
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -212,7 +212,7 @@ a:focus {
 }
 
 .active .dcjq-icon {
-    background: url(../images/nav-expand.png) no-repeat bottom;
+    background: url(../ASSETS/images/nav-expand.png) no-repeat bottom;
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -222,7 +222,7 @@ a:focus {
     height: 17px;
     width: 17px;
     display: inline-block;
-    background: url(../images/acc-expand.png) no-repeat top;
+    background: url(../ASSETS/images/acc-expand.png) no-repeat top;
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -231,7 +231,7 @@ a:focus {
 }
 
 .right-side-accordion .active .dcjq-icon {
-    background: url(../images/acc-expand.png) no-repeat bottom;
+    background: url(../ASSETS/images/acc-expand.png) no-repeat bottom;
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -582,7 +582,7 @@ ul.sidebar-menu li a.active i {
         height: 17px;
         width: 17px;
         display: inline-block;
-        background: url(../images/nav-expand.png) no-repeat top;
+        background: url(../ASSETS/images/nav-expand.png) no-repeat top;
         border-radius: 3px;
         -moz-border-radius: 3px;
         -webkit-border-radius: 3px;
@@ -591,7 +591,7 @@ ul.sidebar-menu li a.active i {
     }
 
     .active .dcjq-icon {
-        background: url(../images/nav-expand.png) no-repeat bottom;
+        background: url(../ASSETS/images/nav-expand.png) no-repeat bottom;
         border-radius: 3px;
         -moz-border-radius: 3px;
         -webkit-border-radius: 3px;
@@ -601,7 +601,7 @@ ul.sidebar-menu li a.active i {
         height: 17px;
         width: 17px;
         display: inline-block;
-        background: url(../images/acc-expand.png) no-repeat top;
+        background: url(../ASSETS/images/acc-expand.png) no-repeat top;
         border-radius: 3px;
         -moz-border-radius: 3px;
         -webkit-border-radius: 3px;
@@ -610,7 +610,7 @@ ul.sidebar-menu li a.active i {
     }
 
     .right-side-accordion .active .dcjq-icon {
-        background: url(../images/acc-expand.png) no-repeat bottom;
+        background: url(../ASSETS/images/acc-expand.png) no-repeat bottom;
         border-radius: 3px;
         -moz-border-radius: 3px;
         -webkit-border-radius: 3px;
@@ -1021,7 +1021,7 @@ ul.sidebar-menu li a.active i {
     }
 
     .log-arrow-up {
-        background: url("../images/top-arrow.png") no-repeat;
+        background: url("../ASSETS/images/top-arrow.png") no-repeat;
         width: 18px;
         height: 10px;
         margin-top: -20px;
@@ -1122,7 +1122,7 @@ ul.sidebar-menu li a.active i {
 
     /*----*/
     .notify-arrow {
-        background: url("../images/top-arrow.png") no-repeat;
+        background: url("../ASSETS/images/top-arrow.png") no-repeat;
         width: 18px;
         height: 10px;
         margin-top: 0;
@@ -1146,7 +1146,7 @@ ul.sidebar-menu li a.active i {
         transition: all .3s ease;
         border: 1px solid #fff;
         box-shadow: none;
-        background: #f6f6f6 url("../images/search-icon.png") no-repeat 10px 8px;
+        background: #f6f6f6 url("../ASSETS/images/search-icon.png") no-repeat 10px 8px;
         padding: 0 5px 0 30px;
         color: #fff;
         border-radius: 100px;
@@ -4293,11 +4293,11 @@ ul.sidebar-menu li a.active i {
     }
 
     .blue-ribon {
-        background: url("../images/twitter_corner_blue.png") no-repeat;
+        background: url("../ASSETS/images/twitter_corner_blue.png") no-repeat;
     }
 
     .black-ribon {
-        background: url("../images/twitter_corner_black.png") no-repeat;
+        background: url("../ASSETS/images/twitter_corner_black.png") no-repeat;
     }
 
     .twt-feed.blue-bg {
@@ -4732,7 +4732,7 @@ ul.sidebar-menu li a.active i {
     }
 
     .customSelectInner {
-        background: url(../images/customSelect-arrow.gif) no-repeat center right;
+        background: url(../ASSETS/images/customSelect-arrow.gif) no-repeat center right;
     }
 
     /*Timeline chat*/
@@ -5424,7 +5424,7 @@ ul.sidebar-menu li a.active i {
 
     /*lock screen*/
     .lock-screen {
-        background: #1FB3A3 url("../images/lock-screen.jpg") no-repeat fixed 0 0 / cover;
+        background: #1FB3A3 url("../ASSETS/images/lock-screen.jpg") no-repeat fixed 0 0 / cover;
     }
 
     .lock-wrapper {
@@ -5552,7 +5552,7 @@ ul.sidebar-menu li a.active i {
     }
 
     .lang-arrow-up {
-        background: url("../images/top-arrow.png") no-repeat;
+        background: url("../ASSETS/images/top-arrow.png") no-repeat;
         width: 18px;
         height: 10px;
         margin-top: -15px;
@@ -7618,7 +7618,7 @@ ul.top-menu > li > a:focus {
 }
 
 .log-arrow-up {
-    background: url("../images/top-arrow.png") no-repeat;
+    background: url("../ASSETS/images/top-arrow.png") no-repeat;
     width: 18px;
     height: 10px;
     margin-top: -20px;
@@ -7721,7 +7721,7 @@ ul.top-menu > li > a:focus {
 /*----*/
 
 .notify-arrow {
-    background: url("../images/top-arrow.png") no-repeat;
+    background: url("../ASSETS/images/top-arrow.png") no-repeat;
     width: 18px;
     height: 10px;
     margin-top: 0;
@@ -7746,7 +7746,7 @@ ul.top-menu > li > a:focus {
     transition: all .3s ease;
     border: 1px solid #fff;
     box-shadow: none;
-    background: #f6f6f6 url("../images/search-icon.png") no-repeat 10px 8px;
+    background: #f6f6f6 url("../ASSETS/images/search-icon.png") no-repeat 10px 8px;
     padding: 0 5px 0 30px;
     color: #fff;
     border-radius: 100px;
@@ -10957,11 +10957,11 @@ select:focus:invalid:focus,
 }
 
 .blue-ribon {
-    background: url("../images/twitter_corner_blue.png") no-repeat;
+    background: url("../ASSETS/images/twitter_corner_blue.png") no-repeat;
 }
 
 .black-ribon {
-    background: url("../images/twitter_corner_black.png") no-repeat;
+    background: url("../ASSETS/images/twitter_corner_black.png") no-repeat;
 }
 
 .twt-feed.blue-bg {
@@ -11408,7 +11408,7 @@ span.customSelect.changed {
 }
 
 .customSelectInner {
-    background: url(../images/customSelect-arrow.gif) no-repeat center right;
+    background: url(../ASSETS/images/customSelect-arrow.gif) no-repeat center right;
 }
 
 /*Timeline chat*/
@@ -12119,7 +12119,7 @@ tr.odd.gradeU td.sorting_1 {
 /*lock screen*/
 
 .lock-screen {
-    background: #1FB3A3 url("../images/lock-screen.jpg") no-repeat fixed 0 0 / cover;
+    background: #1FB3A3 url("../ASSETS/images/lock-screen.jpg") no-repeat fixed 0 0 / cover;
 }
 
 .lock-wrapper {
@@ -12248,7 +12248,7 @@ tr.odd.gradeU td.sorting_1 {
 }
 
 .lang-arrow-up {
-    background: url("../images/top-arrow.png") no-repeat;
+    background: url("../ASSETS/images/top-arrow.png") no-repeat;
     width: 18px;
     height: 10px;
     margin-top: -15px;

@@ -14,7 +14,7 @@
             <ul class="sidebar-menu" id="nav-accordion">
                 <!-- <li style="padding-top:20px"> 
                 <center>
-                    <img src="../images/OSAS/MAAM%20DEM.jpg" class="userpic" alt="lock avatar"> 
+                    <img src="../ASSETS/images/OSAS/MAAM%20DEM.jpg" class="userpic" alt="lock avatar"> 
                 <center>
                 </li>
                 <li style="padding-top:10px">

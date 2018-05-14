@@ -1298,7 +1298,7 @@
   // ======================= imagesLoaded Plugin ===============================
   /*!
    * jQuery imagesLoaded plugin v1.1.0
-   * http://github.com/desandro/imagesloaded
+   * http://github.com/desandro/ASSETS/imagesloaded
    *
    * MIT License. by Paul Irish et al.
    */

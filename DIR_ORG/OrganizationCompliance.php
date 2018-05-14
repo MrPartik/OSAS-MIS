@@ -335,7 +335,7 @@ include('../config/connection.php');
                             <div class="twt-feed blue-bg">
                                 <div class="corner-ribon black-ribon"> <i class="fa fa-group"></i> </div>
                                 <div class="fa fa-group wtt-mark"></div>
-                                <a href="#"> <img alt="" src="../../../images/OSAS/Organization_Icon.png"> </a>
+                                <a href="#"> <img alt="" src="../../../ASSETS/images/OSAS/Organization_Icon.png"> </a>
                                 <h1 id="lblcode"></h1>
                                 <p id="lblname"></p>
                                 <p id="lbladvname"></p>
