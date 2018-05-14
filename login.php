@@ -6,12 +6,12 @@
     <link rel="shortcut icon" href="images/favicon.png">
     <title>Login</title>
     <!--Core CSS -->
-    <link href="bs3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-reset.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="ASSETS/bs3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="ASSETS/css/bootstrap-reset.css" rel="stylesheet">
+    <link href="ASSETS/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/style-responsive.css" rel="stylesheet" /> </head>
+    <link href="ASSETS/css/style.css" rel="stylesheet">
+    <link href="ASSETS/css/style-responsive.css" rel="stylesheet" /> </head>
 
 <body class="login-body">
     <div class="container">
@@ -27,11 +27,11 @@
 				    session_start();
                     if(isset($_SESSION['logged_in']))
                     {   if($_SESSION['logged_user']['role']=="Organization")
-                        { header("location:org_dir/dashboard.php");  }
+                        { header("location:DIR_ORG/dashboard.php");  }
                         else if($_SESSION['logged_user']['role']=="OSAS HEAD")
-                         { header("location:osas_dir/dashboard.php"); }
+                         { header("location:DIR_OSAS/dashboard.php"); }
                         else if($_SESSION['logged_user']['role']=="Administrator")
-                        { header("location:admin_dir/dashboard.php"); }
+                        { header("location:DIR_ADMIN/dashboard.php"); }
                         else if($_SESSION['logged_user']['role']=="Student")
                         { }  
                         else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
@@ -55,11 +55,11 @@
                                             'ref'=>$row['Users_REFERENCED']);
                                         $role = $_SESSION['logged_user']['role'];
                                            if($_SESSION['logged_user']['role']=="Organization")
-                                            { header("location:org_dir/dashboard.php");  }
+                                            { header("location:DIR_ORG/dashboard.php");  }
                                             else if($_SESSION['logged_user']['role']=="OSAS HEAD")
-                                            { header("location:osas_dir/dashboard.php"); }
+                                            { header("location:DIR_OSAS/dashboard.php"); }
                                             else if($_SESSION['logged_user']['role']=="Administrator")
-                                            { header("location:admin_dir/dashboard.php"); }
+                                            { header("location:DIR_ADMIN/dashboard.php"); }
                                             else if($_SESSION['logged_user']['role']=="Student")
                                             { }
                                             else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
@@ -102,8 +102,8 @@
     </div>
     <!-- Placed js at the end of the document so the pages load faster -->
     <!--Core js-->
-    <script src="js/jquery.js"></script>
-    <script src="bs3/js/bootstrap.min.js"></script>
+    <script src="ASSETS/js/jquery.js"></script>
+    <script src="ASSETS/bs3/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
 

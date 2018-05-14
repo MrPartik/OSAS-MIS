@@ -13,7 +13,7 @@
   <component name="FileEditorManager">
     <leaf>
       <file leaf-file-name="finanAssign.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/OSAS_Dir/finanAssign.php">
+        <entry file="file://$PROJECT_DIR$/DIR_OSAS/finanAssign.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="2040">
               <caret line="120" column="16" lean-forward="false" selection-start-line="120" selection-start-column="16" selection-end-line="120" selection-end-column="16" />
@@ -27,7 +27,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/OSAS_Dir/finanAssign.php" />
+        <option value="$PROJECT_DIR$/DIR_OSAS/finanAssign.php" />
       </list>
     </option>
   </component>
@@ -84,7 +84,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="OSAS_Dir" />
+              <option name="myItemId" value="DIR_OSAS" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -161,7 +161,7 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/OSAS_Dir/footer.php">
+    <entry file="file://$PROJECT_DIR$/DIR_OSAS/footer.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-141">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -169,7 +169,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/OSAS_Dir/header.php">
+    <entry file="file://$PROJECT_DIR$/DIR_OSAS/header.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-444">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -177,7 +177,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/OSAS_Dir/finanAssignSave.php">
+    <entry file="file://$PROJECT_DIR$/DIR_OSAS/finanAssignSave.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -185,7 +185,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/OSAS_Dir/finanAssign.php">
+    <entry file="file://$PROJECT_DIR$/DIR_OSAS/finanAssign.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2040">
           <caret line="120" column="16" lean-forward="false" selection-start-line="120" selection-start-column="16" selection-end-line="120" selection-end-column="16" />
