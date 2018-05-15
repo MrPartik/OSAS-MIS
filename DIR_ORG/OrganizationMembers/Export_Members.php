@@ -1,14 +1,20 @@
 <?php  
  if(!empty($_FILES["employee_file"]["name"]))  
  {  
-      include('../../config/connection.php');     
+    include('../../config/connection.php');
 
-      $output = '';  
-      $allowed_ext = array("csv");  
-     $container_arr = array();
-     $org = $_GET['Orgcode'];
+    $output = '';
+    $allowed_ext = array("csv");
+    $container_arr = array();
+    session_start();
 
-      $extension = end(explode(".", $_FILES["employee_file"]["name"]));  
+    $role = $_SESSION['logged_user']['role'];
+    $org = $_SESSION['logged_user']['username'];
+
+
+      //$extension = end(explode(".", $_FILES["employee_file"]["name"]));
+        $extension = pathinfo($_FILES["employee_file"]["name"], PATHINFO_EXTENSION);
+
       if(in_array($extension, $allowed_ext))  
       {  
            $file_data = fopen($_FILES["employee_file"]["tmp_name"], 'r');  
@@ -51,6 +57,7 @@
         
            }  
             echo json_encode($container_arr);
+//          echo 'okay';
       }  
       else  
       {  

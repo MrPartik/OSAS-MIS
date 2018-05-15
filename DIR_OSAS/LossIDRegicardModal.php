@@ -53,6 +53,8 @@
                         <br/>
                         <br/>
                         <button id="addStudLoss" class="btnSave btn btn-default"><i class="fa fa-plus"></i> Add</button>
+
+            <button id="MoreInfo" class="btnSave btn btn-info"><i class="fa fa-info-circle"></i> More Info</button>
                         <br/>
                         <br/> </div>
                     <div class="collapse-group">
@@ -126,11 +128,38 @@
                     </div>
                 </div>
             </div>
-            <script> 
-                    var table = $('#dynamic-table-modal').DataTable({
-                        iDisplayLength:3
+            <script>
+
+
+            $("div.twt-feed").hide();
+            $("#MoreInfo").on("click",function(){
+                if(!$("div.twt-feed.maroon-bg:visible").length){
+                    $("div.twt-feed").slideToggle();
+                    $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide Info');
+                }else{
+                     $("div.twt-feed").slideToggle();
+                    $(this).html('<i class="fa  fa-info-circle"></i> More Info');
+                }
+            });
+
+
+                   var oTable = $('#dynamic-table-modal').dataTable({
+                        "aLengthMenu": [
+                    [3, 5, 15, 20, -1]
+                    , [3, 5, 15, 20, "All"] // change per page values here
+                ], // set the initial value
+                        "iDisplayLength": 3
+                        , "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>"
+                        , "sPaginationType": "bootstrap"
+                        , "oLanguage": {
+                            "sLengthMenu": "_MENU_ records per page"
+                            , "oPaginate": {
+                                "sPrevious": "Prev"
+                                , "sNext": "Next"
+                            }
+                        }
                         , aaSorting: [[1, "desc"]]
-                    }); 
+                    });
                 $('#addStudLoss').on("click", function () {
                     if ($('#LossDiv:visible').length) {
                         $("#LossDiv").slideToggle(500);

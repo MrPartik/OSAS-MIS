@@ -13,13 +13,6 @@ include('header.php');
 include('../config/connection.php');
 ?>
 
-<link href="../ASSETS/js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-<link href="../ASSETS/js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
-<link rel="stylesheet" href="../ASSETS/js/data-tables/DT_bootstrap.css" />
-<!-- Custom styles for this template -->
-<link href="../ASSETS/css/style.css" rel="stylesheet">
-<link href="../ASSETS/css/style-responsive.css" rel="stylesheet" />
-
 <body>
     <?php include('sidenav.php')?>
     <!--main content start-->

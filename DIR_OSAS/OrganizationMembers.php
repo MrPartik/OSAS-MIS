@@ -39,6 +39,7 @@ include('../config/connection.php');
                                             <tr>
                                                 <th class='hidden'>Organization Code</th>
                                                 <th>Organization Name</th>
+                                                <th>Academic Year</th>
                                                 <th>Organization Category</th>
                                                 <th>Number of Members</th>
                                                 <th style="width:1%"> <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
@@ -47,15 +48,20 @@ include('../config/connection.php');
                                         <tbody>
                                             <?php
 
-                                        $view_query = mysqli_query($con," SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME,OrgForCompliance_ADVISER,OrgAppProfile_STATUS,OC.OrgCat_NAME,(SELECT COUNT(*) FROM t_assign_org_members WHERE AssOrgMem_DISPLAY_STAT = 'Active' AND AssOrgMem_COMPL_ORG_CODE = OrgForCompliance_ORG_CODE) AS COU
+                                        $view_query = mysqli_query($con," SELECT OrgForCompliance_ORG_CODE,OrgForCompliance_BATCH_YEAR,OrgAppProfile_NAME,OrgForCompliance_ADVISER,OrgAppProfile_STATUS,OC.OrgCat_NAME,(SELECT COUNT(*) FROM t_assign_org_members WHERE AssOrgMem_DISPLAY_STAT = 'Active' AND AssOrgMem_COMPL_ORG_CODE = OrgForCompliance_ORG_CODE) AS COU
 FROM `r_org_applicant_profile` AS OAP INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE INNER JOIN t_assign_org_category AOC ON AOC.AssOrgCategory_ORG_CODE = OFC.OrgForCompliance_ORG_CODE INNER JOIN r_org_category OC ON OC.OrgCat_CODE = AOC.AssOrgCategory_ORGCAT_CODE
 WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active' ");
+
+//                                       $view_query = mysqli_query($con," SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME,OrgForCompliance_ADVISER,OrgAppProfile_STATUS,OC.OrgCat_NAME,(SELECT COUNT(*) FROM t_assign_org_members WHERE AssOrgMem_DISPLAY_STAT = 'Active' AND AssOrgMem_COMPL_ORG_CODE = OrgForCompliance_ORG_CODE) AS COU
+//FROM `r_org_applicant_profile` AS OAP INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE INNER JOIN t_assign_org_category AOC ON AOC.AssOrgCategory_ORG_CODE = OFC.OrgForCompliance_ORG_CODE INNER JOIN r_org_category OC ON OC.OrgCat_CODE = AOC.AssOrgCategory_ORGCAT_CODE
+//WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_STAT = 'Active' AND (SELECT COUNT(*) FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgAppProfile_APPL_CODE = (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` AS AZ WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR = '$current_acadyear' AND AZ.OrgForCompliance_ORG_CODE = OFC.OrgForCompliance_ORG_CODE  )) = '1' ");
                                         while($row = mysqli_fetch_assoc($view_query))
                                         {
                                             $code = $row["OrgForCompliance_ORG_CODE"];
                                             $name = $row["OrgAppProfile_NAME"];
                                             $cat = $row["OrgCat_NAME"];
                                             $cou = $row["COU"];
+                                            $byear = $row["OrgForCompliance_BATCH_YEAR"];
                                             $i = 0;
 
 
@@ -63,6 +69,7 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                                             <tr class=''>
                                                 <td class='hidden'>$code</td>
                                                 <td>$name</td>
+                                                <td>$byear</td>
                                                 <td>$cat</td>
                                                 <td>$cou</td>
                                                 <td style='width:100px'>
@@ -75,16 +82,18 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
 
 
 
-									?>  <tfoot>
-                                    <tr>
-                                        <th class='hidden'>Organization Code</th>
-                                        <th>Organization Name</th>
-                                        <th>Organization Category</th>
-                                        <th>Number of Members</th>
-                                        <th style="width:1%"> <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
-                                    </tr>
-                                </tfoot>
-                                        </tbody>
+									?>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th class='hidden'>Organization Code</th>
+                                            <th>Organization Name</th>
+                                            <th>Academic Year</th>
+                                            <th>Organization Category</th>
+                                            <th>Number of Members</th>
+                                            <th style="width:1%"> <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
+                                        </tr>
+                                    </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -208,7 +217,8 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                                                     </div>
                                                 </div>
                                             </form>
-                                            <!--
+<!--
+
                                             <form id="upload_csv2" method="post" enctype="multipart/form-data">
                                                 <div class="controls col-md-12">
                                                     <div class="fileupload fileupload-new row" data-provides="fileupload"> <span class="btn btn-white btn-file" style="width:200px">
@@ -219,6 +229,7 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                                                     </div>
                                                 </div>
                                             </form>
+
 -->
                                         </div>
                                     </div>
@@ -316,7 +327,6 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
             var flag = 0;
             $('#upload_csv').on("submit", function(e) {
                 var orgcode = document.getElementById('orgcode').innerText;
-                alert();
                 e.preventDefault(); //form will not submitted
                 $.ajax({
                     url: "Organization/OrganizationMembers/Export_Members.php?Orgcode=" + orgcode,
@@ -335,7 +345,18 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                             //
                             //                                alert(data);
                             //                            });
-                            swal("Record Updated!", "The data is successfully imported!", "success");
+                            swal({
+                                title: "Data Imported!",
+                                text: "The csv file is successfully imported!",
+                                type: "success",
+                                confirmButtonColor: '#88A755',
+                                confirmButtonText: 'Okay',
+                                closeOnConfirm: false
+                            }, function (isConfirm) {
+                                alert('qwe')
+                                window.location.reload();
+
+                            });
                         }
                     }
                 })
@@ -355,7 +376,7 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                         } else if (data == "Error2") {
                             swal("Cancelled", "Please Select File", "error");
                         } else {
-                            alert(data);
+//                            alert(data);
                             //                            $.each(data, function(key, val) {
                             //
                             //                                alert('qwe');

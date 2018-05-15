@@ -59,6 +59,7 @@ include('header.php');
                                                 <button class="btn btn-default " id="btnprint">Print <i class="fa fa-print"></i></button>
                                             </div>
                                         </div>
+
                                         <div class="space15"></div>
                                         <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                             <thead>
@@ -126,23 +127,29 @@ include('header.php');
 
         <?php include ('footer.php'); ?>
         <!--script for this page only-->
+        <script type="text/javascript" src="../js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="../js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+        <script type="text/javascript" src="../js/bootstrap-daterangepicker/moment.min.js"></script>
+        <script type="text/javascript" src="../js/bootstrap-daterangepicker/daterangepicker.js"></script>
         <script src="Organization/Cashflow.js"></script>
 
         <!-- END JAVASCRIPTS -->
         <script>
             $(document).ready(function() {
+                $('#dateFrom').attr('disabled',true)
+                $('#dateTo').attr('disabled',true)
+
+
                 $('#btnprint').click(function() {
                     var items = [];
                     var table = $('#editable-sample').DataTable();
                     jQuery(table.fnGetNodes()).each(function() {
                         items.push($(this).closest('tr').children('td:first').find('label').attr("cashid"));
                     });
-
-                    $.ajax({
-
-                    })
                     window.open('Print/CashflowStatement_Print.php?items=' + items, '_blank');
                 });
+
+
 
             });
             jQuery(document).ready(function() {

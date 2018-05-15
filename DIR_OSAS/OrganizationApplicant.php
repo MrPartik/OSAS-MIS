@@ -343,9 +343,7 @@ include('../config/connection.php');
                 $('#editable-sample_new').on('click', function() {
                     $('#updsubmit-data').hide();
                     $('#submit-data').show();
-                    document.getElementById("form-data2").reset();
-
-
+                    $("#form-data2").trigger("reset");
                 });
 
                 $('.hidethis').hide();

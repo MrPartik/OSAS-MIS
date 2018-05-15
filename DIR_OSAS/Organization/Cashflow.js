@@ -45,7 +45,7 @@ var EditableTable = function () {
                     , [5, 15, 20, "All"] // change per page values here
                 ]
                 , // set the initial value
-                "iDisplayLength": 5
+                "iDisplayLength": -1
                 , "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>"
                 , "sPaginationType": "bootstrap"
                 , "oLanguage": {
@@ -55,10 +55,13 @@ var EditableTable = function () {
                         , "sNext": "Next"
                     }
                 }
-                , "aoColumnDefs": [{
-                        'bSortable': false
-                        , 'aTargets': [0, 1, 2, 3, 4, 5, 6]
-                    }
+                    , "aoColumnDefs": [{
+                            'bSortable': false
+                            , 'aTargets': [0, 1, 2, 3, 4, 5, 6]
+                        },
+                        {
+                            "sClass": "hidden", "aTargets": [ 0 ]
+                        }
                 ]
             });
             oTable.fnSort([]);
@@ -82,7 +85,7 @@ var EditableTable = function () {
                             oTable.fnDeleteRow(0);
                         });
                         $.each(data, function (key, val) {
-                            var aiNew = oTable.fnAddData(['<label cashID =' + val.id + '>' + val.ref + '</label>', '<label>'+ val.orgCode+' - '+ val.desc + '</label>', '<label>' + val.col + '</label>', '<label>' + val.exp + '</label>', '<label>' + val.bal + '</label>', '<label>' + val.rem + '</label>', '<label>' + val.dat + '</label>']);
+                            var aiNew = oTable.fnAddData(['<label cashID =' + val.id + '>' , val.ref ,val.desc,val.col,val.exp , val.bal ,val.rem,val.dat]);
                             var nRow = oTable.fnGetNodes(aiNew[0]);
                         });
                     }

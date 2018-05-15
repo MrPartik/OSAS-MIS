@@ -8,7 +8,9 @@
      $container_arr = array();
      $org = $_GET['Orgcode'];
 
-      $extension = end(explode(".", $_FILES["employee_file"]["name"]));  
+//      $extension = end(explode(".", $_FILES["employee_file"]["name"]));
+     $extension = pathinfo($_FILES["employee_file"]["name"], PATHINFO_EXTENSION);
+
       if(in_array($extension, $allowed_ext))  
       {  
            $file_data = fopen($_FILES["employee_file"]["tmp_name"], 'r');  

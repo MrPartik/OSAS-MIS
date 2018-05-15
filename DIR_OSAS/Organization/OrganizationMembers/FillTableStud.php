@@ -9,7 +9,7 @@
 		INNER JOIN r_stud_profile ON AssOrgMem_STUD_NO = Stud_NO
         LEFT JOIN t_org_officers  ON OrgOffi_STUD_NO = AssOrgMem_STUD_NO       
         LEFT JOIN r_org_officer_position_details ON OrgOffiPosDetails_ID = OrgOffi_OrgOffiPosDetails_ID
-        WHERE AssOrgMem_DISPLAY_STAT = 'Active'  AND AssOrgMem_COMPL_ORG_CODE = '$compcode'";
+        WHERE AssOrgMem_DISPLAY_STAT = 'Active'  AND AssOrgMem_COMPL_ORG_CODE = '$compcode' GROUP BY Stud_NO";
     $view_query = mysqli_query($con,$query);
     $container_arr = array();
     while($row = mysqli_fetch_assoc($view_query))

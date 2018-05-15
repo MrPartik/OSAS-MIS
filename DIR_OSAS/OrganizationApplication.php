@@ -178,19 +178,16 @@ include('../config/connection.php');
                                                 <td>$desc</td>";
                                             
                                             if($mystat == 0){
-                                            echo "<td><center><span class='label label-danger'>Expired</span> &nbsp;";
+                                            echo "<td title='This organization is no longer the active organization. There should be one organization with same organization application must be active'><center><span class='label label-danger'>Expired</span> &nbsp;";
                                                         $ifInactive =mysqli_fetch_assoc(mysqli_query($con,"Select OrgForCompliance_DISPAY_STAT from  t_org_for_compliance where OrgForCompliance_ORG_CODE ='$code' "));
                                                 if($ifInactive['OrgForCompliance_DISPAY_STAT'] !='Active'){
-                                              echo  "<span class='label label-danger'>Deactivated</span></center>";
+                                              echo  "<span class='label label-danger'>Deactivated Account</span></center>";
                                                 }
-
-
-
                                                 echo "</center></td>
                                                 $curstep</center></td>
-                                                <td style='width:200px'>
+                                                <td title ='This Organization is Expired, or Inactive' style='width:200px'>
                                                     <center>
-                                                         <a class='btn btn-info' href='javascript:;'  onClick='expiredSession()'><i class='fa fa-flag '></i></a>
+                                                         <a class='btn btn-danger' href='javascript:;'  onClick='expiredSession()'><i class='fa fa-flag '></i></a>
                                                     </center>
                                                 </td>
                                             </tr>

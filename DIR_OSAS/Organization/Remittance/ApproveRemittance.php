@@ -10,8 +10,8 @@
         mysqli_stmt_bind_param($query, 'ss', $id, $code);
         mysqli_stmt_execute($query);
         $id = 'Received By: '. $id;
-        $query = mysqli_prepare($con, "INSERT INTO t_org_cash_flow_statement (OrgCashFlowStatement_ORG_CODE,OrgCashFlowStatement_ITEM,OrgCashFlowStatement_REMARKS) VALUES ((SELECT OrgRemittance_ORG_CODE FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = ?),?,?)");
-        mysqli_stmt_bind_param($query, 'sss', $code, $code,$id);
+        $query = mysqli_prepare($con, "INSERT INTO t_org_cash_flow_statement (OrgCashFlowStatement_ORG_CODE,OrgCashFlowStatement_ITEM,OrgCashFlowStatement_REMARKS,OrgCashFlowStatement_REMARKS) VALUES ((SELECT OrgRemittance_ORG_CODE FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = ?),?,?,?)");
+        mysqli_stmt_bind_param($query, 'sss', $code, $code,$id,'Received by: ' .  $id);
         mysqli_stmt_execute($query);
 
         

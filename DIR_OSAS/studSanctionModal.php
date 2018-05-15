@@ -5,7 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Student Details</h4> </div>
             <div class="modal-body">
-                <!--
+
             <div class='twt-feed maroon-bg'>
                 <?php viewStudProfileCond( 0,$_GET['StudNo']) ?>
                 <?php while($profileLayoutRow = mysqli_fetch_array($view_studProfile_cond)){ ?>
@@ -52,12 +52,12 @@
                     </ul>
                 </div>
             </div>
--->
                 <div class="row">
                     <div class="col-md-12">
                         <br/>
                         <br/>
                         <button id="assignSanction" class="btnSave btn btn-default"><i class="fa fa-plus"></i> Add</button>
+                        <button id="MoreInfo" class="btnSave btn btn-info"><i class="fa fa-info-circle"></i> More Info</button>
                         <br/>
                         <br/> </div>
                     <div class="collapse-group">
@@ -91,7 +91,7 @@
                         </div>
                         <div id="TableStudSanc " class="panel-body ">
                             <div class="adv-table">
-                                <table class="display table table-bordered table-striped" id="dynamic-table-modal">
+                                <table class="display table table-bordered table-striped" id="dynamic-table-modals">
                                     <thead>
                                         <tr>
                                             <th class="hidden">Sanction ID </th>
@@ -119,9 +119,7 @@
                                                     <br>Last Modified: '. $dateMod->format('D M d, Y h:i A').'</i>'?></span>
                                                 </td>
                                                 <td>
-                                                    <textarea id="sancRemarks" style="resize:vertical; width:100%;height:100px" value="<?php echo $SancDetrow['Remarks']?>">
-                                                        <?php echo $SancDetrow['Remarks']?>
-                                                    </textarea>
+                                                    <textarea id="sancRemarks" style="resize:vertical; width:100%;height:100px" value="<?php echo $SancDetrow['Remarks']?>"><?php echo $SancDetrow['Remarks']?></textarea>
                                                 </td>
                                                 <td class="numeric ">
                                                     <center>
@@ -195,6 +193,17 @@
             </div>
         </div>
         <script>
+            $("div.twt-feed").hide();
+            $("#MoreInfo").on("click",function(){
+                if(!$("div.twt-feed.maroon-bg:visible").length){
+                    $("div.twt-feed").slideToggle();
+                    $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide Info');
+                }else{
+                     $("div.twt-feed").slideToggle();
+                    $(this).html('<i class="fa  fa-info-circle"></i> More Info');
+                }
+            });
+
             var date = new Date();
             dd = ('0' + date.getDate()).slice(-2)
                 , mm = ('0' + (date.getMonth() + 1)).slice(-2)
@@ -210,7 +219,7 @@
                     $(this).css("color", "red");
                 }
             });
-            var oTable = $('#dynamic-table-modal').dataTable({
+            var oTable = $('#dynamic-table-modals').dataTable({
             "aLengthMenu": [
                     [3,5, 15, 20, -1]
                     , [3,5, 15, 20, "All"] // change per page values here
@@ -225,7 +234,7 @@
                     , "sNext": "Next"
                 }
             }
-            , aaSorting: [[5, "desc"]]
+            , aaSorting: [[1, "desc"]]
             });
             $('#assignSanction').on("click", function () {
                 if ($('#sanctionDiv:visible').length) {

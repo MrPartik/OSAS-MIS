@@ -126,13 +126,13 @@ include('../config/connection.php');
                                                     }	
 
                                                ?>
-                    <?php $sanc_query = mysqli_query($con,"SELECT A.AssSancStudStudent_STUD_NO StudNo, CONCAT(B.Stud_LNAME,', ',B.Stud_FNAME,' ',COALESCE(B.Stud_MNAME,'')) AS FullName, A.AssSancStudStudent_SancDetails_CODE  AS SANC, ((C.SancDetails_TIMEVAL)-(A.AssSancStudStudent_CONSUMED_HOURS)) as remaining FROM t_assign_stud_saction A 
+                    <?php $sanc_query = mysqli_query($con,"SELECT A.AssSancStudStudent_STUD_NO StudNo,A.AssSancStudStudent_TO_BE_DONE datee, CONCAT(B.Stud_LNAME,', ',B.Stud_FNAME,' ',COALESCE(B.Stud_MNAME,'')) AS FullName, A.AssSancStudStudent_SancDetails_CODE  AS SANC, ((C.SancDetails_TIMEVAL)-(A.AssSancStudStudent_CONSUMED_HOURS)) as remaining FROM t_assign_stud_saction A
 INNER JOIN  r_stud_profile B on a.AssSancStudStudent_STUD_NO = a.AssSancStudStudent_STUD_NO
 INNER JOIN r_sanction_details C on A.AssSancStudStudent_SancDetails_CODE = C.SancDetails_CODE
-WHERE A.AssSancStudStudent_TO_BE_DONE = CURRENT_DATE AND A.AssSancStudStudent_STUD_NO = B.Stud_NO AND a.AssSancStudStudent_DISPLAY_STAT='Active' AND A.AssSancStudStudent_IS_FINISH <> 'Finish' AND a.AssSancStudStudent_CONSUMED_HOURS<>c.SancDetails_TIMEVAL");
+WHERE A.AssSancStudStudent_TO_BE_DONE <= CURRENT_DATE AND A.AssSancStudStudent_STUD_NO = B.Stud_NO AND a.AssSancStudStudent_DISPLAY_STAT='Active' AND A.AssSancStudStudent_IS_FINISH <> 'Finish' AND a.AssSancStudStudent_CONSUMED_HOURS<>c.SancDetails_TIMEVAL");
                     while($row=mysqli_fetch_assoc($sanc_query)){ ?>
                 
-                <li><?php echo '<strong>'.$row["StudNo"].'</strong> <br> '.$row["FullName"].'<br> Sanction: '.$row["SANC"]."<br>Remaining Hours:".$row["remaining"]."hrs<br><i style='color:red'> Exceeding the sanction duedate</i>" ?><a id="StudSanctionModalClick" value="<?php echo $row["StudNo"]; ?>" data-toggle="modal" href="#studSanction" class="event-close"><i class="fa fa-bolt"></i></a></li>
+                <li><?php echo '<strong>'.$row["StudNo"].'</strong> <br> '.$row["FullName"].'<br> Sanction: '.$row["SANC"]."<br>Remaining Hours: ".$row["remaining"]."hrs<br><i style='color:red'> Exceeding the sanction duedate -".(new datetime($row["datee"]))->format('D  M d, Y')." </i>" ?><a id="StudSanctionModalClick" value="<?php echo $row["StudNo"]; ?>" data-toggle="modal" href="#studSanction" class="event-close"><i class="fa fa-bolt"></i></a></li>
                    
                     <?php }?>
 

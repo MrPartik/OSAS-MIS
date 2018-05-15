@@ -185,12 +185,12 @@ include('../config/connection.php');
 </html>
 <script>
     $(document).ready(function () {
-        var oTable = $('#dynamic-table').dataTable({
-            "aLengthMenu": [
-                    [5, 15, 20, -1]
-                    , [5, 15, 20, "All"] // change per page values here
+                var oTable = $('#dynamic-table').dataTable({
+                        "aLengthMenu": [
+                    [3, 5, 10, 15, 20, -1]
+                    , [3, 5,10, 15, 20, "All"] // change per page values here
                 ], // set the initial value
-            "iDisplayLength": 5
+                        "iDisplayLength": 10
             , "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>"
             , "sPaginationType": "bootstrap"
             , "oLanguage": {
@@ -219,6 +219,22 @@ include('../config/connection.php');
             , $Name = $("#sancName").val()
             , $Desc = $("#sancDesc").val()
             , $Time = $("#sancTime").val();
+
+
+                    swal({
+                            title: "Are you sure?"
+                            , text: "This data will be saved and used in further transactions"
+                            , type: "warning"
+                            , showCancelButton: true
+                            , confirmButtonColor: '#9DD656'
+                            , confirmButtonText: 'Yes, Update  it!'
+                            , cancelButtonText: "No!"
+                            , closeOnConfirm: false
+                            , closeOnCancel: false
+                        }, function (isConfirm) {
+                            if (isConfirm) {
+
+
         $.ajax({
             url: "studSanctionSave.php"
             , cache: false
@@ -236,6 +252,11 @@ include('../config/connection.php');
                 window.location.reload();
             }
         });
+    }
+                            else {
+                                swal("Cancelled", "The transaction is cancelled", "error");
+                            }
+                        });
     });
     $(".btnInsertOff").on("click", function () {
         var $Code = $("#OffCode").val()

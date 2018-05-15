@@ -75,10 +75,16 @@ include('../config/connection.php');
                                                             $studNo = $stud_row['Stud_NO'];
                                                             $noRow = mysqli_fetch_array(mysqli_query($con,"SELECT `AssSancStudStudent_STUD_NO` FROM `t_assign_stud_saction` WHERE `AssSancStudStudent_STUD_NO` = '$studNo' and `AssSancStudStudent_DISPLAY_STAT` <> 'Inactive'  and `AssSancStudStudent_IS_FINISH` <>'finished'")); 
                                                             $countSanc = mysqli_num_rows(mysqli_query($con,"SELECT `AssSancStudStudent_STUD_NO` FROM `t_assign_stud_saction` WHERE `AssSancStudStudent_STUD_NO` = '$studNo' and `AssSancStudStudent_DISPLAY_STAT` <> 'Inactive'  and `AssSancStudStudent_IS_FINISH` <>'finished'"));
-                                                            ?> 
+                                                        if($noRow){
+
+                                                        ?>
                                                         
                                                         <center> <a id="StudSanctionModalClick" value="<?php echo $noRow[0] ; ?>" data-toggle="modal" href="#studSanction"  class="label label-danger label-mini"> <?php echo  $countSanc ?></a></center>
                                                             </td>
+                                                            <?php
+                                                        }else{ ?>
+                                                        <center> <a class="label label-success label-mini"> <?php echo  $countSanc ?></a></center>
+                                                        <?php } ?>
                                                             <td style="width:20%;"> 
                                                             <center> <strong>
                                                                 <?php
@@ -194,8 +200,7 @@ include('../config/connection.php');
             </div>
             <!-- Modal Dest-->
             <div id="studSemClearance" class="modal fade content-sanction " role="dialog "> </div>
-
-    <div id="studSanction" class="modal fade content-sanction " role="dialog "> </div>
+            <div id="studSanction" class="modal fade content-sanctionss " role="dialog "> </div>
             <!--main content end-->
             <!-- Placed js at the end of the document so the pages load faster -->
             <!--Core js-->
@@ -213,33 +218,28 @@ include('../config/connection.php');
             , cache: false
             , async: false
             , success: function (result) {
-                $(".content-sanction ").html(result);
+                $(".content-sanctionss ").html(result);
             }
         });
     });
-    $(document).ready(function () {
-        var dataSrc = [];
-        var table = $('#dynamic-table').DataTable({
-            'initComplete': function () {
-                var api = this.api();
-                api.cells('tr', [0, 1, 2,3,4]).every(function () {
-                    var data = $('<div>').html(this.data()).text();
-                    if (dataSrc.indexOf(data) === -1) {
-                        dataSrc.push(data);
-                    }
-                });
-                dataSrc.sort();
-                $('.dataTables_filter input[type="search"]', api.table().container()).typeahead({
-                    source: dataSrc
-                    , afterSelect: function (value) {
-                        api.search(value).draw();
-                    }
-                });
+
+       var oTable = $('#dynamic-table').dataTable({
+                        "aLengthMenu": [
+                    [3, 5, 10, 15, 20, -1]
+                    , [3, 5,10, 15, 20, "All"] // change per page values here
+                ], // set the initial value
+                        "iDisplayLength": 10
+            , "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>"
+            , "sPaginationType": "bootstrap"
+            , "oLanguage": {
+                "sLengthMenu": "_MENU_ records per page"
+                , "oPaginate": {
+                    "sPrevious": "Prev"
+                    , "sNext": "Next"
+                }
             }
-            , bDestroy: true
-            , aaSorting: [[5, "desc"]]
+            , aaSorting: [[4, "desc"]]
         });
-    });
     $("#TableStudSanc ").on("click ", "#StudSemModalClick ", function () {
         var datas = $(this).attr("value");
         $.ajax({

@@ -80,7 +80,7 @@ include('../config/connection.php');
 		INNER JOIN r_stud_profile ON AssOrgMem_STUD_NO = Stud_NO
         LEFT JOIN t_org_officers  ON OrgOffi_STUD_NO = AssOrgMem_STUD_NO       
         LEFT JOIN r_org_officer_position_details ON OrgOffiPosDetails_ID = OrgOffi_OrgOffiPosDetails_ID
-        WHERE AssOrgMem_DISPLAY_STAT = 'Active'  AND AssOrgMem_COMPL_ORG_CODE = '$compcode'"
+        WHERE AssOrgMem_DISPLAY_STAT = 'Active'  AND AssOrgMem_COMPL_ORG_CODE = '$compcode' GROUP BY Stud_NO"
                                                     );
                                                     while($row = mysqli_fetch_assoc($view_query))
                                                     {
@@ -264,13 +264,11 @@ include('../config/connection.php');
             var countreq = 0;
             var flag = 0;
             $('#upload_csv').on("submit", function(e) {
-                var orgcode = document.getElementById('getappcode').innerText;
                 e.preventDefault();
                 $.ajax({
-                    url: "OrganizationMembers/Export_Members.php?Orgcode=" + orgcode,
+                    url: "OrganizationMembers/Export_Members.php",
                     method: "POST",
                     data: new FormData(this),
-                    dataType: 'json',
                     contentType: false, // The content type used when sending data to the server.
                     cache: false, // To unable request pages to be cached
                     processData: false, // To send DOMDocument or non processed data file it is set to false
@@ -280,14 +278,30 @@ include('../config/connection.php');
                         } else if (data == "Error2") {
                             swal("Cancelled", "Please Select File", "error");
                         } else {
-                            $.each(data, function(key, val) {
-                                //alert(val.snum)
-                            });
+                                swal({
+                                    title: "Data Imported!",
+                                    text: "The csv file is successfully imported!",
+                                    type: "success",
+                                    confirmButtonColor: '#88A755',
+                                    confirmButtonText: 'Okay',
+                                    closeOnConfirm: false
+                                }, function (isConfirm) {
+                                alert('qwe')
+                                window.location.reload();
+
+                                });
+//                            $.each(data, function(key, val) {
+//                                //alert(val.snum)
+//                            });
 
                             swal("Record Updated!", "The data is successfully imported!", "success");
                         }
+                    },
+                    error: function(response) {
+                        swal("Error encountered while adding data", "Please try again", "error");
                     }
                 })
+
             });
             $('#drpappcode').change(function() {
                 //                alert('qwe');

@@ -5,7 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Student Details</h4> </div>
             <div class="modal-body">
-                <div class='twt-feed maroon-bg'>
+                <div class='twt-feed maroon-bg' style="display:none">
                     <?php viewStudProfileCond(0,$_GET['StudNo']); 
                     $data =$_GET['StudNo'];
                     while($profileLayoutRow = mysqli_fetch_array($view_studProfile_cond)){ ?>
@@ -51,6 +51,7 @@
                         <br/>
                         <br/>
                         <button id="addFinanStud" class="btnSave btn btn-default"><i class="fa fa-plus"></i> Add</button>
+                        <button id="MoreInfo" class="btnSave btn btn-info"><i class="fa fa-info-circle"></i> More Info</button>
                         <br/>
                         <br/> </div>
                     <div class="collapse-group">
@@ -145,9 +146,36 @@
                 </div>
             </div >
             <script>
-                    var table = $('#dynamic-table-modal').DataTable({
-                         bDestroy: true
-                        , iDisplayLength: 3
+
+            $("div.twt-feed").hide();
+            $("#MoreInfo").on("click",function(){
+                if(!$("div.twt-feed.maroon-bg:visible").length){
+                    $("div.twt-feed").slideToggle();
+                    $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide Info');
+                }else{
+                     $("div.twt-feed").slideToggle();
+                    $(this).html('<i class="fa  fa-info-circle"></i> More Info');
+                }
+            });
+
+
+
+                  var oTable = $('#dynamic-table-modal').dataTable({
+                        "aLengthMenu": [
+                    [3, 5, 15, 20, -1]
+                    , [3, 5, 15, 20, "All"] // change per page values here
+                ], // set the initial value
+                        "iDisplayLength": 3
+                        , "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>"
+                        , "sPaginationType": "bootstrap"
+                        , "oLanguage": {
+                            "sLengthMenu": "_MENU_ records per page"
+                            , "oPaginate": {
+                                "sPrevious": "Prev"
+                                , "sNext": "Next"
+                            }
+                        }
+                        , aaSorting: [[4, "asc"]]
                     });
                 $('#addFinanStud').on("click", function () {
                     if ($('#FinanDiv:visible').length) {
@@ -352,6 +380,5 @@
                                 swal("Error", "no transaction has been made", "error");
                     }
                 });
-                
-            $("#finanDesc").select2(); 
+
             </script>

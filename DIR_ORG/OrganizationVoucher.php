@@ -135,7 +135,12 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                                     </thead>
                                     <tbody>
 
-                                        <?php  while($vouch=mysqli_fetch_array($view_orgVoucher)) { ?>
+                                        <?php
+
+                                        $view_orgVoucher = mysqli_query($con,"SELECT * FROM t_org_voucher v
+                                        INNER JOIN t_org_for_compliance OC on v.OrgVoucher_ORG_CODE = oc.OrgForCompliance_ORG_CODE
+                                        INNER JOIN r_org_applicant_profile OP on OP.OrgAppProfile_APPL_CODE = OC.OrgForCompliance_OrgApplProfile_APPL_CODE WHERE OrgVoucher_STATUS='Approved' AND OrgForCompliance_OrgApplProfile_APPL_CODE = (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` where OrgForCompliance_ORG_CODE ='$referenced_user')  ");
+                                        while($vouch=mysqli_fetch_array($view_orgVoucher)) { ?>
                                         <tr><td>
                                                 <center><?php echo $vouch['OrgVoucher_CASH_VOUCHER_NO'];?></center>
                                             </td>
@@ -269,7 +274,23 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
     <!--Core js-->
     <?php include('footer.php')?>
     <script>
-       var rows = $('#dynamic-table').dataTable();
+     var oTable = $('#dynamic-table').dataTable({
+                        "aLengthMenu": [
+                    [3, 5, 15, 20, -1]
+                    , [3, 5, 15, 20, "All"] // change per page values here
+                ], // set the initial value
+                        "iDisplayLength": -1
+                        , "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>"
+                        , "sPaginationType": "bootstrap"
+                        , "oLanguage": {
+                            "sLengthMenu": "_MENU_ records per page"
+                            , "oPaginate": {
+                                "sPrevious": "Prev"
+                                , "sNext": "Next"
+                            }
+                        }
+                        , aaSorting: [[5, "asc"]]
+                    });
       
         $("#addItem").on("click",function(){
             

@@ -4,8 +4,6 @@ include('../../../config/connection.php');
 
 	if(isset($_POST['_name']))
 	{
-		
-        
 		$name = $_POST['_name'];
 		$desc = $_POST['_desc'];
 		$batchyear = $_POST['_year'];

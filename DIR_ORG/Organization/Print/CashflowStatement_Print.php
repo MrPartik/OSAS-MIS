@@ -13,7 +13,7 @@
                 foreach (explode(',', $_GET['items']) as $data) {
                     $item = $item . ",'".$data."'";
                 }
-                $view_query = mysqli_query($con,"SELECT OrgForCompliance_ORG_CODE as CODE,IF(OrgCashFlowStatement_COLLECTION IS NULL,'A',
+                $view_query = mysqli_query($con,"SELECT OrgForCompliance_ORG_CODE as CODE,IF(OrgCashFlowStatement_COLLECTION IS NULL,(SELECT OrgVoucher_CHECKED_BY FROM `t_org_voucher` WHERE OrgVoucher_CASH_VOUCHER_NO = OrgCashFlowStatement_ITEM ),
         (SELECT OrgRemittance_DESC FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = OrgCashFlowStatement_ITEM )) 		 AS DESCRIPTION,IF(OrgCashFlowStatement_COLLECTION IS NULL,'A',
         (SELECT OrgCashFlowStatement_ITEM FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = OrgCashFlowStatement_ITEM ))   AS REF ,IF(OrgCashFlowStatement_COLLECTION IS NOT 
                                                                                                              	             NULL,CONCAT('₱',FORMAT(OrgCashFlowStatement_COLLECTION,3)),'') AS COLLECTION,IF(OrgCashFlowStatement_EXPENSES IS NOT 
@@ -23,8 +23,8 @@
     WHERE OrgVoucher_ORG_CODE = OrgCashFlowStatement_ORG_CODE AND OrgVouchItems_DATE_ADD <= OrgCashFlowStatement_DATE_ADD AND OrgVoucher_DISPLAY_STAT = 'Active' AND OrgVouchItems_DISPLAY_STAT = 'Active' ),3)) AS BALANCE,OrgCashFlowStatement_REMARKS AS REMARKS,DATE_FORMAT(OrgCashFlowStatement_DATE_ADD,'%M %d, %Y') AS DATEISSUED                                                                                                                     
         FROM `t_org_cash_flow_statement`
 		INNER JOIN t_org_for_compliance ON OrgCashFlowStatement_ORG_CODE = OrgForCompliance_ORG_CODE
-        WHERE OrgCashFlowStatement_DISPLAY_STAT = 'Active' AND IF(OrgCashFlowStatement_COLLECTION IS NULL,'A',
-        (SELECT OrgCashFlowStatement_ITEM FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = OrgCashFlowStatement_ITEM )) IN ('1'".$item.") ORDER BY OrgCashFlowStatement_DATE_ADD DESC ");
+        WHERE OrgCashFlowStatement_DISPLAY_STAT = 'Active' AND IF(OrgCashFlowStatement_COLLECTION IS NULL,(SELECT OrgCashFlowStatement_ID FROM `t_org_voucher` WHERE OrgVoucher_CASH_VOUCHER_NO = OrgCashFlowStatement_ITEM ),
+        (SELECT OrgCashFlowStatement_ID FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = OrgCashFlowStatement_ITEM )) IN ('1'".$item.") ORDER BY OrgCashFlowStatement_DATE_ADD DESC ");
                 while($row = mysqli_fetch_assoc($view_query))
                 {
                         
@@ -113,7 +113,7 @@
                     $item = $item . ",'".$data."'";
                 }
             
-                $view_query = mysqli_query($con,"SELECT OrgForCompliance_ORG_CODE as CODE,IF(OrgCashFlowStatement_COLLECTION IS NULL,'A',
+                $view_query = mysqli_query($con,"SELECT OrgForCompliance_ORG_CODE as CODE,IF(OrgCashFlowStatement_COLLECTION IS NULL,(SELECT OrgVoucher_CHECKED_BY FROM `t_org_voucher` WHERE OrgVoucher_CASH_VOUCHER_NO = OrgCashFlowStatement_ITEM ),
         (SELECT OrgRemittance_DESC FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = OrgCashFlowStatement_ITEM )) 		 AS DESCRIPTION,IF(OrgCashFlowStatement_COLLECTION IS NULL,'A',
         (SELECT OrgCashFlowStatement_ITEM FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = OrgCashFlowStatement_ITEM ))   AS REF ,IF(OrgCashFlowStatement_COLLECTION IS NOT 
                                                                                                              	             NULL,CONCAT('₱',FORMAT(OrgCashFlowStatement_COLLECTION,3)),'') AS COLLECTION,IF(OrgCashFlowStatement_EXPENSES IS NOT 
@@ -144,8 +144,8 @@
         
         FROM `t_org_cash_flow_statement`
 		INNER JOIN t_org_for_compliance ON OrgCashFlowStatement_ORG_CODE = OrgForCompliance_ORG_CODE
-        WHERE OrgCashFlowStatement_DISPLAY_STAT = 'Active' AND IF(OrgCashFlowStatement_COLLECTION IS NULL,'A',
-        (SELECT OrgCashFlowStatement_ITEM FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = OrgCashFlowStatement_ITEM )) IN ('1'".$item.") ORDER BY OrgCashFlowStatement_DATE_ADD DESC ");
+        WHERE OrgCashFlowStatement_DISPLAY_STAT = 'Active' AND IF(OrgCashFlowStatement_COLLECTION IS NULL,(SELECT OrgCashFlowStatement_ID FROM `t_org_voucher` WHERE OrgVoucher_CASH_VOUCHER_NO = OrgCashFlowStatement_ITEM ),
+        (SELECT OrgCashFlowStatement_ID FROM `t_org_remittance` WHERE OrgRemittance_NUMBER = OrgCashFlowStatement_ITEM )) IN ('1'".$item.") ORDER BY OrgCashFlowStatement_DATE_ADD DESC ");
                 while($row = mysqli_fetch_assoc($view_query))
                 {
                         

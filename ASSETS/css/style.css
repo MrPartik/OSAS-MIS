@@ -4293,11 +4293,11 @@ ul.sidebar-menu li a.active i {
     }
 
     .blue-ribon {
-        background: url("../ASSETS/images/twitter_corner_blue.png") no-repeat;
+        background: url("../images/twitter_corner_blue.png") no-repeat;
     }
 
     .black-ribon {
-        background: url("../ASSETS/images/twitter_corner_black.png") no-repeat;
+        background: url("../images/twitter_corner_black.png") no-repeat;
     }
 
     .twt-feed.blue-bg {
@@ -10957,11 +10957,11 @@ select:focus:invalid:focus,
 }
 
 .blue-ribon {
-    background: url("../ASSETS/images/twitter_corner_blue.png") no-repeat;
+    background: url("../images/twitter_corner_blue.png") no-repeat;
 }
 
 .black-ribon {
-    background: url("../ASSETS/images/twitter_corner_black.png") no-repeat;
+    background: url("../images/twitter_corner_black.png") no-repeat;
 }
 
 .twt-feed.blue-bg {
