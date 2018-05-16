@@ -13,7 +13,7 @@
                         <span>Officers and Members</span>
                     </a>
                 </li>
-                <li> <a <?php if( $currentPage==='Org_RemReq' ) {echo 'class="active"';} ?> href="Remittance.php">
+                <li> <a <?php if( $currentPage==='Org_Remit' ) {echo 'class="active"';} ?> href="Remittance.php">
                         <i class="fa fa-money"></i>
                         <span>Remittance</span>
                     </a>
