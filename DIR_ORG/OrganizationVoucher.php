@@ -248,7 +248,7 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                                             <th class="numeric ">Amount</th> 
                                         </tr> 
                                     <tbody id="tbodyvoucher">
-                                     
+                                     <tr class='newItem'><td><i id='deletemoto' style='font-size:20px' class='fa fa-minus-circle  '></i></td><td><input id='AddDesc' class='form-control' type='text' style='width:100%'></td> <td><input id='AddAmo' type='number'  class='form-control' style='width:100%'></td> </tr>
                                     </tbody>
 
                                 </table> 
@@ -519,7 +519,8 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                                 swal("Error encountered while adding data", "Please try again", "error");
                             }
                         }); 
- 
+
+
     </script>
 </body> 
 </html>
