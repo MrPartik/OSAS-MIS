@@ -118,9 +118,7 @@
                                                     <br>Last Modified: '. $dateMod->format('D M d, Y h:i A').'</i>'?></span>
                                                 </td>
                                                 <td>
-                                                    <textarea id="sancRemarks" style="resize:vertical; width:100%;height:100px" value="<?php echo $SancDetrow['Remarks']?>">
-                                                        <?php echo $SancDetrow['Remarks']?>
-                                                    </textarea>
+                                                    <textarea id="sancRemarks" style="resize:vertical; width:100%;height:100px" value="<?php echo $SancDetrow['Remarks']?>"><?php echo $SancDetrow['Remarks']?></textarea>
                                                 </td>
                                                 <td class="numeric ">
                                                     <center>
