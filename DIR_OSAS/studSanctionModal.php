@@ -5,27 +5,26 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Student Details</h4> </div>
             <div class="modal-body">
-
-            <div class='twt-feed maroon-bg'>
-                <?php viewStudProfileCond( 0,$_GET['StudNo']) ?>
-                <?php while($profileLayoutRow = mysqli_fetch_array($view_studProfile_cond)){ ?>
-                <div class='corner-ribon black-ribon'><i class='fa fa-user'></i></div>
-                <div class='fa fa-user wtt-mark'></div><a href='#'><img alt='<?php echo $profileLayoutRow['FullName']?>' src='../ASSETS/images/Student//Student.png'></a>
-                <h1>
+                <div class='twt-feed maroon-bg'>
+                    <?php viewStudProfileCond( 0,$_GET['StudNo']) ?>
+                        <?php while($profileLayoutRow = mysqli_fetch_array($view_studProfile_cond)){ ?>
+                            <div class='corner-ribon black-ribon'><i class='fa fa-user'></i></div>
+                            <div class='fa fa-user wtt-mark'></div><a href='#'><img alt='<?php echo $profileLayoutRow['FullName']?>' src='../ASSETS/images/Student//Student.png'></a>
+                            <h1>
                     <?php echo $profileLayoutRow['FullName']?>
                 </h1>
-                <p>
-                    <?php echo $profileLayoutRow['Stud_EMAIL']?>
-                </p>
-                <p>
-                    <?php echo $profileLayoutRow['Stud_NO']?>
-                </p>
-                <br/>
-                <br/>
-                <div class='weather-category twt-category'>
-                    <ul>
-                        <li class='active'>
-                            <h5>
+                            <p>
+                                <?php echo $profileLayoutRow['Stud_EMAIL']?>
+                            </p>
+                            <p>
+                                <?php echo $profileLayoutRow['Stud_NO']?>
+                            </p>
+                            <br/>
+                            <br/>
+                            <div class='weather-category twt-category'>
+                                <ul>
+                                    <li class='active'>
+                                        <h5>
                                 <?php  
                                         $counterSanction=0; 
                                         viewStudSanctionCond($profileLayoutRow['Stud_NO']);
@@ -35,23 +34,23 @@
                                         echo $counterSanction;  
                                  ?>
                             </h5> Sanction /s </li>
-                        <li>
-                            <?php $percentageSanction = "0 %";
+                                    <li>
+                                        <?php $percentageSanction = "0 %";
                             viewStudSanctionComputation($profileLayoutRow['Stud_NO']);
                             while($row=mysqli_fetch_array($view_studSanctionComputation)){ 
                             
                             $percentageSanction = $row['Percentage']." %";
                             }?>
-                            <h5>
+                                            <h5>
                                 <?php echo $percentageSanction; ?>
                             </h5>Percentage Finished</li>
-                        <li>
-                            <h5>
+                                    <li>
+                                        <h5>
                                 <?php echo $profileLayoutRow['Course']?>
                             </h5> Course </li>
-                    </ul>
+                                </ul>
+                            </div>
                 </div>
-            </div>
                 <div class="row">
                     <div class="col-md-12">
                         <br/>
@@ -119,7 +118,9 @@
                                                     <br>Last Modified: '. $dateMod->format('D M d, Y h:i A').'</i>'?></span>
                                                 </td>
                                                 <td>
-                                                    <textarea id="sancRemarks" style="resize:vertical; width:100%;height:100px" value="<?php echo $SancDetrow['Remarks']?>"><?php echo $SancDetrow['Remarks']?></textarea>
+                                                    <textarea id="sancRemarks" style="resize:vertical; width:100%;height:100px" value="<?php echo $SancDetrow['Remarks']?>">
+                                                        <?php echo $SancDetrow['Remarks']?>
+                                                    </textarea>
                                                 </td>
                                                 <td class="numeric ">
                                                     <center>
@@ -134,7 +135,7 @@
                                                 </td>
                                                 <td>
                                                     <center>
-                                                        <input id="tobeDone" class="form-control" type="Date" value=<?php echo $SancDetrow[ 'Done'] ?>> </center>
+                                                        <input id="tobeDone" readonly class="form-control" type="text" value="<?php echo (new dateTime($SancDetrow[ 'Done']))->format(" D M d, Y ") ?>" sortt="<?php echo $SancDetrow[ 'Done'] ?>"> </center>
                                                 </td>
                                                 <td class="actionDes">
                                                     <center><i title="Delete" style='cursor:pointer;font-size: 20px; ' id='deletemotoInside' class='fa fa-minus-circle  '></i> </center>
@@ -192,327 +193,330 @@
                 </div>
             </div>
         </div>
-        <script>
-            $("div.twt-feed").hide();
-            $("#MoreInfo").on("click",function(){
-                if(!$("div.twt-feed.maroon-bg:visible").length){
-                    $("div.twt-feed").slideToggle();
-                    $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide Info');
-                }else{
-                     $("div.twt-feed").slideToggle();
-                    $(this).html('<i class="fa  fa-info-circle"></i> More Info');
-                }
-            });
-
-            var date = new Date();
-            dd = ('0' + date.getDate()).slice(-2)
-                , mm = ('0' + (date.getMonth() + 1)).slice(-2)
-                , y = date.getFullYear()
-                , someFormattedDate = y + '-' + mm + '-' + dd;
-            $("tbody").find("tr").find("input[id='tobeDone']").each(function () {
-                var date = new Date()
-                dd = ('0' + date.getDate()).slice(-2)
-                    , mm = ('0' + (date.getMonth() + 1)).slice(-2)
-                    , y = date.getFullYear()
-                    , someFormattedDate = y + '-' + mm + '-' + dd;
-                if ($(this).attr("value") == someFormattedDate) {
-                    $(this).css("color", "red");
-                }
-            });
-            var oTable = $('#dynamic-table-modals').dataTable({
-            "aLengthMenu": [
-                    [3,5, 15, 20, -1]
-                    , [3,5, 15, 20, "All"] // change per page values here
+        <?php
+            $dateNewSanc = new dateTime();
+            $dateNewSanc->modify('+3 day');
+            $formatdateNewSanc = $dateNewSanc->format('D M d, Y');
+        ?>
+            <script>
+                $("div.twt-feed").hide();
+                $("#MoreInfo").on("click", function () {
+                    if (!$("div.twt-feed.maroon-bg:visible").length) {
+                        $("div.twt-feed").slideToggle();
+                        $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide Info');
+                    }
+                    else {
+                        $("div.twt-feed").slideToggle();
+                        $(this).html('<i class="fa  fa-info-circle"></i> More Info');
+                    }
+                });
+                var date = new Date();
+                dd = ('0' + date.getDate()).slice(-2), mm = ('0' + (date.getMonth() + 1)).slice(-2), y = date.getFullYear(), someFormattedDate = y + '-' + mm + '-' + dd;
+                $("tbody").find("tr").find("input[id='tobeDone']").each(function () {
+                    var date = new Date()
+                    dd = ('0' + date.getDate()).slice(-2), mm = ('0' + (date.getMonth() + 1)).slice(-2), y = date.getFullYear(), someFormattedDate = y + '-' + mm + '-' + dd;
+                    if ($(this).attr("sortt") <= someFormattedDate) {
+                        $(this).css("color", "red");
+                    }
+                });
+                var oTable = $('#dynamic-table-modals').dataTable({
+                    "aLengthMenu": [
+                    [3, 5, 15, 20, -1]
+                    , [3, 5, 15, 20, "All"] // change per page values here
                 ], // set the initial value
-            "iDisplayLength": 3
-            , "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>"
-            , "sPaginationType": "bootstrap"
-            , "oLanguage": {
-                "sLengthMenu": "_MENU_ records per page"
-                , "oPaginate": {
-                    "sPrevious": "Prev"
-                    , "sNext": "Next"
-                }
-            }
-            , aaSorting: [[1, "desc"]]
-            });
-            $('#assignSanction').on("click", function () {
-                if ($('#sanctionDiv:visible').length) {
-                    $("#sanctionDiv").slideToggle(500);
-                    $("#assignSanction").html("<i class='fa  fa-plus'></i>  Add");
-                }
-                else {
-                    $("#sanctionDiv").slideToggle(500);
-                    $("#assignSanction").html("<i class='fa  fa-arrow-circle-o-left'></i>  Back");
-                }
-            });
-            $("#tbodySanctions").on('input', "textarea[id='sancRemarks']", function () {
-                if ($(this).val() == $(this).attr("value")) {
-                    $(this).closest("tr").removeClass("updatingRow");
-                }
-                else {
-                    $(this).closest("tr").addClass("updatingRow");
-                }
-            });
-            $("#tbodySanctions").on("change", "input[id='tobeDone']", function () {
-                if ($(this).val() == $(this).attr("value")) {
-                    $(this).closest("tr").removeClass("updatingRow");
-                }
-                else {
-                    $(this).closest("tr").addClass("updatingRow");
-                }
-                if ($(this).val() == someFormattedDate) {
-                    $(this).css("color", "red");
-                }
-                else {
-                    $(this).css("color", "black");
-                }
-            });
-            $("#tbodySanctions").on('change', "input[id='checkFinished']", function () {
-                var checkStatus = $(this).closest('tr').find('#checkFinished').attr('checkStatus')
-                    , isChecked = $(this).is(':checked') ? 'Finished' : 'Processing';
-                if (checkStatus == isChecked) {
-                    $(this).closest('tr').removeClass('updatingRow');
-                }
-                else {
-                    $(this).closest('tr').addClass('updatingRow');
-                }
-                if ($(this).is(':checked')) {
-                    $(this).closest("tr").find("#inputConsume").val($(this).closest("tr").find("#inputConsume").attr("maxval"));
-                    $(this).closest('tr').find('.timeRemaining').html($(this).closest("tr").find("#inputConsume").attr("maxval") - $(this).closest("tr").find("#inputConsume").val());
-                }
-                else {
-                    $(this).closest("tr").find("#inputConsume").val($(this).closest("tr").find("#inputConsume").attr("value"));
-                    $(this).closest('tr').find('.timeRemaining').html($(this).closest("tr").find("#inputConsume").attr("maxval") - $(this).closest("tr").find("#inputConsume").val());
-                }
-            });
-            $("#addSanction").on("click", function () {
-                var SanctionCode = $('#sanctionSelection option:selected').attr("sanctionCode")
-                    , SanctionName = $('#sanctionSelection option:selected').text()
-                    , Hrs = $('#sanctionSelection option:selected').attr("sanctionTimeValue")
-                    , DesignatedOfficeCode = $('#officesSelection option:selected').attr("value")
-                    , DesignatedOfficeName = $('#officesSelection option:selected').text()
-                    , currDate = "<?php echo dateNow(); ?>"
-                    , Remaining = $('#sanctionSelection option:selected').attr("sanctionTimeValue")
-                    , date = new Date();
-                date.setDate(date.getDate() + 2);
-                var dd = ('0' + date.getDate()).slice(-2)
-                    , mm = ('0' + (date.getMonth() + 1)).slice(-2)
-                    , y = date.getFullYear()
-                    , someFormattedDate = y + '-' + mm + '-' + dd;
-                $("#tbodySanctions").find(".dataTables_empty").closest("tr ").remove();
-                $("#tbodySanctions").prepend("<tr id='newSanction'> <td class='hidden'>" + SanctionCode + "</td><td class='hidden'>" + DesignatedOfficeCode + "</td><td><span class='label label-success'>NEW</span><strong> " + SanctionName + '<br></strong>Time Value:  ' + Hrs + ' Hours' + "<br/><br/><i style='font-size:10px'>Date Added:" + currDate + "</i></td><td><textarea id='sancRemarks' style='resize:vertical; width:100%;height:100px'></textarea></td><td class='numeric'>  <center><input id='inputConsume' type='text' value='0' maxVal='" + Hrs + "' style='width:50px; text-align:center;' /> </center></td><td class='timeRemaining numeric'>" + Remaining + "</td><td> <center> <input id='checkFinished' type='checkbox'  /></center><td> <center><input id='tobeDone' class='form-control' type='Date' value=" + someFormattedDate + " > </center></td></td> <td><center> <i title='Delete' style='cursor:pointer;font-size: 20px; ' id='deletemoto' class='fa fa-minus-circle '></i> </center></td>< /tr>  ");
-            });
-            $("#tbodySanctions").on("click", "i[id='deletemoto']", function (e) {
-                $(this).closest('tr').remove();
-            });
-            $("#tbodySanctions").on("click", "i[id='deletemotoInside']", function (e) {
-                $(this).closest('tr').addClass("tobeRemoved");
-                $(this).closest('tr').find(".TDSancName").html("<span class='label label-danger'>Deactivate!</span><span class='spanSancName'>  " + $(this).closest('tr').find(".TDSancName").html() + "</span>");
-                $(this).closest('tr').find(".actionDes").html(" <center> <i style='cursor:pointer;font-size: 20px' id='returnmotoInside' class='fa fa-undo'></i> </center>");
-            });
-            $("#tbodySanctions").on("click", "i[id='returnmotoInside']", function (e) {
-                $(this).closest('tr').removeClass("tobeRemoved");
-                $(this).closest('tr').find(".TDSancName").html("<span class='spanSancName'>" + $(this).closest('tr').find(".spanSancName").html() + "</span>");
-                $(this).closest('tr').find(".actionDes").html("  <center> <i style='cursor:pointer;font-size: 20px' id='deletemotoInside' class='fa fa-minus-circle'></i> </center>");
-            });
-            $("#tbodySanctions").on('input change', "input[id='inputConsume']", function () {
-                $(this).closest('tr').find('.timeRemaining').html($(this).attr('maxVal') - $(this).val());
-                if ($(this).attr('value') == $(this).val()) {
-                    $(this).closest('tr').removeClass('updatingRow');
-                }
-                else {
-                    $(this).closest('tr').addClass('updatingRow');
-                }
-                if (parseInt($(this).attr("maxVal"), 10) < parseInt($(this).val(), 10)) {
-                    $(this).val($(this).attr("maxVal"));
+                    "iDisplayLength": 3
+                    , "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>"
+                    , "sPaginationType": "bootstrap"
+                    , "oLanguage": {
+                        "sLengthMenu": "_MENU_ records per page"
+                        , "oPaginate": {
+                            "sPrevious": "Prev"
+                            , "sNext": "Next"
+                        }
+                    }
+                    , aaSorting: [[1, "desc"]]
+                });
+                $('#assignSanction').on("click", function () {
+                    if ($('#sanctionDiv:visible').length) {
+                        $("#sanctionDiv").slideToggle(500);
+                        $("#assignSanction").html("<i class='fa  fa-plus'></i>  Add");
+                    }
+                    else {
+                        $("#sanctionDiv").slideToggle(500);
+                        $("#assignSanction").html("<i class='fa  fa-arrow-circle-o-left'></i>  Back");
+                    }
+                });
+                $("#tbodySanctions").on('input', "textarea[id='sancRemarks']", function () {
+                    if ($(this).val() == $(this).attr("value")) {
+                        $(this).closest("tr").removeClass("updatingRow");
+                    }
+                    else {
+                        $(this).closest("tr").addClass("updatingRow");
+                    }
+                });
+                $("#tbodySanctions").on("change", "input[id='tobeDone']", function () {
+                    var dateComp = new Date($(this).val());
+                    ddComp = ('0' + dateComp.getDate()).slice(-2), mmComp = ('0' + (dateComp.getMonth() + 1)).slice(-2), yyComp = dateComp.getFullYear(), someFormattedDateCompareLive = yyComp + '-' + mmComp + '-' + ddComp;
+                    if ($(this).val() == $(this).attr("value")) {
+                        $(this).closest("tr").removeClass("updatingRow");
+                    }
+                    else {
+                        $(this).closest("tr").addClass("updatingRow");
+                    }
+                    if (someFormattedDateCompareLive <= someFormattedDate) {
+                        $(this).css("color", "red");
+                    }
+                    else {
+                        $(this).css("color", "black");
+                    }
+                });
+                $("#tbodySanctions").on('change', "input[id='checkFinished']", function () {
+                    var checkStatus = $(this).closest('tr').find('#checkFinished').attr('checkStatus')
+                        , isChecked = $(this).is(':checked') ? 'Finished' : 'Processing';
+                    if (checkStatus == isChecked) {
+                        $(this).closest('tr').removeClass('updatingRow');
+                    }
+                    else {
+                        $(this).closest('tr').addClass('updatingRow');
+                    }
+                    if ($(this).is(':checked')) {
+                        $(this).closest("tr").find("#inputConsume").val($(this).closest("tr").find("#inputConsume").attr("maxval"));
+                        $(this).closest('tr').find('.timeRemaining').html($(this).closest("tr").find("#inputConsume").attr("maxval") - $(this).closest("tr").find("#inputConsume").val());
+                    }
+                    else {
+                        $(this).closest("tr").find("#inputConsume").val($(this).closest("tr").find("#inputConsume").attr("value"));
+                        $(this).closest('tr').find('.timeRemaining').html($(this).closest("tr").find("#inputConsume").attr("maxval") - $(this).closest("tr").find("#inputConsume").val());
+                    }
+                });
+                $("#addSanction").on("click", function () {
+                    var SanctionCode = $('#sanctionSelection option:selected').attr("sanctionCode")
+                        , SanctionName = $('#sanctionSelection option:selected').text()
+                        , Hrs = $('#sanctionSelection option:selected').attr("sanctionTimeValue")
+                        , DesignatedOfficeCode = $('#officesSelection option:selected').attr("value")
+                        , DesignatedOfficeName = $('#officesSelection option:selected').text()
+                        , currDate = "<?php echo dateNow(); ?>"
+                        , Remaining = $('#sanctionSelection option:selected').attr("sanctionTimeValue");
+                    $("#tbodySanctions").find(".dataTables_empty").closest("tr ").remove();
+                    $("#tbodySanctions").prepend("<tr id='newSanction'> <td class='hidden'>" + SanctionCode + "</td><td class='hidden'>" + DesignatedOfficeCode + "</td><td><span class='label label-success'>NEW</span><strong> " + SanctionName + '<br></strong>Time Value:  ' + Hrs + ' Hours' + "<br/><br/><i style='font-size:10px'>Date Added:" + currDate + "</i></td><td><textarea id='sancRemarks' style='resize:vertical; width:100%;height:100px'></textarea></td><td class='numeric'>  <center><input id='inputConsume' type='text' value='0' maxVal='" + Hrs + "' style='width:50px; text-align:center;' /> </center></td><td class='timeRemaining numeric'>" + Remaining + "</td><td> <center> <input id='checkFinished' type='checkbox'  /></center><td> <center><input id='tobeDone' class='form-control' type='text' readonly value=" + '"<?php echo $formatdateNewSanc ?>"' + " > </center></td></td> <td><center> <i title='Delete' style='cursor:pointer;font-size: 20px; ' id='deletemoto' class='fa fa-minus-circle '></i> </center></td>< /tr>  ");
+                    $("input[id='tobeDone']").datepicker({
+                        minDate: 0
+                        , dateFormat: 'D M d, yy'
+                    });
+                });
+                $("#tbodySanctions").on("click", "i[id='deletemoto']", function (e) {
+                    $(this).closest('tr').remove();
+                });
+                $("#tbodySanctions").on("click", "i[id='deletemotoInside']", function (e) {
+                    $(this).closest('tr').addClass("tobeRemoved");
+                    $(this).closest('tr').find(".TDSancName").html("<span class='label label-danger'>Deactivate!</span><span class='spanSancName'>  " + $(this).closest('tr').find(".TDSancName").html() + "</span>");
+                    $(this).closest('tr').find(".actionDes").html(" <center> <i style='cursor:pointer;font-size: 20px' id='returnmotoInside' class='fa fa-undo'></i> </center>");
+                });
+                $("#tbodySanctions").on("click", "i[id='returnmotoInside']", function (e) {
+                    $(this).closest('tr').removeClass("tobeRemoved");
+                    $(this).closest('tr').find(".TDSancName").html("<span class='spanSancName'>" + $(this).closest('tr').find(".spanSancName").html() + "</span>");
+                    $(this).closest('tr').find(".actionDes").html("  <center> <i style='cursor:pointer;font-size: 20px' id='deletemotoInside' class='fa fa-minus-circle'></i> </center>");
+                });
+                $("#tbodySanctions").on('input change', "input[id='inputConsume']", function () {
                     $(this).closest('tr').find('.timeRemaining').html($(this).attr('maxVal') - $(this).val());
-                }
-                else if (0 > parseInt($(this).val(), 10) || $(this).closest("tr").find(".timeRemaining").text() == "") {
-                    $(this).val(0);
-                }
-                if ($(this).attr("maxVal") == $(this).val()) {
-                    $(this).closest('tr').find("#checkFinished").prop("checked", true);
-                }
-                else {
-                    $(this).closest('tr').find("#checkFinished").prop("checked", false);
-                }
-            });
-            $("#saveSanctionSet").on("click", function () {
-                var newLosscialAss = $('tbody').find("tr[id='newSanction']").length
-                    , tobeRemoved = $("tbody").find("tr[class='tobeRemoved']").length
-                    , updatingRow = $("tbody").find("tr[class='updatingRow']").length;
-                if (newLosscialAss != 0 || tobeRemoved != 0 || updatingRow != 0) {
-                    if (newLosscialAss != 0) {
-                        swal({
-                            title: "Are you sure?"
-                            , text: "This data will be added  and used for further transaction"
-                            , type: "warning"
-                            , showCancelButton: true
-                            , confirmButtonColor: '#9DD656'
-                            , confirmButtonText: 'Yes!'
-                            , cancelButtonText: "No!"
-                            , closeOnConfirm: false
-                            , closeOnCancel: false
-                        }, function (isConfirm) {
-                            if (isConfirm) {
-                                $("#saveSanctionSet").attr("disabled", "disabled");
-                                $("tbody").find("tr[id='newSanction']").each(function (i) {
-                                    var $tds = $(this).find('td')
-                                        , SanctionCode = $tds.eq(0).text()
-                                        , DesignatedOfficeCode = $tds.eq(1).text()
-                                        , StudNumber = "<?php echo $_GET['StudNo']?>"
-                                        , Cons = $tds.eq(4).find("input[id='inputConsume']").val()
-                                        , Finish = $tds.eq(6).find("input[id='checkFinished']").is(':checked') ? 'Finished' : 'Processing'
-                                        , Donee = $tds.eq(7).find("input[id='tobeDone']").val()
-                                        , sancRemarks = $tds.eq(3).find("textarea[id='sancRemarks']").val();
-                                    $.ajax({
-                                        type: 'post'
-                                        , url: 'studSanctionSave.php'
-                                        , data: {
-                                            insertSanction: 'sanctionAdd'
-                                            , SanctionCode: SanctionCode
-                                            , DesignatedOfficeCode: DesignatedOfficeCode
-                                            , StudNumber: StudNumber
-                                            , SancRemarks: sancRemarks
-                                            , Cons: Cons
-                                            , Finish: Finish
-                                            , Done: Donee
-                                        }
-                                        , success: function (result) {
-                                            alert(result);
-                                            window.location.reload();
-                                        }
-                                        , error: function (result) {
-                                            alert('Error')
-                                        }
-                                    });
-                                }).promise().done(function () {
-                                    swal({
-                                        title: "Woaah, that's neat!"
-                                        , text: "The Saction Detail record is added"
-                                        , type: "success"
-                                        , showCancelButton: false
-                                        , confirmButtonColor: '#9DD656'
-                                        , confirmButtonText: 'Ok'
-                                    }, function (isConfirm) {
-                                        location.reload();
-                                    });
-                                });
-                            }
-                            else {
-                                swal("Cancelled", "The transaction is cancelled", "error");
-                            }
-                        });
+                    if ($(this).attr('value') == $(this).val()) {
+                        $(this).closest('tr').removeClass('updatingRow');
                     }
-                    if (tobeRemoved != 0) {
-                        swal({
-                            title: "Are you sure?"
-                            , text: "This data will be deleted"
-                            , type: "warning"
-                            , showCancelButton: true
-                            , confirmButtonColor: '#9DD656'
-                            , confirmButtonText: 'Yes, Delete  it!'
-                            , cancelButtonText: "No!"
-                            , closeOnConfirm: false
-                            , closeOnCancel: false
-                        }, function (isConfirm) {
-                            if (isConfirm) {
-                                $("tbody").find("tr[class='tobeRemoved']").each(function (i) {
-                                    var $tds = $(this).find('td')
-                                        , ID = $tds.eq(0).text();
-                                    $.ajax({
-                                        type: 'post'
-                                        , url: 'studSanctionSave.php'
-                                        , data: {
-                                            archiveSanction: 'sanctionAdd'
-                                            , ID: ID
-                                        }
-                                        , success: function (result) {
-                                            window.location.reload();
-                                        }
-                                        , error: function (result) {
-                                            alert('Error')
-                                        }
-                                    });
-                                }).promise().done(function () {
-                                    swal({
-                                        title: "Woaah, that's neat!"
-                                        , text: "The Sanction Detail record is deleted"
-                                        , type: "success"
-                                        , showCancelButton: false
-                                        , confirmButtonColor: '#9DD656'
-                                        , confirmButtonText: 'Ok'
-                                    }, function (isConfirm) {
-                                        location.reload();
-                                    });
-                                });
-                            }
-                            else {
-                                swal("Cancelled", "The transaction is cancelled", "error");
-                            }
-                        });
+                    else {
+                        $(this).closest('tr').addClass('updatingRow');
                     }
-                    if (updatingRow != 0 && newLosscialAss == 0) {
-                        swal({
-                            title: "Are you sure?"
-                            , text: "This data will be saved and used in further transactions"
-                            , type: "warning"
-                            , showCancelButton: true
-                            , confirmButtonColor: '#9DD656'
-                            , confirmButtonText: 'Yes, Update  it!'
-                            , cancelButtonText: "No!"
-                            , closeOnConfirm: false
-                            , closeOnCancel: false
-                        }, function (isConfirm) {
-                            if (isConfirm) {
-                                $("tbody").find("tr[class='updatingRow']").each(function (i) {
-                                    var $tds = $(this).find('td')
-                                        , ID = $tds.eq(0).text()
-                                        , UpdateConsumed = $tds.eq(3).find("input[id='inputConsume']").val()
-                                        , UpdateMax = $tds.eq(3).find("input[id='inputConsume']").attr('maxVal')
-                                        , Remaining = $tds.eq(4).html()
-                                        , Finish = $tds.eq(5).find("input[id='checkFinished']").is(':checked') ? 'Finished' : 'Processing'
-                                        , sancRemarks = $tds.eq(2).find("textarea[id='sancRemarks']").val()
-                                        , Donee = $tds.eq(6).find("input[id='tobeDone']").val();
-                                    $.ajax({
-                                        type: 'post'
-                                        , url: 'studSanctionSave.php'
-                                        , data: {
-                                            updateSanction: 'sanctionUpdate'
-                                            , ID: ID
-                                            , Cons: UpdateConsumed
-                                            , max: UpdateMax
-                                            , finish: Finish
-                                            , SancRemarks: sancRemarks
-                                            , Done: Donee
-                                        }
-                                        , success: function (result) {}
-                                        , error: function (result) {
-                                            alert('Error')
-                                        }
-                                    });
-                                }).promise().done(function () {
-                                    swal({
-                                        title: "Woaah, that's neat!"
-                                        , text: "The Sanction Detail record is updated"
-                                        , type: "success"
-                                        , showCancelButton: false
-                                        , confirmButtonColor: '#9DD656'
-                                        , confirmButtonText: 'Ok'
-                                    }, function (isConfirm) {
-                                        location.reload();
-                                    });
-                                });
-                            }
-                            else {
-                                swal("Cancelled", "The transaction is cancelled", "error");
-                            }
-                        });
+                    if (parseInt($(this).attr("maxVal"), 10) < parseInt($(this).val(), 10)) {
+                        $(this).val($(this).attr("maxVal"));
+                        $(this).closest('tr').find('.timeRemaining').html($(this).attr('maxVal') - $(this).val());
                     }
-                }
-                else {
-                    swal("Error", "no transaction has been made", "error");
-                }
-            });
-        </script>
+                    else if (0 > parseInt($(this).val(), 10) || $(this).closest("tr").find(".timeRemaining").text() == "") {
+                        $(this).val(0);
+                    }
+                    if ($(this).attr("maxVal") == $(this).val()) {
+                        $(this).closest('tr').find("#checkFinished").prop("checked", true);
+                    }
+                    else {
+                        $(this).closest('tr').find("#checkFinished").prop("checked", false);
+                    }
+                });
+                $("#saveSanctionSet").on("click", function () {
+                    var newLosscialAss = $('tbody').find("tr[id='newSanction']").length
+                        , tobeRemoved = $("tbody").find("tr[class='tobeRemoved']").length
+                        , updatingRow = $("tbody").find("tr[class='updatingRow']").length;
+                    if (newLosscialAss != 0 || tobeRemoved != 0 || updatingRow != 0) {
+                        if (newLosscialAss != 0) {
+                            swal({
+                                title: "Are you sure?"
+                                , text: "This data will be added  and used for further transaction"
+                                , type: "warning"
+                                , showCancelButton: true
+                                , confirmButtonColor: '#9DD656'
+                                , confirmButtonText: 'Yes!'
+                                , cancelButtonText: "No!"
+                                , closeOnConfirm: false
+                                , closeOnCancel: false
+                            }, function (isConfirm) {
+                                if (isConfirm) {
+                                    $("#saveSanctionSet").attr("disabled", "disabled");
+                                    $("tbody").find("tr[id='newSanction']").each(function (i) {
+                                        var $tds = $(this).find('td')
+                                            , SanctionCode = $tds.eq(0).text()
+                                            , DesignatedOfficeCode = $tds.eq(1).text()
+                                            , StudNumber = "<?php echo $_GET['StudNo']?>"
+                                            , Cons = $tds.eq(4).find("input[id='inputConsume']").val()
+                                            , Finish = $tds.eq(6).find("input[id='checkFinished']").is(':checked') ? 'Finished' : 'Processing'
+                                            , Donee = $tds.eq(7).find("input[id='tobeDone']").val()
+                                            , sancRemarks = $tds.eq(3).find("textarea[id='sancRemarks']").val();
+                                        $.ajax({
+                                            type: 'post'
+                                            , url: 'studSanctionSave.php'
+                                            , data: {
+                                                insertSanction: 'sanctionAdd'
+                                                , SanctionCode: SanctionCode
+                                                , DesignatedOfficeCode: DesignatedOfficeCode
+                                                , StudNumber: StudNumber
+                                                , SancRemarks: sancRemarks
+                                                , Cons: Cons
+                                                , Finish: Finish
+                                                , Done: Donee
+                                            }
+                                            , success: function (result) {
+                                                alert(result);
+                                                window.location.reload();
+                                            }
+                                            , error: function (result) {
+                                                alert('Error')
+                                            }
+                                        });
+                                    }).promise().done(function () {
+                                        swal({
+                                            title: "Woaah, that's neat!"
+                                            , text: "The Saction Detail record is added"
+                                            , type: "success"
+                                            , showCancelButton: false
+                                            , confirmButtonColor: '#9DD656'
+                                            , confirmButtonText: 'Ok'
+                                        }, function (isConfirm) {
+                                            location.reload();
+                                        });
+                                    });
+                                }
+                                else {
+                                    swal("Cancelled", "The transaction is cancelled", "error");
+                                }
+                            });
+                        }
+                        if (tobeRemoved != 0) {
+                            swal({
+                                title: "Are you sure?"
+                                , text: "This data will be deleted"
+                                , type: "warning"
+                                , showCancelButton: true
+                                , confirmButtonColor: '#9DD656'
+                                , confirmButtonText: 'Yes, Delete  it!'
+                                , cancelButtonText: "No!"
+                                , closeOnConfirm: false
+                                , closeOnCancel: false
+                            }, function (isConfirm) {
+                                if (isConfirm) {
+                                    $("tbody").find("tr[class='tobeRemoved']").each(function (i) {
+                                        var $tds = $(this).find('td')
+                                            , ID = $tds.eq(0).text();
+                                        $.ajax({
+                                            type: 'post'
+                                            , url: 'studSanctionSave.php'
+                                            , data: {
+                                                archiveSanction: 'sanctionAdd'
+                                                , ID: ID
+                                            }
+                                            , success: function (result) {
+                                                window.location.reload();
+                                            }
+                                            , error: function (result) {
+                                                alert('Error')
+                                            }
+                                        });
+                                    }).promise().done(function () {
+                                        swal({
+                                            title: "Woaah, that's neat!"
+                                            , text: "The Sanction Detail record is deleted"
+                                            , type: "success"
+                                            , showCancelButton: false
+                                            , confirmButtonColor: '#9DD656'
+                                            , confirmButtonText: 'Ok'
+                                        }, function (isConfirm) {
+                                            location.reload();
+                                        });
+                                    });
+                                }
+                                else {
+                                    swal("Cancelled", "The transaction is cancelled", "error");
+                                }
+                            });
+                        }
+                        if (updatingRow != 0 && newLosscialAss == 0) {
+                            swal({
+                                title: "Are you sure?"
+                                , text: "This data will be saved and used in further transactions"
+                                , type: "warning"
+                                , showCancelButton: true
+                                , confirmButtonColor: '#9DD656'
+                                , confirmButtonText: 'Yes, Update  it!'
+                                , cancelButtonText: "No!"
+                                , closeOnConfirm: false
+                                , closeOnCancel: false
+                            }, function (isConfirm) {
+                                if (isConfirm) {
+                                    $("tbody").find("tr[class='updatingRow']").each(function (i) {
+                                        var $tds = $(this).find('td')
+                                            , ID = $tds.eq(0).text()
+                                            , UpdateConsumed = $tds.eq(3).find("input[id='inputConsume']").val()
+                                            , UpdateMax = $tds.eq(3).find("input[id='inputConsume']").attr('maxVal')
+                                            , Remaining = $tds.eq(4).html()
+                                            , Finish = $tds.eq(5).find("input[id='checkFinished']").is(':checked') ? 'Finished' : 'Processing'
+                                            , sancRemarks = $tds.eq(2).find("textarea[id='sancRemarks']").val()
+                                            , Donee = $tds.eq(6).find("input[id='tobeDone']").val();
+                                        $.ajax({
+                                            type: 'post'
+                                            , url: 'studSanctionSave.php'
+                                            , data: {
+                                                updateSanction: 'sanctionUpdate'
+                                                , ID: ID
+                                                , Cons: UpdateConsumed
+                                                , max: UpdateMax
+                                                , finish: Finish
+                                                , SancRemarks: sancRemarks
+                                                , Done: Donee
+                                            }
+                                            , success: function (result) {}
+                                            , error: function (result) {
+                                                alert('Error')
+                                            }
+                                        });
+                                    }).promise().done(function () {
+                                        swal({
+                                            title: "Woaah, that's neat!"
+                                            , text: "The Sanction Detail record is updated"
+                                            , type: "success"
+                                            , showCancelButton: false
+                                            , confirmButtonColor: '#9DD656'
+                                            , confirmButtonText: 'Ok'
+                                        }, function (isConfirm) {
+                                            location.reload();
+                                        });
+                                    });
+                                }
+                                else {
+                                    swal("Cancelled", "The transaction is cancelled", "error");
+                                }
+                            });
+                        }
+                    }
+                    else {
+                        swal("Error", "no transaction has been made", "error");
+                    }
+                });
+                $("input[id='tobeDone']").datepicker({
+                    minDate: 0
+                    , dateFormat: 'D M d, yy'
+                });
+            </script>
