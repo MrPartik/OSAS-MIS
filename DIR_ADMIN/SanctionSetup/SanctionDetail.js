@@ -307,19 +307,19 @@ var EditableTable = function () {
 
                     } else if (jqInputs[1].value.length > 100) {
 
-                        swal("Error", "The Office name must be less than 100 characters", "error");
+                        swal("Error", "The name must be less than 100 characters", "error");
 
                     } else if (jqInputs[1].value.length < 5) {
 
-                        swal("Error", "Please enter a valid Office name", "error");
+                        swal("Error", "Please enter a valid name", "error");
 
                     } else if (jqInputs[2].value.length > 100) {
 
-                        swal("Error", "The Office description must be less than 100 characters", "error");
+                        swal("Error", "The description must be less than 100 characters", "error");
 
                     } else if (jqInputs[2].value.length < 5) {
 
-                        swal("Error", "Please enter a valid Office description", "error");
+                        swal("Error", "Please enter a valid description", "error");
 
                     }
                 } else if (nEditing == nRow && this.innerHTML == "Add") {
@@ -370,19 +370,19 @@ var EditableTable = function () {
 
                     } else if (jqInputs[1].value.length > 100) {
 
-                        swal("Error", "The Office name must be less than 100 characters", "error");
+                        swal("Error", "The name must be less than 100 characters", "error");
 
                     } else if (jqInputs[1].value.length < 5) {
 
-                        swal("Error", "Please enter a valid Office name", "error");
+                        swal("Error", "Please enter a valid name", "error");
 
                     } else if (jqInputs[2].value.length > 100) {
 
-                        swal("Error", "The Office description must be less than 100 characters", "error");
+                        swal("Error", "The description must be less than 100 characters", "error");
 
                     } else if (jqInputs[2].value.length < 5) {
 
-                        swal("Error", "Please enter a valid Office description", "error");
+                        swal("Error", "Please enter a valid description", "error");
 
                     }
                 } else {
