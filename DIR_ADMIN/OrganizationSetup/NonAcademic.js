@@ -103,9 +103,9 @@ var EditableTable = function () {
                 var txtcode = document.getElementById("txtcode").value;
 
                 $("#close").click();
-
-
-                swal({
+                if(txtname.length != 0){
+                    if(txtdesc.length != 0){
+                    swal({
                         title: "Are you sure?",
                         text: "The record will be save and will be use for further transaction",
                         type: "warning",
@@ -148,6 +148,38 @@ var EditableTable = function () {
                         }
 
                     });
+
+                    }
+                    else{
+                        swal({
+                            title: "Please enter a valid description",
+                            text: "Please check your description field",
+                            type: "error",
+                            confirmButtonColor: '#88A755',
+                            confirmButtonText: 'Okay',
+                            closeOnConfirm: true
+                        }, function (isConfirm) {
+                            $("#editable-sample_new").click();
+
+                        });
+                    }
+
+                }
+                else{
+                    swal({
+                        title: "Please enter a valid name",
+                        text: "Please check your name field",
+                        type: "error",
+                        confirmButtonColor: '#88A755',
+                        confirmButtonText: 'Okay',
+                        closeOnConfirm: true
+                    }, function (isConfirm) {
+                        $("#editable-sample_new").click();
+
+                    });
+                }
+
+
 
             });
             $('#editable-sample a.delete').live('click', function (e) {

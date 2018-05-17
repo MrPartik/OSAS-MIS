@@ -103,51 +103,83 @@ var EditableTable = function () {
                 var txtcode = document.getElementById("txtcode").value;
 
                 $("#close").click();
+                if(txtname.length != 0){
+                    if(txtdesc.length != 0){
+                        swal({
+                            title: "Are you sure?",
+                            text: "The record will be save and will be use for further transaction",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: '#DD6B55',
+                            confirmButtonText: 'Yes, do it!',
+                            cancelButtonText: "No!",
+                            closeOnConfirm: false,
+                            closeOnCancel: false
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                $.ajax({
+                                    type: 'post',
+                                    url: 'OrganizationSetup/OrganizationCategory/Add-ajax.php',
+                                    data: {
+                                        _code: txtcode,
+                                        _name: txtname,
+                                        _desc: txtdesc
 
 
-                swal({
-                        title: "Are you sure?",
-                        text: "The record will be save and will be use for Designated Office",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: '#DD6B55',
-                        confirmButtonText: 'Yes, do it!',
-                        cancelButtonText: "No!",
-                        closeOnConfirm: false,
-                        closeOnCancel: false
-                    },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            $.ajax({
-                                type: 'post',
-                                url: 'OrganizationSetup/OrganizationCategory/Add-ajax.php',
-                                data: {
-                                    _code: txtcode,
-                                    _name: txtname,
-                                    _desc: txtdesc
+                                    },
+                                    success: function (response) {
+                                        swal("Record Added!", "The data is successfully added!", "success");
+                                        var aiNew = oTable.fnAddData([txtcode, txtname, txtdesc, '<center><a class="btn btn-success  edit" href="">Edit</a> <a class="btn btn-danger delete" href="javascript:;">Delete</a>	</center>', '']);
+                                        var nRow = oTable.fnGetNodes(aiNew[0]);
+                                        document.getElementById("form-data").reset();
+                                    },
+                                    error: function (response) {
+                                        swal("Error encountered while adding data", "Please try again", "error");
+                                        $("#editable-sample_new").click();
+                                    }
 
+                                });
 
-                                },
-                                success: function (response) {
-                                    swal("Record Added!", "The data is successfully added!", "success");
-                                    var aiNew = oTable.fnAddData([txtcode, txtname, txtdesc, '<center><a class="btn btn-success  edit" href="">Edit</a> <a class="btn btn-danger delete" href="javascript:;">Delete</a>	</center>', '']);
-                                    var nRow = oTable.fnGetNodes(aiNew[0]);
-                                    document.getElementById("form-data").reset();
-                                },
-                                error: function (response) {
-                                    swal("Error encountered while adding data", "Please try again", "error");
-                                    $("#editable-sample_new").click();
-                                }
+                            } else {
 
-                            });
+                                swal("Cancelled", "The transaction is cancelled", "error");
+                                $("#editable-sample_new").click();
+                            }
 
-                        } else {
+                        });
 
-                            swal("Cancelled", "The transaction is cancelled", "error");
+                    }
+                    else{
+                        swal({
+                            title: "Please enter a valid description",
+                            text: "Please check your description field",
+                            type: "error",
+                            confirmButtonColor: '#88A755',
+                            confirmButtonText: 'Okay',
+                            closeOnConfirm: true
+                        }, function (isConfirm) {
                             $("#editable-sample_new").click();
-                        }
+
+                        });
+                    }
+
+                }
+                else{
+                    swal({
+                        title: "Please enter a valid name",
+                        text: "Please check your name field",
+                        type: "error",
+                        confirmButtonColor: '#88A755',
+                        confirmButtonText: 'Okay',
+                        closeOnConfirm: true
+                    }, function (isConfirm) {
+                        $("#editable-sample_new").click();
 
                     });
+                }
+
+
 
             });
             $('#editable-sample a.delete').live('click', function (e) {
@@ -322,7 +354,7 @@ var EditableTable = function () {
 
                     } else if (jqInputs[1].value.length > 100) {
 
-                        swal("Error", "The Office must be less than 100 characters", "error");
+                        swal("Error", "The must be less than 100 characters", "error");
 
                     } else if (jqInputs[1].value.length < 5) {
 

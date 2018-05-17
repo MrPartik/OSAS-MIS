@@ -196,8 +196,8 @@ include('../config/connection.php');
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button data-dismiss="modal" class="btn btn-default" id="close" type="button">Close</button>
-                    <button class="btn btn-success " id="submit-data" type="button">Save</button>
+                    <button data-dismiss="modal" class="btn btn-default" id="close" type="button"><u>C</u>lose</button>
+                    <button class="btn btn-success " id="submit-data" type="button"><u>S</u>ave</button>
                 </div>
             </div>
         </div>
@@ -236,6 +236,17 @@ include('../config/connection.php');
                 });
 
             });
+            document.onkeyup = function(e) {
+                if (e.altKey && e.which == 83) {
+                    if($('#Add').is(':visible')){
+                        $('#submit-data').click();
+                    }
+                } else if (e.altKey && e.which == 67) {
+                    if($('#Add').is(':visible')){
+                        $('#close').click();
+                    }
+                }
+            };
 
         });
         jQuery(document).ready(function() {

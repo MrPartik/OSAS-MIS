@@ -230,9 +230,9 @@ var EditableTable = function () {
 
 
                 $("#close").click();
-
-
-                swal({
+                if(txtname.length != 0){
+                    if(txtdesc.length != 0){
+                       swal({
                         title: "Are you sure?",
                         text: "The record will be save and will be use for further transaction",
                         type: "warning",
@@ -272,6 +272,38 @@ var EditableTable = function () {
                         }
 
                     });
+
+                    }
+                    else{
+                        swal({
+                            title: "Please enter a valid description",
+                            text: "Please check your description field",
+                            type: "error",
+                            confirmButtonColor: '#88A755',
+                            confirmButtonText: 'Okay',
+                            closeOnConfirm: true
+                        }, function (isConfirm) {
+                            $("#editable-sample_new").click();
+
+                        });
+                    }
+
+                }
+                else{
+                    swal({
+                        title: "Please enter a valid name",
+                        text: "Please check your name field",
+                        type: "error",
+                        confirmButtonColor: '#88A755',
+                        confirmButtonText: 'Okay',
+                        closeOnConfirm: true
+                    }, function (isConfirm) {
+                        $("#editable-sample_new").click();
+
+                    });
+                }
+
+
 
             });
             $('#editable-sample a.edit').live('click', function (e) {
@@ -314,19 +346,19 @@ var EditableTable = function () {
 
                     } else if (jqInputs[1].value.length > 100) {
 
-                        swal("Error", "The Office name must be less than 100 characters", "error");
+                        swal("Error", "The name must be less than 100 characters", "error");
 
                     } else if (jqInputs[1].value.length < 5) {
 
-                        swal("Error", "Please enter a valid Office name", "error");
+                        swal("Error", "Please enter a valid name", "error");
 
                     } else if (jqInputs[2].value.length > 100) {
 
-                        swal("Error", "The Office description must be less than 100 characters", "error");
+                        swal("Error", "The description must be less than 100 characters", "error");
 
                     } else if (jqInputs[2].value.length < 5) {
 
-                        swal("Error", "Please enter a valid Office description", "error");
+                        swal("Error", "Please enter a valid description", "error");
 
                     }
                 } else if (nEditing == nRow && this.innerHTML == "Add") {
