@@ -140,10 +140,10 @@
                             <a href="#">';
             $file = glob("../Avatar/".$orgcode.".*");
             if($file) {
-                $container = $container . '<img alt="" src="../Avatar/'.$orgcode.'.png">';
+                $container = $container . '<img alt="" src="../Avatar/'.$orgcode.'.*">';
             }
             else{
-                $container = $container . '<img alt="" src="../Avatar/Default-Organization.png">';
+                $container = $container . '<img alt="" src="../Avatar/Default-Organization.*">';
                 
             }
                 

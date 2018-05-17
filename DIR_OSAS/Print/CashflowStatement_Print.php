@@ -74,7 +74,7 @@
                 </center>
             </div>
             <div class="column">
-                <img src="<?php ?>" style="float:right;display:none"></div>
+                <img src="<?php echo "../../Avatar/".$orgCode.".png"  ?>" style="   float:right;height: 110px;;"></div>
         </div>
         <p id="header">CASH FLOW
         </p>

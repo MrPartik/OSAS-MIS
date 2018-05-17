@@ -5,10 +5,10 @@
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
 
     <title>&nbsp</title>
-    <link rel='stylesheet' type='text/css' href='../../Report/css/style.css' />
-    <link rel='stylesheet' type='text/css' href='../../Report/css/print.css' media="print" />
-    <script type='text/javascript' src='../../Report/js/jquery-1.3.2.min.js'></script>
-    <script type='text/javascript' src='../../Report/js/example.js'></script>
+    <link rel='stylesheet' type='text/css' href='css/style.css' />
+    <link rel='stylesheet' type='text/css' href='css/print.css' media="print" />
+    <script type='text/javascript' src='js/jquery-1.3.2.min.js'></script>
+    <script type='text/javascript' src='js/example.js'></script>
     <style>
         @media print {
             .header,
@@ -40,7 +40,7 @@
     <div id="page-wrap">
         <div class="headerrow">
             <div class="column">
-                <img src="../../Report/ASSETS/images/puplogo.png">
+                <img src="images/puplogo.png">
             </div>
             <div class="column">
                 <center>
