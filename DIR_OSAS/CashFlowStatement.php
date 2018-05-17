@@ -143,10 +143,11 @@ include('header.php');
                 $('#btnprint').click(function() {
                     var items = [];
                     var table = $('#editable-sample').DataTable();
+                    var code = $('#drporg option:selected').val();
                     jQuery(table.fnGetNodes()).each(function() {
                         items.push($(this).closest('tr').children('td:first').find('label').attr("cashid"));
                     });
-                    window.open('Print/CashflowStatement_Print.php?items=' + items, '_blank');
+                    window.open('Print/CashflowStatement_Print.php?items=' + items+'&OrgCode='+code);
                 });
 
 

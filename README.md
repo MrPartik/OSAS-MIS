@@ -16,22 +16,22 @@ __System Features__
 - [x] Organization Management
 - [x] Organization Profile Management
 - [x] Organization Accreditation
-- [ ] Organization Financial Statement
-- [ ] Organization Voucher
-- [ ] Organization Remittance
+- [x] Organization Financial Statement
+- [x] Organization Voucher
+- [x] Organization Remittance
 - [x] Loss of ID and Regicard
 - [x] Financial Assistance and Scholarships
 - [ ] Clearance Management
 - [ ] Semestral Clearance
 - [ ] General Clearance
-- [ ] Document Archiving  
+- [x] Document Archiving  
 - [x] System Setup
-
+- [ ] Integration of GCSMS and OSAS MIS
 ***
 
 | Members        | Role           | Initials  |
 | ------------- |:-------------:| -----:|
-| JOhn Patrick b. Loyola  | Programmer| J.P.L |
+| John Patrick B. Loyola  | Programmer| J.P.L |
 | Ceriaco B. Respecia Jr. | System Documentation |   C.R. Jr |
 | Keith Eyvan N. Alvior | Programmer     |    K.E.A |
 | Eric Kristopher P. Valdez | Programmer     |    E.K.V |

@@ -8,7 +8,7 @@
     <?php
                 
                 include('../../config/connection.php');
-
+                $orgCode = $_GET['OrgCode'];
                 $item = '';    
                 $totcol ='NN';
                 $totexp ='NN';
@@ -22,7 +22,7 @@
         FROM `t_org_cash_flow_statement`
 		INNER JOIN t_org_for_compliance ON OrgCashFlowStatement_ORG_CODE = OrgForCompliance_ORG_CODE
         WHERE OrgCashFlowStatement_DISPLAY_STAT = 'Active' AND 
-        OrgCashFlowStatement_ID  IN ('0'".$item.") ORDER BY OrgCashFlowStatement_DATE_ADD DESC  ") ;
+        OrgCashFlowStatement_ID  IN ('0'".$item.") AND OrgForCompliance_ORG_CODE = '$orgCode' ORDER BY OrgCashFlowStatement_DATE_ADD DESC  ") ;
             $row = mysqli_fetch_assoc($view_query);
                     $code = $row["CODE"];
     
@@ -40,10 +40,10 @@
                     
 
         ?>
-        <link rel='stylesheet' type='text/css' href='../../Report/css/style.css' />
-        <link rel='stylesheet' type='text/css' href='../../Report/css/print.css' media="print" />
-        <script type='text/javascript' src='../../Report/js/jquery-1.3.2.min.js'></script>
-        <script type='text/javascript' src='../../Report/js/example.js'></script>
+        <link rel='stylesheet' type='text/css' href='css/style.css' />
+        <link rel='stylesheet' type='text/css' href='css/print.css' media="print" />
+        <script type='text/javascript' src='js/jquery-1.3.2.min.js'></script>
+        <script type='text/javascript' src='js/example.js'></script>
         <style>
             @media print {
                 .header,
@@ -59,7 +59,7 @@
     <div id="page-wrap">
         <div class="headerrow">
             <div class="column">
-                <img src="../../Report/ASSETS/images/puplogo.png">
+                <img src="images/puplogo.png">
             </div>
             <div class="column">
                 <center>
@@ -74,7 +74,7 @@
                 </center>
             </div>
             <div class="column">
-                <img src="../../Report/ASSETS/images/commitslogo.png" style="float:right;display:none"></div>
+                <img src="<?php ?>" style="float:right;display:none"></div>
         </div>
         <p id="header">CASH FLOW
         </p>
@@ -134,7 +134,7 @@
                 (select @exsum := 0,@colsum := 0,@balsum := 0) params
                 INNER JOIN t_org_for_compliance ON OrgCashFlowStatement_ORG_CODE = OrgForCompliance_ORG_CODE
                 WHERE OrgCashFlowStatement_DISPLAY_STAT = 'Active' AND 
-                OrgCashFlowStatement_ID  IN ('0'".$item.")  ORDER BY OrgCashFlowStatement_ID asc ");
+                OrgCashFlowStatement_ID  IN ('0'".$item.")  AND OrgForCompliance_OrgApplProfile_APPL_CODE = '$orgCode' ORDER BY OrgCashFlowStatement_ID asc ");
                 while($row = mysqli_fetch_assoc($view_query))
                 {
                         

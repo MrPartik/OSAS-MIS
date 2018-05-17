@@ -6,7 +6,6 @@ session_start();
 $Username = $_SESSION['logged_user']['username'];
 if(isset($_POST['insertVouch']))
 {
-    
     $orgcode=$_POST['orgcode'];
     $vouchBy=$_POST['vouchBy'];
     $vouch=$_POST['vouch'];  
