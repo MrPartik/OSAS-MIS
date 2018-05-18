@@ -423,6 +423,7 @@ WHERE A.AssSancStudStudent_TO_BE_DONE <= CURRENT_DATE AND A.AssSancStudStudent_S
                         </div>
                     </section>
                 </div>
+<!--
                 <div class="col-md-4">
                     <section class="panel">
                         <div class="panel-body">
@@ -430,6 +431,7 @@ WHERE A.AssSancStudStudent_TO_BE_DONE <= CURRENT_DATE AND A.AssSancStudStudent_S
                         </div>
                     </section>
                 </div>
+-->
 
             </div>
         </section>
