@@ -2,6 +2,7 @@ var getcode = '';
 var getname = '';
 var oldWizard = '';
 var latcode = '';
+var stat = '';
 var initFlag = 0;
 var EditableTable = function () {
     return {
@@ -385,10 +386,29 @@ var EditableTable = function () {
                     nEditing = null;
                 }
             });
+            document.onkeyup = function(e) {
+                if (e.altKey && e.which == 83) {
+                    if(stat == 'Add'){
+                        $('#submit-data').click();
+                    }
+                    else if(stat == 'Edit'){
+                        $('#updsubmit-data').click();
+                    }
+
+                } 
+                else if (e.altKey && e.which == 67) {
+                    if($('#Add').is(':visible') || $('#Edit').is(':visible')){
+                        $('#close').click();
+                    }
+                }
+            };
+            
             $('#editable-sample a.edit').on('click', function (e) {
                 e.preventDefault();
                 $('#updsubmit-data').show();
                 $('#submit-data').hide();
+                stat = 'Edit';
+
                 var id = $(this).closest('tr').children('td:first').text();
                 document.getElementById('txtgetid').value = $(this).closest('tr').children('td:first').text();
                 $('#formcode').show();

@@ -231,8 +231,8 @@ include ("header.php");
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button data-dismiss="modal" id="close" class="btn btn-default" type="button">Close</button>
-                        <button class="btn btn-success " id="submit-data" type="button">Save</button>
+                        <button data-dismiss="modal" id="close" class="btn btn-default" type="button"><u>C</u>lose</button>
+                        <button class="btn btn-success " id="submit-data" type="button"><u>S</u>ave</button>
                     </div>
                 </div>
             </div>
@@ -284,8 +284,8 @@ include ("header.php");
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button data-dismiss="modal" id="updclose" class="btn btn-default" type="button">Close</button>
-                        <button class="btn btn-success " id="updsubmit-data" type="button">Save</button>
+                        <button data-dismiss="modal" id="updclose" class="btn btn-default" type="button"><u>C</u>lose</button>
+                        <button class="btn btn-success " id="updsubmit-data" type="button"><u>S</u>ave</button>
                     </div>
                 </div>
             </div>
@@ -304,6 +304,26 @@ include ("header.php");
 
             jQuery(document).ready(function() {
                 EditableTable.init();
+                document.onkeyup = function(e) {
+                    if (e.altKey && e.which == 83) {
+                        if($('#Add').is(':visible')){
+                            $('#submit-data').click();
+                        }
+                        else if($('#Edit').is(':visible')){
+                            $('#updsubmit-data').click();
+                        }
+
+                    } 
+                    else if (e.altKey && e.which == 67) {
+                        if($('#Add').is(':visible')){
+                            $('#close').click();
+                        }
+                        else if($('#Edit').is(':visible')){
+                            $('#updclose').click();
+                        }
+
+                    }
+                };
             });
 
         </script>
