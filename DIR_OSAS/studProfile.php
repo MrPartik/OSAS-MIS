@@ -14,7 +14,7 @@ include('header.php');
 include('../config/connection.php');     
 
 ?>
-
+<link rel="stylesheet" type="text/css" href="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.css" />
     <body>
         <!--sidebar start-->
         <?php include('sidenav.php')?>
@@ -105,6 +105,18 @@ include('../config/connection.php');
                                                 </tr>
                                             </tfoot>
                                         </table>
+                                                <div class="btn-group">
+                                            <form id="upload_csv" method="post" enctype="multipart/form-data">
+                                                <div class="controls col-md-12">
+                                                    <div class="fileupload fileupload-new row" data-provides="fileupload"> <span class="btn btn-white btn-file" style="width:200px">
+                                                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Click to Import Members</span> <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                                        <input name="employee_file" id="file" type="file" class="default" accept=".csv" /> </span> <span class="fileupload-preview" style="margin-left:5px;"></span>
+                                                        <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none; margin-left:5px;"></a>
+                                                        <button type="submit" class='btn btn-success' id="upload">Import <i class='fa fa-cloud-upload'></i></button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </section>
@@ -271,6 +283,81 @@ include('../config/connection.php');
                         });
                     });
                 </script>
+    <!-- END JAVASCRIPTS -->
+    <script type="text/javascript" src="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#getappcode').hide();
+            $('#updstudnum').hide();
+            var countreq = 0;
+            var flag = 0;
+            $('#upload_csv').on("submit", function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "Organization/OrganizationMembers/Export_stud.php",
+                    method: "POST",
+                    data: new FormData(this),
+                    contentType: false, // The content type used when sending data to the server.
+                    cache: false, // To unable request pages to be cached
+                    processData: false, // To send DOMDocument or non processed data file it is set to false
+                    success: function(data) {
+                        if (data == 'Error1') {
+                            swal("Invalid File");
+                        } else if (data == "Error2") {
+                            swal("Cancelled", "Please Select File", "error");
+                        } else {
+                                swal({
+                                    title: "Data Imported!",
+                                    text: "The csv file is successfully imported!",
+                                    type: "success",
+                                    confirmButtonColor: '#88A755',
+                                    confirmButtonText: 'Okay',
+                                    closeOnConfirm: false
+                                }, function (isConfirm) {
+                                alert('qwe')
+                                window.location.reload();
+
+                                });
+//                            $.each(data, function(key, val) {
+//                                //alert(val.snum)
+//                            });
+
+                            swal("Record Updated!", "The data is successfully imported!", "success");
+                        }
+                    },
+                    error: function(response) {
+                        swal("Error encountered while adding data", "Please try again", "error");
+                    }
+                })
+
+            });
+            $('#drpappcode').change(function() {
+                //                alert('qwe');
+                var _drpappcode = document.getElementById('drpappcode');
+                var drpname = _drpappcode.options[_drpappcode.selectedIndex].text;
+                var drpcode = _drpappcode.options[_drpappcode.selectedIndex].value;
+                $.ajax({
+                    type: "GET",
+                    url: 'Organization/OrganizationMembers/GetData-ajax.php',
+                    dataType: 'json',
+                    data: {
+                        _code: drpcode
+                    },
+                    success: function(data) {
+                        //                        alert(data.count);
+                        countreq = data.countlist;
+                        document.getElementById('accreqlist').innerHTML = data.list;
+                    },
+                    error: function(response) {
+                        swal("Error encountered while adding data", "Please try again", "error");
+                    }
+                });
+            });
+
+        });
+
+
+    </script>
     </body>
 
 </html>
