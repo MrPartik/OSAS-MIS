@@ -68,12 +68,7 @@ var EditableTable = function () {
                         "sPrevious": "Prev",
                         "sNext": "Next"
                     }
-                },
-                "aoColumnDefs": [{
-                        'bSortable': false,
-                        'aTargets': [0]
-                    }
-                ]
+                }
             });
 
             jQuery('#editable-sample_wrapper .dataTables_filter input').addClass("form-control medium"); // modify table search input
