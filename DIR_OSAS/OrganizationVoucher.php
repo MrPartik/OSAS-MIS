@@ -474,9 +474,9 @@ include('../config/connection.php');
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button id="addItem" class="btnInsert btn btn-info" type="submit" style="float: left;">Add Item</button>
-                            <button data-dismiss="modal" class="btn btn-cancel" type="button">Cancel</button>
-                            <button id="insertVoucher" class="btnInsert btn btn-success" type="submit">Submit</button>
+                            <button id="addItem" class="btnInsert btn btn-info" type="submit" style="float: left;"><u>A</u>dd Item</button>
+                            <button data-dismiss="modal" id="close" class="btn btn-cancel" type="button"><u>C</u>ancel</button>
+                            <button id="insertVoucher" class="btnInsert btn btn-success" type="submit"><u>S</u>ubmit</button>
                         </div>
                     </div>
                 </div>
@@ -490,6 +490,24 @@ include('../config/connection.php');
             <!--Core js-->
             <?php include('footer.php')?>
                 <script>
+                    document.onkeyup = function(e) {
+                        if (e.altKey && e.which == 83) {
+                            if($('#Add').is(':visible')){
+                                $('#insertVoucher').click();
+                            }
+                        }
+                        else if (e.altKey && e.which == 67) {
+                            if($('#Add').is(':visible')){
+                                $('#close').click();
+                            }
+                        }
+                        else if (e.altKey && e.which == 65) {
+                            if($('#Add').is(':visible')){
+                                $('#addItem').click();
+                            }
+                        }
+                    };
+
                     var oTable = $('#dynamic-table').dataTable({
                         "aLengthMenu": [
                     [3, 5, 15, 20, -1]

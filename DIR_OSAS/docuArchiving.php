@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <title>OSAS - Student Profile</title>
@@ -52,32 +51,24 @@ include('../config/connection.php');
                                                     <th>Description</th>
                                                     <th>File Name</th>
                                                     <th>Last Modified</th>
-                                                    <th><center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
+                                                    <th>
+                                                        <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                        <tr>
-                                                            <td>
-                                                            2017-doc-0001
-                                                            </td>
-                                                            <td>  
-                                                            Policy of University/ Branches Required Activity Attendance and Registration Card
-                                                            </td>
-                                                            <td> 
-                                                            Requiring the Activity attendance
-                                                            </td>
-                                                            <td> 
-                                                            PolUniv.docx
-                                                            </td>
-                                                            <td> 
-                                                                Wed Feb 28, 2018 11:30 PM
-                                                            </td>
-                                                            <td>
-                                                                <center>
-                                                                    <button id="btnStudProfile" value="" data-toggle="modal" href="#" class="btn btn-info"> <i class="fa  fa-info-circle"></i> </button>
-                                                                </center>
-                                                            </td>
-                                                        </tr> 
+                                                <tr>
+                                                    <td> 2017-doc-0001 </td>
+                                                    <td> Policy of University/ Branches Required Activity Attendance and Registration Card </td>
+                                                    <td> Requiring the Activity attendance </td>
+                                                    <td> PolUniv.docx </td>
+                                                    <td> Wed Feb 28, 2018 11:30 PM </td>
+                                                    <td>
+                                                        <center>
+                                                            <button id="btnStudProfile" value="" data-toggle="modal" href="#" class="btn btn-info"> <i class="fa  fa-info-circle"></i> </button>
+                                                        </center>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                             <tfoot>
                                                 <tr>
@@ -86,7 +77,9 @@ include('../config/connection.php');
                                                     <th>Description</th>
                                                     <th>File Name</th>
                                                     <th>Last Modified</th>
-                                                    <th><center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
+                                                    <th>
+                                                        <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
+                                                    </th>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -109,20 +102,15 @@ include('../config/connection.php');
                             <p>You are now archiving a document</p>
                             <br>
                             <div class="row">
-                                <div class="col-md-12 form-group"> 
-                                <form id="upload" method="post" action="upload.php" enctype="multipart/form-data">
-                            <div id="drop">
-                                Drop Here
-
-                                <a>Browse</a>
-                                <input type="file" name="upl" multiple />
-                            </div>
-
-                            <ul>
-                                <!-- The file uploads will be shown here -->
-                            </ul>
-
-                        </form>
+                                <div class="col-md-12 form-group">
+                                    <div class="col-md-12 form-group"> *Document Name
+                                        <textarea id="docName" type="text" class="form-control" placeholder="Policy of University/ Branches Required Activity Attendance and Registration Card	" required></textarea>
+                                    </div>
+                                    <div class="col-md-12 form-group"> *Document Description
+                                        <textarea id="docDesc" type="text" class="form-control" placeholder="Requiring the Activity attendance	 " required></textarea>
+                                    </div>
+                                    <div class="col-md-12 form-group"> *Document File
+                                        <input id="docFile" type="file" class="form-control" style=" resize:vertical " required> </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -138,12 +126,12 @@ include('../config/connection.php');
             <!--main content end-->
             <!-- Placed js at the end of the document so the pages load faster -->
             <!--Core js-->
-            <?php include('footer.php')?> 
+            <?php include('footer.php')?>
                 <script>
-                                var oTable = $('#dynamic-table').dataTable({
+                    var oTable = $('#dynamic-table').dataTable({
                         "aLengthMenu": [
-                    [5, 10,15, 20, -1]
-                    , [5, 10,15, 20, "All"] // change per page values here
+                    [5, 10, 15, 20, -1]
+                    , [5, 10, 15, 20, "All"] // change per page values here
                 ], // set the initial value
                         "iDisplayLength": 10
                         , "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>"
@@ -156,6 +144,53 @@ include('../config/connection.php');
                             }
                         }
                         , aaSorting: [[4, "desc"]]
+                    });
+                    $("button[name='insert']").on("click", function () {
+                        if ($("#docName").val().length && $("#docDesc").val().length && $("#docFile").val().length) {
+                            swal({
+                                title: "Are you sure?"
+                                , text: "This data will be added  and used for further transaction"
+                                , type: "warning"
+                                , showCancelButton: true
+                                , confirmButtonColor: '#9DD656'
+                                , confirmButtonText: 'Yes!'
+                                , cancelButtonText: "No!"
+                                , closeOnConfirm: false
+                                , closeOnCancel: false
+                            }, function (isConfirm) {
+                                if (isConfirm) {
+                                    var file_data = $('#docFile').prop('files')[0]
+                                        , form_data = new FormData();
+                                    form_data.append('insertDoc', 'insertDoc');
+                                    form_data.append('docuName', $("#docName").val());
+                                    form_data.append('docuDesc', $("#docDesc").val());
+                                    form_data.append('file', file_data);
+                                    $.ajax({
+                                        url: "docuArchivingSave.php"
+                                        , type: "POST"
+                                        , data: form_data
+                                        , cache: false
+                                        , contentType: false
+                                        , processData: false
+                                        , success: function (data) {
+                                            swal({
+                                                title: "Woaah, that's neat!"
+                                                , text: "The Document record is added"
+                                                , type: "success"
+                                                , showCancelButton: false
+                                                , confirmButtonColor: '#9DD656'
+                                                , confirmButtonText: 'Ok'
+                                            }, function (isConfirm) {
+                                                location.reload();
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                        else {
+                            swal("Please fill all the required fields", "The transaction is cancelled, please try again", "error");
+                        }
                     });
                     $("#TableStudProfile").on("click", "#btnStudProfile", function () {
                         var datas = $(this).attr("value");
@@ -170,5 +205,5 @@ include('../config/connection.php');
                     });
                 </script>
     </body>
-    
+
 </html>

@@ -235,9 +235,9 @@ include('../config/connection.php');
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button data-dismiss="modal" id="close" class="btn btn-default" type="button">Close</button>
-                        <button class="btn btn-success " id="submit-data" type="button">Save</button>
-                        <button class="btn btn-success " id="updsubmit-data" type="button">Save</button>
+                        <button data-dismiss="modal" id="close" class="btn btn-default" type="button"><u>C</u>lose</button>
+                        <button class="btn btn-success " id="submit-data" type="button"><u>S</u>ave</button>
+                        <button class="btn btn-success " id="updsubmit-data" type="button"><u>S</u>ave</button>
                     </div>
                 </div>
             </div>
@@ -324,8 +324,8 @@ include('../config/connection.php');
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button data-dismiss="modal" class="btn btn-default" id="updclose" type="button">Close</button>
-                        <button class="btn btn-success " id="updsubmit-data" type="button">Save</button>
+                        <button data-dismiss="modal" class="btn btn-default" id="updclose" type="button"><u>C</u>lose</button>
+                        <button class="btn btn-success " id="updsubmit-data" type="button"><u>S</u>ave</button>
                     </div>
                 </div>
             </div>
@@ -344,6 +344,7 @@ include('../config/connection.php');
                     $('#updsubmit-data').hide();
                     $('#submit-data').show();
                     $("#form-data2").trigger("reset");
+                    stat = 'Add';
                 });
 
                 $('.hidethis').hide();
@@ -372,6 +373,7 @@ include('../config/connection.php');
             });
             jQuery(document).ready(function() {
                 EditableTable.init();
+
             });
 
         </script>
