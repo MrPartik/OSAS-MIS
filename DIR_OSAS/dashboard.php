@@ -259,6 +259,156 @@ WHERE A.AssSancStudStudent_TO_BE_DONE <= CURRENT_DATE AND A.AssSancStudStudent_S
                         </div>
                     </section>
                 </div>
+                <div class="col-md-12" style="padding-top:10px">
+                    <section class="panel">
+                        <div class="panel-body">
+                            <div id="PopulationPerCourse" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                            <table id="tblPopulationPerCourse" class="hidden">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <?php
+                                            $view_query = mysqli_query($con," SELECT  COUNT(*) AS COU,
+                                                Stud_COURSE AS COURSE,
+
+                                                CONCAT(
+                                                    'At ',
+                                                     FORMAT((
+                                                    SELECT
+                                                        COUNT(*)
+                                                    FROM
+                                                        r_stud_profile AS B
+                                                    WHERE
+                                                        B.Stud_COURSE = A.Stud_COURSE AND Stud_DISPLAY_STATUS = 'Active'
+                                                )/(SELECT COUNT(*) FROM r_stud_profile AS B WHERE Stud_DISPLAY_STATUS = 'Active') * 100,3),'% of population'
+                                                ) AS PER
+                                            FROM
+                                                r_stud_profile AS A WHERE Stud_DISPLAY_STATUS = 'Active' GROUP BY A.Stud_COURSE ");
+                                            while($row = mysqli_fetch_assoc($view_query))
+                                            {
+                                                $legend = $row["COURSE"];
+
+                                                echo "
+                                                <th>$legend</th>
+                                                    ";
+                                            }
+
+                                        ?>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <th>Population</th>
+                                        <?php
+                                            $view_query = mysqli_query($con," SELECT  COUNT(*) AS COU,
+                                                Stud_COURSE AS COURSE,
+
+                                                CONCAT(
+                                                    'At ',
+                                                     FORMAT((
+                                                    SELECT
+                                                        COUNT(*)
+                                                    FROM
+                                                        r_stud_profile AS B
+                                                    WHERE
+                                                        B.Stud_COURSE = A.Stud_COURSE AND Stud_DISPLAY_STATUS = 'Active'
+                                                )/(SELECT COUNT(*) FROM r_stud_profile AS B WHERE Stud_DISPLAY_STATUS = 'Active') * 100,3),'% of population'
+                                                ) AS PER
+                                            FROM
+                                                r_stud_profile AS A WHERE Stud_DISPLAY_STATUS = 'Active' GROUP BY A.Stud_COURSE ");
+                                            while($row = mysqli_fetch_assoc($view_query))
+                                            {
+                                                $item = $row["COU"];
+
+                                                echo "
+                                                <td>$item</td>
+                                                ";
+                                            }
+
+                                        ?>
+                                    </tr>
+
+
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-12" style="padding-top:10px">
+                    <section class="panel">
+                        <div class="panel-body">
+                            <div id="MoneyPerOrg" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                            <table id="tblMoneyPerOrg" class="hidden">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <?php
+                                            $view_query = mysqli_query($con," SELECT
+                                        OrgAppProfile_APPL_CODE
+                                        ,OrgAppProfile_DESCRIPTION
+                                        ,OrgForCompliance_ORG_CODE
+                                        ,OrgAppProfile_NAME
+                                        ,OrgForCompliance_ADVISER
+                                        ,OrgAppProfile_STATUS
+                                        ,(SELECT COUNT(*) FROM r_org_accreditation_details WHERE OrgAccrDetail_DISPLAY_STAT = 'Active') AS A1
+                                        , (SELECT COUNT(*) FROM t_org_accreditation_process A WHERE OrgAccrProcess_ORG_CODE = OFC.OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_DISPLAY_STAT='Active')  as A2
+                                        ,(SELECT IFNULL((SELECT WIZARD_CURRENT_STEP FROM r_application_wizard A WHERE A.WIZARD_ORG_CODE = OrgForCompliance_ORG_CODE),'1') ) AS STEP
+                                        ,(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OFC.OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 ) = (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) AS TR,
+                                        (SELECT COUNT(*) FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgAppProfile_APPL_CODE = (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` AS AZ WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR = '$current_acadyear' AND AZ.OrgForCompliance_ORG_CODE = OFC.OrgForCompliance_ORG_CODE  )) AS MYSTAT
+                                        FROM `r_org_applicant_profile` AS OAP
+                                        INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE
+                                        WHERE   OAP.OrgAppProfile_DISPLAY_STAT = 'Active' AND (SELECT COUNT(*) FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgAppProfile_APPL_CODE = (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` AS AZ WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR = '$current_acadyear' AND AZ.OrgForCompliance_ORG_CODE = OFC.OrgForCompliance_ORG_CODE  )) = '1' ");
+                                            while($row = mysqli_fetch_assoc($view_query))
+                                            {
+                                                $legend = $row["OrgAppProfile_NAME"];
+                                                $code = $row["OrgAppProfile_APPL_CODE"];
+
+                                                echo "
+                                                <th>$legend</th>
+                                                    ";
+                                            }
+
+                                        ?>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <th>Money</th>
+                                        <?php
+                                            $view_query = mysqli_query($con," SELECT
+                                        OrgAppProfile_APPL_CODE
+                                        ,OrgAppProfile_NAME,
+                                        (SELECT SUM(OrgCashFlowStatement_COLLECTION) - SUM(OrgCashFlowStatement_EXPENSES) FROM `t_org_cash_flow_statement`
+	INNER JOIN t_org_for_compliance ON OrgForCompliance_ORG_CODE = OrgCashFlowStatement_ORG_CODE
+    INNER JOIN r_org_applicant_profile ON OrgAppProfile_APPL_CODE = OrgForCompliance_OrgApplProfile_APPL_CODE
+    WHERE OrgAppProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE ) AS BALANCE
+                                                                                FROM `r_org_applicant_profile` AS OAP
+                                        INNER JOIN t_org_for_compliance AS OFC ON OFC.OrgForCompliance_OrgApplProfile_APPL_CODE = OAP.OrgAppProfile_APPL_CODE
+                                        WHERE   OAP.OrgAppProfile_DISPLAY_STAT = 'Active' AND (SELECT COUNT(*) FROM `r_org_applicant_profile` WHERE OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgAppProfile_APPL_CODE = (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` AS AZ WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR = '2018-2019' AND AZ.OrgForCompliance_ORG_CODE = OFC.OrgForCompliance_ORG_CODE  )) = '1' ");
+                                            while($row = mysqli_fetch_assoc($view_query))
+                                            {
+                                                $item = $row["BALANCE"];
+
+                                                echo "
+                                                <td>$item</td>
+                                                ";
+                                            }
+
+                                        ?>
+                                    </tr>
+
+
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </section>
+                </div>
                 <div class="col-md-12">
                     <section class="panel">
                         <div class="panel-body">
@@ -367,6 +517,55 @@ WHERE A.AssSancStudStudent_TO_BE_DONE <= CURRENT_DATE AND A.AssSancStudStudent_S
                     }
                 }
             });
+
+            Highcharts.chart('PopulationPerCourse', {
+                data: {
+                    table: 'tblPopulationPerCourse'
+                },
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Population per Course'
+                },
+                yAxis: {
+                    allowDecimals: false,
+                    title: {
+                        text: 'Number of Population'
+                    }
+                },
+                tooltip: {
+                    formatter: function() {
+                        return '<b>' + this.series.name + '</b><br/>' +
+                            this.point.y + ' Student';
+                    }
+                }
+            });
+
+            Highcharts.chart('MoneyPerOrg', {
+                data: {
+                    table: 'tblMoneyPerOrg'
+                },
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Money per Organization'
+                },
+                yAxis: {
+                    allowDecimals: true,
+                    title: {
+                        text: 'Amount of Money'
+                    }
+                },
+                tooltip: {
+                    formatter: function() {
+                        return '<b>' + this.series.name + '</b><br/>' + '₱'+
+                            this.point.y + ' as of now';
+                    }
+                }
+            });
+
 
             // Create the chart
 
