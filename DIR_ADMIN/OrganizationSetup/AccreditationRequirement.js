@@ -141,7 +141,7 @@ var EditableTable = function () {
                 e.preventDefault();
                 var nRow = $(this).parents('tr')[0];
                 var getval = $(this).closest('tr').children('td:first').text();;
-                alert(getval)
+//                alert(getval)
                 swal({
                     title: "Are you sure?"
                     , text: "The record will be save and will be use for further transaction"

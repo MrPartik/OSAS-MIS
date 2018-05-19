@@ -88,7 +88,6 @@ include('../config/connection.php');
                                                         else{
                                                             $display = "<center><span class='badge bg-important ' style='padding:10px;'>Inactive</span></center>";
                                                             $button = "<center>
-                                                                        <a class='btn btn-success edit' style='color:white' data-toggle='modal' href='#Edit' href='javascript:;'><i class='fa   fa-edit'></i></a>                                                        
                                                                         <a class='btn btn-info retrieve' href='javascript:;'><i class='fa fa-undo'></i></a>
                                                                     </center>";
                                                         }
@@ -356,9 +355,7 @@ include('../config/connection.php');
                         }
                     });
                 });
-                jQuery(document).ready(function () {
                     EditableTable.init();
-                });
             </script>
     </body>
 

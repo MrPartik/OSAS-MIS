@@ -54,7 +54,7 @@
                         <!-- <li <?php if( $currentPage==='OSAS_OrgAccreditation' ) { echo 'class="active"';} ?> ><a href="OrganizationAccreditation.php">Accreditation</a></li> -->
                         <li <?php if( $currentPage==='OSAS_OrgMem' ) { echo 'class="active"';} ?> ><a href="OrganizationMembers.php">Organization Members</a></li>
                         <li <?php if( $currentPage==='OSAS_OrgPos' ) { echo 'class="active"';} ?> ><a href="OrganizationPosition.php">Officer Position</a></li>
-                        <li><a href="#">Financial Statement</a></li>
+<!--                        <li><a href="#">Financial Statement</a></li>-->
                         <li <?php if( $currentPage==='OSAS_Remittance' ) { echo 'class="active"';} ?>><a href="Remittance.php">Remittance</a></li>
                         <li <?php if( $currentPage==='OSAS_OrgVouch' ) { echo 'class="active"';} ?> ><a href="OrganizationVoucher.php">Voucher</a></li>
                         <li <?php if( $currentPage==='OSAS_Cflow' ) { echo 'class="active"';} ?>><a href="CashFlowStatement.php">Cashflow Statement</a></li>
@@ -77,8 +77,8 @@
                 <li class="sub-menu" style="position: absolute;bottom: 0;width: 100%;"> <a href="docuArchiving.php" <?php if( $currentPage==='Config' ) {echo 'class="active"';} ?> > <i class="fa fa-gears"></i> <span>Configuration & Maintenance </span> </a>
                     <ul class="sub">
                         <!-- Please modify this -->
-                        <li <?php if( $currentPage==='' ) { echo 'class="active"';} ?>><a href="#">Student Sanction</a></li>
-                        <li <?php if( $currentPage==='' ) { echo 'class="active"';} ?> ><a href="#">System Configuration</a></li>
+                        <li <?php if( $currentPage==='' ) { echo 'class="active"';} ?>><a href="#">Announcement</a></li>
+                        <li <?php if( $currentPage==='Config' ) { echo 'class="active"';} ?> ><a href="systemConfig.php">System Configuration</a></li>
                     </ul>
                 </li>
                 <!-- <li>
