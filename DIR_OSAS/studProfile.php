@@ -105,7 +105,7 @@ include('../config/connection.php');
                                                 </tr>
                                             </tfoot>
                                         </table>
-                                                <div class="btn-group">
+                                        <div class="btn-group">
                                             <form id="upload_csv" method="post" enctype="multipart/form-data">
                                                 <div class="controls col-md-12">
                                                     <div class="fileupload fileupload-new row" data-provides="fileupload"> <span class="btn btn-white btn-file" style="width:200px">
