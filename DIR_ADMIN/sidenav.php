@@ -28,8 +28,8 @@
                     <ul class="sub">
                         <li <?php if( $currentPage==='Admin_AccrReq' ) { echo 'class="active"';} ?> ><a href="AccreditationRequirement.php">Accreditation Requirement</a></li>
                         <li <?php if( $currentPage==='Admin_Course' ) { echo 'class="active"';} ?>><a href="Course.php">Course</a></li>
+                        <li <?php if( $currentPage==='Admin_OrgCat' ) { echo 'class="active"';} ?>><a href="AcademicCategory.php">Organization Category</a></li>
                         <li <?php if( $currentPage==='Admin_NonAcad' ) { echo 'class="active"';} ?>><a href="NonAcademicCategory.php">Non Academic Category </a></li>
-                        <li <?php if( $currentPage==='Admin_OrgCat' ) { echo 'class="active"';} ?>><a href="AcademicCategory.php">Academic Category</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
