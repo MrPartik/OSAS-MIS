@@ -11,14 +11,13 @@ if(isset($_POST["insertDoc"])){
             $docuDesc = $_POST["docuDesc"];
             $filename = "   ";
 
-            mysqli_query($con,"INSERT INTO `r_archiving_documents` ( `ArchDocuments_ORDER_NO`, `ArchDocuments_NAME`, `ArchDocuments_DESC`, `ArchDocuments_FILE_PATH`) VALUES ($count,'$docuName','$docuDesc','$filename')");
 
 
 
             if(isset($_FILES['file'])){
                 $path = $_FILES['file']['name'];
                 $ext = pathinfo($path, PATHINFO_EXTENSION);
-            $filename = 'Document-'.$count.'-'.$docuName.'.'.$ext;
+            $filename = 'Document-'.$current_acadyear.'-'.$docuName.'.'.$ext;
             $url = '../Documents/'.$filename;
 
             // Check for errors
@@ -40,6 +39,8 @@ if(isset($_POST["insertDoc"])){
             if(!move_uploaded_file($_FILES['file']['tmp_name'], '../Documents/' . $filename)){
                 die('CD');
             }
+
+            mysqli_query($con,"INSERT INTO `r_archiving_documents` ( `ArchDocuments_ORDER_NO`, `ArchDocuments_NAME`, `ArchDocuments_DESC`, `ArchDocuments_FILE_PATH`) VALUES ('$current_acadyear _ $count','$docuName','$docuDesc','$filename')")or die('Error executing query');
         }
 }
 ?>

@@ -517,4 +517,10 @@
                     minDate: 0
                     , dateFormat: 'D M d, yy'
                 });
+                $("tbody").find("tr").find("input[id='checkFinished']").each(function () {
+                    if ($(this).is(":checked")) {
+                        $(this).closest("tr").find("td.TDSancName  ").css("background", "#d6fbd6");
+                        $(this).closest("tr").find("td input[id='tobeDone']").css("color", "black");
+                    }
+                });
             </script>

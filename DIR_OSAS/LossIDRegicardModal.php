@@ -53,8 +53,7 @@
                         <br/>
                         <br/>
                         <button id="addStudLoss" class="btnSave btn btn-default"><i class="fa fa-plus"></i> Add</button>
-
-            <button id="MoreInfo" class="btnSave btn btn-info"><i class="fa fa-info-circle"></i> More Info</button>
+                        <button id="MoreInfo" class="btnSave btn btn-info"><i class="fa fa-info-circle"></i> More Info</button>
                         <br/>
                         <br/> </div>
                     <div class="collapse-group">
@@ -95,14 +94,16 @@
                                                 <td class="hidden ">
                                                     <?php echo $LossDet['ID']?>
                                                 </td>
-                                                <td class="TDLossDesc"> <span class="spanSancName"><?php
+                                                <td class="TDLossDesc" > <span class="spanSancName"><?php
                                                 $dateStart =new DateTime($LossDet['start']);
                                                 $dateMod =new DateTime($LossDet['mods']);
                                                 echo "<strong>".$LossDet['type'].'</strong><br><br><i style="font-size:10px">Date Added: '. $dateStart->format('D M d, Y h:i A').' <br>Last Modified: '. $dateMod->format('D M d, Y h:i A').'</i>'?></span> </td>
                                                 <td>
                                                     <input id="DateClaim" type="date" class="form-control" value=<?php echo (new DateTime($LossDet[ 'claim']))->format('Y-m-d'); ?>> </td>
                                                 <td>
-                                                    <textarea id="lossRemarks" style="resize:vertical" value="<?php echo $LossDet['remarks']?>"> <?php echo $LossDet['remarks']?> </textarea>
+                                                    <textarea id="lossRemarks" style="resize:vertical" value="<?php echo $LossDet['remarks']?>">
+                                                        <?php echo $LossDet['remarks']?>
+                                                    </textarea>
                                                 </td>
                                                 <td class="actionDes">
                                                     <center> <i style='cursor:pointer;font-size: 20px' id='deletemotoInside' class='fa fa-minus-circle'></i> </center>
@@ -129,37 +130,40 @@
                 </div>
             </div>
             <script>
+                $("tbody").find("tr").find("input#DateClaim").each(function () {
+                    if ($(this).val().length) {
+                        $(this).closest("tr").find("td.TDLossDesc").css("background", "#d6fbd6");
+                    }
+                });
 
-
-            $("div.twt-feed").hide();
-            $("#MoreInfo").on("click",function(){
-                if(!$("div.twt-feed.maroon-bg:visible").length){
-                    $("div.twt-feed").slideToggle();
-                    $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide Info');
-                }else{
-                     $("div.twt-feed").slideToggle();
-                    $(this).html('<i class="fa  fa-info-circle"></i> More Info');
-                }
-            });
-
-
-                   var oTable = $('#dynamic-table-modal').dataTable({
-                        "aLengthMenu": [
+                $("div.twt-feed").hide();
+                $("#MoreInfo").on("click", function () {
+                    if (!$("div.twt-feed.maroon-bg:visible").length) {
+                        $("div.twt-feed").slideToggle();
+                        $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide Info');
+                    }
+                    else {
+                        $("div.twt-feed").slideToggle();
+                        $(this).html('<i class="fa  fa-info-circle"></i> More Info');
+                    }
+                });
+                var oTable = $('#dynamic-table-modal').dataTable({
+                    "aLengthMenu": [
                     [3, 5, 15, 20, -1]
                     , [3, 5, 15, 20, "All"] // change per page values here
                 ], // set the initial value
-                        "iDisplayLength": 3
-                        , "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>"
-                        , "sPaginationType": "bootstrap"
-                        , "oLanguage": {
-                            "sLengthMenu": "_MENU_ records per page"
-                            , "oPaginate": {
-                                "sPrevious": "Prev"
-                                , "sNext": "Next"
-                            }
+                    "iDisplayLength": 3
+                    , "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>"
+                    , "sPaginationType": "bootstrap"
+                    , "oLanguage": {
+                        "sLengthMenu": "_MENU_ records per page"
+                        , "oPaginate": {
+                            "sPrevious": "Prev"
+                            , "sNext": "Next"
                         }
-                        , aaSorting: [[1, "desc"]]
-                    });
+                    }
+                    , aaSorting: [[1, "desc"]]
+                });
                 $('#addStudLoss').on("click", function () {
                     if ($('#LossDiv:visible').length) {
                         $("#LossDiv").slideToggle(500);
@@ -224,7 +228,6 @@
                                             , LossClaim = $tds.eq(2).find("#DateClaim").val()
                                             , LossRemarks = $tds.eq(3).find("#lossRemarks").val()
                                             , StudNumber = "<?php echo $_GET['StudNo']?>"
- 
                                         $.ajax({
                                             type: 'post'
                                             , url: 'LossIDRegicardSave.php'
@@ -304,7 +307,7 @@
                                 }
                             });
                         }
-                        if (updatingRow != 0 && newLosscialAss==0) {
+                        if (updatingRow != 0 && newLosscialAss == 0) {
                             swal({
                                 title: "Are you sure?"
                                 , text: "This data will be saved and used in further transactions"
@@ -331,9 +334,9 @@
                                                 , LossClaim: LossClaim
                                                 , LossRemarks: LossRemarks
                                             }
-                                            , success: function (result) {   }
+                                            , success: function (result) {}
                                             , error: function (result) {
-                                            swal("Error encountered while updating data", "Please try again", "error");
+                                                swal("Error encountered while updating data", "Please try again", "error");
                                             }
                                         });
                                     }).promise().done(function () {

@@ -32,6 +32,11 @@ include('../config/connection.php');
                                 <div class="mini-stat-info"> <span>1</span> Number of Documents </div>
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="mini-stat clearfix"> <span class="mini-stat-icon orange"><i class="fa fa-calendar"></i></span>
+                                <div class="mini-stat-info"> <span><?php $row = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM `r_system_config` WHERE `SysConfig_NAME` = 'DisposalDays'")); echo $row["SysConfig_PROPERTIES"]?></span>Disposal of Documents (Limitation in (Day/s))</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="row ">
                         <div class="col-md-12">
@@ -50,25 +55,38 @@ include('../config/connection.php');
                                                     <th>Document Name</th>
                                                     <th>Description</th>
                                                     <th>File Name</th>
-                                                    <th>Last Modified</th>
+                                                    <th>Date Issued</th>
                                                     <th>
                                                         <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
                                                     </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td> 2017-doc-0001 </td>
-                                                    <td> Policy of University/ Branches Required Activity Attendance and Registration Card </td>
-                                                    <td> Requiring the Activity attendance </td>
-                                                    <td> PolUniv.docx </td>
-                                                    <td> Wed Feb 28, 2018 11:30 PM </td>
-                                                    <td>
-                                                        <center>
-                                                            <button id="btnStudProfile" value="" data-toggle="modal" href="#" class="btn btn-info"> <i class="fa  fa-info-circle"></i> </button>
-                                                        </center>
-                                                    </td>
-                                                </tr>
+                                                <?php $query = mysqli_query($con,"SELECT `ArchDocuments_ORDER_NO`,`ArchDocuments_NAME`,`ArchDocuments_DESC`,`ArchDocuments_FILE_PATH`,`ArchDocuments_DATE_ADD` FROM `r_archiving_documents`");
+                                                            while($row=mysqli_fetch_assoc($query)){?>
+                                                    <tr>
+                                                        <td>
+                                                            <?php echo $row['ArchDocuments_ORDER_NO']?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $row['ArchDocuments_NAME']?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $row['ArchDocuments_DESC']?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $row['ArchDocuments_FILE_PATH']?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo (new datetime($row['ArchDocuments_DATE_ADD']))->format('D M d, Y h:i A')  ?>
+                                                        </td>
+                                                        <td>
+                                                            <center>
+                                                                <button id="btnStudProfile" value="" data-toggle="modal" href="#" class="btn btn-info"> <i class="fa  fa-info-circle"></i> </button>
+                                                            </center>
+                                                        </td>
+                                                    </tr>
+                                                    <?php }?>
                                             </tbody>
                                             <tfoot>
                                                 <tr>
@@ -76,7 +94,7 @@ include('../config/connection.php');
                                                     <th>Document Name</th>
                                                     <th>Description</th>
                                                     <th>File Name</th>
-                                                    <th>Last Modified</th>
+                                                    <th>Date Issued</th>
                                                     <th>
                                                         <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
                                                     </th>
