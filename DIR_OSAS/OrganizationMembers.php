@@ -146,12 +146,7 @@ WHERE OFC.OrgForCompliance_DISPAY_STAT = 'Active' AND OAP.OrgAppProfile_DISPLAY_
                                             <div class="btn-group">
                                                 <button id="btnstudadd" class="btn btn-success"> Add <i class="fa fa-plus"></i> </button> <a class='btn btn-primary delete tooltips' id="btnsync" data-toggle='tooltip' href='javascript:;' data-placement='bottom' data-original-title='Sync the data? '>Sync <i class='fa fa-refresh' ></i></a> </div>
                                             <div class="btn-group pull-right">
-                                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i> </button>
-                                                <ul class="dropdown-menu pull-right">
-                                                    <li><a href="#">Print</a></li>
-                                                    <li><a href="#">Save as PDF</a></li>
-                                                    <li><a href="#">Export to Excel</a></li>
-                                                </ul>
+                                                <button class="btn btn-default " id="btnprint">Print <i class="fa fa-print"></i></button>
                                             </div>
                                         </div>
                                         <div id="drpstudent">

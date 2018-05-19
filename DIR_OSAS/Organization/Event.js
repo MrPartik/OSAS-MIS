@@ -82,6 +82,11 @@ var EditableTable = function () {
             jQuery('#editable-sample_wrapper .dataTables_filter input').addClass("form-control medium"); // modify table search input
             jQuery('#editable-sample_wrapper .dataTables_length select').addClass("form-control xsmall"); // modify table per page dropdown
 
+            var oTable2 = $('#editable-sample2').dataTable({
+
+            });
+
+            
             var nEditing = null;
 
 
@@ -121,8 +126,20 @@ var EditableTable = function () {
 
                             },
                             success: function (response) {
-                                alert(date)
-                                
+                                swal({
+                                    title: "Record Added!",
+                                    text: "The data is successfully Added!",
+                                    type: "success",
+                                    confirmButtonColor: '#88A755',
+                                    confirmButtonText: 'Okay',
+                                    closeOnConfirm: false
+                                }, function (isConfirm) {
+                                    if (isConfirm) {
+                                        window.location.reload();
+
+
+                                    }
+                                });
                             },
                             error: function (response) {
                                 swal("Error encountered while adding data", "Please try again", "error");
@@ -173,7 +190,66 @@ var EditableTable = function () {
                             success: function (response) {
                                 swal({
                                     title: "Record Updated!",
-                                    text: "The data is successfully Added!",
+                                    text: "The data is successfully Updated!!",
+                                    type: "success",
+                                    confirmButtonColor: '#88A755',
+                                    confirmButtonText: 'Okay',
+                                    closeOnConfirm: false
+                                }, function (isConfirm) {
+                                    if (isConfirm) {
+                                        window.location.reload();
+
+
+                                    }
+                                });
+
+                            },
+                            error: function (response) {
+                                swal("Error encountered while adding data", "Please try again", "error");
+                            }
+                        });
+                        
+                    } else {
+                        swal("Cancelled", "The transaction is cancelled", "error");
+                    }
+                });
+
+
+
+            });
+
+            $('#updappsubmit-data').click(function (e) {
+                e.preventDefault();
+                var name = document.getElementById('txtappupdname').value;
+                var date = document.getElementById('txtappupddate').value;
+                var desc = document.getElementById('txtappupddesc').value;
+                $("#updappclose").click();
+
+                swal({
+                    title: "Are you sure?",
+                    text: "This data will be saved and used for further transaction",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: '#DD6B55',
+                    confirmButtonText: 'Yes!',
+                    cancelButtonText: "No!",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            type: 'post',
+                            url: 'Organization/Event/Update2-ajax.php',
+                            data: {
+                                _code: latcode,
+                                _name: name,
+                                _desc: desc,
+                                _date: date
+                            },
+                            success: function (response) {
+                                swal({
+                                    title: "Record Updated!",
+                                    text: "The data is successfully Updated!!",
                                     type: "success",
                                     confirmButtonColor: '#88A755',
                                     confirmButtonText: 'Okay',
@@ -344,6 +420,158 @@ var EditableTable = function () {
 
 
             });
+            
+            $('#editable-sample a.ApproveEdit').on('click', function (e) {
+                e.preventDefault();
+                var id = $(this).closest('tr').children('td:first').text();
+                latcode = id;
+                $.ajax({
+                    type: "GET",
+                    url: 'Organization/Event/GetData-ajax.php',
+                    dataType: 'json',
+                    data: {
+                        _id: id
+                    },
+                    success: function (data) {
+                        document.getElementById('txtappupddate').value = data.date;
+                        document.getElementById('txtappupdname').value = data.name;
+                        document.getElementById('txtappupddesc').value = data.desc;
+                        
+                    },
+                    error: function (response) {
+                        swal("Error encountered while adding data", "Please try again", "error");
+                    }
+
+                });
+
+
+            });           
+            $('#editable-sample').on('click','a.info', function (e) {
+                e.preventDefault();
+                var id = $(this).closest('tr').children('td:first').text();
+                latcode = id;
+                $.ajax({
+                    type: "POST",
+                    url: 'Organization/Event/Info.php',
+                    data: {
+                        event: id
+                    },
+                    success: function (data) {
+//                        alert(data)
+                        document.getElementById('InfoBody').innerHTML = data
+                        
+                    },
+                    error: function (response) {
+                        swal("Error encountered while adding data", "Please try again", "error");
+                    }
+
+                });
+
+
+            });
+                      
+            $('#editable-sample2').on('click','a.btnApprove', function (e) {
+                e.preventDefault();
+                var id = $(this).closest('tr').children('td:first').text();
+                swal({
+
+                        title: "Are you sure?",
+                        text: id + " will be approved, please make sure that you are aware on what you're doing ;)",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: '#DD6B55',
+                        confirmButtonText: 'Yes, do it!',
+                        cancelButtonText: "No!",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                type: 'post',
+                                url: 'Organization/Event/Approved.php',
+                                data: {
+                                    item: id
+                                },
+                                success: function (response) {
+                                    swal({
+                                        title: id +  " Approved!",
+                                        text: "The data is successfully added!",
+                                        type: "success",
+                                        confirmButtonColor: '#88A755',
+                                        confirmButtonText: 'Okay',
+                                        closeOnConfirm: false
+                                    }, function (isConfirm) {
+                                        window.location.reload();
+
+                                    });
+                                },
+                                error: function (response) {
+                                    swal("Error encountered while adding data", "Please try again", "error");
+                                    oTable.fnDeleteRow(nRow);
+                                }
+
+                            });
+
+                        } else
+                            swal("Cancelled", "The transaction is cancelled", "error");
+
+                    });
+
+
+            });
+            
+            $('#editable-sample2').on('click','a.btnReject', function (e) {
+                e.preventDefault();
+                var id = $(this).closest('tr').children('td:first').text();
+                swal({
+
+                        title: "Are you sure?",
+                        text: id + " will be reject, please make sure that you are aware on what you're doing ;)",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: '#DD6B55',
+                        confirmButtonText: 'Yes, do it!',
+                        cancelButtonText: "No!",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                type: 'post',
+                                url: 'Organization/Event/Rejected.php',
+                                data: {
+                                    item: id
+                                },
+                                success: function (response) {
+                                    swal({
+                                        title: id +  " Rejected!",
+                                        text: "The data is successfully Rejected!",
+                                        type: "success",
+                                        confirmButtonColor: '#88A755',
+                                        confirmButtonText: 'Okay',
+                                        closeOnConfirm: false
+                                    }, function (isConfirm) {
+                                        window.location.reload();
+
+                                    });
+                                },
+                                error: function (response) {
+                                    swal("Error encountered while adding data", "Please try again", "error");
+                                    oTable.fnDeleteRow(nRow);
+                                }
+
+                            });
+
+                        } else
+                            swal("Cancelled", "The transaction is cancelled", "error");
+
+                    });
+
+
+            });
+            
         }
 
     };

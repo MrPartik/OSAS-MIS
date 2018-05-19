@@ -56,12 +56,13 @@ var EditableTable = function () {
                     }
                 }
                     , "aoColumnDefs": [{
-                            'bSortable': false
+                            'bSortable': true
                             , 'aTargets': [0, 1, 2, 3, 4, 5, 6]
-                        },
-                        {
-                            "sClass": "hidden", "aTargets": [ 0 ]
                         }
+//                                       ,
+//                        {
+//                            "sClass": "hidden", "aTargets": [ 0 ]
+//                        }
                 ]
             });
             oTable.fnSort([]);
@@ -85,7 +86,8 @@ var EditableTable = function () {
                             oTable.fnDeleteRow(0);
                         });
                         $.each(data, function (key, val) {
-                            var aiNew = oTable.fnAddData(['<label cashID =' + val.id + '>' , val.ref ,val.desc,val.col,val.exp , val.bal ,val.rem,val.dat]);
+//                            var aiNew = oTable.fnAddData(['<label cashID =' + val.id + '>' , val.ref ,val.desc,val.col,val.exp , val.bal ,val.rem,val.dat]);
+                            var aiNew = oTable.fnAddData([val.ref + '<label class="refid hidden">'+ val.id +'</label>' ,val.desc,val.col,val.exp , val.bal ,val.rem,val.dat]);
                             var nRow = oTable.fnGetNodes(aiNew[0]);
                         });
                     }

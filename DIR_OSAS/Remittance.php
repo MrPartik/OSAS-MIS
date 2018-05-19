@@ -341,12 +341,18 @@ include ('header.php');
                 $(document).ready(function () {
                     $('#btnprint').click(function () {
                         var items = [];
-                        var table = $('#editable-sample').DataTable();
-                        jQuery(table.fnGetNodes()).each(function () {
+                        var rows = $('#editable-sample').dataTable()
+                            .$('tr', {
+                                "filter": "applied"
+                            });
+                        $(rows).each(function(index, el) {
                             items.push($(this).closest('tr').children('td:first').text());
-                        });
+
+                        })                        
                         window.open('Print/Remittance_Print.php?items=' + items, '_blank');
                     });
+                    
+
                 });
                 jQuery(document).ready(function () {
                     EditableTable.init();

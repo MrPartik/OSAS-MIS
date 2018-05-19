@@ -24,7 +24,15 @@
             $osas=$row["NAME"];
 
         }
+        $orgc = $_GET['Organization'];
+        $view_query=mysqli_query($con, " SELECT OrgAppProfile_NAME,OrgForCompliance_BATCH_YEAR FROM `t_org_for_compliance` 
+	INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE  
+    WHERE OrgForCompliance_ORG_CODE = '$orgc' ");
+        while($row=mysqli_fetch_assoc($view_query)) {
+            $orgname = $row["OrgAppProfile_NAME"];
+            $byear = $row["OrgForCompliance_BATCH_YEAR"];
 
+        }
 
         $item='';
         foreach (explode(',', $_GET['items']) as $data) {
@@ -49,12 +57,14 @@
                     <h5>Republic of the Philippines</h5>
                     <h5>Polytechnic University of the Philippines</h5>
                     <h5>Quezon City Branch</h5>
+                    <h5><?php echo $orgname; ?></h5>
+                    <h5>Batch of <?php echo $byear; ?></h5>
                 </center>
             </div>
             <div class="column">
                 <img src="<?php ?>" style="float:right;display:none"></div>
         </div>
-        <p id="header">REMITTANCE
+        <p id="header">Organization Members
         </p>
 
 
@@ -66,38 +76,34 @@
         <table id="items">
 
             <tr>
-                <th style="width:200px">Remittance Number</th>
-                <th style="width:200px">Organization</th>
-                <th style="width:200px">Overview</th>
-                <th style="width:200px">Description</th>
-                <th style="width:150px">Date Issued</th>
+                <th>Student Number</th>
+                <th>Student Name</th>
+                <th>Course - Year and Section</th>
+                <th>Position</th>
             </tr>
 
             <?php
 
-                $view_query = mysqli_query($con," SELECT OrgRemittance_NUMBER,OrgRemittance_ID,OrgAppProfile_NAME,OrgRemittance_SEND_BY,OrgRemittance_REC_BY,CONCAT('₱', FORMAT(OrgRemittance_AMOUNT, 3)) AS AMOUNT  ,OrgRemittance_DESC,DATE_FORMAT(OrgRemittance_DATE_ADD, '%M %d, %Y') AS DATE  FROM t_org_remittance
-                INNER JOIN t_org_for_compliance ON OrgRemittance_ORG_CODE = OrgForCompliance_ORG_CODE
-                INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
-                WHERE OrgRemittance_DISPLAY_STAT = 'Active' AND OrgForCompliance_DISPAY_STAT = 'Active' AND OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgRemittance_ID IN ('1'".$item.")  ORDER BY OrgRemittance_NUMBER ASC ");
+                $view_query = mysqli_query($con," SELECT CONCAT(Stud_LNAME,', ',Stud_FNAME ,' ', IFNULL(Stud_MNAME,''))  AS NAME , Stud_NO,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,' - ',Stud_SECTION) AS CAS, IFNULL((SELECT OrgOffiPosDetails_NAME FROM r_org_officer_position_details 
+		INNER JOIN t_org_officers ON OrgOffiPosDetails_ID = OrgOffi_OrgOffiPosDetails_ID
+ 	WHERE OrgOffi_DISPLAY_STAT = 'Active' AND OrgOffi_STUD_NO = Stud_NO  AND OrgOffiPosDetails_DISPLAY_STAT = 'Active' AND OrgOffiPosDetails_ORG_CODE = '$orgc'   ),'Member') AS POS FROM t_assign_org_members
+		INNER JOIN r_stud_profile ON AssOrgMem_STUD_NO = Stud_NO
+        LEFT JOIN t_org_officers  ON OrgOffi_STUD_NO = AssOrgMem_STUD_NO       
+        LEFT JOIN r_org_officer_position_details ON OrgOffiPosDetails_ID = OrgOffi_OrgOffiPosDetails_ID
+        WHERE AssOrgMem_DISPLAY_STAT = 'Active'  AND AssOrgMem_COMPL_ORG_CODE = '$orgc'  AND AssOrgMem_STUD_NO IN ('1'".$item.") GROUP BY Stud_NO ");
                 while($row = mysqli_fetch_assoc($view_query))
                 {
-                    $id = $row["OrgRemittance_ID"];
-                    $number = $row["OrgRemittance_NUMBER"];
-                    $name = $row["OrgAppProfile_NAME"];
-                    $send = $row["OrgRemittance_SEND_BY"];
-                    $rec = $row["OrgRemittance_REC_BY"];
-                    $amount = $row["AMOUNT"];
-                    $desc = $row["OrgRemittance_DESC"];
-                    $date = $row["DATE"];
+                    $name = $row["NAME"];
+                    $no = $row["Stud_NO"];
+                    $cas = $row["CAS"];
+                    $pos = $row["POS"];
 
                     echo "
                     <tr class=''>
-                        <td style='width:250px'><label>$number</label></td>
+                        <td style='width:250px'><label>$no</label></td>
                         <td style='width:200px'><label>$name</label></td>
-                        <td style='width:280px'><label>Send by: </label> $send<br/>
-                            <label>Receive by: </label> $rec</td>
-                        <td><label>Amount: </label> $amount<br/><label>Description: </label> $desc</td>
-                        <td><label>$date</label></td>
+                        <td style='width:200px'><label>$cas</label></td>
+                        <td><label>$pos</label></td>
                     </tr>
                             ";
                 }

@@ -333,6 +333,7 @@ include('../config/connection.php');
                                         <table class="display table table-bordered table-striped col-md-12" id="dynamic-table">
                                             <thead>
                                                 <tr>
+                                                    <th class="hidden"></th>
                                                     <th>Voucher No.</th>
                                                     <th>Organization Code</th>
                                                     <th>Amount</th>
@@ -347,6 +348,8 @@ include('../config/connection.php');
                                             <tbody>
                                                 <?php  while($vouch=mysqli_fetch_array($view_orgVoucher)) { ?>
                                                     <tr>
+                                                        <td class='hidden'><?php echo $vouch['OrgVoucher_ID'];?></td>
+
                                                         <td>
                                                             <center>
                                                                 <?php echo $vouch['OrgVoucher_CASH_VOUCHER_NO'];?>
@@ -380,6 +383,7 @@ include('../config/connection.php');
                                             </tbody>
                                             <tfoot>
                                                 <tr>
+                                                    <th class="hidden"></th>
                                                     <th>Voucher No.</th>
                                                     <th>Organization Code</th>
                                                     <th>Amount</th>
@@ -490,6 +494,16 @@ include('../config/connection.php');
             <!--Core js-->
             <?php include('footer.php')?>
                 <script>
+                    $('#btnprint').click(function () {
+                        var items = [];
+                        var table = $('#dynamic-table').DataTable();
+                        jQuery(table.fnGetNodes()).each(function () {
+                            items.push($(this).closest('tr').children('td:first').text());
+//                            alert($(this).closest('tr').children('td:first').text())
+                        });
+                        window.open('Print/Voucher_Print.php?items=' + items, '_blank');
+                    });
+
                     document.onkeyup = function(e) {
                         if (e.altKey && e.which == 83) {
                             if($('#Add').is(':visible')){

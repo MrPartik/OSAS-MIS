@@ -127,10 +127,6 @@ include('header.php');
 
         <?php include ('footer.php'); ?>
         <!--script for this page only-->
-        <script type="text/javascript" src="../js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-        <script type="text/javascript" src="../js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-        <script type="text/javascript" src="../js/bootstrap-daterangepicker/moment.min.js"></script>
-        <script type="text/javascript" src="../js/bootstrap-daterangepicker/daterangepicker.js"></script>
         <script src="Organization/Cashflow.js"></script>
 
         <!-- END JAVASCRIPTS -->
@@ -142,11 +138,21 @@ include('header.php');
 
                 $('#btnprint').click(function() {
                     var items = [];
-                    var table = $('#editable-sample').DataTable();
+//                    var table = $('#editable-sample').DataTable();
                     var code = $('#drporg option:selected').val();
-                    jQuery(table.fnGetNodes()).each(function() {
-                        items.push($(this).closest('tr').children('td:first').find('label').attr("cashid"));
-                    });
+//                    jQuery(table.fnGetNodes()).each(function() {
+//                        alert($(this).closest('tr').children('td:first').find('label').text())
+//                        items.push($(this).closest('tr').children('td:first').find('label').text());
+//                    });
+                    var rows = $('#editable-sample').dataTable()
+                        .$('tr', {
+                            "filter": "applied"
+                        });
+                    $(rows).each(function(index, el) {
+                        items.push($(this).closest('tr').children('td:first').find('label').text());
+
+                    })
+                    
                     window.open('Print/CashflowStatement_Print.php?items=' + items+'&OrgCode='+code);
                 });
 

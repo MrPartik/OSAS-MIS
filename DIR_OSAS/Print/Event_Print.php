@@ -24,7 +24,15 @@
             $osas=$row["NAME"];
 
         }
+        $orgc = $_GET['Organization'];
+        $view_query=mysqli_query($con, " SELECT OrgAppProfile_NAME,OrgForCompliance_BATCH_YEAR FROM `t_org_for_compliance` 
+	INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE  
+    WHERE OrgForCompliance_ORG_CODE = '$orgc' ");
+        while($row=mysqli_fetch_assoc($view_query)) {
+            $orgname = $row["OrgAppProfile_NAME"];
+            $byear = $row["OrgForCompliance_BATCH_YEAR"];
 
+        }
 
         $item='';
         foreach (explode(',', $_GET['items']) as $data) {
@@ -54,56 +62,61 @@
             <div class="column">
                 <img src="<?php ?>" style="float:right;display:none"></div>
         </div>
-        <p id="header">REMITTANCE
-        </p>
-
-
-
+        <p id="header">Event</p>
         <div style="clear:both"></div>
-        <div id="event">
-        </div>
+        <div id="event"></div>
 
         <table id="items">
-
-            <tr>
-                <th style="width:200px">Remittance Number</th>
-                <th style="width:200px">Organization</th>
-                <th style="width:200px">Overview</th>
-                <th style="width:200px">Description</th>
-                <th style="width:150px">Date Issued</th>
-            </tr>
+            <thead>
+                <th>Event Code</th>
+                <th>Event Name</th>
+                <th>Event Description</th>
+                <th>Date</th>
+                <th>Event Status</th>
+                <th>Approval Status</th>
+            </thead>
 
             <?php
 
-                $view_query = mysqli_query($con," SELECT OrgRemittance_NUMBER,OrgRemittance_ID,OrgAppProfile_NAME,OrgRemittance_SEND_BY,OrgRemittance_REC_BY,CONCAT('₱', FORMAT(OrgRemittance_AMOUNT, 3)) AS AMOUNT  ,OrgRemittance_DESC,DATE_FORMAT(OrgRemittance_DATE_ADD, '%M %d, %Y') AS DATE  FROM t_org_remittance
-                INNER JOIN t_org_for_compliance ON OrgRemittance_ORG_CODE = OrgForCompliance_ORG_CODE
-                INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
-                WHERE OrgRemittance_DISPLAY_STAT = 'Active' AND OrgForCompliance_DISPAY_STAT = 'Active' AND OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgRemittance_ID IN ('1'".$item.")  ORDER BY OrgRemittance_NUMBER ASC ");
+                $view_query = mysqli_query($con," SELECT OrgEvent_OrgCode,OrgEvent_Code,OrgEvent_NAME,OrgEvent_DESCRIPTION,OrgEvent_ReviewdBy,OrgEvent_STATUS,OrgAppProfile_NAME,DATE_FORMAT(OrgEvent_PROPOSED_DATE, '%M %d, %Y') AS PROPDATE,IF(DATE_FORMAT(OrgEvent_PROPOSED_DATE, '%M %d, %Y') > DATE_FORMAT(CURRENT_DATE, '%M %d, %Y'),'Tapos Na',IF(DATE_FORMAT(OrgEvent_PROPOSED_DATE, '%M %d, %Y') = DATE_FORMAT(CURRENT_DATE, '%M %d, %Y'),'On Going','Sa future') ) AS EVSTAT, OrgEvent_DISPLAY_STAT FROM `r_org_event_management` AS E
+                                INNER JOIN t_org_for_compliance AS R ON E.OrgEvent_OrgCode = R.OrgForCompliance_ORG_CODE
+                                INNER JOIN r_org_applicant_profile AS I ON I.OrgAppProfile_APPL_CODE = R.OrgForCompliance_OrgApplProfile_APPL_CODE AND OrgEvent_Code IN ('1'".$item.") ");
                 while($row = mysqli_fetch_assoc($view_query))
                 {
-                    $id = $row["OrgRemittance_ID"];
-                    $number = $row["OrgRemittance_NUMBER"];
-                    $name = $row["OrgAppProfile_NAME"];
-                    $send = $row["OrgRemittance_SEND_BY"];
-                    $rec = $row["OrgRemittance_REC_BY"];
-                    $amount = $row["AMOUNT"];
-                    $desc = $row["OrgRemittance_DESC"];
-                    $date = $row["DATE"];
+                    $code = $row["OrgEvent_Code"];
+                    $name = $row["OrgEvent_NAME"];
+                    $desc = $row["OrgEvent_DESCRIPTION"];
+                    $date = $row["PROPDATE"];
+                    $evestatus = $row["EVSTAT"];
+                    $appstatus = $row["OrgEvent_STATUS"];
+                    
+                    $estat = '';
+                    
+                    if($evestatus == 'Sa future'){
+                        $estat = 'Incoming';
+                        
+                    }else if($evestatus == 'On Going'){
+                        $estat = 'On Going';
+                        
+                    }
+                    else{
+                        $estat = 'Done';
+                        
+                    }
 
                     echo "
                     <tr class=''>
-                        <td style='width:250px'><label>$number</label></td>
+                        <td style='width:250px'><label>$code</label></td>
                         <td style='width:200px'><label>$name</label></td>
-                        <td style='width:280px'><label>Send by: </label> $send<br/>
-                            <label>Receive by: </label> $rec</td>
-                        <td><label>Amount: </label> $amount<br/><label>Description: </label> $desc</td>
-                        <td><label>$date</label></td>
+                        <td style='width:200px'><label>$desc</label></td>
+                        <td style='width:200px'><label>$date</label></td>
+                        <td style='width:200px'><label>$estat</label></td>
+                        <td style='width:200px'><label>$appstatus</label></td>
                     </tr>
                             ";
                 }
 
             ?>
-
         </table>
         <br><br><br><br><br><br>
 

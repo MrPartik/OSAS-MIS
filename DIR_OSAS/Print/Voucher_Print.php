@@ -54,7 +54,7 @@
             <div class="column">
                 <img src="<?php ?>" style="float:right;display:none"></div>
         </div>
-        <p id="header">REMITTANCE
+        <p id="header">Voucher
         </p>
 
 
@@ -66,7 +66,7 @@
         <table id="items">
 
             <tr>
-                <th style="width:200px">Remittance Number</th>
+                <th style="width:200px">Voucher Number</th>
                 <th style="width:200px">Organization</th>
                 <th style="width:200px">Overview</th>
                 <th style="width:200px">Description</th>
@@ -75,20 +75,18 @@
 
             <?php
 
-                $view_query = mysqli_query($con," SELECT OrgRemittance_NUMBER,OrgRemittance_ID,OrgAppProfile_NAME,OrgRemittance_SEND_BY,OrgRemittance_REC_BY,CONCAT('₱', FORMAT(OrgRemittance_AMOUNT, 3)) AS AMOUNT  ,OrgRemittance_DESC,DATE_FORMAT(OrgRemittance_DATE_ADD, '%M %d, %Y') AS DATE  FROM t_org_remittance
-                INNER JOIN t_org_for_compliance ON OrgRemittance_ORG_CODE = OrgForCompliance_ORG_CODE
-                INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
-                WHERE OrgRemittance_DISPLAY_STAT = 'Active' AND OrgForCompliance_DISPAY_STAT = 'Active' AND OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgRemittance_ID IN ('1'".$item.")  ORDER BY OrgRemittance_NUMBER ASC ");
+                $view_query = mysqli_query($con," SELECT DATE_FORMAT(OrgVoucher_DATE_MOD,'%M %d, %Y') AS DATEISSUED ,OrgAppProfile_NAME,OrgVoucher_CHECKED_BY,OrgVoucher_VOUCHED_BY,OrgVoucher_CASH_VOUCHER_NO,(SELECT GROUP_CONCAT(OrgVouchItems_ITEM_NAME SEPARATOR ', ') 
+                FROM t_org_voucher_items WHERE OrgVouchItems_VOUCHER_NO = OrgVoucher_CASH_VOUCHER_NO) AS ITEMS,(SELECT SUM(OrgVouchItems_AMOUNT) 
+                FROM t_org_voucher_items WHERE OrgVouchItems_VOUCHER_NO = OrgVoucher_CASH_VOUCHER_NO) AS AMOUNT FROM `t_org_voucher` INNER JOIN t_org_for_compliance ON OrgForCompliance_ORG_CODE = OrgVoucher_ORG_CODE INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE =  OrgAppProfile_APPL_CODE  WHERE OrgVoucher_ID  IN ('0'".$item.") AND OrgVoucher_STATUS = 'Approved' ");
                 while($row = mysqli_fetch_assoc($view_query))
                 {
-                    $id = $row["OrgRemittance_ID"];
-                    $number = $row["OrgRemittance_NUMBER"];
+                    $number = $row["OrgVoucher_CASH_VOUCHER_NO"];
                     $name = $row["OrgAppProfile_NAME"];
-                    $send = $row["OrgRemittance_SEND_BY"];
-                    $rec = $row["OrgRemittance_REC_BY"];
+                    $send = $row["OrgVoucher_VOUCHED_BY"];
+                    $rec = $row["OrgVoucher_CHECKED_BY"];
                     $amount = $row["AMOUNT"];
-                    $desc = $row["OrgRemittance_DESC"];
-                    $date = $row["DATE"];
+                    $desc = $row["ITEMS"];
+                    $date = $row["DATEISSUED"];
 
                     echo "
                     <tr class=''>
@@ -137,6 +135,7 @@
                 window.print();
             
             });
+
 
         </script>
 

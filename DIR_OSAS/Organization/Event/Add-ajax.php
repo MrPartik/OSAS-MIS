@@ -16,9 +16,15 @@ include('../../../config/connection.php');
             $code = $row['CODE'];
         }
         
-        $query = mysqli_prepare($con, "INSERT INTO r_org_event_management (OrgEvent_OrgCode,OrgEvent_Code,OrgEvent_NAME,OrgEvent_DESCRIPTION,OrgEvent_PROPOSED_DATE) VALUES (?,?,?,?,STR_TO_DATE(REPLACE(?,'/','.'),GET_FORMAT(DATE,'USA')))");
-        mysqli_stmt_bind_param($query, 'sssss',$org,$code ,$name,$desc,$date);
-        mysqli_stmt_execute($query);
+        $id = $_SESSION['logged_user']['username'];
+        $view_query = mysqli_query($con," SELECT OSASHead_NAME FROM r_osas_head INNER JOIN r_users ON Users_REFERENCED = OSASHead_CODE WHERE Users_USERNAME = '$id' ");
+        while($row = mysqli_fetch_assoc($view_query))
+        $id = $row['OSASHead_NAME'];
+        
+        $query = mysqli_prepare($con, "INSERT INTO r_org_event_management (OrgEvent_ReviewdBy,OrgEvent_STATUS,OrgEvent_OrgCode,OrgEvent_Code,OrgEvent_NAME,OrgEvent_DESCRIPTION,OrgEvent_PROPOSED_DATE) VALUES (?,'Approved',?,?,?,?,?)");
+        mysqli_stmt_bind_param($query, 'ssssss',$id,$org,$code ,$name,$desc,$date);
+        echo mysqli_stmt_execute($query);
+        
         
     }       
     else{

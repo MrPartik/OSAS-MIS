@@ -29,6 +29,24 @@ var EditableTable = function () {
 
 
             }
+            $('#btnprint').on('click', function() {
+                var items = [];
+//                var table = $('#proftable').DataTable();
+//                jQuery(table.fnGetNodes()).each(function() {
+//                    items.push($(this).closest('tr').children('td:first').text());
+////                    alert($(this).closest('tr').children('td:first').text())
+//                });
+                
+                var rows = $('#proftable').dataTable()
+                    .$('tr', {
+                        "filter": "applied"
+                    });
+                $(rows).each(function(index, el) {
+                    items.push($(this).closest('tr').children('td:first').text());
+
+                })     
+                window.open('Print/Member_Print.php?items=' + items+'&Organization='+latcode);
+            });
 
             function saveRow(oTable, nRow) {
                 var jqInputs = $('input', nRow);
