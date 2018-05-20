@@ -418,7 +418,7 @@ include('../config/connection.php');
                                             <td class="meta-head">Organization:</td>
                                             <td class="AddOrgCode">
                                                 <select id="Addorgcode" class="form-control m-bot10">
-                                                    <option disabled selected value="default">Please choose an Organization</option>
+                                                    <option disabled selected value="">Please choose an Organization</option>
                                                     <?php  while($code=mysqli_fetch_assoc($view_availOrgVouch)){?>
                                                         <option value="<?php echo $code['OrgForCompliance_OrgApplProfile_APPL_CODE']?>">
                                                             <?php echo $code["OrgAppProfile_NAME"]?>
@@ -433,7 +433,7 @@ include('../config/connection.php');
                         ?>
                                             <tr>
                                                 <td class="meta-head">Voucher Number:</td>
-                                                <td class="AddVoucherNo" value="<?php echo $VouchNo[" Vouch "];?>">
+                                                <td class="AddVoucherNo" value="<?php echo $VouchNo["Vouch"];?>">
                                                     <?php echo $VouchNo["Vouch"]?>
                                                 </td>
                                             </tr>
@@ -494,12 +494,13 @@ include('../config/connection.php');
             <!--Core js-->
             <?php include('footer.php')?>
                 <script>
+
+              
                     $('#btnprint').click(function () {
                         var items = [];
                         var table = $('#dynamic-table').DataTable();
                         jQuery(table.fnGetNodes()).each(function () {
-                            items.push($(this).closest('tr').children('td:first').text());
-//                            alert($(this).closest('tr').children('td:first').text())
+                            items.push($(this).closest('tr').children('td:first').text()); 
                         });
                         window.open('Print/Voucher_Print.php?items=' + items, '_blank');
                     });    
@@ -598,6 +599,16 @@ include('../config/connection.php');
                             , vouch = ($("table[id='meta']").find("tbody").find("tr").find(".AddVoucherNo").attr("value"))
                             , amount = $("#cash").attr("amount")
                             , remarks = "<?php echo $user_check; ?>";
+                            if(!$('#AddVouchBy').val().length)
+                            {
+                                swal("Vouch by?", "Please try again, Vouch by couldn't be null", "error"); 
+                            }
+                            else if(!$('#Addorgcode option:selected').val().length)
+                            {
+                                swal("What Organization?", "Please try again, Organization by couldn't be null", "error"); 
+                            
+                            }
+                            else{
                         swal({
                             title: "Are you sure?"
                             , text: "your balance will be deducted according to your total amount in voucher"
@@ -729,6 +740,7 @@ include('../config/connection.php');
                                 swal("Cancelled", "The transaction is cancelled", "error");
                             }
                         })
+                            }
                     });
                     $("tbody[id='tbodyvoucher']").on("input", "input[id='AddAmo']", function () {
                         var sum = 0;

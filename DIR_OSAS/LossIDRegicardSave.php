@@ -18,8 +18,13 @@ if(isset($_POST['insertLossAss']))
 if(isset($_POST['updateLossAss']))
 {
     $ID = $_POST['ID'];  
-    $LossClaimDate= new DateTime( $_POST['LossClaim']);
-    $LossClaim =  $LossClaimDate->format('Y-m-d H:i:s');  
+    $LossClaimDate= new DateTime( $_POST['LossClaim']); 
+    if(!empty($_POST['LossClaim'])){
+        $LossClaimDate= new DateTime( $_POST['LossClaim']);
+        $LossClaim =  $LossClaimDate->format('Y-m-d H:i:s');
+        }else{
+        $LossClaim =null;
+        }
     $LossRemarks=$_POST['LossRemarks'];  
    mysqli_query($con,"call Update_LossIDRegi($ID,'$LossClaim','$LossRemarks')"); 
 } 

@@ -10978,8 +10978,8 @@ tr.odd.gradeU td.sorting_1 {
 
 .horizontal-menu .navbar-nav > li > a {
     padding: 10px 20px;
-    border-radius: 30px;
-    -webkit-border-radius: 30px;
+    /* border-radius: 30px; */
+    /* -webkit-border-radius: 30px; */
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
@@ -11004,12 +11004,13 @@ tr.odd.gradeU td.sorting_1 {
 .full-width .nav .open > a,
 .full-width .nav .open > a:hover,
 .full-width .nav .open > a:focus {
-    background-color: #1FB5AD;
+    background-color: #c80932;
     text-decoration: none;
     color: #fff;
     transition: all 0.3s ease 0s;
     -webkit-transition: all 0.3s ease 0s;
-    border-radius: 30px;
+    /* border-radius: 30px; */
+    px; */
     -webkit-border-radius: 30px;
 }
 
