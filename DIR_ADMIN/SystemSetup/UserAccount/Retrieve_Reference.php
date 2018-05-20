@@ -1,6 +1,6 @@
 <?php 
 
-include('../../../config/connection.php');
+include ('../../../config/connection.php'); 
 
  
     $stat = $_GET['_stat'];

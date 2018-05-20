@@ -1,5 +1,5 @@
 <?php 
-include ('../../connection.php'); 
+include ('../../../config/connection.php'); 
 
 	if(isset($_POST['_username']) )
 	{
@@ -8,9 +8,9 @@ include ('../../connection.php');
 		$role = $_POST['_role'];
 		$ref = $_POST['_reference'];
         if($ref == 'default')
-            mysqli_query($connection,"call Insert_Users('$username','','$role','$password') "); 
+            mysqli_query($con,"call Insert_Users('$username','','$role','$password') "); 
         else
-            mysqli_query($connection,"call Insert_Users('$username','$ref','$role','$password') "); 
+            mysqli_query($con,"call Insert_Users('$username','$ref','$role','$password') "); 
 
 	}
   

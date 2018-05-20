@@ -201,6 +201,7 @@ include('../config/connection.php');
                             <div class="col-lg-12 form-group" id="drpnon">
                                 <label class="control-label">Non Academic Category</label>
                                 <select class="form-control input-sm m-bot15 selectYear" id="nonacad">
+                                <option disabled selected>Please select category</option>
                                     <?php
 
                                         $view_query = mysqli_query($con,"SELECT OrgNonAcad_CODE AS CODE , OrgNonAcad_NAME AS NAME FROM `r_org_non_academic_details` WHERE OrgNonAcad_DISPLAY_STAT = 'Active'");
@@ -340,12 +341,13 @@ include('../config/connection.php');
                     $('#updsubmit-data').hide();
                     $('#drpcat').change(function () {
                         var e = document.getElementById("drpcat");
-                        var getcat = e.options[e.selectedIndex].text;
-                        if (getcat == 'Academic Organization') {
+                        var getcat = e.options[e.selectedIndex].value;
+                        console.log();
+                        if (getcat == 'ACAD_ORG') {
                             $('#course').show();
                             $('#drpnon').hide();
                         }
-                        else if (getcat == 'Non-academic Organization') {
+                        else if (getcat == 'NON-ACAD_ORG') {
                             $('#course').hide();
                             $('#drpnon').show();
                         }

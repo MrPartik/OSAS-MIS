@@ -1,10 +1,10 @@
 <?php 
-include ('../../connection.php'); 
+include ('../../../config/connection.php'); 
 
 	if(isset($_POST['_username']) )
 	{
 		$username = $_POST['_username'];
-        $view_query = mysqli_query($connection,"SELECT * from r_users where Users_USERNAME = '$username' ");
+        $view_query = mysqli_query($con,"SELECT * from r_users where Users_USERNAME = '$username' ");
 
         while($row = mysqli_fetch_assoc($view_query))
         {
