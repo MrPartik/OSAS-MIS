@@ -502,7 +502,8 @@ include('../config/connection.php');
 //                            alert($(this).closest('tr').children('td:first').text())
                         });
                         window.open('Print/Voucher_Print.php?items=' + items, '_blank');
-                    });
+                    });    
+
 
                     document.onkeyup = function(e) {
                         if (e.altKey && e.which == 83) {
