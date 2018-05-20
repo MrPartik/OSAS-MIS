@@ -101,9 +101,7 @@
                                                 <td>
                                                     <input id="DateClaim" type="date" class="form-control" value=<?php echo (new DateTime($LossDet[ 'claim']))->format('Y-m-d'); ?>> </td>
                                                 <td>
-                                                    <textarea id="lossRemarks" style="resize:vertical" value="<?php echo $LossDet['remarks']?>">
-                                                        <?php echo $LossDet['remarks']?>
-                                                    </textarea>
+                                                    <textarea id="lossRemarks" style="resize:vertical" value="<?php echo $LossDet['remarks']?>"><?php echo $LossDet['remarks']?></textarea>
                                                 </td>
                                                 <td class="actionDes">
                                                     <center> <i style='cursor:pointer;font-size: 20px' id='deletemotoInside' class='fa fa-minus-circle'></i> </center>

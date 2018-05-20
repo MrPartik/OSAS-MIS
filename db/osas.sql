@@ -11,7 +11,7 @@
  Target Server Version : 100108
  File Encoding         : 65001
 
- Date: 19/05/2018 12:07:33
+ Date: 20/05/2018 22:05:16
 */
 
 SET NAMES utf8mb4;
@@ -189,7 +189,7 @@ CREATE TABLE `r_designated_offices_details`  (
   `DesOffDetails_DISPLAY_STAT` enum('Active','Inactive') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT 'Active',
   PRIMARY KEY (`DesOffDetails_ID`) USING BTREE,
   UNIQUE INDEX `UNQ_DesOffDetails_CODE`(`DesOffDetails_CODE`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for r_financial_assistance_title
@@ -382,7 +382,7 @@ CREATE TABLE `r_sanction_details`  (
   `SancDetails_DISPLAY_STAT` enum('Active','Inactive') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT 'Active',
   PRIMARY KEY (`SancDetails_ID`) USING BTREE,
   UNIQUE INDEX `UNQ_SancDetails_CODE`(`SancDetails_CODE`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for r_semester
@@ -428,7 +428,7 @@ CREATE TABLE `r_stud_profile`  (
   UNIQUE INDEX `PK_Stud_NO`(`Stud_NO`) USING BTREE,
   INDEX `FK_COURSE`(`Stud_COURSE`) USING BTREE,
   CONSTRAINT `FK_COURSE` FOREIGN KEY (`Stud_COURSE`) REFERENCES `r_courses` (`Course_CODE`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for r_system_config
@@ -514,7 +514,7 @@ CREATE TABLE `t_assign_org_members`  (
   INDEX `FK_AssOrgMem_COMPL_ORG_CODE`(`AssOrgMem_COMPL_ORG_CODE`) USING BTREE,
   CONSTRAINT `FK_AssOrgMem_COMPL_ORG_CODE` FOREIGN KEY (`AssOrgMem_COMPL_ORG_CODE`) REFERENCES `t_org_for_compliance` (`OrgForCompliance_ORG_CODE`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_AssOrgMem_STUD_NO` FOREIGN KEY (`AssOrgMem_STUD_NO`) REFERENCES `r_stud_profile` (`Stud_NO`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 61 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for t_assign_org_non_academic
@@ -841,9 +841,9 @@ DROP PROCEDURE IF EXISTS `Active_AssignConfilicts_SemClearance`;
 delimiter ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Active_AssignConfilicts_SemClearance`(IN `id` INT)
     NO SQL
-UPDATE `t_assign_student_clearance` SET
+UPDATE `t_assign_student_clearance` SET 
 `AssStudClearance_DATE_MOD`=CURRENT_TIMESTAMP
-,`AssStudClearance_DISPLAY_STAT`='Active'
+,`AssStudClearance_DISPLAY_STAT`='Active' 
 WHERE `AssStudClearance_ID` =id
 ;;
 delimiter ;
@@ -855,9 +855,9 @@ DROP PROCEDURE IF EXISTS `Archive_AssignConfilicts_SemClearance`;
 delimiter ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Archive_AssignConfilicts_SemClearance`(IN `id` INT)
     NO SQL
-UPDATE `t_assign_student_clearance` SET
+UPDATE `t_assign_student_clearance` SET 
 `AssStudClearance_DATE_MOD`=CURRENT_TIMESTAMP
-,`AssStudClearance_DISPLAY_STAT`='Inactive'
+,`AssStudClearance_DISPLAY_STAT`='Inactive' 
 WHERE `AssStudClearance_ID` =id
 ;;
 delimiter ;
@@ -869,7 +869,7 @@ DROP PROCEDURE IF EXISTS `Archive_AssignSanction`;
 delimiter ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Archive_AssignSanction`(IN `ID` INT)
     NO SQL
-UPDATE `t_assign_stud_saction` SET `AssSancStudStudent_DISPLAY_STAT`='Inactive'
+UPDATE `t_assign_stud_saction` SET `AssSancStudStudent_DISPLAY_STAT`='Inactive' 
 ,`AssSancStudStudent_DATE_MOD` = CURRENT_TIMESTAMP
 WHERE
 `AssSancStudStudent_ID` =ID
@@ -883,7 +883,7 @@ DROP PROCEDURE IF EXISTS `Archive_FinancialAss`;
 delimiter ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Archive_FinancialAss`(IN `ID` INT(100))
     NO SQL
-delete from `t_assign_stud_finan_assistance`
+delete from `t_assign_stud_finan_assistance`  
 where AssStudFinanAssistance_ID = ID
 ;;
 delimiter ;
@@ -895,7 +895,7 @@ DROP PROCEDURE IF EXISTS `Archive_LossIDRegi`;
 delimiter ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Archive_LossIDRegi`(IN `ID` INT)
     NO SQL
-update t_assign_stud_loss_id_regicard
+update t_assign_stud_loss_id_regicard 
 set AssLoss_DISPLAY_STAT ='Inactive'
 where AssLoss_ID =ID
 ;;
@@ -908,7 +908,7 @@ DROP PROCEDURE IF EXISTS `FinishSanction`;
 delimiter ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `FinishSanction`(IN `ID` INT)
     NO SQL
-UPDATE t_assign_stud_saction
+UPDATE t_assign_stud_saction 
 set AssSancStudStudent_IS_FINISH ='Finished'
 where AssSancStudStudent_ID =ID
 ;;
@@ -983,12 +983,12 @@ DROP PROCEDURE IF EXISTS `Insert_SanctionDetails`;
 delimiter ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_SanctionDetails`(IN `SancCode` VARCHAR(100), IN `SancName` VARCHAR(100), IN `SancDesc` VARCHAR(1000), IN `TimeVal` INT(11))
     NO SQL
-INSERT INTO `r_sanction_details`
+INSERT INTO `r_sanction_details` 
 (`SancDetails_CODE`
  , `SancDetails_NAME`
  , `SancDetails_DESC`
  , `SancDetails_TIMEVAL`)
- VALUES
+ VALUES 
  (SancCode
   ,SancName
   ,SancDesc
@@ -1030,7 +1030,7 @@ INSERT INTO R_STUD_PROFILE
 ,Stud_ADDRESS
 ,Stud_STATUS)
 VALUES
-(
+(	
     STUDNO
     ,FNAME
 	,MNAME
@@ -1088,9 +1088,9 @@ DROP PROCEDURE IF EXISTS `Login_User`;
 delimiter ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Login_User`(IN `username` VARCHAR(100), IN `password` VARCHAR(100))
     NO SQL
-SELECT *
-FROM osas.r_users
-WHERE Users_USERNAME = username
+SELECT * 
+FROM osas.r_users 
+WHERE Users_USERNAME = username 
 AND AES_DECRYPT(Users_PASSWORD , Password('OSASMIS')) =password
 AND Users_DISPLAY_STAT = 'Active'
 ;;
@@ -1114,8 +1114,8 @@ DROP PROCEDURE IF EXISTS `Update_AssignFinancialAss`;
 delimiter ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Update_AssignFinancialAss`(IN `ID` INT, IN `FinanAssStat` ENUM('Active','Inactive','Void','Cancelled'), IN `Remarks` VARCHAR(500))
     NO SQL
-UPDATE `t_assign_stud_finan_assistance`
-SET `AssStudFinanAssistance_STATUS` = FinanAssStat
+UPDATE `t_assign_stud_finan_assistance` 
+SET `AssStudFinanAssistance_STATUS` = FinanAssStat 
 ,`AssStudFinanAssistance_REMARKS` = Remarks
 ,`AssStudFinanAssistance_DATE_MOD` = CURRENT_TIMESTAMP
 WHERE `AssStudFinanAssistance_ID` = ID
@@ -1130,7 +1130,7 @@ delimiter ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Update_AssignSanction`(IN `ID` INT, IN `Consume` INT, IN `Finish` ENUM('Finished','Processing'), IN `remarks` VARCHAR(100), IN `done` DATE)
     NO SQL
 BEGIN
-UPDATE `t_assign_stud_saction` SET
+UPDATE `t_assign_stud_saction` SET 
 `AssSancStudStudent_CONSUMED_HOURS` =Consume
 ,`AssSancStudStudent_IS_FINISH` = Finish
 ,`AssSancStudStudent_REMARKS` = remarks
@@ -1150,7 +1150,7 @@ DROP PROCEDURE IF EXISTS `Update_LossIDRegi`;
 delimiter ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Update_LossIDRegi`(IN `ID` INT, IN `Claim` DATETIME, IN `Remarks` VARCHAR(500))
     NO SQL
-update t_assign_stud_loss_id_regicard
+update t_assign_stud_loss_id_regicard 
 set AssLoss_DATE_CLAIM = Claim
 ,AssLoss_REMARKS = Remarks
 where AssLoss_ID =ID
@@ -1165,12 +1165,12 @@ delimiter ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Update_StudProfile`(IN `ID` INT(100), IN `StudNO` VARCHAR(15), IN `FNAME` VARCHAR(100), IN `MNAME` VARCHAR(100), IN `LNAME` VARCHAR(100), IN `COURSE` VARCHAR(15), IN `SECTION` VARCHAR(5), IN `GENDER` VARCHAR(10), IN `EMAIL` VARCHAR(100), IN `CONTACT` VARCHAR(20), IN `BDAY` DATE, IN `BPLACE` VARCHAR(500), IN `ADDRESS` VARCHAR(500), IN `STATUS` VARCHAR(50))
     NO SQL
 UPDATE `r_stud_profile`
-SET
+SET 
 `Stud_NO`=StudNO
 ,`Stud_FNAME`=FNAME
 ,`Stud_MNAME`=MNAME
 ,`Stud_LNAME`=LNAME
-,`Stud_COURSE`=COURSE
+,`Stud_COURSE`=COURSE 
 ,`Stud_SECTION`=SECTION
 ,`Stud_GENDER`=GENDER
 ,`Stud_EMAIL`=EMAIL
@@ -1202,7 +1202,7 @@ DROP PROCEDURE IF EXISTS `View_StudProfile`;
 delimiter ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `View_StudProfile`()
     NO SQL
-select
+select 
 	Stud_NO
 	,CONCAT(Stud_LNAME,', ',Stud_FNAME,' ',COALESCE(Stud_MNAME,'')) as FullName
 	,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) as Course
@@ -1238,11 +1238,11 @@ INNER JOIN  t_assign_stud_saction B ON
 INNER JOIN r_sanction_details C ON
 	C.SancDetails_CODE = B.AssSancStudStudent_SancDetails_CODE
 INNER JOIN r_designated_offices_details D ON
-	D.DesOffDetails_CODE = B.AssSancStudStudent_DesOffDetails_CODE
+	D.DesOffDetails_CODE = B.AssSancStudStudent_DesOffDetails_CODE 
 WHERE A.Stud_DISPLAY_STATUS='ACTIVE'
 AND B.AssSancStudStudent_DISPLAY_STAT='ACTIVE'
 AND C.SancDetails_DISPLAY_STAT='ACTIVE'
-AND D.DesOffDetails_DISPLAY_STAT='ACTIVE'
+AND D.DesOffDetails_DISPLAY_STAT='ACTIVE' 
 AND B.AssSancStudStudent_IS_FINISH<>'FINISHED'
 AND B.AssSancStudStudent_CONSUMED_HOURS <> C.SancDetails_TIMEVAL
 ;;
