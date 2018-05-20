@@ -54,11 +54,7 @@
                         <!-- <li <?php if( $currentPage==='OSAS_OrgAccreditation' ) { echo 'class="active"';} ?> ><a href="OrganizationAccreditation.php">Accreditation</a></li> -->
                         <li <?php if( $currentPage==='OSAS_OrgMem' ) { echo 'class="active"';} ?> ><a href="OrganizationMembers.php">Organization Members</a></li>
                         <li <?php if( $currentPage==='OSAS_OrgPos' ) { echo 'class="active"';} ?> ><a href="OrganizationPosition.php">Officer Position</a></li>
-<<<<<<< HEAD
-                        <!--<li><a href="#">Financial Statement</a></li> --!>
-=======
 <!--                        <li><a href="#">Financial Statement</a></li>-->
->>>>>>> 4a953f46d0ecbb49125b1fba83e129f694767c16
                         <li <?php if( $currentPage==='OSAS_Remittance' ) { echo 'class="active"';} ?>><a href="Remittance.php">Remittance</a></li>
                         <li <?php if( $currentPage==='OSAS_OrgVouch' ) { echo 'class="active"';} ?> ><a href="OrganizationVoucher.php">Voucher</a></li>
                         <li <?php if( $currentPage==='OSAS_Cflow' ) { echo 'class="active"';} ?>><a href="CashFlowStatement.php">Cashflow Statement</a></li>
