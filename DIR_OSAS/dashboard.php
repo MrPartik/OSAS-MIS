@@ -52,12 +52,12 @@ include('../config/connection.php');
                 </div>
                 <div class="col-md-3">
                     <div class="mini-stat clearfix"> <span class="mini-stat-icon pink"><i class="fa fa-money"></i></span>
-                        <div class="mini-stat-info"> <span>5</span> Organization Fund Request </div>
+                        <div class="mini-stat-info"> <span><?php echo $count_request_vouch ?></span> Organization Fund Request </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="mini-stat clearfix"> <span class="mini-stat-icon orange"><i class="fa fa-asterisk"></i></span>
-                        <div class="mini-stat-info"> <span>10</span> Number of Student who lost their Regicard or ID </div>
+                        <div class="mini-stat-info"> <span><?php echo $count_loss_id_regi?></span> Number of Student who loss their Regicard or ID </div>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -78,7 +78,7 @@ include('../config/connection.php');
                 </div>
                 <div class="col-md-3">
                     <div class="mini-stat clearfix"> <span class="mini-stat-icon blue"><i class="fa fa-envelope"></i></span>
-                        <div class="mini-stat-info"> <span>100</span> Number of Archived Documents </div>
+                        <div class="mini-stat-info"> <span><?php echo $count_docu?></span> Number of Archived Documents </div>
                     </div>
                 </div>
                 <!-- <div class="col-md-4">

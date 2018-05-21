@@ -5,6 +5,9 @@ function fnFormatDetails ( oTable, nTr )
     sOut += '<tr><td>Rendering engine:</td><td>'+aData[1]+' '+aData[4]+'</td></tr>';
     sOut += '<tr><td>Link to source:</td><td>Could provide a link here</td></tr>';
     sOut += '<tr><td>Extra info:</td><td>And any further details here (images etc)</td></tr>';
+    sOut += '<tr><td>Extra info:</td><td>And any further details here (images etc)</td></tr>';
+    sOut += '<tr><td>Extra info:</td><td>And any further details here (images etc)</td></tr>';
+    sOut += '<tr><td>Extra info:</td><td>And any further details here (images etc)</td></tr>';
     sOut += '</table>';
 
     return sOut;
@@ -22,7 +25,7 @@ $(document).ready(function() {
      */
     var nCloneTh = document.createElement( 'th' );
     var nCloneTd = document.createElement( 'td' );
-    nCloneTd.innerHTML = '<img src="images/details_open.png">';
+    nCloneTd.innerHTML = '<img src="../Assets/images/details_open.png">';
     nCloneTd.className = "center";
 
     $('#hidden-table-info thead tr').each( function () {
@@ -52,13 +55,13 @@ $(document).ready(function() {
         if ( oTable.fnIsOpen(nTr) )
         {
             /* This row is already open - close it */
-            this.src = "images/details_open.png";
+            this.src = "../Assets/images/details_open.png";
             oTable.fnClose( nTr );
         }
         else
         {
             /* Open this row */
-            this.src = "images/details_close.png";
+            this.src = "../Assets/images/details_close.png";
             oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
         }
     } );

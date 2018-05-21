@@ -9,11 +9,11 @@
 		$time = $_POST['_time']; 
 		
         $query = mysqli_prepare($con, "INSERT INTO `r_sanction_details` (SancDetails_CODE,SancDetails_NAME,SancDetails_DESC,SancDetails_TIMEVAL) VALUES (?,?,?,?)");
-        mysqli_stmt_bind_param($query, 'ssss', $code, $name,$time, $desc);
+        mysqli_stmt_bind_param($query, 'ssss', $code, $name, $desc,$time);
         mysqli_stmt_execute($query);
         
 	}
-    else
+    else		
     {
         
         include('../../../Retrict.php');

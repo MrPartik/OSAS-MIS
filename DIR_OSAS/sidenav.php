@@ -36,13 +36,13 @@
                         <i class ="fa fa-dashboard" ></i>
                         <span>Dashboard</span>
                     </a> </li>
-                <li class="sub-menu"> <a <?php if( $currentPage==='OSAS_StudProfile' || $currentPage==='OSAS_StudSanction' ) { echo 'class="active"';} ?> href="javascript:;">
+                <li class="sub-menu"> <a <?php if( $currentPage==='OSAS_StudProfile' || $currentPage==='OSAS_StudSanction'  ) { echo 'class="active"';} ?> href="javascript:;">
                         <i class="fa fa-user"></i>
                         <span>Student Management</span>
                     </a>
                     <ul class="sub">
                         <li <?php if( $currentPage==='OSAS_StudProfile' ) { echo 'class="active"';} ?> ><a href="studprofile.php">Student Profile</a></li>
-                        <li <?php if( $currentPage==='OSAS_StudSanction' ) { echo 'class="active"';} ?>><a href="studSanction.php">Student Sanction</a></li>
+                        <li <?php if( $currentPage==='OSAS_StudSanction' ) { echo 'class="active"';} ?>><a href="studSanction.php">Student Sanction</a></li> 
                     </ul>
                 </li>
                 <li class="sub-menu"> <a href="javascript:;" <?php if( $currentPage==='OSAS_OrgAccreditation' || $currentPage==='OSAS_OrgApplication' || $currentPage==='OSAS_OrgCompliance' || $currentPage==='OSAS_OrgPos' || $currentPage==='OSAS_OrgMem' || $currentPage==='OSAS_OrgApplicant' || $currentPage==='OSAS_Remittance' || $currentPage==='OSAS_Cflow' || $currentPage==='OSAS_OrgVouch' || $currentPage==='OSAS_Event' ) { echo 'class="active"';} ?> > <i class="fa fa-users"></i> <span>Organization Management</span> </a>
@@ -77,7 +77,7 @@
                 <li class="sub-menu" style="position: absolute;bottom: 0;width: 100%;"> <a href="docuArchiving.php" <?php if( $currentPage==='Config' ) {echo 'class="active"';} ?> > <i class="fa fa-gears"></i> <span>Configuration & Maintenance </span> </a>
                     <ul class="sub">
                         <!-- Please modify this -->
-                        <li <?php if( $currentPage==='' ) { echo 'class="active"';} ?>><a href="#">Announcement</a></li>
+                        <li <?php if( $currentPage==='' ) { echo 'class="active"';} ?>><a href="#">Announcement</a></li> 
                         <li <?php if( $currentPage==='Config' ) { echo 'class="active"';} ?> ><a href="systemConfig.php">System Configuration</a></li>
                     </ul>
                 </li>

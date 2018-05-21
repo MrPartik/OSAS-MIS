@@ -5,6 +5,17 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Student Details</h4> </div>
             <div class="modal-body">
+            <div class="row">
+            <div class="col-md-12">
+                        <br/>
+                        <br/>
+                        <button id="assignSanction" class="btnSave btn btn-default"><i class="fa fa-plus"></i> Add</button>
+                        <button id="MoreInfo" class="btnSave btn btn-info"><i class="fa fa-info-circle"></i> More Info</button> 
+                        <button id="History" class="btnSave btn btn-success"><i class="fa fa-tag"></i> History</button>
+                        <br/>
+                        <br/> 
+                    </div>
+            </div>
                 <div class='twt-feed maroon-bg'>
                     <?php viewStudProfileCond( 0,$_GET['StudNo']) ?>
                         <?php while($profileLayoutRow = mysqli_fetch_array($view_studProfile_cond)){ ?>
@@ -53,12 +64,65 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <br/>
-                        <br/>
-                        <button id="assignSanction" class="btnSave btn btn-default"><i class="fa fa-plus"></i> Add</button>
-                        <button id="MoreInfo" class="btnSave btn btn-info"><i class="fa fa-info-circle"></i> More Info</button>
-                        <br/>
-                        <br/> </div>
+                    
+                    <div id="TableStudSancHisto" class="panel-body" style="display:none ">
+                            <div class="adv-table">
+                                <table class="display table table-bordered table-striped" id="TableStudSancHistory">
+                                    <thead>
+                                        <tr>
+                                            <th class="hidden">Sanction ID </th>
+                                            <th style="width:80% ">Sanction Details</th>
+                                            <th style="width:100%">Remarks</th>
+                                            <th class="numeric ">Consumed</th> 
+                                            <th>Finish</th>
+                                            <th>To be Finished</th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodySanctionsHistory"> 
+                                            <?php 
+                                            $StudNo= $_GET['StudNo'];
+                                            $query = mysqli_query($con,"SELECT LSanc.LogSanc_AssSancSudent_ID, LSanc.LogSanc_ID, ASS.AssSancStudStudent_STUD_NO, SD.SancDetails_NAME,SD.SancDetails_TIMEVAL, LSanc.LogSanc_REMARKS, LSanc.LogSanc_CONSUMED_HOURS, LSanc.LogSanc_SEMESTER, LSanc.LogSanc_ACAD_YEAR, LSanc.LogSanc_IS_FINISH, LSanc.LogSanc_DATE_MOD ,DOD.DesOffDetails_NAME, LSanc.LogSanc_TO_BE_DONE FROM `log_sanction` LSanc
+INNER JOIN t_assign_stud_saction ASS ON LSanc.LogSanc_AssSancSudent_ID = ASS.AssSancStudStudent_ID
+INNER JOIN r_sanction_details SD on SD.SancDetails_CODE =  ASS.AssSancStudStudent_SancDetails_CODE
+INNER JOIN r_designated_offices_details DOD ON DOD.DesOffDetails_CODE = ASS.AssSancStudStudent_DesOffDetails_CODE
+INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHERE ASS.AssSancStudStudent_STUD_NO  ='$StudNo' ") ;
+                                            while($row = mysqli_fetch_array($query)){
+?>
+<tr>
+    <td class='hidden'><?php echo $row['LogSanc_ID']; ?></td>
+    <td> <strong><span class="spanSancName"><?php 
+                                                $dateMod =new DateTime($row['LogSanc_DATE_MOD']);
+                                                echo '('.$row['LogSanc_AssSancSudent_ID'].') '.$row['SancDetails_NAME'].'<br>Time Value:  '. $row['SancDetails_TIMEVAL'].' Hours<br>Designated Office: '.$row['DesOffDetails_NAME'].'<i style="font-size:10px"><br><br></strong>
+                                                    <br>Last Modified: '. $dateMod->format('D M d, Y h:i A').'</i>'?></span></td>
+    <td><?php echo $row['LogSanc_REMARKS']; ?></td>
+    <td><?php echo $row['LogSanc_CONSUMED_HOURS']; ?></td>
+    <td>  <center>
+                                                        <input  checkStatus="<?php echo  $row[ 'LogSanc_IS_FINISH'] ?>" <?php if( $row[ 'LogSanc_IS_FINISH']==='Finished' ) {echo 'checked';} ?> type="checkbox" disabled /></center></td>
+    <td>
+                                                    <center>
+                                                        <input  readonly class="form-control" type="text" value="<?php echo (new dateTime($row[ 'LogSanc_TO_BE_DONE']))->format(" D M d, Y ") ?>" sortt="<?php echo $row[ 'LogSanc_TO_BE_DONE'] ?>"> </center></td> 
+</tr>
+
+
+<?php }?>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th class="hidden">Sanction ID </th>
+                                            <th style="width:80% ">Sanction Details</th>
+                                            <th style="width:100%">Remarks</th>
+                                            <th class="numeric ">Consumed</th> 
+                                            <th>Finish</th>
+                                            <th>To be Finished</th> 
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                  
                     <div class="collapse-group">
                         <div id="sanctionDiv" class="row collapse panel-body">
                             <div class="col-md-4" style="width:300px"> Available Sanction
@@ -100,7 +164,8 @@
                                             <th class="numeric ">Remaining</th>
                                             <th>Finish</th>
                                             <th>To be Finished</th>
-                                            <th>Action</th>
+                                            <th>
+                                                        <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbodySanctions">
@@ -137,6 +202,7 @@
                                                 </td>
                                                 <td class="actionDes">
                                                     <center><i title="Delete" style='cursor:pointer;font-size: 20px; ' id='deletemotoInside' class='fa fa-minus-circle  '></i> </center>
+                                                    <br> 
                                                 </td>
                                                 <div id="sanctionDivs" class="row collapse panel-body">
                                                     <div class="col-md-4" style="width:300px"> Available Sanction
@@ -178,7 +244,8 @@
                                             <th class="numeric ">Remaining</th>
                                             <th>Finish</th>
                                             <th>To be Finished</th>
-                                            <th>Action</th>
+                                            <th>
+                                                        <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -200,12 +267,27 @@
                 $("div.twt-feed").hide();
                 $("#MoreInfo").on("click", function () {
                     if (!$("div.twt-feed.maroon-bg:visible").length) {
-                        $("div.twt-feed").slideToggle();
-                        $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide Info');
+                        $("div.twt-feed").slideDown();
+                        $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide Info'); 
+                        
+                        $("#TableStudSancHisto").slideUp();
+                        $("#History").html('<i class="fa  fa-info-circle"></i> History');
                     }
                     else {
-                        $("div.twt-feed").slideToggle();
+                        $("div.twt-feed").slideUp();
                         $(this).html('<i class="fa  fa-info-circle"></i> More Info');
+                    }
+                });
+                $("#History").on("click", function () {
+                    if (!$("#TableStudSancHisto:visible").length) {
+                        $("#TableStudSancHisto").slideDown();
+                        $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide History'); 
+                        $("div.twt-feed").slideUp();
+                        $("#MoreInfo").html('<i class="fa  fa-info-circle"></i> More Info');
+                    }
+                    else {
+                        $("#TableStudSancHisto").slideUp();
+                        $(this).html('<i class="fa  fa-info-circle"></i> History');
                     }
                 });
                 var date = new Date();
@@ -234,6 +316,28 @@
                     }
                     , aaSorting: [[1, "desc"]]
                 });
+                var oTable2 = $('#TableStudSancHistory').dataTable({
+                    "aLengthMenu": [
+                    [3, 5, 15, 20, -1]
+                    , [3, 5, 15, 20, "All"] // change per page values here
+                ], // set the initial value
+                    "iDisplayLength": 15
+                    , "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>"
+                    , "sPaginationType": "bootstrap"
+                    , "oLanguage": {
+                        "sLengthMenu": "_MENU_ records per page"
+                        , "oPaginate": {
+                            "sPrevious": "Prev"
+                            , "sNext": "Next"
+                        }
+                    
+                }, aaSorting: [[0, "desc"]],
+                "aoColumnDefs": [{
+                        'bSortable': false,
+                        'aTargets': [1,2,3,4,5]
+                    }]
+                    }
+                );
                 $('#assignSanction').on("click", function () {
                     if ($('#sanctionDiv:visible').length) {
                         $("#sanctionDiv").slideToggle(500);
@@ -378,11 +482,11 @@
                                                 , Done: Donee
                                             }
                                             , success: function (result) {
-                                                alert(result);
+                                                // alert(result);
                                                 window.location.reload();
                                             }
                                             , error: function (result) {
-                                                alert('Error')
+                                                // alert('Error')
                                             }
                                         });
                                     }).promise().done(function () {
@@ -406,11 +510,11 @@
                         if (tobeRemoved != 0) {
                             swal({
                                 title: "Are you sure?"
-                                , text: "This data will be deleted"
+                                , text: "This data will be Deactivated"
                                 , type: "warning"
                                 , showCancelButton: true
                                 , confirmButtonColor: '#9DD656'
-                                , confirmButtonText: 'Yes, Delete  it!'
+                                , confirmButtonText: 'Yes, Archived it!'
                                 , cancelButtonText: "No!"
                                 , closeOnConfirm: false
                                 , closeOnCancel: false
@@ -418,19 +522,30 @@
                                 if (isConfirm) {
                                     $("tbody").find("tr[class='tobeRemoved']").each(function (i) {
                                         var $tds = $(this).find('td')
-                                            , ID = $tds.eq(0).text();
+                                            , ID = $tds.eq(0).text()
+                                            , UpdateConsumed = $tds.eq(3).find("input[id='inputConsume']").val()
+                                            , UpdateMax = $tds.eq(3).find("input[id='inputConsume']").attr('maxVal')
+                                            , Remaining = $tds.eq(4).html()
+                                            , Finish = $tds.eq(5).find("input[id='checkFinished']").is(':checked') ? 'Finished' : 'Processing'
+                                            , sancRemarks = $tds.eq(2).find("textarea[id='sancRemarks']").val()
+                                            , Donee = $tds.eq(6).find("input[id='tobeDone']").val();
                                         $.ajax({
                                             type: 'post'
                                             , url: 'studSanctionSave.php'
                                             , data: {
                                                 archiveSanction: 'sanctionAdd'
                                                 , ID: ID
+                                                , Cons: UpdateConsumed
+                                                , max: UpdateMax
+                                                , finish: Finish
+                                                , SancRemarks: sancRemarks
+                                                , Done: Donee
                                             }
                                             , success: function (result) {
                                                 window.location.reload();
                                             }
                                             , error: function (result) {
-                                                alert('Error')
+                                                // alert('Error')
                                             }
                                         });
                                     }).promise().done(function () {
@@ -487,7 +602,7 @@
                                             }
                                             , success: function (result) {}
                                             , error: function (result) {
-                                                alert('Error')
+                                                // alert('Error')
                                             }
                                         });
                                     }).promise().done(function () {

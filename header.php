@@ -39,7 +39,7 @@
                         <li class="active"><a  href="index.php">Home</a></li>
                         <li class="dropdown"> <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">Student Services <b class=" fa fa-angle-down"></b></a>
                             <ul class="dropdown-menu">
-                                    <li><a href="login.php">Guidance and Counselling</a></li>  
+                                    <li><a href="login.php">Guidance and Counseling</a></li>  
                                     <li><a href="login.php">Office of the Student Affairs and Services</a></li> 
                             </ul>
                         </li> 

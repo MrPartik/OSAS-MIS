@@ -232,5 +232,15 @@ WHERE Notification_RECEIVER = (SELECT OSASHead_CODE FROM `r_osas_head` WHERE OSA
 ORDER BY Notification_DATE_ADDED DESC"))or die("0");
 $count_notif = $count_notif_query["countt"];
 
+$count_docu_query = mysqli_fetch_assoc(mysqli_query($con,"SELECT count(`ArchDocuments_ID`) as countt FROM `r_archiving_documents` WHERE `ArchDocuments_DISPLAY_STAT` = 'Active'"));
+$count_docu = $count_docu_query['countt'];
+
+$count_loss_id_regi_query = mysqli_fetch_assoc(mysqli_query($con,"SELECT COUNT(`AssLoss_ID`) countt FROM `t_assign_stud_loss_id_regicard` WHERE `AssLoss_DATE_CLAIM` = null and `AssLoss_DISPLAY_STAT` = 'Active'"));
+$count_loss_id_regi = $count_loss_id_regi_query['countt'];
+
+$count_request_vouch_query = mysqli_fetch_assoc(mysqli_query($con,"SELECT COUNT(`OrgVoucher_ID`) countt FROM `t_org_voucher` WHERE `OrgVoucher_STATUS` = 'Pending' AND `OrgVoucher_DISPLAY_STAT` = 'Active'"));
+$count_request_vouch = $count_request_vouch_query['countt'];
+
+
 
 ?>

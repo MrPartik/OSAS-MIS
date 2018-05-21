@@ -29,7 +29,7 @@ include('../config/connection.php');
                         </div> -->
                         <div class="col-md-3">
                             <div class="mini-stat clearfix"> <span class="mini-stat-icon blue"><i class="fa fa-envelope"></i></span>
-                                <div class="mini-stat-info"> <span>1</span> Number of Documents </div>
+                                <div class="mini-stat-info"> <span><?php echo $count_docu  ?></span> Number of Documents </div>
                             </div>
                         </div>
                         <div class="col-md-4">
