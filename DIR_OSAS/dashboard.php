@@ -30,12 +30,12 @@ include('../config/connection.php');
                         </div> -->
                 <div class="col-md-6">
                     <div class="mini-stat clearfix"> <span class="mini-stat-icon tar"><i class="fa  fa-chain"></i></span>
-                        <div class="mini-stat-info"> <span> <?php echo $current_acadyear;?></span> Activated Academic Year </div>
+                        <div class="mini-stat-info"> <span> <?php echo $current_acadyear;?></span> Activate Academic Year </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="mini-stat clearfix"> <span class="mini-stat-icon tar"><i class="fa  fa-chain"></i></span>
-                        <div class="mini-stat-info"> <span><?php echo $current_semster;?></span> Activated Semester </div>
+                        <div class="mini-stat-info"> <span><?php echo $current_semster;?></span> Activate Semester </div>
                     </div>
                 </div>
                
@@ -210,14 +210,12 @@ WHERE A.AssSancStudStudent_TO_BE_DONE <= CURRENT_DATE AND A.AssSancStudStudent_S
                                     <tr>
                                         <th></th>
                                         <?php
-                                            $view_query = mysqli_query($con," SELECT FinAssiTitle_NAME FROM `r_financial_assistance_title` WHERE FinAssiTitle_DISPLAY_STAT = 'Active' ");
+                                            $view_query = mysqli_query($con," SELECT FinAssiTitle_NAME FROM `r_financial_assistance_title` WHERE FinAssiTitle_DISPLAY_STAT  = 'Active' ");
                                             while($row = mysqli_fetch_assoc($view_query))
                                             {
                                                 $legend = $row["FinAssiTitle_NAME"];
 
-                                                echo "
-                                                <th>$legend</th>
-                                                    ";
+                                                echo " <th>$legend</th>  ";
                                             }
 
                                         ?>
@@ -227,24 +225,20 @@ WHERE A.AssSancStudStudent_TO_BE_DONE <= CURRENT_DATE AND A.AssSancStudStudent_S
                                 <tbody>
                                     <tr>
                                         <th>Financial Assistance</th>
-                                        <?php
-                                            $view_query = mysqli_query($con," SELECT FinAssiTitle_NAME FROM `r_financial_assistance_title` WHERE FinAssiTitle_DISPLAY_STAT = 'Active' ");
+                                        <?php 
+                                            $view_query = mysqli_query($con,"SELECT FinAssiTitle_NAME FROM `r_financial_assistance_title` WHERE FinAssiTitle_DISPLAY_STAT = 'Active' "); 
+                                            
+                                            $legend= "";
                                             while($row = mysqli_fetch_assoc($view_query))
                                             {
                                                 $legend = $row["FinAssiTitle_NAME"];
 
-                                            
-                                                $view_query2 = mysqli_query($con," SELECT COUNT(*) as COU FROM `t_assign_stud_finan_assistance`                                               
-                                                WHERE AssStudFinanAssistance_FINAN_NAME = '$legend' AND AssStudFinanAssistance_STATUS = 'Active' ");
+                                                $view_query2 = mysqli_query($con,"SELECT COUNT(*) as COU FROM `t_assign_stud_finan_assistance`    
+                                                WHERE AssStudFinanAssistance_FINAN_NAME = '$legend' AND AssStudFinanAssistance_STATUS = 'Active'");
                                                 while($row2 = mysqli_fetch_assoc($view_query2))
                                                 {
-                                                    $item = $row2["COU"];
-
-                                                    echo "
-                                                    <td>$item</td>
-                                                    ";
-
-
+                                                    $item = $row2["COU"]; 
+                                                    echo " <td>$item</td> "; 
                                                 }
                                             }
 

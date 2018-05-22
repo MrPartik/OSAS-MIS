@@ -5,6 +5,17 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Student Details</h4> </div>
             <div class="modal-body">
+                <div class="row"> 
+                  <div class="col-md-12">
+                        <br/>
+                        <br/>
+                        <button id="addStudLoss" class="btnSave btn btn-default"><i class="fa fa-plus"></i> Add</button>
+                        <button id="MoreInfo" class="btnSave btn btn-info"><i class="fa fa-info-circle"></i> More Info</button>
+                        <br/>
+                        <br/>
+                    </div>
+            </div>
+                <div id="profilee">
                 <div class='twt-feed maroon-bg'>
                     <?php viewStudProfileCond(0,$_GET['StudNo']); 
                     $data =$_GET['StudNo'];
@@ -47,15 +58,9 @@
                             </h5> Course </li>
                                 </ul>
                             </div>
-                </div>
+                </div></div>
                 <div class="row">
-                    <div class="col-md-12">
-                        <br/>
-                        <br/>
-                        <button id="addStudLoss" class="btnSave btn btn-default"><i class="fa fa-plus"></i> Add</button>
-                        <button id="MoreInfo" class="btnSave btn btn-info"><i class="fa fa-info-circle"></i> More Info</button>
-                        <br/>
-                        <br/> </div>
+                  
                     <div class="collapse-group">
                         <div id="LossDiv" class="row collapse panel-body">
                             <div class="col-md-4">ID or RegiCard
@@ -134,14 +139,14 @@
                     }
                 });
 
-                $("div.twt-feed").hide();
+                $("#profilee").hide();
                 $("#MoreInfo").on("click", function () {
-                    if (!$("div.twt-feed.maroon-bg:visible").length) {
-                        $("div.twt-feed").slideToggle();
+                    if (!$("#profilee:visible").length) {
+                        $("#profilee").slideToggle();
                         $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide Info');
                     }
                     else {
-                        $("div.twt-feed").slideToggle();
+                        $("#profilee").slideToggle();
                         $(this).html('<i class="fa  fa-info-circle"></i> More Info');
                     }
                 });

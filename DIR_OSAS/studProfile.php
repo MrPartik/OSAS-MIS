@@ -191,7 +191,8 @@ include('../config/connection.php');
                 </div>
             </div>
             <!-- modal -->
-            <div id="Profile" class="modal fade content-profile" role="dialog"> </div>
+            <div id="Profile" class="modal fade content-profile" > </div>           
+            <div id="studSanction" class="modal fade content-sanctionss "> </div>
             <!--main content end-->
             <!-- Placed js at the end of the document so the pages load faster -->
             <!--Core js-->

@@ -21,8 +21,7 @@
                                 <?php echo $profileLayoutRow['Stud_NO']?>
                             </p>
                             <br/>
-                            <br/> 
-                            </div>
+                            <br/> </div>
                 <aside class="profile-nav alt">
                     <section class="panel">
                         <ul class="nav nav-pills nav-stacked">
@@ -35,37 +34,33 @@
                             <li>
                                 <a href="javascript:;"> <i class="fa  fa-arrow-circle-down"></i> Year Admitted <span class="label label-success pull-right r-activity"><?php echo substr($profileLayoutRow['Stud_NO'],0,4); ?></span></a>
                             </li>
-                             <?php  
+                            <?php  
                                         $counterSanction=0; 
                                         viewStudSanctionCond($profileLayoutRow['Stud_NO']);
                                         while(mysqli_fetch_array($view_studSanctionCond)){
                                             $counterSanction++;}
                                          if($counterSanction!=0){
                                          ?>
-                                            
-                            <li> 
-                                    <a href="javascript:;"> <i class="fa fa-thumbs-down"></i> Sanction /s 
-                                        <span class="label <?php echo ($counterSanction==0)?'label-success':'label-danger' ?> pull-right r-activity">
+                                <li>
+                                    <a id="StudSanctionModalClick" data-toggle="modal" href="#studSanction" value="<?php echo $profileLayoutRow['Stud_NO']; ?>"> <i class="fa fa-thumbs-down"></i> Sanction /s <span class="label <?php echo ($counterSanction==0)?'label-success':'label-danger' ?> pull-right r-activity">
                                             <?php echo $counterSanction;} ?>
                                         </span></a>
-                            </li>
-                              <?php $percentageSanction = "0 %";
+                                </li>
+                                <?php $percentageSanction = "0 %";
                             viewStudSanctionComputation($profileLayoutRow['Stud_NO']);
                             while($row=mysqli_fetch_array($view_studSanctionComputation)){ 
                             
                             $percentageSanction = $row['Percentage'];
                             ?>
-                            <li>
-                              
-                                    <a href="javascript:;"> <i class="fa  fa-refresh"></i>Sanction Percentage Finished<span class="label <?php echo ($percentageSanction==0)?'label-success':'label-danger' ?>  pull-right r-activity"> 
+                                    <li>
+                                        <a href="javascript:;"> <i class="fa  fa-refresh"></i>Sanction Percentage Finished<span class="label <?php echo ($percentageSanction==0)?'label-success':'label-danger' ?>  pull-right r-activity"> 
                                         <?php echo round($percentageSanction,2).' %';} ?></span></a>
-                            </li>
-                                <?php viewFinanStudCond(0,$profileLayoutRow['Stud_NO']);  
+                                    </li>
+                                    <?php viewFinanStudCond(0,$profileLayoutRow['Stud_NO']);  
                                                                     $scholarship ="";
                                                         while($row = mysqli_fetch_array($view_studFinanCond)){ ?>
-                            <li>
-                                <a href="javascript:;"> <i class="fa fa-money"></i>Scholarship/s
-                                    <span class="pull-right ">
+                                        <li>
+                                            <a href="javascript:;"> <i class="fa fa-money"></i>Scholarship/s <span class="pull-right ">
                                             <?php viewFinanStudCond(0,$profileLayoutRow['Stud_NO']);  
                                                                     $scholarship ="";
                                                         while($row = mysqli_fetch_array($view_studFinanCond)){ 
@@ -73,23 +68,21 @@
                                                                     $scholarship =  $row["Finan_Name"]." "; 
                                                                     $statusColor = ($row["Status"]==="Active")? "label-success" : "label-danger";
                                                                     $date = new DateTime($row["Start"]);
-                                                        echo " &nbsp;<span title ='".$date->format('D M d, Y h:i A')."' class='label ".$statusColor." r-activity'>".$scholarship."</span>";}?>
-                                    </span>
-                                </a>
-                                <?php  
+                                                        echo " &nbsp;<span title ='".$date->format('D M d, Y h:i A')."' class='label ".$statusColor." r-activity'>".$scholarship."</span>";}?> </span>
+                                            </a>
+                                            <?php  
                                             $statusFinan = 'INACTIVE';    
                                             viewFinanStudCond (0,$profileLayoutRow['Stud_NO']); 
                                             while ($finanStud= mysqli_fetch_array($view_studFinanCond)){
                                             $statusFinan=  $finanStud['Status']; ?>
-                            </li>
-                            <?php } ?>
-                            <li>
-                                <a href="javascript:;"> <i class="fa fa-info-circle"></i> Scholarship Status <span class="label label-success pull-right r-activity">
+                                        </li>
+                                        <?php } ?>
+                                            <li>
+                                                <a href="javascript:;"> <i class="fa fa-info-circle"></i> Scholarship Status <span class="label label-success pull-right r-activity">
                                     <?php echo $statusFinan;} ?>
-                                    </span>
-                                </a>
-                            </li>
-                            <?php
+                                    </span> </a>
+                                            </li>
+                                            <?php
                                                                             $ID =0;
                                                                             $Regi =0;
                                                                             $StudNo =$profileLayoutRow['Stud_NO'];
@@ -99,16 +92,30 @@
                                                                              $Regi = $row["Regi"];
                                                                             if($ID!=0 && $Regi!=0){
                                                                 ?>
-                                <li>
-                                    <a href="javascript:;"> <i class="fa fa-bell-o"></i> Loss of Identification Card <span class="label label-success pull-right r-activity"><?php   echo $ID;  ?></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;"> <i class="fa fa-bell-o"></i>Loss of Registration Card<span class="label label-success pull-right r-activity"><?php   echo $Regi; } ?></span></a>
-                                </li>
+                                                <li>
+                                                    <a href="javascript:;"> <i class="fa fa-bell-o"></i> Loss of Identification Card <span class="label label-success pull-right r-activity"><?php   echo $ID;  ?></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;"> <i class="fa fa-bell-o"></i>Loss of Registration Card<span class="label label-success pull-right r-activity"><?php   echo $Regi; } ?></span></a>
+                                                </li>
                         </ul>
                     </section>
                 </aside>
-                   <!-- <div class="collapse-group">
+                <script>
+                    $("#StudSanctionModalClick ").on("click ", function () {
+                        var datas = $(this).attr("value");
+                        $.ajax({
+                            url: "studSanctionModal.php?StudNo=" + datas
+                            , cache: false
+                            , async: false
+                            , success: function (result) {
+                                $(".content-sanctionss ").html(result);
+                            }
+                        });
+                    });
+                </script>
+                <!--
+                   <div class="collapse-group">
                     <br/>
                     <br/>
                     <div class="row collapse">
@@ -165,9 +172,9 @@
                         <a id="btnStudModal" href="<?php echo $data?>" class="profileView btn btn-info"><i class="fa fa-eye"></i>  View Profile</a> </div>
                 </div> 
             </div>
-        </div> -->
+        </div> 
                 <?php }?>
-                    <!-- <script>
+                     <script>
                 $('.editStud').on('click', function () {
                     if ($('.twt-feed:visible').length) {
                         $('.twt-feed').hide();
@@ -253,4 +260,5 @@
                         }
                     });
                 });
-            </script> -->
+            </script> 
+-->

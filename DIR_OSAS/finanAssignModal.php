@@ -5,7 +5,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Student Details</h4> </div>
             <div class="modal-body">
-                <div class='twt-feed maroon-bg' style="display:none">
+                <div id="profilee">
+                <div class='twt-feed maroon-bg' >
                     <?php viewStudProfileCond(0,$_GET['StudNo']); 
                     $data =$_GET['StudNo'];
                     while($profileLayoutRow = mysqli_fetch_array($view_studProfile_cond)){ ?>
@@ -46,6 +47,7 @@
                             </ul>
                         </div>
                 </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <br/>
@@ -83,7 +85,7 @@
                                     <button id="assFinanStud" class="btnSave btn btn-primary"><i class="fa fa-plus-circle "></i> Assign</button>
                                 </center>
                             </div>
-                        </div>
+                        </div>  
                         <div id="TableStudSanc " class="panel-body ">
                             <div class="adv-table">
                                 <table class="display table table-bordered table-striped" id="dynamic-table-modal">
@@ -147,18 +149,27 @@
             </div >
             <script>
 
-            $("div.twt-feed").hide();
+            $("#profilee").hide();
             $("#MoreInfo").on("click",function(){
-                if(!$("div.twt-feed.maroon-bg:visible").length){
-                    $("div.twt-feed").slideToggle();
+                if(!$("#profilee:visible").length){
+                    $("#profilee").slideToggle();
                     $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide Info');
                 }else{
-                     $("div.twt-feed").slideToggle();
+                     $("#profilee").slideToggle();
                     $(this).html('<i class="fa  fa-info-circle"></i> More Info');
                 }
             });
 
-
+                $('#addFinanStud').on("click", function () {
+                    if ($('#FinanDiv:visible').length) {
+                        $("#FinanDiv").slideToggle(500);
+                        $("#addFinanStud").html("<i class='fa  fa-plus'></i>  Add");
+                    }
+                    else {
+                        $("#FinanDiv").slideToggle(500);
+                        $("#addFinanStud").html("<i class='fa  fa-arrow-circle-o-left'></i>  Back");
+                    }
+                });
 
                   var oTable = $('#dynamic-table-modal').dataTable({
                         "aLengthMenu": [
@@ -177,16 +188,7 @@
                         }
                         , aaSorting: [[4, "asc"]]
                     });
-                $('#addFinanStud').on("click", function () {
-                    if ($('#FinanDiv:visible').length) {
-                        $("#FinanDiv").slideToggle(500);
-                        $("#addFinanStud").html("<i class='fa  fa-plus'></i>  Add");
-                    }
-                    else {
-                        $("#FinanDiv").slideToggle(500);
-                        $("#addFinanStud").html("<i class='fa  fa-arrow-circle-o-left'></i>  Back");
-                    }
-                });
+              
                 $("#tbodyFinancial").on("input", "textarea[id='efinanRemarks']", function () {
                     if ($(this).attr("value") == $(this).val()) $(this).closest("tr").removeClass("updatingRow");
                     else $(this).closest("tr").addClass("updatingRow");

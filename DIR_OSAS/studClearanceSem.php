@@ -29,12 +29,12 @@ include('../config/connection.php');
                         </div>
                         <div class="col-md-4">
                             <div class="mini-stat clearfix"> <span class="mini-stat-icon tar"><i class="fa  fa-chain"></i></span>
-                                <div class="mini-stat-info"> <span> <?php echo $current_acadyear?></span> Activated Academic Year </div>
+                                <div class="mini-stat-info"> <span> <?php echo $current_acadyear?></span> Activate Academic Year </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mini-stat clearfix"> <span class="mini-stat-icon tar"><i class="fa  fa-chain"></i></span> 
-                                <div class="mini-stat-info"> <span><?php echo $current_semster?></span> Activated Semester </div>
+                                <div class="mini-stat-info"> <span><?php echo $current_semster?></span> Activate Semester </div>
                             </div>
                         </div>
                     </div>

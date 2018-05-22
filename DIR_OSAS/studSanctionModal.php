@@ -16,6 +16,10 @@
                         <br/> 
                     </div>
             </div>
+                <div id="profilee" >
+                    
+                        <div class="col-lg-12" style=" font-size: 20px;  background: #2b2a2a1f; color: black; padding: 10px 10px; ">
+                            Student Sanction History</div>
                 <div class='twt-feed maroon-bg'>
                     <?php viewStudProfileCond( 0,$_GET['StudNo']) ?>
                         <?php while($profileLayoutRow = mysqli_fetch_array($view_studProfile_cond)){ ?>
@@ -62,10 +66,15 @@
                                 </ul>
                             </div>
                 </div>
+                </div>
                 <div class="row">
+                
                     <div class="col-md-12">
                     
-                    <div id="TableStudSancHisto" class="panel-body" style="display:none ">
+                    <div id="TableStudSancHisto" class="panel-body" style="display:none ">    
+                        <div class="col-lg-12" style=" font-size: 20px;  background: #2b2a2a1f; color: black; padding: 10px 10px; ">
+                                Student Sanction History
+                            </div>
                             <div class="adv-table">
                                 <table class="display table table-bordered table-striped" id="TableStudSancHistory">
                                     <thead>
@@ -152,6 +161,10 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                                 </center>
                             </div>
                         </div>
+                        <div class="rows" style="padding-top:10px"> 
+                            <div class="col-lg-12" style=" font-size: 20px;  background: #2b2a2a1f; color: black; padding: 10px 10px; ">
+                                Student Sanction Details
+                            </div>
                         <div id="TableStudSanc " class="panel-body ">
                             <div class="adv-table">
                                 <table class="display table table-bordered table-striped" id="dynamic-table-modals">
@@ -179,7 +192,7 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                                                 <td class="TDSancName"> <strong><span class="spanSancName"><?php
                                                 $dateStart =new DateTime($SancDetrow['Start']);
                                                 $dateMod =new DateTime($SancDetrow['Mods']);
-                                                echo $SancDetrow['SanctionName'].'<br>Time Value:  '. $SancDetrow['TimeVal'].' Hours<br>Designated Office: '.$SancDetrow['Office'].'<i style="font-size:10px"><br><br></strong>Date Started: '. $dateStart->format('D M d, Y h:i A').'
+                                                echo '('.$SancDetrow['AssSancID'].') '.$SancDetrow['SanctionName'].'<br>Time Value:  '. $SancDetrow['TimeVal'].' Hours<br>Designated Office: '.$SancDetrow['Office'].'<i style="font-size:10px"><br><br></strong>Date Started: '. $dateStart->format('D M d, Y h:i A').'
                                                     <br>Last Modified: '. $dateMod->format('D M d, Y h:i A').'</i>'?></span>
                                                 </td>
                                                 <td>
@@ -251,6 +264,7 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                                 </table>
                             </div>
                         </div>
+                            </div> 
                         <div class="modal-footer">
                             <button id="saveSanctionSet" type="submit" class="btnSave btn btn-success"><i class="fa fa-save"></i> Save</button>
                         </div>
@@ -264,25 +278,25 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
             $formatdateNewSanc = $dateNewSanc->format('D M d, Y');
         ?>
             <script>
-                $("div.twt-feed").hide();
-                $("#MoreInfo").on("click", function () {
-                    if (!$("div.twt-feed.maroon-bg:visible").length) {
-                        $("div.twt-feed").slideDown();
-                        $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide Info'); 
-                        
+                $("#profilee").hide();
+            $("#MoreInfo").on("click",function(){
+                if(!$("#profilee:visible").length){
+                    $("#profilee").slideDown();
                         $("#TableStudSancHisto").slideUp();
+                        $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide Info');
+                        $("#profilee").slideDown();
                         $("#History").html('<i class="fa  fa-info-circle"></i> History');
-                    }
-                    else {
-                        $("div.twt-feed").slideUp();
-                        $(this).html('<i class="fa  fa-info-circle"></i> More Info');
-                    }
-                });
+                }else{
+                     $("#profilee").slideUp();
+                    $(this).html('<i class="fa  fa-info-circle"></i> More Info');
+                }
+            });
+                
                 $("#History").on("click", function () {
                     if (!$("#TableStudSancHisto:visible").length) {
                         $("#TableStudSancHisto").slideDown();
                         $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide History'); 
-                        $("div.twt-feed").slideUp();
+                        $("#profilee").slideUp();
                         $("#MoreInfo").html('<i class="fa  fa-info-circle"></i> More Info');
                     }
                     else {
@@ -290,6 +304,7 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                         $(this).html('<i class="fa  fa-info-circle"></i> History');
                     }
                 });
+                
                 var date = new Date();
                 dd = ('0' + date.getDate()).slice(-2), mm = ('0' + (date.getMonth() + 1)).slice(-2), y = date.getFullYear(), someFormattedDate = y + '-' + mm + '-' + dd;
                 $("tbody").find("tr").find("input[id='tobeDone']").each(function () {

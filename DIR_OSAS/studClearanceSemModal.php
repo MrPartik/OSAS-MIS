@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Student Details</h4> </div>
+                <h4 class="modal-title">Student Clearance Details</h4> </div>
             <div class="modal-body">
                 <div class='twt-feed maroon-bg'>
                     <?php viewStudProfileCond( 0,$_GET['StudNo']) ?>
@@ -47,8 +47,8 @@
                     <div class="row">
                         <br/>
                         <div class="col-lg-12 form-group" id="course">
-                            <Strong>Choose Signatories</Strong>
-                            <br> <i>This will letting the Student Services to hold clearance</i>
+                            <Strong>Choose Signatory</Strong> 
+                            <br>
                             <select multiple name="e9" id="e9" style="width:100%" class="populate">
                                 <?php
                                                             $view_query = mysqli_query($con,"SELECT * FROM `r_clearance_signatories` WHERE `ClearSignatories_DISPLAY_STAT` ='active'");
@@ -61,7 +61,7 @@
                                                         ?>
                             </select>
                             <br>
-                            <br><span class="label label-danger">NOTE!</span> Every signatories above, signifies that the student dind't cleared with the specific singatories </div>
+                            <br><span class="label label-danger">NOTE!</span> Every signatory above, signifies that the student didn't clear with the specific signatories </div>
                     </div>
                     <div class="modal-footer">
                         <button id="saveClearanceSemSave" type="submit" class="btnSave btn btn-success"><i class="fa fa-save"></i> Save</button>
@@ -74,7 +74,7 @@
     <script>
             var table = $('#dynamic-table-modal').DataTable({
                 iDisplayLength: 3
-            });
+            }); 
         $("#saveClearanceSemSave").on("click", function () {
             swal({
                 title: "Are you sure?"
@@ -82,7 +82,7 @@
                 , type: "warning"
                 , showCancelButton: true
                 , confirmButtonColor: '#9DD656'
-                , confirmButtonText: 'Yes, save it!'
+                , confirmButtonText: 'Yes!'
                 , cancelButtonText: "No!"
                 , closeOnConfirm: false
                 , closeOnCancel: false 
