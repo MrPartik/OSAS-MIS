@@ -216,10 +216,10 @@ include ("header.php");
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-lg-6 form-group">
-                                Event Name<input type="text" class="form-control" placeholder="ex. Commits General Assembly" id="txtname">
+                                *Event Name<input type="text" class="form-control" placeholder="ex. Commits General Assembly" id="txtname">
                             </div>
                             <div class="col-lg-6 form-group">
-                                Organization
+                                *Organization
                                 <select class="form-control input-sm" id="drporg">
                                 <?php
                                     $view_query = mysqli_query($con,"SELECT OrgForCompliance_ORG_CODE,OrgAppProfile_NAME,(SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) AS STAT FROM `t_org_for_compliance` INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE WHERE OrgForCompliance_DISPAY_STAT = 'Active' AND OrgForCompliance_BATCH_YEAR= '$current_acadyear' AND (SELECT IF((SELECT COUNT(*) FROM t_org_accreditation_process A WHERE A.OrgAccrProcess_ORG_CODE =  OrgForCompliance_ORG_CODE AND A.OrgAccrProcess_IS_ACCREDITED = 1 )= (SELECT COUNT(*) FROM r_org_accreditation_details B WHERE B.OrgAccrDetail_DISPLAY_STAT = 'Active'),'TRUE','FALSE')) = 'TRUE'");
@@ -240,15 +240,15 @@ include ("header.php");
                         <div class="row">
                             <div class="col-lg-12 form-group">
                                 <div class="form-group">
-                                    Date 
-<!--                                <input type="text" placeholder="" data-mask="99/99/9999" class="form-control" id="txtdate">-->
+                                    *Date
                                     <input type="date" maxlength="10" class="form-control" id="txtdate">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-lg-12 form-group">
-                                Event Description<textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
+                                *Event Description<textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
+                            </div>
+                            <div class="col-lg-12 form-group">
+                                *Concept Paper etc...<input class="form-control" type ="file" style="margin: 0px 202.5px 0px 0px;resize:none" id="docFile">
                             </div>
                         </div>
                     </div>

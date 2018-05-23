@@ -189,6 +189,7 @@ include ("header.php");
 
         </section>
         <!-- Modal -->
+
         <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Add" class="modal fade">
             <div class="modal-dialog" style="width:700px">
                 <div class="modal-content">
@@ -199,27 +200,27 @@ include ("header.php");
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-lg-12 form-group">
-                                Event Name<input type="text" class="form-control" placeholder="ex. Commits General Assembly" id="txtname">
+                                *Event Name<input type="text" class="form-control" placeholder="ex. Commits General Assembly" id="txtname">
                             </div>
                         </div>    
                         <div class="row">
                             <div class="col-lg-12 form-group">
                                 <div class="form-group">
-                                    Date 
-<!--                                <input type="text" placeholder="" data-mask="99/99/9999" class="form-control" id="txtdate">-->
+                                    *Date
                                     <input type="date" maxlength="10" class="form-control" id="txtdate">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-lg-12 form-group">
-                                Event Description<textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
+                                *Event Description<textarea class="form-control" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>
+                            </div>
+                            <div class="col-lg-12 form-group">
+                                *Concept Paper etc...<input class="form-control" type ="file" style="margin: 0px 202.5px 0px 0px;resize:none" id="docFile">
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button data-dismiss="modal" id="close" class="btn btn-default" type="button">Close</button>
-                        <button class="btn btn-success " id="submit-data" type="button">Save</button>
+                        <button data-dismiss="modal" id="close" class="btn btn-default" type="button"><u>C</u>lose</button>
+                        <button class="btn btn-success " id="submit-data" type="button"><u>S</u>ave</button>
                     </div>
                 </div>
             </div>

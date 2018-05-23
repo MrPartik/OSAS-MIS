@@ -1,4 +1,3 @@
-<?php   
-error_reporting(E_ERROR | E_PARSE);
+<?php
 $con = mysqli_connect("localhost","root","","osas");  
 ?>

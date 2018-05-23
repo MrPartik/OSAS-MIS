@@ -88,11 +88,16 @@ var EditableTable = function () {
             $('#submit-data').click(function (e) {
                 e.preventDefault();
 
-                //                var code = document.getElementById('txtcode').value;
                 var name = document.getElementById('txtname').value;
                 var desc = document.getElementById('txtdesc').value;
                 var date = document.getElementById('txtdate').value;
-
+                var file_data = $('#docFile').prop('files')[0];
+            if (name.length && desc.length && date.length && $('#docFile').val().length) {
+                    var formdata = new FormData();
+                    formdata.append("_name", name);
+                    formdata.append("_desc", desc);
+                    formdata.append("_date", date);
+                    formdata.append("file", file_data);
                 $("#close").click();
 
                 swal({
@@ -109,14 +114,12 @@ var EditableTable = function () {
                     if (isConfirm) {
                         $.ajax({
                             type: 'post',
-                            url: 'Event/Add-ajax.php',
-                            data: {
-                                _name: name,
-                                _desc: desc,
-                                _date: date
-
-                            },
-                            success: function (response) {
+                            url: 'Event/Add-ajax.php'
+                                , data: formdata
+                                , cache: false
+                                , contentType: false
+                                , processData: false
+                            ,success: function (response) {
                                 swal({
                                     title: "Request Send!",
                                     text: "The request is successfully send!",
@@ -136,11 +139,13 @@ var EditableTable = function () {
                         });
                     } else {
                         swal("Cancelled", "The transaction is cancelled", "error");
-                        //                        $("#openAddmodal").click();
                         document.getElementById("form-data").reset();
                     }
                 });
-
+            }else
+                    {
+                            swal("Please complete your inputs", "The transaction is cancelled, please try again", "error");
+                    }
             });
 
             $('#updsubmit-data').click(function (e) {
