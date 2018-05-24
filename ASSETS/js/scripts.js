@@ -363,8 +363,7 @@
             fill_notificationCount();
         }, 5000);
         
-        $('#notificationlist').on('click','a.notif',function(){
-            
+        $('#notificationlist').on('click','div.notif',function(){
             $.ajax({
                 type: "POST",
                 url: '../config/NotificationClick.php',
@@ -378,6 +377,7 @@
 
             });
             if($(this).attr('item').substring(0,5) == 'Remit'){
+                $('#RemittanceApproval').modal('show');
                 $.ajax({
                     type: "POST",
                     url: '../config/NotificationApprovalFillBody.php',
@@ -393,6 +393,7 @@
                 
             }
             else if($(this).attr('item').substring(0,4) == 'EVNT'){
+                $('#EventApproval').modal('show');
                 $.ajax({
                     type: "POST",
                     url: '../config/NotificationEventApprovalFillBody.php',
@@ -408,6 +409,7 @@
                 
             } 
             else if($(this).attr('item').substring(0,5) == 'Vouch'){
+                $('#VoucherApproval').modal('show');
                 $.ajax({
                     type: "POST",
                     url: '../config/NotificationVoucherApprovalFillBody.php',
