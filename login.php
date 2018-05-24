@@ -52,7 +52,8 @@
                                             'username'=>$row['Users_USERNAME'], 
                                             'role'=>$row['Users_ROLES'],
                                             'ppath'=>$row['Users_PROFILE_PATH'],
-                                            'ref'=>$row['Users_REFERENCED']);
+                                            'ref'=>$row['Users_REFERENCED'],
+                                            'id'=>$row['Users_ID']);
                                         $role = $_SESSION['logged_user']['role'];
                                            if($_SESSION['logged_user']['role']=="Organization")
                                             { header("location:DIR_ORG/dashboard.php");  }

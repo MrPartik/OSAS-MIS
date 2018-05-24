@@ -11,9 +11,6 @@ if(isset($_POST["insertDoc"])){
             $docuDesc = $_POST["docuDesc"];
             $filename = "   ";
 
-
-
-
             if(isset($_FILES['file'])){
                 $path = $_FILES['file']['name'];
                 $ext = pathinfo($path, PATHINFO_EXTENSION);

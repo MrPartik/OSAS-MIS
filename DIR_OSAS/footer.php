@@ -50,21 +50,82 @@
 <script type="text/javascript" src="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.js"></script>
 <script>
     $("#divVerify").css("display", "none");
-    $("#newpassword").on("input", function () {
+    $("#OSAS_newpassword").on("input", function () {
         if ($(this).val().length < 8) {
             $("#divVerify").slideUp();;
-            $("#verifypassword").val("");
+            $("#OSAS_verifypassword").val("");
         }
         else {
             $("#divVerify").slideDown();
         }
     });
-    $("#verifypassword").on("input", function () {
-        if ($("#newpassword").val() == $(this).val()) {
+    $("#OSAS_verifypassword").on("input", function () {
+        if ($("#OSAS_newpassword").val() == $(this).val()) {
             $(this).css("background", "#FFFFFF");
         }
         else {
             $(this).css("background", "#ff000024");
+        }
+    });
+    $("button[name='insertUpdateProfileInfo']").on("click", function () {
+        if ($("#OSAS_ProfilePicture").val().length || $("#OSAS_username").val().length && $("#OSAS_currentpassword").val().length && $("#OSAS_newpassword").val().length && $("#OSAS_verifypassword").val().length) {
+            if ($("#OSAS_newpassword").val() == $("#OSAS_verifypassword").val()) {
+                swal({
+                    title: "Are you sure you want to save your profile?"
+                    , text: "This data will be added  and used for further transaction"
+                    , type: "warning"
+                    , showCancelButton: true
+                    , confirmButtonColor: '#9DD656'
+                    , confirmButtonText: 'Yes!'
+                    , cancelButtonText: "No!"
+                    , closeOnConfirm: false
+                    , closeOnCancel: false
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        var file_data = $('#OSAS_ProfilePicture').prop('files')[0]
+                            , form_data = new FormData();
+                        form_data.append('OSAS_Save', 'insertDoc');
+                        form_data.append('username', $("#OSAS_username").val());
+                        form_data.append('prevpassword', $("#OSAS_currentpassword").val());
+                        form_data.append('password', $("#OSAS_verifypassword").val());
+                        form_data.append('file', file_data);
+                        $.ajax({
+                            url: "../config/saveProfile.php"
+                            , type: "POST"
+                            , data: form_data
+                            , cache: false
+                            , contentType: false
+                            , processData: false
+                            , success: function (data) {
+                                if (data == "ERR") {
+                                    swal("Incorrect current password", "The transaction is cancelled, please try again", "error");
+                                }
+                                else {
+                                    swal({
+                                        title: "Woaah, that's neat!"
+                                        , text: "changes will see after you re-login."
+                                        , type: "success"
+                                        , showCancelButton: false
+                                        , confirmButtonColor: '#9DD656'
+                                        , confirmButtonText: 'Ok'
+                                    }, function (isConfirm) {
+                                        location.reload();
+                                    });
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        swal("Cancelled", "The transaction is cancelled", "error");
+                    }
+                });
+            }
+            else {
+                swal("Please make sure you verified your password", "The transaction is cancelled, please try again", "error");
+            }
+        }
+        else {
+            swal("Please fill all the required fields", "The transaction is cancelled, please try again", "error");
         }
     });
 </script>

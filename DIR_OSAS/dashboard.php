@@ -442,7 +442,6 @@ WHERE A.AssSancStudStudent_TO_BE_DONE <= CURRENT_DATE AND A.AssSancStudStudent_S
     <script src="../ASSETS/js/data.js"></script>
     <script src="../ASSETS/js/drilldown.js"></script>
     <script src="../ASSETS/js/exporting.js"></script>
-    <script src="Dashboard/donut-graph.js"></script>
     <!-- Easy Pie Chart-->
     <script src="../ASSETS/js/easypiechart/jquery.easypiechart.js"></script>
     <!-- Sparkline Chart-->

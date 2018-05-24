@@ -91,25 +91,25 @@ $referenced_user = $_SESSION['logged_user']['ref']; ?>
                                         <div> <span class="btn btn-white btn-file">
 
                                                    <span class="fileupload-new"><i class="fa fa-paper-clip" ></i> Select image</span> <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
-                                            <input type="file" id="docDesc" class="default" /> </span> <a href="#" class="btn btn-danger btn-sm fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i>Remove</a> </div>
+                                            <input type="file" id="OSAS_ProfilePicture" class="default" /> </span> <a href="#" class="btn btn-danger btn-sm fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i>Remove</a> </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="col-md-12" style="padding-top:10px">Username
-                                    <input id="username" type="text" class="form-control" placeholder="your username" value="<?php echo $user_check; ?>"> </div>
+                                    <input id="OSAS_username" type="text" class="form-control" placeholder="your username" value="<?php echo $user_check; ?>"> </div>
                                 <div class="col-md-12" style="padding-top:10px">Current Password
-                                    <input id="currentpassword" type="password" class="form-control" placeholder="your previous password"> </div>
+                                    <input id="OSAS_currentpassword" type="password" class="form-control" placeholder="your previous password"> </div>
                                 <div class="col-md-12" style="padding-top:10px">New Password
-                                    <input id="newpassword" type="password" class="form-control" placeholder="your new password"> </div>
+                                    <input id="OSAS_newpassword" type="password" class="form-control" placeholder="your new password"> </div>
                                 <div class="col-md-12" style="padding-top:10px" id="divVerify">Verify Password
-                                    <input id="verifypassword" type="password" class="form-control" placeholder="enter again your new password"> </div>
+                                    <input id="OSAS_verifypassword" type="password" class="form-control" placeholder="enter again your new password"> </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button data-dismiss="modal" class="btn btn-cancel" type="button">Cancel</button>
-                        <button name="insert" class="btnInsert btn btn-success" type="submit">Update Password</button>
+                        <button name="insertUpdateProfileInfo" class="btnInsert btn btn-success" type="submit">Save</button>
                     </div>
                 </div>
             </div>
@@ -117,52 +117,3 @@ $referenced_user = $_SESSION['logged_user']['ref']; ?>
     </section>
     <?php  include('../config/NotificationApproval.php') ?>
         <!--header end-->
-        <script>
-            $("button[name='insert']").on("click", function () {
-                if ($("#docName").val().length && $("#docDesc").val().length && $("#docFile").val().length) {
-                    swal({
-                        title: "Are you sure?"
-                        , text: "This data will be added  and used for further transaction"
-                        , type: "warning"
-                        , showCancelButton: true
-                        , confirmButtonColor: '#9DD656'
-                        , confirmButtonText: 'Yes!'
-                        , cancelButtonText: "No!"
-                        , closeOnConfirm: false
-                        , closeOnCancel: false
-                    }, function (isConfirm) {
-                        if (isConfirm) {
-                            var file_data = $('#docFile').prop('files')[0]
-                                , form_data = new FormData();
-                            form_data.append('insertDoc', 'insertDoc');
-                            form_data.append('docuName', $("#docName").val());
-                            form_data.append('docuDesc', $("#docDesc").val());
-                            form_data.append('file', file_data);
-                            $.ajax({
-                                url: "docuArchivingSave.php"
-                                , type: "POST"
-                                , data: form_data
-                                , cache: false
-                                , contentType: false
-                                , processData: false
-                                , success: function (data) {
-                                    swal({
-                                        title: "Woaah, that's neat!"
-                                        , text: "The Document record is added"
-                                        , type: "success"
-                                        , showCancelButton: false
-                                        , confirmButtonColor: '#9DD656'
-                                        , confirmButtonText: 'Ok'
-                                    }, function (isConfirm) {
-                                        location.reload();
-                                    });
-                                }
-                            });
-                        }
-                    });
-                }
-                else {
-                    swal("Please fill all the required fields", "The transaction is cancelled, please try again", "error");
-                }
-            });
-        </script>

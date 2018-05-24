@@ -320,7 +320,7 @@ var defaultParams = {
   showConfirmButton: true,
   showCancelButton: false,
   closeOnConfirm: true,
-  closeOnCancel: true,
+  closeOnCancel: false,
   confirmButtonText: 'OK',
   confirmButtonColor: '#8CD4F5',
   cancelButtonText: 'Cancel',

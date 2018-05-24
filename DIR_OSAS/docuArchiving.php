@@ -204,6 +204,9 @@ include('../config/connection.php');
                                         }
                                     });
                                 }
+                                else {
+                                    swal("Cancelled", "The transaction is cancelled", "error");
+                                }
                             });
                         }
                         else {
