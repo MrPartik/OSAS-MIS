@@ -11,7 +11,7 @@
  Target Server Version : 100108
  File Encoding         : 65001
 
- Date: 21/05/2018 10:25:48
+ Date: 24/05/2018 12:57:16
 */
 
 SET NAMES utf8mb4;
@@ -74,7 +74,14 @@ CREATE TABLE `log_sanction`  (
   PRIMARY KEY (`LogSanc_ID`) USING BTREE,
   INDEX `FK_LogSanc_AssSancSudent_ID`(`LogSanc_AssSancSudent_ID`) USING BTREE,
   CONSTRAINT `FK_LogSanc_AssSancSudent_ID` FOREIGN KEY (`LogSanc_AssSancSudent_ID`) REFERENCES `t_assign_stud_saction` (`AssSancStudStudent_ID`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of log_sanction
+-- ----------------------------
+INSERT INTO `log_sanction` VALUES (1, 1, 0, '', '2018-05-24', 'Summer Semester', '2019-2020', 'Processing', '2018-05-21 15:01:19');
+INSERT INTO `log_sanction` VALUES (2, 1, 12, '', '2018-05-24', 'Summer Semester', '2019-2020', 'Processing', '2018-05-21 15:01:31');
+INSERT INTO `log_sanction` VALUES (3, 1, 16, '', '2018-05-24', 'Summer Semester', '2019-2020', 'Finished', '2018-05-22 13:59:23');
 
 -- ----------------------------
 -- Table structure for notif_announcement
@@ -84,6 +91,8 @@ CREATE TABLE `notif_announcement`  (
   `Notif_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Notif_SUBJECT` varchar(1000) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `Notif_MESSAGE` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `Notif_SEMESTER` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `Notif_ACAD_YEAR` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `Notif_SEND_BY` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `Notif_REC_BY` enum('All','Student','Organization') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `Notif_DATE_ADD` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -102,7 +111,12 @@ CREATE TABLE `r_application_wizard`  (
   UNIQUE INDEX `WIZARD_ORG_CODE_2`(`WIZARD_ORG_CODE`) USING BTREE,
   INDEX `WIZARD_ORG_CODE`(`WIZARD_ORG_CODE`) USING BTREE,
   CONSTRAINT `r_application_wizard_ibfk_1` FOREIGN KEY (`WIZARD_ORG_CODE`) REFERENCES `t_org_for_compliance` (`OrgForCompliance_ORG_CODE`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of r_application_wizard
+-- ----------------------------
+INSERT INTO `r_application_wizard` VALUES (1, 'CITS2019', 5);
 
 -- ----------------------------
 -- Table structure for r_archiving_documents
@@ -287,7 +301,12 @@ CREATE TABLE `r_notification`  (
   `Notification_DATE_CLICKED` datetime(0) NULL DEFAULT NULL,
   `Notification_DATE_ADDED` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Notification_ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of r_notification
+-- ----------------------------
+INSERT INTO `r_notification` VALUES (1, 'EVNT00003', 'CITS2019', '2018-OSAS-CM', 'Seen', 'Clicked', 'Organization', '2018-05-23 13:47:13', '2018-05-23 13:48:33', '2018-05-23 13:46:57');
 
 -- ----------------------------
 -- Table structure for r_org_accreditation_details
@@ -303,7 +322,15 @@ CREATE TABLE `r_org_accreditation_details`  (
   `OrgAccrDetail_DISPLAY_STAT` enum('Active','Inactive') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT 'Active',
   PRIMARY KEY (`OrgAccrDetail_ID`) USING BTREE,
   UNIQUE INDEX `UNQ_OrgAccrDetail_CODE`(`OrgAccrDetail_CODE`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of r_org_accreditation_details
+-- ----------------------------
+INSERT INTO `r_org_accreditation_details` VALUES (1, 'REQ00001', 'Organization Name', 'Organization Name Description', '2018-05-23 12:46:05', '2018-05-23 12:46:05', 'Active');
+INSERT INTO `r_org_accreditation_details` VALUES (2, 'REQ00002', 'Organization Category', 'Organization Category Description', '2018-05-23 12:46:20', '2018-05-23 12:46:56', 'Active');
+INSERT INTO `r_org_accreditation_details` VALUES (3, 'REQ00003', 'Organization Members', 'Organization Members Description', '2018-05-23 12:46:36', '2018-05-23 12:47:00', 'Active');
+INSERT INTO `r_org_accreditation_details` VALUES (4, 'REQ00004', 'Organization Officers', 'Organization Officers Description', '2018-05-23 12:46:45', '2018-05-23 12:47:03', 'Active');
 
 -- ----------------------------
 -- Table structure for r_org_applicant_profile
@@ -320,7 +347,12 @@ CREATE TABLE `r_org_applicant_profile`  (
   `OrgAppProfile_DISPLAY_STAT` enum('Active','Inactive') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT 'Active',
   PRIMARY KEY (`OrgAppProfile_ID`) USING BTREE,
   UNIQUE INDEX `UNQ_OrgAppProfile_ORG_CODE`(`OrgAppProfile_APPL_CODE`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of r_org_applicant_profile
+-- ----------------------------
+INSERT INTO `r_org_applicant_profile` VALUES (1, 'CITS2019', 'Commonwealth Information Technology Society', 'This is an Academic Organization, responsible for managing and inspiring its members.', 'This application is ready for accreditation', '2018-05-23 12:44:12', '2018-05-23 12:44:12', 'Active');
 
 -- ----------------------------
 -- Table structure for r_org_category
@@ -360,7 +392,12 @@ CREATE TABLE `r_org_essentials`  (
   PRIMARY KEY (`OrgEssentials_ID`) USING BTREE,
   INDEX `FK_OrgEssentials_ORG_CODE`(`OrgEssentials_ORG_CODE`) USING BTREE,
   CONSTRAINT `FK_OrgEssentials_ORG_CODE` FOREIGN KEY (`OrgEssentials_ORG_CODE`) REFERENCES `t_org_for_compliance` (`OrgForCompliance_ORG_CODE`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of r_org_essentials
+-- ----------------------------
+INSERT INTO `r_org_essentials` VALUES (1, 'CITS2019', 'MissionMissionMission', 'VisionVisionVision', '', '2018-05-23 12:45:08', '2018-05-23 12:45:08', 'Active');
 
 -- ----------------------------
 -- Table structure for r_org_event_management
@@ -372,7 +409,7 @@ CREATE TABLE `r_org_event_management`  (
   `OrgEvent_Code` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `OrgEvent_NAME` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `OrgEvent_DESCRIPTION` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `OrgEvent_FILES` enum('Ok','Pending') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Pending',
+  `OrgEvent_FILES` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `OrgEvent_STATUS` enum('Cancelled','Pending','Approved','Rejected') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Pending',
   `OrgEvent_PROPOSED_DATE` date NOT NULL,
   `OrgEvent_ReviewdBy` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
@@ -383,7 +420,13 @@ CREATE TABLE `r_org_event_management`  (
   UNIQUE INDEX `UNQ_ORGEVENT_CODE`(`OrgEvent_Code`) USING BTREE,
   INDEX `FK_ORGEVENT_ORGCODE`(`OrgEvent_OrgCode`) USING BTREE,
   CONSTRAINT `FK_ORGEVENT_ORGCODE` FOREIGN KEY (`OrgEvent_OrgCode`) REFERENCES `t_org_for_compliance` (`OrgForCompliance_ORG_CODE`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of r_org_event_management
+-- ----------------------------
+INSERT INTO `r_org_event_management` VALUES (2, 'CITS2019', 'EVNT00002', 'sdsa', 'sdsa', '../../../Documents/EventDocu-2019-2020-Summer Semester-CITS2019-sdsa.png', 'Approved', '3123-02-12', 'Demelyn E. Monz', '2018-05-23 13:41:40', NULL, 'Active');
+INSERT INTO `r_org_event_management` VALUES (3, 'CITS2019', 'EVNT00003', '$orgcode', 'asd', '../../Documents/EventDocu-2019-2020-Summer Semester-CITS2019-$orgcode.png', 'Pending', '0000-00-00', '', '2018-05-23 13:46:57', NULL, 'Active');
 
 -- ----------------------------
 -- Table structure for r_org_non_academic_details
@@ -423,7 +466,17 @@ CREATE TABLE `r_org_officer_position_details`  (
   PRIMARY KEY (`OrgOffiPosDetails_ID`) USING BTREE,
   INDEX `FK_OrgOffiPosDetails_ORG_CODE`(`OrgOffiPosDetails_ORG_CODE`) USING BTREE,
   CONSTRAINT `FK_OrgOffiPosDetails_ORG_CODE` FOREIGN KEY (`OrgOffiPosDetails_ORG_CODE`) REFERENCES `t_org_for_compliance` (`OrgForCompliance_ORG_CODE`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of r_org_officer_position_details
+-- ----------------------------
+INSERT INTO `r_org_officer_position_details` VALUES (1, 'CITS2019', 'President', 'Office Position Description', 1, '2018-05-23 12:44:12', '2018-05-23 12:44:12', 'Active');
+INSERT INTO `r_org_officer_position_details` VALUES (2, 'CITS2019', 'Vice-President of internal affair', 'Office Position Description', 1, '2018-05-23 12:44:12', '2018-05-23 12:44:12', 'Active');
+INSERT INTO `r_org_officer_position_details` VALUES (3, 'CITS2019', 'Vice-President of external affair', 'Office Position Description', 1, '2018-05-23 12:44:13', '2018-05-23 12:44:13', 'Active');
+INSERT INTO `r_org_officer_position_details` VALUES (4, 'CITS2019', 'Budget and Finance', 'Office Position Description', 1, '2018-05-23 12:44:13', '2018-05-23 12:44:13', 'Active');
+INSERT INTO `r_org_officer_position_details` VALUES (5, 'CITS2019', 'Auditor', 'Office Position Description', 1, '2018-05-23 12:44:13', '2018-05-23 12:44:13', 'Active');
+INSERT INTO `r_org_officer_position_details` VALUES (16, 'CITS2019', 'Research and Development Team', 'Research and Development Team', 4, '2018-05-24 10:28:11', '2018-05-24 10:28:11', 'Active');
 
 -- ----------------------------
 -- Table structure for r_osas_head
@@ -529,7 +582,7 @@ CREATE TABLE `r_stud_profile`  (
 -- ----------------------------
 -- Records of r_stud_profile
 -- ----------------------------
-INSERT INTO `r_stud_profile` VALUES (22, '20123-00075-CM-', 'LOWELL DAVE', 'ELBA', 'AGNIR', 'BSIT-CM', 3, '1', 'Male', 'sampleemail@gmail.com', '9182035678', '0000-00-00', 'qc', 'qc', 'Regular', '2018-05-21 08:04:43', '2018-05-21 08:04:43', NULL, 'Active');
+INSERT INTO `r_stud_profile` VALUES (22, '2012-00075-CM-0', 'LOWELL DAVE', 'ELBA', 'AGNIR', 'BSIT-CM', 3, '1', 'Male', 'sampleemail@gmail.com', '9182035678', '2018-05-21', 'qc', 'qc', 'Regular', '2018-05-21 17:12:18', '2018-05-21 08:04:43', NULL, 'Active');
 INSERT INTO `r_stud_profile` VALUES (23, '2016-00410-CM-0', 'MA. MICHAELA ', 'CRUZ', 'ALEJANDRIA', 'BSIT-CM', 3, '1', 'Female', 'sampleemail@gmail.com', '9182035678', '0000-00-00', 'qc', 'qc', 'Regular', '2018-05-21 08:04:43', '2018-05-21 08:04:43', NULL, 'Active');
 INSERT INTO `r_stud_profile` VALUES (24, '2015-00046-CM-0', 'KEITH EYVAN ', 'NOBONG', 'ALVIOR', 'BSIT-CM', 3, '1', 'Male', 'sampleemail@gmail.com', '9182035678', '0000-00-00', 'qc', 'qc', 'Regular', '2018-05-21 08:04:43', '2018-05-21 08:04:43', NULL, 'Active');
 INSERT INTO `r_stud_profile` VALUES (25, '2011-00075-CM-0', 'LOWELL DAVE', 'ELBA', 'AGNIR', 'BSIT-CM', 3, '1', 'Male', 'sampleemail@gmail.com', '9182035678', '0000-00-00', 'qc', 'qc', 'Regular', '2018-05-21 08:04:43', '2018-05-21 08:04:43', NULL, 'Active');
@@ -572,7 +625,7 @@ CREATE TABLE `r_users`  (
   `Users_DISPLAY_STAT` enum('Active','Inactive') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT 'Active',
   PRIMARY KEY (`Users_ID`) USING BTREE,
   UNIQUE INDEX `UNQ_Users_USERNAME`(`Users_USERNAME`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of r_users
@@ -580,6 +633,7 @@ CREATE TABLE `r_users`  (
 INSERT INTO `r_users` VALUES (14, 'Demelyn', '2018-OSAS-CM', 0x852FA0A245A1467FCFD3E79A8C1BB0C9, 'OSAS HEAD', NULL, '2018-05-20 23:49:40', '2018-05-20 23:49:40', 'Active');
 INSERT INTO `r_users` VALUES (15, 'admin', 'admin', 0x4D8EAB5029A8C36FE1BF1C3F13405F73, 'Administrator', NULL, '2018-05-20 23:51:59', '2018-05-20 23:51:59', 'Active');
 INSERT INTO `r_users` VALUES (16, 'staff', '-1', 0xC025BDDA58E2790A32D70E58B3F5F148, 'Staff', NULL, '2018-05-21 00:01:12', '2018-05-21 00:01:12', 'Active');
+INSERT INTO `r_users` VALUES (17, 'CITS2019', 'CITS2019', 0xFEFB12FA6206F5695691C396467CD6A1, 'Organization', NULL, '2018-05-23 12:44:31', '2018-05-23 12:44:31', 'Active');
 
 -- ----------------------------
 -- Table structure for t_assign_org_academic_course
@@ -597,7 +651,12 @@ CREATE TABLE `t_assign_org_academic_course`  (
   INDEX `FK_AssOrgAcademic_COURSE_CODE`(`AssOrgAcademic_COURSE_CODE`) USING BTREE,
   CONSTRAINT `FK_AssOrgAcademic_COURSE_CODE` FOREIGN KEY (`AssOrgAcademic_COURSE_CODE`) REFERENCES `r_courses` (`Course_CODE`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_AssOrgAcademic_ORG_CODE` FOREIGN KEY (`AssOrgAcademic_ORG_CODE`) REFERENCES `t_org_for_compliance` (`OrgForCompliance_ORG_CODE`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of t_assign_org_academic_course
+-- ----------------------------
+INSERT INTO `t_assign_org_academic_course` VALUES (1, 'CITS2019', 'BSIT-CM', '2018-05-23 12:44:13', '2018-05-23 12:44:13', 'Active');
 
 -- ----------------------------
 -- Table structure for t_assign_org_category
@@ -615,7 +674,12 @@ CREATE TABLE `t_assign_org_category`  (
   INDEX `FK_AssOrgCategory_ORGCAT_CODE`(`AssOrgCategory_ORGCAT_CODE`) USING BTREE,
   CONSTRAINT `FK_AssOrgCategory_ORGCAT_CODE` FOREIGN KEY (`AssOrgCategory_ORGCAT_CODE`) REFERENCES `r_org_category` (`OrgCat_CODE`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_AssOrgCategory_ORG_CODE` FOREIGN KEY (`AssOrgCategory_ORG_CODE`) REFERENCES `t_org_for_compliance` (`OrgForCompliance_ORG_CODE`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of t_assign_org_category
+-- ----------------------------
+INSERT INTO `t_assign_org_category` VALUES (1, 'CITS2019', 'ACAD_ORG', '2018-05-23 12:44:12', '2018-05-23 12:44:12', 'Active');
 
 -- ----------------------------
 -- Table structure for t_assign_org_members
@@ -633,7 +697,18 @@ CREATE TABLE `t_assign_org_members`  (
   INDEX `FK_AssOrgMem_COMPL_ORG_CODE`(`AssOrgMem_COMPL_ORG_CODE`) USING BTREE,
   CONSTRAINT `FK_AssOrgMem_COMPL_ORG_CODE` FOREIGN KEY (`AssOrgMem_COMPL_ORG_CODE`) REFERENCES `t_org_for_compliance` (`OrgForCompliance_ORG_CODE`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_AssOrgMem_STUD_NO` FOREIGN KEY (`AssOrgMem_STUD_NO`) REFERENCES `r_stud_profile` (`Stud_NO`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of t_assign_org_members
+-- ----------------------------
+INSERT INTO `t_assign_org_members` VALUES (5, '2010-00410-CM-0', 'CITS2019', '2018-05-23 12:45:14', NULL, 'Active');
+INSERT INTO `t_assign_org_members` VALUES (4, '2011-00075-CM-0', 'CITS2019', '2018-05-23 12:45:14', NULL, 'Active');
+INSERT INTO `t_assign_org_members` VALUES (1, '2012-00075-CM-0', 'CITS2019', '2018-05-23 12:45:12', NULL, 'Active');
+INSERT INTO `t_assign_org_members` VALUES (3, '2015-00046-CM-0', 'CITS2019', '2018-05-23 12:45:13', NULL, 'Active');
+INSERT INTO `t_assign_org_members` VALUES (2, '2016-00410-CM-0', 'CITS2019', '2018-05-23 12:45:13', NULL, 'Active');
+INSERT INTO `t_assign_org_members` VALUES (6, '2020-00410-CM-0', 'CITS2019', '2018-05-23 12:45:14', NULL, 'Active');
+INSERT INTO `t_assign_org_members` VALUES (7, '2032-00410-CM-0', 'CITS2019', '2018-05-23 12:45:14', NULL, 'Active');
 
 -- ----------------------------
 -- Table structure for t_assign_org_non_academic
@@ -733,7 +808,12 @@ CREATE TABLE `t_assign_stud_saction`  (
   CONSTRAINT `FK_AssSancStudStudent_DesOffDetails_CODE` FOREIGN KEY (`AssSancStudStudent_DesOffDetails_CODE`) REFERENCES `r_designated_offices_details` (`DesOffDetails_CODE`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_AssSancStudStudent_STUD_NO` FOREIGN KEY (`AssSancStudStudent_STUD_NO`) REFERENCES `r_stud_profile` (`Stud_NO`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_AssSancStudStudent_SancDetails_CODE` FOREIGN KEY (`AssSancStudStudent_SancDetails_CODE`) REFERENCES `r_sanction_details` (`SancDetails_CODE`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of t_assign_stud_saction
+-- ----------------------------
+INSERT INTO `t_assign_stud_saction` VALUES (1, '2012-00075-CM-0', 'LossRegi_16', 'OFF00001', 16, '2018-05-24', '', 'Finished', '2018-05-21 15:01:19', '2018-05-22 13:59:23', 'Active');
 
 -- ----------------------------
 -- Table structure for t_assign_student_clearance
@@ -757,7 +837,16 @@ CREATE TABLE `t_assign_student_clearance`  (
   CONSTRAINT `FK_AssStudClearance_SEMESTER` FOREIGN KEY (`AssStudClearance_SEMESTER`) REFERENCES `r_semester` (`Semestral_NAME`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_AssStudClearance_SIGNATORIES_CODE` FOREIGN KEY (`AssStudClearance_SIGNATORIES_CODE`) REFERENCES `r_clearance_signatories` (`ClearSignatories_CODE`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_AssStudClearance_STUD_NO` FOREIGN KEY (`AssStudClearance_STUD_NO`) REFERENCES `r_stud_profile` (`Stud_NO`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of t_assign_student_clearance
+-- ----------------------------
+INSERT INTO `t_assign_student_clearance` VALUES (1, '2012-00075-CM-0', '2019-2020', 'Summer Semester', 'SIG00001', '2018-05-21 14:56:15', '2018-05-22 12:49:54', 'Inactive');
+INSERT INTO `t_assign_student_clearance` VALUES (4, '2012-00075-CM-0', '2019-2020', 'Summer Semester', 'SIG00002', '2018-05-21 14:56:15', '2018-05-22 12:49:54', 'Inactive');
+INSERT INTO `t_assign_student_clearance` VALUES (3, '2012-00075-CM-0', '2019-2020', 'Summer Semester', 'SIG00003', '2018-05-21 14:56:15', '2018-05-22 12:49:54', 'Inactive');
+INSERT INTO `t_assign_student_clearance` VALUES (2, '2012-00075-CM-0', '2019-2020', 'Summer Semester', 'SIG00004', '2018-05-21 14:56:15', '2018-05-22 12:49:54', 'Inactive');
+INSERT INTO `t_assign_student_clearance` VALUES (5, '2012-00075-CM-0', '2019-2020', 'Summer Semester', 'SIG00005', '2018-05-21 14:56:15', '2018-05-22 12:50:04', 'Inactive');
 
 -- ----------------------------
 -- Table structure for t_clearance_generated_code
@@ -766,17 +855,17 @@ DROP TABLE IF EXISTS `t_clearance_generated_code`;
 CREATE TABLE `t_clearance_generated_code`  (
   `ClearanceGenCode_ID` int(11) NOT NULL AUTO_INCREMENT,
   `ClearanceGenCode_STUD_NO` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `ClearanceGenCode_BATCH` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `ClearanceGenCode_ACADEMIC_YEAR` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `ClearanceGenCode_SEMESTER` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `ClearanceGenCode_COD_VALUE` varchar(1000) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `ClearanceGenCode_DATE_ADD` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ClearanceGenCode_DATE_MOD` datetime(0) NOT NULL,
   `ClearanceGenCode_DISPLAY_STAT` enum('Active','Inactive') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT 'Active',
-  PRIMARY KEY (`ClearanceGenCode_STUD_NO`, `ClearanceGenCode_BATCH`, `ClearanceGenCode_SEMESTER`) USING BTREE,
+  PRIMARY KEY (`ClearanceGenCode_STUD_NO`, `ClearanceGenCode_ACADEMIC_YEAR`, `ClearanceGenCode_SEMESTER`) USING BTREE,
   UNIQUE INDEX `UNQ_QRValStudClearance_ID`(`ClearanceGenCode_ID`) USING BTREE,
-  INDEX `FK_QRValStudClearance_BATCH`(`ClearanceGenCode_BATCH`) USING BTREE,
+  INDEX `FK_QRValStudClearance_BATCH`(`ClearanceGenCode_ACADEMIC_YEAR`) USING BTREE,
   INDEX `FK_QRValStudClearance_SEMESTER`(`ClearanceGenCode_SEMESTER`) USING BTREE,
-  CONSTRAINT `FK_ClearanceGenCode_BATCH` FOREIGN KEY (`ClearanceGenCode_BATCH`) REFERENCES `r_batch_details` (`Batch_YEAR`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_ClearanceGenCode_BATCH` FOREIGN KEY (`ClearanceGenCode_ACADEMIC_YEAR`) REFERENCES `r_batch_details` (`Batch_YEAR`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_ClearanceGenCode_SEMESTER` FOREIGN KEY (`ClearanceGenCode_SEMESTER`) REFERENCES `r_semester` (`Semestral_NAME`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_ClearanceGenCode_STUD_NO` FOREIGN KEY (`ClearanceGenCode_STUD_NO`) REFERENCES `r_stud_profile` (`Stud_NO`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
@@ -798,7 +887,15 @@ CREATE TABLE `t_org_accreditation_process`  (
   INDEX `FK_OrgAccrProcess_OrgAccrDetail_CODE`(`OrgAccrProcess_OrgAccrDetail_CODE`) USING BTREE,
   CONSTRAINT `FK_OrgAccrProcess_ORG_CODE` FOREIGN KEY (`OrgAccrProcess_ORG_CODE`) REFERENCES `t_org_for_compliance` (`OrgForCompliance_ORG_CODE`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_OrgAccrProcess_OrgAccrDetail_CODE` FOREIGN KEY (`OrgAccrProcess_OrgAccrDetail_CODE`) REFERENCES `r_org_accreditation_details` (`OrgAccrDetail_CODE`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of t_org_accreditation_process
+-- ----------------------------
+INSERT INTO `t_org_accreditation_process` VALUES (4, 'CITS2019', 'REQ00001', 1, '2018-05-23 12:47:14', '2018-05-23 12:47:14', 'Active');
+INSERT INTO `t_org_accreditation_process` VALUES (1, 'CITS2019', 'REQ00002', 1, '2018-05-23 12:47:14', '2018-05-23 12:47:14', 'Active');
+INSERT INTO `t_org_accreditation_process` VALUES (2, 'CITS2019', 'REQ00003', 1, '2018-05-23 12:47:14', '2018-05-23 12:47:14', 'Active');
+INSERT INTO `t_org_accreditation_process` VALUES (3, 'CITS2019', 'REQ00004', 1, '2018-05-23 12:47:14', '2018-05-23 12:47:14', 'Active');
 
 -- ----------------------------
 -- Table structure for t_org_cash_flow_statement
@@ -874,7 +971,12 @@ CREATE TABLE `t_org_for_compliance`  (
   INDEX `FK_OR_ORG_FOUNDED_BATCH_YEAR`(`OrgForCompliance_BATCH_YEAR`) USING BTREE,
   CONSTRAINT `FK_OR_ORG_FOUNDED_BATCH_YEAR` FOREIGN KEY (`OrgForCompliance_BATCH_YEAR`) REFERENCES `r_batch_details` (`Batch_YEAR`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_OrgForCompliance_CODE` FOREIGN KEY (`OrgForCompliance_OrgApplProfile_APPL_CODE`) REFERENCES `r_org_applicant_profile` (`OrgAppProfile_APPL_CODE`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of t_org_for_compliance
+-- ----------------------------
+INSERT INTO `t_org_for_compliance` VALUES (1, 'CITS2019', 'CITS2019', 'Alma C. Fernandez', '2019-2020', '2018-05-23 12:44:12', '2018-05-23 12:44:12', 'Active');
 
 -- ----------------------------
 -- Table structure for t_org_officers

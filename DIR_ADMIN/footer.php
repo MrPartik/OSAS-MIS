@@ -37,3 +37,4 @@
 <script type="text/javascript" src="../ASSETS/js/fuelux/js/spinner.min.js"></script>
 <script type="text/javascript" src="../ASSETS/js/data-tables/jquery.dataTables.js"></script>
 <script type="text/javascript" src="../ASSETS/js/data-tables/DT_bootstrap.js"></script>
+<script type="text/javascript" src="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.js"></script>

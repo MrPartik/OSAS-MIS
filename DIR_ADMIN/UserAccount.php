@@ -26,8 +26,6 @@ else if($_SESSION['logged_user']['role']=="Student")
 else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
 { header("location:../");}
 ?>
-        <link rel="stylesheet" type="text/css" href="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.css" />
-        <link rel="stylesheet" type="text/css" href="../ASSETS/js/select2/select2.css" /> </head>
 
 <body>
     <section id="container">
@@ -289,7 +287,6 @@ else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
             <script src="SystemSetup/UserAccount.js"></script>
             <script src="../ASSETS/js/select2/select2.js"></script>
             <script src="../ASSETS/js/select-init.js"></script>
-            <script type="text/javascript" src="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.js"></script>
             <!-- END JAVASCRIPTS -->
             <script>
                 $(document).ready(function () {});
