@@ -24,9 +24,10 @@
                 }
                 
                 if(substr($row['Notification_ITEM'],0,5) == 'Remit'){
-                    $container = $container. '<span  class="alert-icon"><i class="fa fa-money"></i></span>
-                                                <div  class="noti-info">
-                                <a class="notif" data-toggle="modal" href="#RemittanceApproval"   item="'.$row['Notification_ITEM'].'"> '.$row['Notification_ITEM']. ' - ' .$row['SENDBY'].'</a>';
+                    $container = $container. '<div class="notif" item="'.$row['Notification_ITEM'].'" style="cursor:pointer;"> 
+                                            <span class="alert-icon "><i class="fa fa-money"></i></span>
+                                                <div class="noti-info ">
+                                <a class="notif" > '.$row['Notification_ITEM']. ' - ' .$row['SENDBY'].'</a>';
 
                 }
                 else
@@ -39,10 +40,11 @@
                     
                         
                     while($row2 = mysqli_fetch_assoc($view_query2)){
-                        $container = $container. '<span class="alert-icon"><i class="fa fa-bookmark"></i></span>
-                                        <div class="noti-info">
-                        <a class="notif" data-toggle="modal" href="#EventApproval" href="javascript:;" item="'.$row['Notification_ITEM'].'"> '.$row2['OrgEvent_NAME'].'</a><br/>
-                        <label class="" style="font-size:10px"> '. $row2['OrgAppProfile_NAME'] .'</label>' ;
+                        $container = $container. '<div class="notif" item="'.$row['Notification_ITEM'].'" style="cursor:pointer;"> 
+                                                    <span class="alert-icon "><i class="fa fa-bookmark"></i></span>
+                                                        <div class="noti-info ">
+                                                            <a> '.$row2['OrgEvent_NAME'].'</a><br/>
+                                                            <label class="" style="font-size:10px; cursor:pointer;"> '. $row2['OrgAppProfile_NAME'] .'</label>' ;
 
                     } 
                 }
@@ -56,7 +58,8 @@
                     
                         
                     while($row2 = mysqli_fetch_assoc($view_query3)){
-                        $container = $container. '<span class="alert-icon"><i class="fa fa-money"></i></span>
+                        $container = $container. '<div class="notif" item="'.$row['Notification_ITEM'].'" style="cursor:pointer;"> 
+                                                <span class="alert-icon"><i class="fa fa-money"></i></span>
                                         <div class="noti-info">
                         <a class="notif" data-toggle="modal" href="#VoucherApproval" href="javascript:;" item="'. $vouch.'"> '. $vouch .' - '.$row2['OrgVoucher_ORG_CODE'].'</a><br/>
                         <label class="" style="font-size:10px"> '. $row2['OrgAppProfile_NAME'] .'</label>' ;
@@ -64,14 +67,16 @@
                     } 
                 }
                 else{
-                    $container = $container. '<span class="alert-icon"><i class="fa fa-envelope-o"></i></span>
+                    $container = $container. '<div class="notif" item="'.$row['Notification_ITEM'].'" style="cursor:pointer;"> 
+                                            <span class="alert-icon"><i class="fa fa-envelope-o"></i></span>
                                                 <div class="noti-info">
-                                <a href="#" data-toggle="modal" href="#RemittanceApproval" href="javascript:;" class="notif" item="'.$row['Notification_ITEM'].'"> '.$row['SENDBY'].'</a>';
+                                <a href="#" > '.$row['SENDBY'].'</a>';
                 }
 
                 if($row['Notification_SEEN'] == 'Seen' && $row['Notification_CLICKED'] == 'Unclick' ){
                     $container = $container. '<br/><label class="pull-right" style="font-size:10px">Seen: '. $row['DATESEEN'] .'</label> 
                             </div>
+                        </div>
                         </div>
                     </li>';
 
@@ -79,6 +84,7 @@
                 else if($row['Notification_SEEN'] == 'Seen' && $row['Notification_CLICKED'] == 'Clicked'){
                     $container = $container. '
                             </div><div class="col-md-12"><span style="font-size:10px">Recent Viewed: '. $row['DATECLICK'] .'</span> </div>
+                        </div>
                         </div>
                     </li>';
 
@@ -119,9 +125,9 @@
                     INNER JOIN r_org_applicant_profile AS I ON I.OrgAppProfile_APPL_CODE = R.OrgForCompliance_OrgApplProfile_APPL_CODE
                     WHERE OrgEvent_Code = '$event' ");
                     while($row2 = mysqli_fetch_assoc($view_query2)){
-                        $container = $container. '<span class="alert-icon"><i class="fa fa-money"></i></span>
+                        $container = $container. '<div class="notif" item="'.$row['Notification_ITEM'].'" style="cursor:pointer;"> <span class="alert-icon"><i class="fa fa-money"></i></span>
                                         <div class="noti-info">
-                        <a class="notif" data-toggle="modal" href="#EventApproval" href="javascript:;" item="'.$row['Notification_ITEM'].'"> '.$row2['OrgEvent_NAME'].'</a><br/>
+                        <a> '.$row2['OrgEvent_NAME'].'</a><br/>
                         <label class="" style="font-size:10px"> '. $row2['OrgAppProfile_NAME'] .'</label>' ;
 
                     }
@@ -138,22 +144,23 @@
                     
                         
                     while($row2 = mysqli_fetch_assoc($view_query3)){
-                        $container = $container. '<span class="alert-icon"><i class="fa fa-money"></i></span>
+                        $container = $container. '<div class="notif" item="'.$row['Notification_ITEM'].'" style="cursor:pointer;"> <span class="alert-icon"><i class="fa fa-money"></i></span>
                                         <div class="noti-info">
-                        <a class="notif" data-toggle="modal" href="#VoucherApproval" href="javascript:;" item="'. $vouch.'"> '. $vouch .' - '.$row2['OrgVoucher_ORG_CODE'].'</a><br/>
+                        <a> '. $vouch .' - '.$row2['OrgVoucher_ORG_CODE'].'</a><br/>
                         <label class="" style="font-size:10px"> '. $row2['OrgAppProfile_NAME'] .'</label>' ;
 
                     } 
                 }
                 else{
-                    $container = $container. '<span class="alert-icon"><i class="fa fa-envelope-o"></i></span>
+                    $container = $container. '<div class="notif" item="'.$row['Notification_ITEM'].'" style="cursor:pointer;"> <span class="alert-icon"><i class="fa fa-envelope-o"></i></span>
                                                 <div class="noti-info">
-                                <a href="#" data-toggle="modal" href="#RemittanceApproval" href="javascript:;" class="notif" item="'.$row['Notification_ITEM'].'"> '.$row['SENDBY'].'</a>';
+                                <a href="#" > '.$row['SENDBY'].'</a>';
                 }
 
                 if($row['Notification_SEEN'] == 'Seen' && $row['Notification_CLICKED'] == 'Unclick' ){
                     $container = $container. '<br/><label class="pull-right" style="font-size:10px">Seen: '. $row['DATESEEN'] .'</label> 
                             </div>
+                        </div>
                         </div>
                     </li>';
 
@@ -161,6 +168,7 @@
                 else if($row['Notification_SEEN'] == 'Seen' && $row['Notification_CLICKED'] == 'Clicked'){
                     $container = $container. '<br/><label class="pull-right" style="font-size:10px">Recent Viewed: '. $row['DATECLICK'] .'</label> 
                             </div>
+                        </div>
                         </div>
                     </li>';
 
