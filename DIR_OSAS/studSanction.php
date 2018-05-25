@@ -304,9 +304,11 @@ include('../config/connection.php');
             , $Name = $("#sancName").val()
             , $Desc = $("#sancDesc").val()
             , $Time = $("#sancTime").val();
-
-
-                    swal({
+        if($Code.lenght){
+            if($Name.lenght){
+                if($Desc.lenght){
+                    if($Time.lenght){
+                        swal({
                             title: "Are you sure?"
                             , text: "This data will be saved and used in further transactions"
                             , type: "warning"
@@ -317,51 +319,74 @@ include('../config/connection.php');
                             , closeOnConfirm: false
                             , closeOnCancel: false
                         }, function (isConfirm) {
-                            if (isConfirm) {
-
-
-        $.ajax({
-            url: "studSanctionSave.php"
-            , cache: false
-            , async: false
-            , type: "Post"
-            , data: {
-                insertSanctionDetails: 'insertNow'
-                , Code: $Code
-                , Name: $Name
-                , SDesc: $Desc
-                , Time: $Time
-            }
-            , success: function (result) {
-                alert(result);
-                window.location.reload();
-            }
-        });
-    }
-                            else {
-                                swal("Cancelled", "The transaction is cancelled", "error");
+                            if(isConfirm) {
+                                $.ajax({
+                                    url: "studSanctionSave.php"
+                                    , cache: false
+                                    , async: false
+                                    , type: "Post"
+                                    , data: {
+                                        insertSanctionDetails: 'insertNow'
+                                        , Code: $Code
+                                        , Name: $Name
+                                        , SDesc: $Desc
+                                        , Time: $Time
+                                    }
+                                    , success: function (result) {
+                                        alert(result);
+                                        window.location.reload();
+                                    }
+                                });
                             }
+                            else 
+                                swal("Cancelled", "The transaction is cancelled", "error");
                         });
+                    }
+                    else
+                        swal("Please try again", "Please provide a time interval", "error");
+                }
+                else
+                    swal("Please try again", "Please provide a sanction description", "error");
+            }
+            else
+                swal("Please try again", "Please provide a sanction name", "error");            
+        }
+        else
+            swal("Please try again", "Please provide a sanction code", "error");
+        
     });
     $(".btnInsertOff").on("click", function () {
         var $Code = $("#OffCode").val()
             , $Name = $("#OffName").val()
             , $Desc = $("#OffDesc").val()
-        $.ajax({
-            url: "studSanctionSave.php"
-            , cache: false
-            , async: false
-            , type: "Post"
-            , data: {
-                insertDesiDetails: 'insertDesiDetails'
-                , Code: $Code
-                , Name: $Name
-                , SDesc: $Desc
-            }
-            , success: function (result) {
-                alert(result);
-                window.location.reload();
-            }
-        });
+        
+        if($Code.length ){
+            if($Name.length ){
+                if($Desc.length ){
+                    $.ajax({
+                        url: "studSanctionSave.php"
+                        , cache: false
+                        , async: false
+                        , type: "Post"
+                        , data: {
+                            insertDesiDetails: 'insertDesiDetails'
+                            , Code: $Code
+                            , Name: $Name
+                            , SDesc: $Desc
+                        }
+                        , success: function (result) {
+                            alert(result);
+                            window.location.reload();
+                        }
+                    });
+                }        
+                else
+                    swal("Please try again", "Please provide a office description", "error");
+            }        
+            else
+                swal("Please try again", "Please provide a office name", "error");           
+        }        
+        else
+            swal("Please try again", "Please provide a office code", "error");
     });
 </script>
