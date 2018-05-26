@@ -1,5 +1,5 @@
 <?php
-require('../../ASSETS/fpdf17/fpdf.php');
+require('ASSETS/fpdf17/fpdf.php');
 
 
 class myPDF extends FPDF{
@@ -7,7 +7,7 @@ class myPDF extends FPDF{
     function Header(){
   
         //Header Logo
-        $this->Image('../../ASSETS/images/PUPLogo.png',10,6,18);
+        $this->Image('ASSETS/images/PUPLogo.png',10,6,18);
 //        $this->Image('ASSETS/images/PUPLogo.png',186,6,18);
         
         // $this->Image('deped.png',162,9,22); 
@@ -77,7 +77,7 @@ class myPDF extends FPDF{
     }
 
     function headerTable(){  
-        require('../../config/connection.php');
+        require('config/connection.php');
 
         $item='';
         foreach (explode(',', $_GET['items']) as $data) {
