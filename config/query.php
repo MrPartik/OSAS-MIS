@@ -7,6 +7,7 @@ $view_studSanctionDetails ="";
 $view_studFinanCond ="";
 $view_studLossCond="";
 $view_orgVoucherReqQuery ="";
+$view_clearanceGeneratedCodeQuery ="";
 
 
 
@@ -14,7 +15,16 @@ $view_orgVoucherReqQuery ="";
                 {
                     return  date('D M d, Y h:i A');
                 }
-                function view_orgVoucherReq() 
+                function view_clearanceGen($id)
+                {
+                    include ('connection.php');
+                    global $view_clearanceGeneratedCodeQuery;
+                    $view_clearanceGeneratedCodeQuery = mysqli_query($con,"SELECT * FROM t_clearance_generated_code
+WHERE ClearanceGenCode_STUD_NO = '$id'
+AND ClearanceGenCode_ACADEMIC_YEAR = (SELECT ActiveAcadYear_Batch_YEAR FROM active_academic_year WHERE ActiveAcadYear_IS_ACTIVE = 1 AND ActiveAcadYear_ID = (SELECT MAX(ActiveAcadYear_ID) FROM active_academic_year))
+AND ClearanceGenCode_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM active_semester WHERE ActiveSemester_IS_ACTIVE = 1 AND ActiveSemester_ID = (SELECT MAX(ActiveSemester_ID) FROM active_semester))");
+
+                } function view_orgVoucherReq()
                 {
                     include ('connection.php');    
                     global $view_orgVoucherReqQuery;

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>OSAS - Student Sanction</title>
+<title>OSAS -Semester Clearance</title>
     <?php
 $breadcrumbs =" <div class='col-md-12'>
 <ul class='breadcrumbs-alt'>
