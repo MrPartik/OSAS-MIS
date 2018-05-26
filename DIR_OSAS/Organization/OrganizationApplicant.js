@@ -70,6 +70,7 @@ var EditableTable = function () {
             $('#submit-data').click(function (e) {
                 e.preventDefault();
                 //                var code = document.getElementById('txtcode').value;
+
                 var name = document.getElementById('txtname').value;
                 var desc = document.getElementById('txtdesc').value;
                 var year = $('#editable-sample').attr('batch-year');
@@ -80,85 +81,110 @@ var EditableTable = function () {
                     var f = document.getElementById("nonacad");
                     var nonacad = f.options[f.selectedIndex].value;
                 }
+                var nonacad = document.getElementById("nonacad");
+                var nonacadtext = nonacad.options[nonacad.selectedIndex].text;
+                var nonacadval = nonacad.options[nonacad.selectedIndex].value;
+
                 var accstat = '';
                 var chkstat = '';
                 var chkcode = '';
-                var stat = 0;
-                $("#close").click();
-                swal({
-                    title: "Are you sure?"
-                    , text: "This data will be saved and used for further transaction"
-                    , type: "warning"
-                    , showCancelButton: true
-                    , confirmButtonColor: '#DD6B55'
-                    , confirmButtonText: 'Yes!'
-                    , cancelButtonText: "No!"
-                    , closeOnConfirm: false
-                    , closeOnCancel: false
-                }, function (isConfirm) {
-                    if (isConfirm) {
-                        $.ajax({
-                            type: 'post'
-                            , url: 'Organization/Applicant/Add-ajax.php'
-                            , data: {
-                                _name: name
-                                , _desc: desc
-                                , _catcode: getcatval
-                                , _year: year
-                            }
-                            , success: function (compcode) {
-                                if (getcatval == 'ACAD_ORG') {
-                                    $('#e9 option:selected').each(function (index, brand) {
-                                        $.ajax({
-                                            type: 'post'
-                                            , url: 'Organization/Applicant/AcadOrg.php'
-                                            , async: true
-                                            , data: {
-                                                _appcode: compcode
-                                                , _catcode: getcatval
-                                                , _coucode: brand.value
-                                            }
-                                            , success: function (response) {
-                                                swal("Record Added!", "The data is successfully Added!", "success");
-                                                document.getElementById("form-data").reset();
-                                            }
-                                            , error: function (response) {
-                                                swal(response, "Please try again", "error");
-                                            }
-                                        });
-                                    });
-                                }
-                                else if (getcatval == 'NONACAD_ORG') {
+                var stat = 0
+                if(name.length != 0){
+                    if(getcatval == 'ACAD_ORG' && $('#e9 option:selected').length == 0){
+                        swal("Please try again", "Please provide a course", "error");
+                    }
+                    else if(getcatval == 'NONACAD_ORG' && nonacadtext == 'Please select category'){
+                        swal("Please try again", "Please provide a non academic category", "error");
+
+                    }
+                    else{
+                        if(desc.length != 0){
+                            $("#close").click();
+                            swal({
+                                title: "Are you sure?"
+                                , text: "This data will be saved and used for further transaction"
+                                , type: "warning"
+                                , showCancelButton: true
+                                , confirmButtonColor: '#DD6B55'
+                                , confirmButtonText: 'Yes!'
+                                , cancelButtonText: "No!"
+                                , closeOnConfirm: false
+                                , closeOnCancel: false
+                            }, function (isConfirm) {
+                                if (isConfirm) {
                                     $.ajax({
                                         type: 'post'
-                                        , url: 'Organization/Applicant/NonAcadOrg.php'
-                                        , async: true
+                                        , url: 'Organization/Applicant/Add-ajax.php'
                                         , data: {
-                                            _appcode: compcode
-                                            , _catcode: nonacad
+                                            _name: name
+                                            , _desc: desc
+                                            , _catcode: getcatval
+                                            , _year: year
                                         }
-                                        , success: function (response) {
-                                            swal("Record Added!", "The data is successfully Added!", "success");
-                                            document.getElementById("form-data").reset();
+                                        , success: function (compcode) {
+                                            if (getcatval == 'ACAD_ORG') {
+                                                $('#e9 option:selected').each(function (index, brand) {
+                                                    $.ajax({
+                                                        type: 'post'
+                                                        , url: 'Organization/Applicant/AcadOrg.php'
+                                                        , async: true
+                                                        , data: {
+                                                            _appcode: compcode
+                                                            , _catcode: getcatval
+                                                            , _coucode: brand.value
+                                                        }
+                                                        , success: function (response) {
+                                                            swal("Record Added!", "The data is successfully Added!", "success");
+                                                            document.getElementById("form-data").reset();
+                                                        }
+                                                        , error: function (response) {
+                                                            swal(response, "Please try again", "error");
+                                                        }
+                                                    });
+                                                });
+                                            }
+                                            else if (getcatval == 'NONACAD_ORG') {
+                                                $.ajax({
+                                                    type: 'post'
+                                                    , url: 'Organization/Applicant/NonAcadOrg.php'
+                                                    , async: true
+                                                    , data: {
+                                                        _appcode: compcode
+                                                        , _catcode: nonacad
+                                                    }
+                                                    , success: function (response) {
+                                                        swal("Record Added!", "The data is successfully Added!", "success");
+                                                        document.getElementById("form-data").reset();
+                                                    }
+                                                    , error: function (response) {
+                                                        swal(response, "Please try again", "error");
+                                                    }
+                                                });
+                                            }
                                         }
                                         , error: function (response) {
-                                            swal(response, "Please try again", "error");
+                                            swal("Error encountered while adding data", "Please try again", "error");
+                                            $("#openAddmodal").click();
                                         }
                                     });
                                 }
-                            }
-                            , error: function (response) {
-                                swal("Error encountered while adding data", "Please try again", "error");
-                                $("#openAddmodal").click();
-                            }
-                        });
+                                else {
+                                    swal("Cancelled", "The transaction is cancelled", "error");
+                                    //                        $("#openAddmodal").click();
+                                    document.getElementById("form-data").reset();
+                                }
+                            });
+
+                        }
+                        else
+                            swal("Please try again", "Please provide a description", "error");
+
                     }
-                    else {
-                        swal("Cancelled", "The transaction is cancelled", "error");
-                        //                        $("#openAddmodal").click();
-                        document.getElementById("form-data").reset();
-                    }
-                });
+
+                }
+                else
+                    swal("Please try again", "Please provide a name", "error");
+
             });
             $('#updsubmit-data').click(function (e) {
                 e.preventDefault();

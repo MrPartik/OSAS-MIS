@@ -148,52 +148,61 @@ var EditableTable = function () {
                 e.preventDefault();
                 var pos = document.getElementById('txtcode').value;
                 var desc = document.getElementById('txtdesc').value;
-                $("#close").click();
-                swal({
+                var occ = document.getElementById('txtocc').value;
+                if(pos.length != 0){
+                    if(desc.length != 0){
+                        if(occ.length != 0){
+                        $("#close").click();
+                        swal({
 
-                        title: "Are you sure?",
-                        text: "The record will be save and will be use for Semester",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: '#DD6B55',
-                        confirmButtonText: 'Yes, do it!',
-                        cancelButtonText: "No!",
-                        closeOnConfirm: false,
-                        closeOnCancel: false
-                    },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            $.ajax({
-                                type: 'post',
-                                url: 'Organization/OrganizationPosition/AddPosition.php',
-                                data: {
-                                    _code: getlatcode,
-                                    _pos: pos,
-                                    _desc: desc
-                                },
-                                success: function (response) {
-                                    swal("Record Added!", "The data is successfully Added!", "success");
-                                    var aiNew = oTable.fnAddData([pos, desc, "<center> <a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-trash-o'></i></a></center>"]);
-                                    var nRow = oTable.fnGetNodes(aiNew[0]);
+                                title: "Are you sure?",
+                                text: "The record will be save and will be use for Semester",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: '#DD6B55',
+                                confirmButtonText: 'Yes, do it!',
+                                cancelButtonText: "No!",
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            },
+                            function (isConfirm) {
+                                if (isConfirm) {
+                                    $.ajax({
+                                        type: 'post',
+                                        url: 'Organization/OrganizationPosition/AddPosition.php',
+                                        data: {
+                                            _code: getlatcode,
+                                            _pos: pos,
+                                            _occ: occ,
+                                            _desc: desc
+                                        },
+                                        success: function (response) {
+                                            swal("Record Added!", "The data is successfully Added!", "success");
+                                            var aiNew = oTable.fnAddData([pos, desc, "<center> <a class='btn btn-success edit' href='javascript:;'><i class='fa fa-edit'></i></a> <a class='btn btn-danger delete' href='javascript:;'><i class='fa fa-trash-o'></i></a></center>"]);
+                                            var nRow = oTable.fnGetNodes(aiNew[0]);
 
-                                },
-                                error: function (response) {
-                                    swal("Error encountered while adding data", "Please try again", "error");
+                                        },
+                                        error: function (response) {
+                                            swal("Error encountered while adding data", "Please try again", "error");
+                                            $("#editable-sample_new").click();
+                                        }
+
+                                    });
+
+                                } else {
+                                    swal("Cancelled", "The transaction is cancelled", "error");
                                     $("#editable-sample_new").click();
+
                                 }
 
                             });
-
-                        } else {
-                            swal("Cancelled", "The transaction is cancelled", "error");
-                            $("#editable-sample_new").click();
-
                         }
-
-                    });
-
-
-
+                        else
+                            swal("Please try again", "Please a valid number of occurence", "error");
+                    }else
+                       swal("Please try again", "Please a valid description", "error");
+                }else
+                   swal("Please try again", "Please a valid officer position", "error");
 
             });
             $('#editable-sample a.delete').live('click', function (e) {

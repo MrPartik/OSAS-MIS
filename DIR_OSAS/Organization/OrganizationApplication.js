@@ -459,50 +459,55 @@ var EditableTable = function () {
                 var _drporg = document.getElementById('drporg');
                 var drporgname = _drporg.options[_drporg.selectedIndex].text;
                 var drporgval = _drporg.options[_drporg.selectedIndex].value;
-                $("#close").click();
-                swal({
-                    title: "Are you sure?"
-                    , text: "This data will be saved and used for further transaction"
-                    , type: "warning"
-                    , showCancelButton: true
-                    , confirmButtonColor: '#DD6B55'
-                    , confirmButtonText: 'Yes!'
-                    , cancelButtonText: "No!"
-                    , closeOnConfirm: false
-                    , closeOnCancel: false
-                }, function (isConfirm) {
-                    if (isConfirm) {
-                        $.ajax({
-                            type: 'post'
-                            , url: 'Organization/OrganizationProfile/Add-ajax.php'
-                            , data: {
-                                _name: drporgname
-                                , _appcode: drporgval
-                            }
-                            , success: function (response) {
-                                swal({
-                                    title: "Record Added!"
-                                    , text: "The data is successfully Added!"
-                                    , type: "success"
-                                    , confirmButtonColor: '#88A755'
-                                    , confirmButtonText: 'Okay'
-                                    , closeOnConfirm: false
-                                }, function (isConfirm) {
-                                    window.location.reload();
-                                });
-                            }
-                            , error: function (response) {
-                                swal("Error encountered while adding data", "Please try again", "error");
-                                $("#openAddmodal").click();
-                            }
-                        });
-                    }
-                    else {
-                        swal("Cancelled", "The transaction is cancelled", "error");
-                        //                        $("#openAddmodal").click();
-                        document.getElementById("form-data").reset();
-                    }
-                });
+                if(drporgval != 'default' && drporgname != 'Please choose an Organization'){
+                    $("#close").click();
+                    swal({
+                        title: "Are you sure?"
+                        , text: "This data will be saved and used for further transaction"
+                        , type: "warning"
+                        , showCancelButton: true
+                        , confirmButtonColor: '#DD6B55'
+                        , confirmButtonText: 'Yes!'
+                        , cancelButtonText: "No!"
+                        , closeOnConfirm: false
+                        , closeOnCancel: false
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                type: 'post'
+                                , url: 'Organization/OrganizationProfile/Add-ajax.php'
+                                , data: {
+                                    _name: drporgname
+                                    , _appcode: drporgval
+                                }
+                                , success: function (response) {
+                                    swal({
+                                        title: "Record Added!"
+                                        , text: "The data is successfully Added!"
+                                        , type: "success"
+                                        , confirmButtonColor: '#88A755'
+                                        , confirmButtonText: 'Okay'
+                                        , closeOnConfirm: false
+                                    }, function (isConfirm) {
+                                        window.location.reload();
+                                    });
+                                }
+                                , error: function (response) {
+                                    swal("Error encountered while adding data", "Please try again", "error");
+                                    $("#openAddmodal").click();
+                                }
+                            });
+                        }
+                        else {
+                            swal("Cancelled", "The transaction is cancelled", "error");
+                            //                        $("#openAddmodal").click();
+                            document.getElementById("form-data").reset();
+                        }
+                    });
+                }
+                else
+                   swal("Please try again", "Please provide an organization", "error");
+
             });
             $('#updsubmit-data').click(function (e) {
                 e.preventDefault();

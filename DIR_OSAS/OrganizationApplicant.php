@@ -348,7 +348,7 @@ include('../config/connection.php');
                             $('#course').show();
                             $('#drpnon').hide();
                         }
-                        else if (getcat == 'NON-ACAD_ORG') {
+                        else if (getcat == 'NONACAD_ORG') {
                             $('#course').hide();
                             $('#drpnon').show();
                         }
