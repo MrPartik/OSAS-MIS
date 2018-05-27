@@ -107,7 +107,7 @@ class myPDF extends FPDF{
             $amount = $row["AMOUNT"];
             $desc = $row["ITEMS"];
             $date = $row["DATEISSUED"];
-            
+
             $this->SetFont('Arial','B',8);
             $this->Cell(35,5,$number,1,0,'C');
             $this->Cell(60,5,$name,1,0,'C');

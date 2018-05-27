@@ -123,6 +123,7 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                                 <table class="display table table-bordered table-striped col-md-12" id="dynamic-table">
                                     <thead>
                                         <tr>
+                                            <th class="hidden"></th>
                                             <th>Voucher No.</th>
                                             <th>Organization Code</th>
                                             <th>Amount</th> 
@@ -141,7 +142,9 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                                         INNER JOIN t_org_for_compliance OC on v.OrgVoucher_ORG_CODE = oc.OrgForCompliance_ORG_CODE
                                         INNER JOIN r_org_applicant_profile OP on OP.OrgAppProfile_APPL_CODE = OC.OrgForCompliance_OrgApplProfile_APPL_CODE WHERE OrgVoucher_STATUS='Approved' AND OrgForCompliance_OrgApplProfile_APPL_CODE = (SELECT OrgForCompliance_OrgApplProfile_APPL_CODE FROM `t_org_for_compliance` where OrgForCompliance_ORG_CODE ='$referenced_user')  ");
                                         while($vouch=mysqli_fetch_array($view_orgVoucher)) { ?>
-                                        <tr><td>
+                                        <tr>
+                                            <td class='hidden'><?php echo $vouch['OrgVoucher_ID'];?></td>
+                                            <td>
                                                 <center><?php echo $vouch['OrgVoucher_CASH_VOUCHER_NO'];?></center>
                                             </td>
                                         <td>
@@ -170,6 +173,7 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                                     </tbody>
                                     <tfoot>
                                         <tr>
+                                            <th  class="hidden"></th>
                                             <th>Voucher No.</th>
                                             <th>Organization Code</th>
                                             <th>Amount</th> 
@@ -291,7 +295,19 @@ textarea:hover, textarea:focus, #items td.total-value textarea:hover, #items td.
                         }
                         , aaSorting: [[5, "asc"]]
                     });
-      
+        $('#btnprint').click(function () {
+            var items = [];
+            var rows = $('#dynamic-table').dataTable()
+                .$('tr', {
+                    "filter": "applied"
+                });
+            $(rows).each(function(index, el) {
+                items.push($(this).closest('tr').children('td:first').text());
+
+            })
+
+            window.open('Print/Voucher_Print.php?items=' + items, '_blank');
+        });
         $("#addItem").on("click",function(){
             
             $("#tbodyvoucher").append("<tr class='newItem'><td><i id='deletemoto' style='font-size:20px' class='fa fa-minus-circle  '></i></td><td><input id='AddDesc' class='form-control' type='text' style='width:100%'></td> <td><input id='AddAmo' type='number'  class='form-control' style='width:100%'></td> </tr>");

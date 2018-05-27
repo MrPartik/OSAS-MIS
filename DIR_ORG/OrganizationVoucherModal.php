@@ -15,11 +15,16 @@
                 <div style = "float:left;">
                 <br>
         </div>
-        
+        <div class="clearfix">
+            <div class="btn-group pull-right">
+                <button class="btn btn-default " id="btnprintVouch">Print <i class="fa fa-print"></i></button>
+            </div>
+        </div>
+        <br/>
                     <table id="meta">
                         <tr>
                             <td class="meta-head">Voucher Number:</td>
-                            <td><?php echo $vouch?></td>
+                            <td id="voucherName"><?php echo $vouch?></td>
                         </tr>
                         <tr> 
                         <td class="meta-head">Date Issued</td>
@@ -69,3 +74,26 @@ AND a.OrgVoucher_ORG_CODE ='$orgcode' and a.OrgVoucher_CASH_VOUCHER_NO ='$vouch'
             </div>
         </div>
     </div>
+    </div>
+<script>
+    $('#btnprintVouch').click(function () {
+        var item = $('#voucherName').html();
+        $.ajax({
+            type: 'GET'
+            , url: 'Organization/OrganizationVoucher/getID.php'
+            , async: true
+            , cache: false
+            , data: {
+                item: item
+            }
+            , success: function (data) {
+                window.open('Print/VoucherPerItem_Print.php?item=' + data, '_blank');
+            }
+            , error: function (response2) {
+                swal("error", "Please try again", "error");
+            }
+        });
+
+
+    });
+</script>

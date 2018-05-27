@@ -28,7 +28,7 @@ class myPDF extends FPDF{
             $amount = $row['AMOUNT'];
 
         }
-        
+
         $picpath = '../../Avatar/'.$orgcode.'.png';
 
 

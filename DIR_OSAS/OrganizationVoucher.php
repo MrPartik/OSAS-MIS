@@ -495,15 +495,7 @@ include('../config/connection.php');
             <?php include('footer.php')?>
                 <script>
 
-              
-                    $('#btnprint').click(function () {
-                        var items = [];
-                        var table = $('#dynamic-table').DataTable();
-                        jQuery(table.fnGetNodes()).each(function () {
-                            items.push($(this).closest('tr').children('td:first').text()); 
-                        });
-                        window.open('Print/Voucher_Print.php?items=' + items, '_blank');
-                    });    
+
 
 
                     document.onkeyup = function(e) {
@@ -540,6 +532,20 @@ include('../config/connection.php');
                             }
                         }
                         , aaSorting: [[5, "asc"]]
+                    });
+
+                    $('#btnprint').click(function () {
+                        var items = [];
+                        var rows = $('#dynamic-table').dataTable()
+                            .$('tr', {
+                                "filter": "applied"
+                            });
+                        $(rows).each(function(index, el) {
+                            items.push($(this).closest('tr').children('td:first').text());
+
+                        })
+
+                        window.open('Print/Voucher_Print.php?items=' + items, '_blank');
                     });
                     $("#addItem").on("click", function () {
                         $("#tbodyvoucher").append("<tr class='newItem'><td><i id='deletemoto' style='font-size:20px' class='fa fa-minus-circle  '></i></td><td><input id='AddDesc' class='form-control' type='text' style='width:100%'></td> <td><input id='AddAmo' type='number'  class='form-control' style='width:100%'></td> </tr>");
