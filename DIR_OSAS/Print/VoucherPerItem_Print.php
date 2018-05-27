@@ -8,7 +8,11 @@ class myPDF extends FPDF{
         require('../../config/connection.php');
         $item = $_GET['item'];
 
+<<<<<<< HEAD
         $query = mysqli_prepare($con, "SELECT OrgAppProfile_NAME,OrgVoucher_CASH_VOUCHER_NO,DATE_FORMAT(OrgVoucher_DATE_ADD, '%M %d, %Y ') AS DATEP,OrgVoucher_VOUCHED_BY, FORMAT(SUM(OrgVouchItems_AMOUNT), 2) AS AMOUNT,OrgForCompliance_ORG_CODE
+=======
+        $query = mysqli_prepare($con, "SELECT OrgAppProfile_NAME,OrgVoucher_CASH_VOUCHER_NO,DATE_FORMAT(OrgVoucher_DATE_ADD, '%M %d, %Y ') AS DATEP,OrgVoucher_VOUCHED_BY, FORMAT(SUM(OrgVouchItems_AMOUNT), 3) AS AMOUNT,OrgForCompliance_ORG_CODE
+>>>>>>> 9fdc63ff3fa8d1675fe553a3a103e575ad78235a
         FROM `t_org_voucher` 
         INNER JOIN t_org_for_compliance ON OrgVoucher_ORG_CODE = OrgForCompliance_ORG_CODE
         INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
@@ -104,7 +108,11 @@ class myPDF extends FPDF{
         require('../../config/connection.php');
         $item = $_GET['item'];
 
+<<<<<<< HEAD
         $query = mysqli_prepare($con, "SELECT OrgAppProfile_NAME,OrgVoucher_CASH_VOUCHER_NO,DATE_FORMAT(OrgVoucher_DATE_ADD, '%M %d, %Y ') AS DATEP,OrgVoucher_VOUCHED_BY, SUM(OrgVouchItems_AMOUNT) AS AMOUNT,FORMAT(SUM(OrgVouchItems_AMOUNT), 2) AS TAMOUNT,OrgForCompliance_ADVISER
+=======
+        $query = mysqli_prepare($con, "SELECT OrgAppProfile_NAME,OrgVoucher_CASH_VOUCHER_NO,DATE_FORMAT(OrgVoucher_DATE_ADD, '%M %d, %Y ') AS DATEP,OrgVoucher_VOUCHED_BY, SUM(OrgVouchItems_AMOUNT) AS AMOUNT,FORMAT(SUM(OrgVouchItems_AMOUNT), 3) AS TAMOUNT,OrgForCompliance_ADVISER
+>>>>>>> 9fdc63ff3fa8d1675fe553a3a103e575ad78235a
         FROM `t_org_voucher` 
         INNER JOIN t_org_for_compliance ON OrgVoucher_ORG_CODE = OrgForCompliance_ORG_CODE
         INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
@@ -122,7 +130,11 @@ class myPDF extends FPDF{
 
         }            
         
+<<<<<<< HEAD
         $view_query = mysqli_query($con," SELECT OrgVouchItems_ITEM_NAME,FORMAT(OrgVouchItems_AMOUNT, 2) AS AMOUNT FROM t_org_voucher_items WHERE OrgVouchItems_DISPLAY_STAT = 'Active' AND OrgVouchItems_VOUCHER_NO = '$vouchnum' ");
+=======
+        $view_query = mysqli_query($con," SELECT OrgVouchItems_ITEM_NAME,FORMAT(OrgVouchItems_AMOUNT, 3) AS AMOUNT FROM t_org_voucher_items WHERE OrgVouchItems_DISPLAY_STAT = 'Active' AND OrgVouchItems_VOUCHER_NO = '$vouchnum' ");
+>>>>>>> 9fdc63ff3fa8d1675fe553a3a103e575ad78235a
         while($row = mysqli_fetch_assoc($view_query))
         {
             $itemname = $row["OrgVouchItems_ITEM_NAME"];
