@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2018 at 07:19 AM
+-- Generation Time: May 27, 2018 at 12:02 PM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -24,53 +24,44 @@ DELIMITER $$
 --
 -- Procedures
 --
-DROP PROCEDURE IF EXISTS `Active_AssignConfilicts_SemClearance`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Active_AssignConfilicts_SemClearance" (IN `id` INT)  NO SQL
 UPDATE `t_assign_student_clearance` SET 
 `AssStudClearance_DATE_MOD`=CURRENT_TIMESTAMP
 ,`AssStudClearance_DISPLAY_STAT`='Active' 
 WHERE `AssStudClearance_ID` =id$$
 
-DROP PROCEDURE IF EXISTS `Archive_AssignConfilicts_SemClearance`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Archive_AssignConfilicts_SemClearance" (IN `id` INT)  NO SQL
 UPDATE `t_assign_student_clearance` SET 
 `AssStudClearance_DATE_MOD`=CURRENT_TIMESTAMP
 ,`AssStudClearance_DISPLAY_STAT`='Inactive' 
 WHERE `AssStudClearance_ID` =id$$
 
-DROP PROCEDURE IF EXISTS `Archive_AssignSanction`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Archive_AssignSanction" (IN `ID` INT)  NO SQL
 UPDATE `t_assign_stud_saction` SET `AssSancStudStudent_DISPLAY_STAT`='Inactive' 
 ,`AssSancStudStudent_DATE_MOD` = CURRENT_TIMESTAMP
 WHERE
 `AssSancStudStudent_ID` =ID$$
 
-DROP PROCEDURE IF EXISTS `Archive_FinancialAss`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Archive_FinancialAss" (IN `ID` INT(100))  NO SQL
 delete from `t_assign_stud_finan_assistance`  
 where AssStudFinanAssistance_ID = ID$$
 
-DROP PROCEDURE IF EXISTS `Archive_LossIDRegi`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Archive_LossIDRegi" (IN `ID` INT)  NO SQL
 update t_assign_stud_loss_id_regicard 
 set AssLoss_DISPLAY_STAT ='Inactive'
 where AssLoss_ID =ID$$
 
-DROP PROCEDURE IF EXISTS `FinishSanction`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "FinishSanction" (IN `ID` INT)  NO SQL
 UPDATE t_assign_stud_saction 
 set AssSancStudStudent_IS_FINISH ='Finished'
 where AssSancStudStudent_ID =ID$$
 
-DROP PROCEDURE IF EXISTS `Insert_AssignConfilicts_SemClearance`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_AssignConfilicts_SemClearance" (IN `Studno` VARCHAR(15), IN `acadyear` VARCHAR(15), IN `sem` VARCHAR(50), IN `sigcode` VARCHAR(15))  NO SQL
 INSERT INTO `t_assign_student_clearance` (`AssStudClearance_STUD_NO`, `AssStudClearance_BATCH`, `AssStudClearance_SEMESTER`, `AssStudClearance_SIGNATORIES_CODE`) VALUES (Studno,acadyear,sem,sigcode)$$
 
-DROP PROCEDURE IF EXISTS `Insert_AssignFinancialAss`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_AssignFinancialAss" (IN `StudNo` VARCHAR(15), IN `FinanAssTitle` VARCHAR(100), IN `FinanAssStatus` ENUM('Active','Inactive','Void','Cancelled'), IN `FinanAssRemarks` VARCHAR(500))  NO SQL
 INSERT INTO `t_assign_stud_finan_assistance` (`AssStudFinanAssistance_STUD_NO`, `AssStudFinanAssistance_FINAN_NAME`, `AssStudFinanAssistance_STATUS`, `AssStudFinanAssistance_REMARKS`, `AssStudFinanAssistance_DATE_ADD`) VALUES (StudNo,FinanAssTitle , FinanAssStatus, FinanAssRemarks, CURRENT_TIMESTAMP)$$
 
-DROP PROCEDURE IF EXISTS `Insert_AssignSanction`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_AssignSanction` (IN `StudNo` VARCHAR(15), IN `SancCode` VARCHAR(100), IN `DesOffCode` VARCHAR(15), IN `Cons` INT, IN `Finish` ENUM('Finished','Processing'), IN `remarks` VARCHAR(100), IN `done` DATE)  NO SQL
 INSERT INTO `t_assign_stud_saction`(`AssSancStudStudent_STUD_NO`, `AssSancStudStudent_SancDetails_CODE`, `AssSancStudStudent_DesOffDetails_CODE`,
 `AssSancStudStudent_CONSUMED_HOURS`,
@@ -78,15 +69,12 @@ INSERT INTO `t_assign_stud_saction`(`AssSancStudStudent_STUD_NO`, `AssSancStudSt
 `AssSancStudStudent_REMARKS`,
 `AssSancStudStudent_TO_BE_DONE`) VALUES (StudNo,SancCode,DesOffCode,Cons,Finish,remarks,done)$$
 
-DROP PROCEDURE IF EXISTS `Insert_DesignatedOffice`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_DesignatedOffice" (IN `DesiCode` VARCHAR(15), IN `DesiName` VARCHAR(100), IN `DesiDesc` VARCHAR(100))  NO SQL
 INSERT INTO `r_designated_offices_details` (  `DesOffDetails_CODE`, `DesOffDetails_NAME`, `DesOffDetails_DESC`) VALUES (DesiCode,DesiName,DesiDesc)$$
 
-DROP PROCEDURE IF EXISTS `Insert_LossIDRegi`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_LossIDRegi" (IN `StudNo` VARCHAR(15), IN `Type` ENUM('Identification Card','Registration Card'), IN `Claim` DATETIME, IN `Remarks` VARCHAR(500))  NO SQL
 INSERT INTO `t_assign_stud_loss_id_regicard` ( `AssLoss_STUD_NO`, `AssLoss_TYPE`, `AssLoss_REMARKS`, `AssLoss_DATE_CLAIM`) VALUES (StudNo,Type,Remarks,Claim)$$
 
-DROP PROCEDURE IF EXISTS `Insert_SanctionDetails`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_SanctionDetails" (IN `SancCode` VARCHAR(100), IN `SancName` VARCHAR(100), IN `SancDesc` VARCHAR(1000), IN `TimeVal` INT(11))  NO SQL
 INSERT INTO `r_sanction_details` 
 (`SancDetails_CODE`
@@ -99,11 +87,9 @@ INSERT INTO `r_sanction_details`
   ,SancDesc
   ,TimeVal)$$
 
-DROP PROCEDURE IF EXISTS `Insert_Signatories`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_Signatories" (IN `sCODE` VARCHAR(15), IN `sNAME` VARCHAR(100), IN `sDESC` VARCHAR(100))  NO SQL
 INSERT INTO `r_clearance_signatories` (`ClearSignatories_CODE`, `ClearSignatories_NAME`, `ClearSignatories_DESC` ) VALUES (sCODE,sNAME,sDESC)$$
 
-DROP PROCEDURE IF EXISTS `Insert_StudProfile`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_StudProfile" (IN `StudNO` VARCHAR(15), IN `FNAME` VARCHAR(100), IN `MNAME` VARCHAR(100), IN `LNAME` VARCHAR(100), IN `COUSRE` VARCHAR(15), IN `SECTION` VARCHAR(5), IN `GENDER` VARCHAR(10), IN `EMAIL` VARCHAR(100), IN `CONTACT` VARCHAR(20), IN `BDAY` DATE, IN `BPLACE` VARCHAR(500), IN `ADDRESS` VARCHAR(500), IN `STATUS` VARCHAR(50))  NO SQL
 INSERT INTO R_STUD_PROFILE
 (
@@ -137,19 +123,15 @@ VALUES
 	,STATUS
 )$$
 
-DROP PROCEDURE IF EXISTS `Insert_Users`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_Users` (IN `Username` VARCHAR(15), IN `referencedUser` VARCHAR(15), IN `userRole` ENUM('Administrator','OSAS HEAD','Organization','Student','Staff','Student Assistant'), IN `UPassword` VARCHAR(500))  NO SQL
 INSERT INTO `r_users` (`Users_USERNAME`, `Users_REFERENCED`, `Users_ROLES`,`Users_PASSWORD`) VALUES (Username,referencedUser,userRole,AES_Encrypt(UPassword,PASSWORD('OSASMIS')))$$
 
-DROP PROCEDURE IF EXISTS `Insert_Voucher`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_Voucher" (IN `Vouch` VARCHAR(15), IN `org` VARCHAR(15), IN `checkk` VARCHAR(100))  NO SQL
 INSERT INTO `t_org_voucher` (`OrgVoucher_CASH_VOUCHER_NO`, `OrgVoucher_ORG_CODE`,`OrgVoucher_VOUCHED_BY`) VALUES ( Vouch, org, checkk)$$
 
-DROP PROCEDURE IF EXISTS `Insert_Voucher_Item`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_Voucher_Item" (IN `Vouch` VARCHAR(15), IN `itemss` VARCHAR(100), IN `amo` DOUBLE(10,3))  NO SQL
 INSERT INTO `t_org_voucher_items` (`OrgVouchItems_VOUCHER_NO`, `OrgVouchItems_ITEM_NAME`, `OrgVouchItems_AMOUNT`) VALUES (Vouch,itemss,amo)$$
 
-DROP PROCEDURE IF EXISTS `Login_User`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Login_User" (IN `username` VARCHAR(100), IN `password` VARCHAR(100))  NO SQL
 SELECT * 
 FROM osas.r_users 
@@ -157,11 +139,9 @@ WHERE Users_USERNAME = username
 AND AES_DECRYPT(Users_PASSWORD , Password('OSASMIS')) =password
 AND Users_DISPLAY_STAT = 'Active'$$
 
-DROP PROCEDURE IF EXISTS `Log_Sanction`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Log_Sanction" (IN `SancID` INT, IN `Consuumed` INT, IN `Remarks` VARCHAR(100), IN `isFinish` ENUM('Processing','Finished'))  NO SQL
 INSERT INTO `log_sanction` ( `LogSanc_AssSancSudent_ID`, `LogSanc_CONSUMED_HOURS`, `LogSanc_REMARKS`, `LogSanc_IS_FINISH`) VALUES (SancID,Consuumed, Remarks, isFinish)$$
 
-DROP PROCEDURE IF EXISTS `Update_AssignFinancialAss`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Update_AssignFinancialAss" (IN `ID` INT, IN `FinanAssStat` ENUM('Active','Inactive','Void','Cancelled'), IN `Remarks` VARCHAR(500))  NO SQL
 UPDATE `t_assign_stud_finan_assistance` 
 SET `AssStudFinanAssistance_STATUS` = FinanAssStat 
@@ -169,7 +149,6 @@ SET `AssStudFinanAssistance_STATUS` = FinanAssStat
 ,`AssStudFinanAssistance_DATE_MOD` = CURRENT_TIMESTAMP
 WHERE `AssStudFinanAssistance_ID` = ID$$
 
-DROP PROCEDURE IF EXISTS `Update_AssignSanction`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Update_AssignSanction` (IN `ID` INT, IN `Consume` INT, IN `Finish` ENUM('Finished','Processing'), IN `remarks` VARCHAR(100), IN `done` DATE)  NO SQL
 UPDATE `t_assign_stud_saction` SET 
 `AssSancStudStudent_CONSUMED_HOURS` =Consume
@@ -180,14 +159,12 @@ UPDATE `t_assign_stud_saction` SET
 WHERE
 `AssSancStudStudent_ID` =ID$$
 
-DROP PROCEDURE IF EXISTS `Update_LossIDRegi`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Update_LossIDRegi" (IN `ID` INT, IN `Claim` DATETIME, IN `Remarks` VARCHAR(500))  NO SQL
 update t_assign_stud_loss_id_regicard 
 set AssLoss_DATE_CLAIM = Claim
 ,AssLoss_REMARKS = Remarks
 where AssLoss_ID =ID$$
 
-DROP PROCEDURE IF EXISTS `Update_StudProfile`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "Update_StudProfile" (IN `ID` INT(100), IN `StudNO` VARCHAR(15), IN `FNAME` VARCHAR(100), IN `MNAME` VARCHAR(100), IN `LNAME` VARCHAR(100), IN `COURSE` VARCHAR(15), IN `SECTION` VARCHAR(5), IN `GENDER` VARCHAR(10), IN `EMAIL` VARCHAR(100), IN `CONTACT` VARCHAR(20), IN `BDAY` DATE, IN `BPLACE` VARCHAR(500), IN `ADDRESS` VARCHAR(500), IN `STATUS` VARCHAR(50))  NO SQL
 UPDATE `r_stud_profile`
 SET 
@@ -207,11 +184,9 @@ SET
 ,`Stud_DATE_MOD`= CURRENT_TIMESTAMP
 WHERE `Stud_ID` = ID$$
 
-DROP PROCEDURE IF EXISTS `View_Courses`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "View_Courses" ()  NO SQL
 select * from r_courses where course_display_stat ='active'$$
 
-DROP PROCEDURE IF EXISTS `View_StudProfile`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "View_StudProfile" ()  NO SQL
 select 
 	Stud_NO
@@ -226,7 +201,6 @@ select
 	,Stud_CITY_ADDRESS
 FROM osas.r_stud_profile$$
 
-DROP PROCEDURE IF EXISTS `View_StudSanction`$$
 CREATE DEFINER="root"@"localhost" PROCEDURE "View_StudSanction" ()  NO SQL
     DETERMINISTIC
 SELECT B.AssSancStudStudent_ID AssSancID
@@ -258,7 +232,6 @@ DELIMITER ;
 -- Table structure for table `active_academic_year`
 --
 
-DROP TABLE IF EXISTS `active_academic_year`;
 CREATE TABLE `active_academic_year` (
   `ActiveAcadYear_ID` int(11) NOT NULL,
   `ActiveAcadYear_Batch_YEAR` varchar(50) NOT NULL,
@@ -267,11 +240,6 @@ CREATE TABLE `active_academic_year` (
   `ActiveAcadYear_DATE_MOD` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `active_academic_year`
---
-
-TRUNCATE TABLE `active_academic_year`;
 --
 -- Dumping data for table `active_academic_year`
 --
@@ -285,7 +253,6 @@ INSERT INTO `active_academic_year` (`ActiveAcadYear_ID`, `ActiveAcadYear_Batch_Y
 -- Table structure for table `active_semester`
 --
 
-DROP TABLE IF EXISTS `active_semester`;
 CREATE TABLE `active_semester` (
   `ActiveSemester_ID` int(11) NOT NULL,
   `ActiveSemester_SEMESTRAL_NAME` varchar(50) NOT NULL,
@@ -294,11 +261,6 @@ CREATE TABLE `active_semester` (
   `ActiveSemester_DATE_MOD` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `active_semester`
---
-
-TRUNCATE TABLE `active_semester`;
 --
 -- Dumping data for table `active_semester`
 --
@@ -312,7 +274,6 @@ INSERT INTO `active_semester` (`ActiveSemester_ID`, `ActiveSemester_SEMESTRAL_NA
 -- Table structure for table `log_sanction`
 --
 
-DROP TABLE IF EXISTS `log_sanction`;
 CREATE TABLE `log_sanction` (
   `LogSanc_ID` int(11) NOT NULL,
   `LogSanc_AssSancSudent_ID` int(11) NOT NULL,
@@ -325,11 +286,6 @@ CREATE TABLE `log_sanction` (
   `LogSanc_DATE_MOD` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `log_sanction`
---
-
-TRUNCATE TABLE `log_sanction`;
 --
 -- Dumping data for table `log_sanction`
 --
@@ -347,7 +303,6 @@ INSERT INTO `log_sanction` (`LogSanc_ID`, `LogSanc_AssSancSudent_ID`, `LogSanc_C
 -- Table structure for table `notif_announcement`
 --
 
-DROP TABLE IF EXISTS `notif_announcement`;
 CREATE TABLE `notif_announcement` (
   `Notif_ID` int(11) NOT NULL,
   `Notif_SUBJECT` varchar(1000) NOT NULL,
@@ -359,29 +314,18 @@ CREATE TABLE `notif_announcement` (
   `Notif_DATE_ADD` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `notif_announcement`
---
-
-TRUNCATE TABLE `notif_announcement`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `r_application_wizard`
 --
 
-DROP TABLE IF EXISTS `r_application_wizard`;
 CREATE TABLE `r_application_wizard` (
   `WIZARD_ID` int(11) NOT NULL,
   `WIZARD_ORG_CODE` varchar(15) NOT NULL,
   `WIZARD_CURRENT_STEP` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_application_wizard`
---
-
-TRUNCATE TABLE `r_application_wizard`;
 --
 -- Dumping data for table `r_application_wizard`
 --
@@ -395,7 +339,6 @@ INSERT INTO `r_application_wizard` (`WIZARD_ID`, `WIZARD_ORG_CODE`, `WIZARD_CURR
 -- Table structure for table `r_archiving_documents`
 --
 
-DROP TABLE IF EXISTS `r_archiving_documents`;
 CREATE TABLE `r_archiving_documents` (
   `ArchDocuments_ID` int(11) NOT NULL,
   `ArchDocuments_ORDER_NO` varchar(50) NOT NULL,
@@ -408,18 +351,12 @@ CREATE TABLE `r_archiving_documents` (
   `ArchDocuments_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_archiving_documents`
---
-
-TRUNCATE TABLE `r_archiving_documents`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `r_assign_case_to_case_sanction`
 --
 
-DROP TABLE IF EXISTS `r_assign_case_to_case_sanction`;
 CREATE TABLE `r_assign_case_to_case_sanction` (
   `Case_ID` int(11) NOT NULL,
   `Case_SancDetails_CODE` varchar(15) NOT NULL,
@@ -430,18 +367,12 @@ CREATE TABLE `r_assign_case_to_case_sanction` (
   `Case_DISPLAY_STAT` enum('Active','InActive') NOT NULL DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_assign_case_to_case_sanction`
---
-
-TRUNCATE TABLE `r_assign_case_to_case_sanction`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `r_batch_details`
 --
 
-DROP TABLE IF EXISTS `r_batch_details`;
 CREATE TABLE `r_batch_details` (
   `Batch_ID` int(11) NOT NULL,
   `Batch_YEAR` varchar(15) NOT NULL,
@@ -449,11 +380,6 @@ CREATE TABLE `r_batch_details` (
   `Batch_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_batch_details`
---
-
-TRUNCATE TABLE `r_batch_details`;
 --
 -- Dumping data for table `r_batch_details`
 --
@@ -475,7 +401,6 @@ INSERT INTO `r_batch_details` (`Batch_ID`, `Batch_YEAR`, `Batch_DESC`, `Batch_DI
 -- Table structure for table `r_clearance_signatories`
 --
 
-DROP TABLE IF EXISTS `r_clearance_signatories`;
 CREATE TABLE `r_clearance_signatories` (
   `ClearSignatories_ID` int(11) NOT NULL,
   `ClearSignatories_CODE` varchar(15) NOT NULL,
@@ -486,11 +411,6 @@ CREATE TABLE `r_clearance_signatories` (
   `ClearSignatories_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_clearance_signatories`
---
-
-TRUNCATE TABLE `r_clearance_signatories`;
 --
 -- Dumping data for table `r_clearance_signatories`
 --
@@ -508,7 +428,6 @@ INSERT INTO `r_clearance_signatories` (`ClearSignatories_ID`, `ClearSignatories_
 -- Table structure for table `r_courses`
 --
 
-DROP TABLE IF EXISTS `r_courses`;
 CREATE TABLE `r_courses` (
   `Course_ID` int(11) NOT NULL,
   `Course_CODE` varchar(15) NOT NULL,
@@ -520,11 +439,6 @@ CREATE TABLE `r_courses` (
   `Course_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_courses`
---
-
-TRUNCATE TABLE `r_courses`;
 --
 -- Dumping data for table `r_courses`
 --
@@ -546,7 +460,6 @@ INSERT INTO `r_courses` (`Course_ID`, `Course_CODE`, `Course_NAME`, `Course_DESC
 -- Table structure for table `r_designated_offices_details`
 --
 
-DROP TABLE IF EXISTS `r_designated_offices_details`;
 CREATE TABLE `r_designated_offices_details` (
   `DesOffDetails_ID` int(11) NOT NULL,
   `DesOffDetails_CODE` varchar(15) NOT NULL,
@@ -557,11 +470,6 @@ CREATE TABLE `r_designated_offices_details` (
   `DesOffDetails_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_designated_offices_details`
---
-
-TRUNCATE TABLE `r_designated_offices_details`;
 --
 -- Dumping data for table `r_designated_offices_details`
 --
@@ -578,7 +486,6 @@ INSERT INTO `r_designated_offices_details` (`DesOffDetails_ID`, `DesOffDetails_C
 -- Table structure for table `r_financial_assistance_title`
 --
 
-DROP TABLE IF EXISTS `r_financial_assistance_title`;
 CREATE TABLE `r_financial_assistance_title` (
   `FinAssiTitle_ID` int(11) NOT NULL,
   `FinAssiTitle_CODE` varchar(15) NOT NULL,
@@ -589,11 +496,6 @@ CREATE TABLE `r_financial_assistance_title` (
   `FinAssiTitle_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_financial_assistance_title`
---
-
-TRUNCATE TABLE `r_financial_assistance_title`;
 --
 -- Dumping data for table `r_financial_assistance_title`
 --
@@ -612,7 +514,6 @@ INSERT INTO `r_financial_assistance_title` (`FinAssiTitle_ID`, `FinAssiTitle_COD
 -- Table structure for table `r_notification`
 --
 
-DROP TABLE IF EXISTS `r_notification`;
 CREATE TABLE `r_notification` (
   `Notification_ID` int(11) NOT NULL,
   `Notification_ITEM` varchar(15) NOT NULL,
@@ -627,11 +528,6 @@ CREATE TABLE `r_notification` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
--- Truncate table before insert `r_notification`
---
-
-TRUNCATE TABLE `r_notification`;
---
 -- Dumping data for table `r_notification`
 --
 
@@ -645,7 +541,6 @@ INSERT INTO `r_notification` (`Notification_ID`, `Notification_ITEM`, `Notificat
 -- Table structure for table `r_org_accreditation_details`
 --
 
-DROP TABLE IF EXISTS `r_org_accreditation_details`;
 CREATE TABLE `r_org_accreditation_details` (
   `OrgAccrDetail_ID` int(11) NOT NULL,
   `OrgAccrDetail_CODE` varchar(15) NOT NULL,
@@ -656,11 +551,6 @@ CREATE TABLE `r_org_accreditation_details` (
   `OrgAccrDetail_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_org_accreditation_details`
---
-
-TRUNCATE TABLE `r_org_accreditation_details`;
 --
 -- Dumping data for table `r_org_accreditation_details`
 --
@@ -677,7 +567,6 @@ INSERT INTO `r_org_accreditation_details` (`OrgAccrDetail_ID`, `OrgAccrDetail_CO
 -- Table structure for table `r_org_applicant_profile`
 --
 
-DROP TABLE IF EXISTS `r_org_applicant_profile`;
 CREATE TABLE `r_org_applicant_profile` (
   `OrgAppProfile_ID` int(11) NOT NULL,
   `OrgAppProfile_APPL_CODE` varchar(15) NOT NULL,
@@ -689,11 +578,6 @@ CREATE TABLE `r_org_applicant_profile` (
   `OrgAppProfile_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_org_applicant_profile`
---
-
-TRUNCATE TABLE `r_org_applicant_profile`;
 --
 -- Dumping data for table `r_org_applicant_profile`
 --
@@ -707,7 +591,6 @@ INSERT INTO `r_org_applicant_profile` (`OrgAppProfile_ID`, `OrgAppProfile_APPL_C
 -- Table structure for table `r_org_category`
 --
 
-DROP TABLE IF EXISTS `r_org_category`;
 CREATE TABLE `r_org_category` (
   `OrgCat_ID` int(11) NOT NULL,
   `OrgCat_CODE` varchar(15) NOT NULL,
@@ -718,11 +601,6 @@ CREATE TABLE `r_org_category` (
   `OrgCat_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_org_category`
---
-
-TRUNCATE TABLE `r_org_category`;
 --
 -- Dumping data for table `r_org_category`
 --
@@ -737,7 +615,6 @@ INSERT INTO `r_org_category` (`OrgCat_ID`, `OrgCat_CODE`, `OrgCat_NAME`, `OrgCat
 -- Table structure for table `r_org_essentials`
 --
 
-DROP TABLE IF EXISTS `r_org_essentials`;
 CREATE TABLE `r_org_essentials` (
   `OrgEssentials_ID` int(11) NOT NULL,
   `OrgEssentials_ORG_CODE` varchar(15) NOT NULL,
@@ -749,11 +626,6 @@ CREATE TABLE `r_org_essentials` (
   `OrgEssentials_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_org_essentials`
---
-
-TRUNCATE TABLE `r_org_essentials`;
 --
 -- Dumping data for table `r_org_essentials`
 --
@@ -767,7 +639,6 @@ INSERT INTO `r_org_essentials` (`OrgEssentials_ID`, `OrgEssentials_ORG_CODE`, `O
 -- Table structure for table `r_org_event_management`
 --
 
-DROP TABLE IF EXISTS `r_org_event_management`;
 CREATE TABLE `r_org_event_management` (
   `OrgEvent_ID` int(11) NOT NULL,
   `OrgEvent_OrgCode` varchar(15) NOT NULL,
@@ -784,11 +655,6 @@ CREATE TABLE `r_org_event_management` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
--- Truncate table before insert `r_org_event_management`
---
-
-TRUNCATE TABLE `r_org_event_management`;
---
 -- Dumping data for table `r_org_event_management`
 --
 
@@ -802,7 +668,6 @@ INSERT INTO `r_org_event_management` (`OrgEvent_ID`, `OrgEvent_OrgCode`, `OrgEve
 -- Table structure for table `r_org_non_academic_details`
 --
 
-DROP TABLE IF EXISTS `r_org_non_academic_details`;
 CREATE TABLE `r_org_non_academic_details` (
   `OrgNonAcad_ID` int(11) NOT NULL,
   `OrgNonAcad_CODE` varchar(15) NOT NULL,
@@ -813,11 +678,6 @@ CREATE TABLE `r_org_non_academic_details` (
   `OrgNonAcad_DISPLAY_STAT` enum('Active','Inactive') NOT NULL DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_org_non_academic_details`
---
-
-TRUNCATE TABLE `r_org_non_academic_details`;
 --
 -- Dumping data for table `r_org_non_academic_details`
 --
@@ -831,7 +691,6 @@ INSERT INTO `r_org_non_academic_details` (`OrgNonAcad_ID`, `OrgNonAcad_CODE`, `O
 -- Table structure for table `r_org_officer_position_details`
 --
 
-DROP TABLE IF EXISTS `r_org_officer_position_details`;
 CREATE TABLE `r_org_officer_position_details` (
   `OrgOffiPosDetails_ID` int(11) NOT NULL,
   `OrgOffiPosDetails_ORG_CODE` varchar(15) NOT NULL,
@@ -843,11 +702,6 @@ CREATE TABLE `r_org_officer_position_details` (
   `OrgOffiPosDetails_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_org_officer_position_details`
---
-
-TRUNCATE TABLE `r_org_officer_position_details`;
 --
 -- Dumping data for table `r_org_officer_position_details`
 --
@@ -866,7 +720,6 @@ INSERT INTO `r_org_officer_position_details` (`OrgOffiPosDetails_ID`, `OrgOffiPo
 -- Table structure for table `r_osas_head`
 --
 
-DROP TABLE IF EXISTS `r_osas_head`;
 CREATE TABLE `r_osas_head` (
   `OSASHead_ID` int(11) NOT NULL,
   `OSASHead_CODE` varchar(15) NOT NULL,
@@ -878,11 +731,6 @@ CREATE TABLE `r_osas_head` (
   `OSASHead_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_osas_head`
---
-
-TRUNCATE TABLE `r_osas_head`;
 --
 -- Dumping data for table `r_osas_head`
 --
@@ -896,7 +744,6 @@ INSERT INTO `r_osas_head` (`OSASHead_ID`, `OSASHead_CODE`, `OSASHead_NAME`, `OSA
 -- Table structure for table `r_sanction_details`
 --
 
-DROP TABLE IF EXISTS `r_sanction_details`;
 CREATE TABLE `r_sanction_details` (
   `SancDetails_ID` int(11) NOT NULL,
   `SancDetails_CODE` varchar(100) NOT NULL,
@@ -908,11 +755,6 @@ CREATE TABLE `r_sanction_details` (
   `SancDetails_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_sanction_details`
---
-
-TRUNCATE TABLE `r_sanction_details`;
 --
 -- Dumping data for table `r_sanction_details`
 --
@@ -928,7 +770,6 @@ INSERT INTO `r_sanction_details` (`SancDetails_ID`, `SancDetails_CODE`, `SancDet
 -- Table structure for table `r_semester`
 --
 
-DROP TABLE IF EXISTS `r_semester`;
 CREATE TABLE `r_semester` (
   `Semestral_ID` int(11) NOT NULL,
   `Semestral_CODE` varchar(15) NOT NULL,
@@ -939,11 +780,6 @@ CREATE TABLE `r_semester` (
   `Semestral_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_semester`
---
-
-TRUNCATE TABLE `r_semester`;
 --
 -- Dumping data for table `r_semester`
 --
@@ -961,7 +797,6 @@ INSERT INTO `r_semester` (`Semestral_ID`, `Semestral_CODE`, `Semestral_NAME`, `S
 -- Table structure for table `r_stud_profile`
 --
 
-DROP TABLE IF EXISTS `r_stud_profile`;
 CREATE TABLE `r_stud_profile` (
   `Stud_ID` int(11) NOT NULL,
   `Stud_NO` varchar(15) NOT NULL,
@@ -985,11 +820,6 @@ CREATE TABLE `r_stud_profile` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
--- Truncate table before insert `r_stud_profile`
---
-
-TRUNCATE TABLE `r_stud_profile`;
---
 -- Dumping data for table `r_stud_profile`
 --
 
@@ -1008,7 +838,6 @@ INSERT INTO `r_stud_profile` (`Stud_ID`, `Stud_NO`, `Stud_FNAME`, `Stud_MNAME`, 
 -- Table structure for table `r_system_config`
 --
 
-DROP TABLE IF EXISTS `r_system_config`;
 CREATE TABLE `r_system_config` (
   `SysConfig_ID` int(11) NOT NULL,
   `SysConfig_NAME` varchar(100) NOT NULL,
@@ -1018,11 +847,6 @@ CREATE TABLE `r_system_config` (
   `SysConfig_DISPLAY_STAT` enum('Active','Inactive') NOT NULL DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_system_config`
---
-
-TRUNCATE TABLE `r_system_config`;
 --
 -- Dumping data for table `r_system_config`
 --
@@ -1036,7 +860,6 @@ INSERT INTO `r_system_config` (`SysConfig_ID`, `SysConfig_NAME`, `SysConfig_PROP
 -- Table structure for table `r_users`
 --
 
-DROP TABLE IF EXISTS `r_users`;
 CREATE TABLE `r_users` (
   `Users_ID` int(11) NOT NULL,
   `Users_USERNAME` varchar(50) NOT NULL,
@@ -1049,11 +872,6 @@ CREATE TABLE `r_users` (
   `Users_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `r_users`
---
-
-TRUNCATE TABLE `r_users`;
 --
 -- Dumping data for table `r_users`
 --
@@ -1070,7 +888,6 @@ INSERT INTO `r_users` (`Users_ID`, `Users_USERNAME`, `Users_REFERENCED`, `Users_
 -- Table structure for table `t_assign_org_academic_course`
 --
 
-DROP TABLE IF EXISTS `t_assign_org_academic_course`;
 CREATE TABLE `t_assign_org_academic_course` (
   `AssOrgAcademic_ID` int(11) NOT NULL,
   `AssOrgAcademic_ORG_CODE` varchar(15) NOT NULL,
@@ -1080,11 +897,6 @@ CREATE TABLE `t_assign_org_academic_course` (
   `AssOrgAcademic_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `t_assign_org_academic_course`
---
-
-TRUNCATE TABLE `t_assign_org_academic_course`;
 --
 -- Dumping data for table `t_assign_org_academic_course`
 --
@@ -1098,7 +910,6 @@ INSERT INTO `t_assign_org_academic_course` (`AssOrgAcademic_ID`, `AssOrgAcademic
 -- Table structure for table `t_assign_org_category`
 --
 
-DROP TABLE IF EXISTS `t_assign_org_category`;
 CREATE TABLE `t_assign_org_category` (
   `AssOrgCategory_ID` int(11) NOT NULL,
   `AssOrgCategory_ORG_CODE` varchar(15) NOT NULL,
@@ -1108,11 +919,6 @@ CREATE TABLE `t_assign_org_category` (
   `AssOrgCategory_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `t_assign_org_category`
---
-
-TRUNCATE TABLE `t_assign_org_category`;
 --
 -- Dumping data for table `t_assign_org_category`
 --
@@ -1126,7 +932,6 @@ INSERT INTO `t_assign_org_category` (`AssOrgCategory_ID`, `AssOrgCategory_ORG_CO
 -- Table structure for table `t_assign_org_members`
 --
 
-DROP TABLE IF EXISTS `t_assign_org_members`;
 CREATE TABLE `t_assign_org_members` (
   `AssOrgMem_ID` int(11) NOT NULL,
   `AssOrgMem_STUD_NO` varchar(15) NOT NULL,
@@ -1136,11 +941,6 @@ CREATE TABLE `t_assign_org_members` (
   `AssOrgMem_DISPLAY_STAT` enum('Active','Inactive') NOT NULL DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `t_assign_org_members`
---
-
-TRUNCATE TABLE `t_assign_org_members`;
 --
 -- Dumping data for table `t_assign_org_members`
 --
@@ -1160,7 +960,6 @@ INSERT INTO `t_assign_org_members` (`AssOrgMem_ID`, `AssOrgMem_STUD_NO`, `AssOrg
 -- Table structure for table `t_assign_org_non_academic`
 --
 
-DROP TABLE IF EXISTS `t_assign_org_non_academic`;
 CREATE TABLE `t_assign_org_non_academic` (
   `AssOrgNonAcademic_ID` int(11) NOT NULL,
   `AssOrgNonAcademic_ORG_CODE` varchar(15) NOT NULL,
@@ -1170,18 +969,12 @@ CREATE TABLE `t_assign_org_non_academic` (
   `AssOrgNonAcademic_DISPLAY_STAT` enum('Active','Inactive') NOT NULL DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `t_assign_org_non_academic`
---
-
-TRUNCATE TABLE `t_assign_org_non_academic`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `t_assign_org_sanction`
 --
 
-DROP TABLE IF EXISTS `t_assign_org_sanction`;
 CREATE TABLE `t_assign_org_sanction` (
   `AssSancOrgStudent_ID` int(11) NOT NULL,
   `AssSancOrgStudent_REG_ORG` varchar(15) NOT NULL,
@@ -1192,18 +985,12 @@ CREATE TABLE `t_assign_org_sanction` (
   `AssSancOrgStudent_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `t_assign_org_sanction`
---
-
-TRUNCATE TABLE `t_assign_org_sanction`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `t_assign_student_clearance`
 --
 
-DROP TABLE IF EXISTS `t_assign_student_clearance`;
 CREATE TABLE `t_assign_student_clearance` (
   `AssStudClearance_ID` int(11) NOT NULL,
   `AssStudClearance_STUD_NO` varchar(15) NOT NULL,
@@ -1215,11 +1002,6 @@ CREATE TABLE `t_assign_student_clearance` (
   `AssStudClearance_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `t_assign_student_clearance`
---
-
-TRUNCATE TABLE `t_assign_student_clearance`;
 --
 -- Dumping data for table `t_assign_student_clearance`
 --
@@ -1237,7 +1019,6 @@ INSERT INTO `t_assign_student_clearance` (`AssStudClearance_ID`, `AssStudClearan
 -- Table structure for table `t_assign_stud_finan_assistance`
 --
 
-DROP TABLE IF EXISTS `t_assign_stud_finan_assistance`;
 CREATE TABLE `t_assign_stud_finan_assistance` (
   `AssStudFinanAssistance_ID` int(11) NOT NULL,
   `AssStudFinanAssistance_STUD_NO` varchar(15) NOT NULL,
@@ -1249,18 +1030,12 @@ CREATE TABLE `t_assign_stud_finan_assistance` (
   `AssStudFinanAssistance_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `t_assign_stud_finan_assistance`
---
-
-TRUNCATE TABLE `t_assign_stud_finan_assistance`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `t_assign_stud_loss_id_regicard`
 --
 
-DROP TABLE IF EXISTS `t_assign_stud_loss_id_regicard`;
 CREATE TABLE `t_assign_stud_loss_id_regicard` (
   `AssLoss_ID` int(11) NOT NULL,
   `AssLoss_STUD_NO` varchar(15) NOT NULL,
@@ -1272,18 +1047,12 @@ CREATE TABLE `t_assign_stud_loss_id_regicard` (
   `AssLoss_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `t_assign_stud_loss_id_regicard`
---
-
-TRUNCATE TABLE `t_assign_stud_loss_id_regicard`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `t_assign_stud_saction`
 --
 
-DROP TABLE IF EXISTS `t_assign_stud_saction`;
 CREATE TABLE `t_assign_stud_saction` (
   `AssSancStudStudent_ID` int(11) NOT NULL,
   `AssSancStudStudent_STUD_NO` varchar(15) NOT NULL,
@@ -1299,11 +1068,6 @@ CREATE TABLE `t_assign_stud_saction` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
--- Truncate table before insert `t_assign_stud_saction`
---
-
-TRUNCATE TABLE `t_assign_stud_saction`;
---
 -- Dumping data for table `t_assign_stud_saction`
 --
 
@@ -1317,7 +1081,6 @@ INSERT INTO `t_assign_stud_saction` (`AssSancStudStudent_ID`, `AssSancStudStuden
 -- Table structure for table `t_clearance_generated_code`
 --
 
-DROP TABLE IF EXISTS `t_clearance_generated_code`;
 CREATE TABLE `t_clearance_generated_code` (
   `ClearanceGenCode_ID` int(11) NOT NULL,
   `ClearanceGenCode_STUD_NO` varchar(15) NOT NULL,
@@ -1331,18 +1094,12 @@ CREATE TABLE `t_clearance_generated_code` (
   `ClearanceGenCode_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `t_clearance_generated_code`
---
-
-TRUNCATE TABLE `t_clearance_generated_code`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `t_org_accreditation_process`
 --
 
-DROP TABLE IF EXISTS `t_org_accreditation_process`;
 CREATE TABLE `t_org_accreditation_process` (
   `OrgAccrProcess_ID` int(11) NOT NULL,
   `OrgAccrProcess_ORG_CODE` varchar(15) NOT NULL,
@@ -1353,11 +1110,6 @@ CREATE TABLE `t_org_accreditation_process` (
   `OrgAccrProcess_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `t_org_accreditation_process`
---
-
-TRUNCATE TABLE `t_org_accreditation_process`;
 --
 -- Dumping data for table `t_org_accreditation_process`
 --
@@ -1374,7 +1126,6 @@ INSERT INTO `t_org_accreditation_process` (`OrgAccrProcess_ID`, `OrgAccrProcess_
 -- Table structure for table `t_org_cash_flow_statement`
 --
 
-DROP TABLE IF EXISTS `t_org_cash_flow_statement`;
 CREATE TABLE `t_org_cash_flow_statement` (
   `OrgCashFlowStatement_ID` int(11) NOT NULL,
   `OrgCashFlowStatement_ORG_CODE` varchar(15) NOT NULL,
@@ -1387,11 +1138,6 @@ CREATE TABLE `t_org_cash_flow_statement` (
   `OrgCashFlowStatement_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `t_org_cash_flow_statement`
---
-
-TRUNCATE TABLE `t_org_cash_flow_statement`;
 --
 -- Dumping data for table `t_org_cash_flow_statement`
 --
@@ -1406,7 +1152,6 @@ INSERT INTO `t_org_cash_flow_statement` (`OrgCashFlowStatement_ID`, `OrgCashFlow
 -- Table structure for table `t_org_financial_statement`
 --
 
-DROP TABLE IF EXISTS `t_org_financial_statement`;
 CREATE TABLE `t_org_financial_statement` (
   `OrgFinStatement_ID` int(11) NOT NULL,
   `OrgFinStatement_ORG_CODE` varchar(15) NOT NULL,
@@ -1416,18 +1161,12 @@ CREATE TABLE `t_org_financial_statement` (
   `OrgFinStatement_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `t_org_financial_statement`
---
-
-TRUNCATE TABLE `t_org_financial_statement`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `t_org_financial_statement_items`
 --
 
-DROP TABLE IF EXISTS `t_org_financial_statement_items`;
 CREATE TABLE `t_org_financial_statement_items` (
   `OrgFinStatExpenses_ID` int(11) NOT NULL,
   `OrgFinStatExpenses_OrgFinStatement_ID` int(11) NOT NULL,
@@ -1438,18 +1177,12 @@ CREATE TABLE `t_org_financial_statement_items` (
   `OrgFinStatExpenses_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `t_org_financial_statement_items`
---
-
-TRUNCATE TABLE `t_org_financial_statement_items`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `t_org_for_compliance`
 --
 
-DROP TABLE IF EXISTS `t_org_for_compliance`;
 CREATE TABLE `t_org_for_compliance` (
   `OrgForCompliance_ID` int(11) NOT NULL,
   `OrgForCompliance_ORG_CODE` varchar(15) NOT NULL,
@@ -1461,11 +1194,6 @@ CREATE TABLE `t_org_for_compliance` (
   `OrgForCompliance_DISPAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `t_org_for_compliance`
---
-
-TRUNCATE TABLE `t_org_for_compliance`;
 --
 -- Dumping data for table `t_org_for_compliance`
 --
@@ -1479,7 +1207,6 @@ INSERT INTO `t_org_for_compliance` (`OrgForCompliance_ID`, `OrgForCompliance_ORG
 -- Table structure for table `t_org_officers`
 --
 
-DROP TABLE IF EXISTS `t_org_officers`;
 CREATE TABLE `t_org_officers` (
   `OrgOffi_ID` int(11) NOT NULL,
   `OrgOffi_OrgOffiPosDetails_ID` int(11) NOT NULL,
@@ -1489,18 +1216,12 @@ CREATE TABLE `t_org_officers` (
   `OrgOffi_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `t_org_officers`
---
-
-TRUNCATE TABLE `t_org_officers`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `t_org_remittance`
 --
 
-DROP TABLE IF EXISTS `t_org_remittance`;
 CREATE TABLE `t_org_remittance` (
   `OrgRemittance_ID` int(11) NOT NULL,
   `OrgRemittance_NUMBER` varchar(15) NOT NULL,
@@ -1516,11 +1237,6 @@ CREATE TABLE `t_org_remittance` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
--- Truncate table before insert `t_org_remittance`
---
-
-TRUNCATE TABLE `t_org_remittance`;
---
 -- Dumping data for table `t_org_remittance`
 --
 
@@ -1533,7 +1249,6 @@ INSERT INTO `t_org_remittance` (`OrgRemittance_ID`, `OrgRemittance_NUMBER`, `Org
 -- Table structure for table `t_org_voucher`
 --
 
-DROP TABLE IF EXISTS `t_org_voucher`;
 CREATE TABLE `t_org_voucher` (
   `OrgVoucher_ID` int(11) NOT NULL,
   `OrgVoucher_CASH_VOUCHER_NO` varchar(15) NOT NULL,
@@ -1547,11 +1262,6 @@ CREATE TABLE `t_org_voucher` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
--- Truncate table before insert `t_org_voucher`
---
-
-TRUNCATE TABLE `t_org_voucher`;
---
 -- Dumping data for table `t_org_voucher`
 --
 
@@ -1564,7 +1274,6 @@ INSERT INTO `t_org_voucher` (`OrgVoucher_ID`, `OrgVoucher_CASH_VOUCHER_NO`, `Org
 -- Table structure for table `t_org_voucher_items`
 --
 
-DROP TABLE IF EXISTS `t_org_voucher_items`;
 CREATE TABLE `t_org_voucher_items` (
   `OrgVouchItems_ID` int(11) NOT NULL,
   `OrgVouchItems_VOUCHER_NO` varchar(15) NOT NULL,
@@ -1575,11 +1284,6 @@ CREATE TABLE `t_org_voucher_items` (
   `OrgVouchItems_DISPLAY_STAT` enum('Active','Inactive') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Truncate table before insert `t_org_voucher_items`
---
-
-TRUNCATE TABLE `t_org_voucher_items`;
 --
 -- Dumping data for table `t_org_voucher_items`
 --

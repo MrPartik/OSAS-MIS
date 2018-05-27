@@ -564,10 +564,10 @@ CREATE TABLE `r_stud_profile`  (
   `Stud_SECTION` varchar(5) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT '1',
   `Stud_GENDER` enum('Male','Female') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Male',
   `Stud_EMAIL` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `Stud_CONTACT_NO` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'None',
-  `Stud_BIRHT_DATE` date NOT NULL,
+  `Stud_MOBILE_NO` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'None',
+  `Stud_BIRTH_DATE` date NOT NULL,
   `Stud_BIRTH_PLACE` varchar(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `Stud_ADDRESS` varchar(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Not Specify',
+  `Stud_CITY_ADDRESS` varchar(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Not Specify',
   `Stud_STATUS` enum('Regular','Irregular','Disqualified','LOA','Transferee') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT 'Regular',
   `Stud_DATE_MOD` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Stud_DATE_ADD` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1242,10 +1242,10 @@ INSERT INTO R_STUD_PROFILE
 ,Stud_SECTION
 ,Stud_GENDER
 ,Stud_EMAIL
-,Stud_CONTACT_NO
-,Stud_BIRHT_DATE
+,Stud_MOBILE_NO
+,Stud_BIRTH_DATE
 ,Stud_BIRTH_PLACE
-,Stud_ADDRESS
+,Stud_CITY_ADDRESS
 ,Stud_STATUS)
 VALUES
 (	
@@ -1389,10 +1389,10 @@ SET
 ,`Stud_SECTION`=SECTION
 ,`Stud_GENDER`=GENDER
 ,`Stud_EMAIL`=EMAIL
-,`Stud_CONTACT_NO`=CONTACT
-,`Stud_BIRHT_DATE`=BDAY
+,`Stud_MOBILE_NO`=CONTACT
+,`Stud_BIRTH_DATE`=BDAY
 ,`Stud_BIRTH_PLACE`=BPLACE
-,`Stud_ADDRESS`=ADDRESS
+,`Stud_CITY_ADDRESS`=ADDRESS
 ,`Stud_STATUS`=STATUS
 ,`Stud_DATE_MOD`= CURRENT_TIMESTAMP
 WHERE `Stud_ID` = ID
@@ -1422,12 +1422,12 @@ select
 	,CONCAT(Stud_LNAME,', ',Stud_FNAME,' ',COALESCE(Stud_MNAME,'')) as FullName
 	,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) as Course
 	,Stud_EMAIL
-	,Stud_CONTACT_NO
+	,Stud_MOBILE_NO
 	,Stud_GENDER
-	,Stud_BIRHT_DATE
+	,Stud_BIRTH_DATE
 	,Stud_BIRTH_PLACE
 	,Stud_STATUS
-	,Stud_ADDRESS
+	,Stud_CITY_ADDRESS
 FROM osas.r_stud_profile
 ;;
 delimiter ;

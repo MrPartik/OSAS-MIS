@@ -63,7 +63,7 @@ AND ClearanceGenCode_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM activ
                                         ,A.Stud_NO
                                         ,CONCAT(A.Stud_LNAME,', ',A.Stud_FNAME,' ',COALESCE(A.Stud_MNAME,'')) AS FullName 
                                         ,A.Stud_EMAIL
-                                        ,A.Stud_CONTACT_NO
+                                        ,A.Stud_MOBILE_NO
                                         ,b.AssStudFinanAssistance_REMARKS remarks
                                         ,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) as Course
                                         ,B.AssStudFinanAssistance_STATUS as Status
@@ -87,7 +87,7 @@ AND ClearanceGenCode_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM activ
                 {
                     include ('connection.php');    
                     global $view_studProfile_cond; 
-                    $view_studProfile_cond = mysqli_query($con,"select Stud_ID as ID ,Stud_NO ,Stud_LNAME,Stud_FNAME,Stud_MNAME,CONCAT(Stud_LNAME,', ',Stud_FNAME,' ',COALESCE(Stud_MNAME,'')) as FullName ,Stud_COURSE,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) as Course ,Stud_EMAIL , Stud_SECTION,Stud_CONTACT_NO ,Stud_GENDER ,Stud_BIRHT_DATE ,Stud_BIRTH_PLACE ,Stud_STATUS ,Stud_ADDRESS FROM osas.r_stud_profile where (Stud_id = $StudID or Stud_NO= '$Studno') and Stud_DISPLAY_STATUS='active'"); 
+                    $view_studProfile_cond = mysqli_query($con,"select Stud_ID as ID ,Stud_NO ,Stud_LNAME,Stud_FNAME,Stud_MNAME,CONCAT(Stud_LNAME,', ',Stud_FNAME,' ',COALESCE(Stud_MNAME,'')) as FullName ,Stud_COURSE,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) as Course ,Stud_EMAIL , Stud_SECTION,Stud_MOBILE_NO ,Stud_GENDER ,Stud_BIRTH_DATE ,Stud_BIRTH_PLACE ,Stud_STATUS ,Stud_CITY_ADDRESS FROM osas.r_stud_profile where (Stud_id = $StudID or Stud_NO= '$Studno') and Stud_DISPLAY_STATUS='active'");
                 }
                 function viewStudSanctionCond($StudNO)
                 {
@@ -196,12 +196,12 @@ $view_studSanction = mysqli_query($con,"SELECT B.AssSancStudStudent_ID AssSancID
 $view_studProfile = mysqli_query($con,"select Stud_ID as ID 
                                     ,Stud_NO ,CONCAT(Stud_LNAME,', ',Stud_FNAME,' ',COALESCE(Stud_MNAME,'')) as FullName 
                                     ,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) as Course
-                                    ,Stud_EMAIL ,Stud_CONTACT_NO 
+                                    ,Stud_EMAIL ,Stud_MOBILE_NO
                                     ,Stud_GENDER 
-                                    ,Stud_BIRHT_DATE
+                                    ,Stud_BIRTH_DATE
                                     ,Stud_BIRTH_PLACE 
                                     ,Stud_STATUS 
-                                    ,Stud_ADDRESS
+                                    ,Stud_CITY_ADDRESS
                                     ,Stud_DATE_ADD  
                                         FROM osas.r_stud_profile 
                                     where Stud_DISPLAY_STATUS='active'"); 

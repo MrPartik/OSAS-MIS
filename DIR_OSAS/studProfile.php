@@ -82,7 +82,7 @@ include('../config/connection.php');
                                                             <?php echo $stud_row['Stud_EMAIL']?>
                                                         </td>
                                                         <td>
-                                                            <?php echo $stud_row['Stud_CONTACT_NO']?>
+                                                            <?php echo $stud_row['Stud_MOBILE_NO']?>
                                                         </td>
                                                         <td>
                                                             <center>

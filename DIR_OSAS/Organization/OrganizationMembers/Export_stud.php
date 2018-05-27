@@ -47,13 +47,13 @@
                if($getcou == '1')
                {
 
-                 $queryy = mysqli_query($con," UPDATE `r_stud_profile` SET `Stud_FNAME` = '$studfname',`Stud_MNAME` = '$studmname',`Stud_LNAME` = '$studlname',`Stud_COURSE` = '$studcourse',`Stud_YEAR_LEVEL` = '$studyrlevel',`Stud_SECTION` = '$studsection',`Stud_GENDER` = '$studgender',`Stud_EMAIL` = '$studemail',`Stud_CONTACT_NO` = '$studcontact',`Stud_BIRHT_DATE` = '$studbday',`Stud_BIRTH_PLACE` = '$studbplace',`Stud_ADDRESS` = '$studaddress',`Stud_STATUS` = '$studstatus' WHERE `r_stud_profile`.`Stud_NO` = '$studnum'");
+                 $queryy = mysqli_query($con," UPDATE `r_stud_profile` SET `Stud_FNAME` = '$studfname',`Stud_MNAME` = '$studmname',`Stud_LNAME` = '$studlname',`Stud_COURSE` = '$studcourse',`Stud_YEAR_LEVEL` = '$studyrlevel',`Stud_SECTION` = '$studsection',`Stud_GENDER` = '$studgender',`Stud_EMAIL` = '$studemail',`Stud_MOBILE_NO` = '$studcontact',`Stud_BIRTH_DATE` = '$studbday',`Stud_BIRTH_PLACE` = '$studbplace',`Stud_CITY_ADDRESS` = '$studaddress',`Stud_STATUS` = '$studstatus' WHERE `r_stud_profile`.`Stud_NO` = '$studnum'");
 
                }
                else
                {
 
-                $queryy = mysqli_prepare($con, "INSERT INTO r_stud_profile(Stud_NO, Stud_FNAME, Stud_MNAME, Stud_LNAME, Stud_COURSE, Stud_YEAR_LEVEL, Stud_SECTION, Stud_GENDER, Stud_EMAIL,Stud_CONTACT_NO,Stud_BIRHT_DATE,Stud_BIRTH_PLACE,Stud_ADDRESS,Stud_STATUS)
+                $queryy = mysqli_prepare($con, "INSERT INTO r_stud_profile(Stud_NO, Stud_FNAME, Stud_MNAME, Stud_LNAME, Stud_COURSE, Stud_YEAR_LEVEL, Stud_SECTION, Stud_GENDER, Stud_EMAIL,Stud_MOBILE_NO,Stud_BIRTH_DATE,Stud_BIRTH_PLACE,Stud_CITY_ADDRESS,Stud_STATUS)
                 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 mysqli_stmt_bind_param($queryy, 'ssssssssssssss',$studnum,$studfname,$studmname,$studlname,$studcourse,$studyrlevel,$studsection,$studgender,$studemail,$studcontact,$studbday,$studbplace,$studaddress,$studstatus);
                 mysqli_stmt_execute($queryy);

@@ -38,14 +38,14 @@
                                         }
                                         //echo $item;
                                         $view_query = mysqli_query($con,"SELECT Stud_NO,CONCAT(Stud_LNAME,', ',Stud_FNAME,' ',COALESCE(Stud_MNAME,'')) AS FULLNAME
-	                                                                       ,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) AS CAS,Stud_CONTACT_NO FROM r_stud_profile WHERE Stud_NO IN ('1'".$item.")");
+	                                                                       ,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) AS CAS,Stud_MOBILE_NO FROM r_stud_profile WHERE Stud_NO IN ('1'".$item.")");
                                         $i = 1;
                                         while($row = mysqli_fetch_assoc($view_query))
                                         {
                                             $no = $row["Stud_NO"];										
                                             $name = $row["FULLNAME"];										
                                             $cas = $row["CAS"];										
-                                            $con = $row["Stud_CONTACT_NO"];										
+                                            $con = $row["Stud_MOBILE_NO"];
 
                                         echo "
                                         <tr class=''>

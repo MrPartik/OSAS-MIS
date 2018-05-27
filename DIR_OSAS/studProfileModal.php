@@ -124,7 +124,7 @@
                         <div class="col-md-4 form-group"> *Email Address
                             <input id="emailadd1" value="<?php echo $profileLayoutRow['Stud_EMAIL']?>" type="text" class="form-control" placeholder="ex. email@email.com" required/> </div>
                         <div class="col-md-4 form-group"> *Contact Number
-                            <input id="contact1" value="<?php echo $profileLayoutRow['Stud_CONTACT_NO']?>" type="text" class="form-control" placeholder="ex. 099999999" required/> </div>
+                            <input id="contact1" value="<?php echo $profileLayoutRow['Stud_MOBILE_NO']?>" type="text" class="form-control" placeholder="ex. 099999999" required/> </div>
                         <div class="col-md-4 form-group"> *First Name
                             <input id="fname1" value="<?php echo $profileLayoutRow['Stud_FNAME']?>" type="text" class="form-control" placeholder="First Name" required/> </div>
                         <div class="col-md-4 form-group"> Middle Name
@@ -150,7 +150,7 @@
                             </select>
                         </div>
                         <div class="col-md-4 form-group"> *Birth Date
-                            <input id="bdate1" value="<?php echo $profileLayoutRow['Stud_BIRHT_DATE']?>" type="Date" class="form-control" required/> </div>
+                            <input id="bdate1" value="<?php echo $profileLayoutRow['Stud_BIRTH_DATE']?>" type="Date" class="form-control" required/> </div>
                         <div class="col-md-4 form-group"> Birth Place
                             <input id="bplace1" value="<?php echo $profileLayoutRow['Stud_BIRTH_PLACE']?>" type="text" class="form-control" placeholder="ex. Quezon City"> </div>
                         <div class="col-md-4 form-group"> *Student Status
@@ -163,7 +163,7 @@
                             </select>
                         </div>
                         <div class="col-md-12 form-group"> *Address
-                            <input id="address1" value="<?php echo $profileLayoutRow['Stud_ADDRESS']?>" type="text" class="form-control" placeholder="enter your home/ permanent address"> </div>
+                            <input id="address1" value="<?php echo $profileLayoutRow['Stud_CITY_ADDRESS']?>" type="text" class="form-control" placeholder="enter your home/ permanent address"> </div>
                     </div>
                     <div class="modal-footer">
                         <button data-toggle="modal" class="editStud btn btn-primary"><i class="fa fa-pencil"></i> Modify</button>
