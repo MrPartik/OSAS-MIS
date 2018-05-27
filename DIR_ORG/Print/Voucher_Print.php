@@ -34,7 +34,7 @@ class myPDF extends FPDF{
                 
         $this->SetFont('Arial','B',10);
         $this->SetY(35);
-        $this->Cell(0,10,'Remittance',0,0,'C');
+        $this->Cell(0,10,'Voucher',0,0,'C');
         $this->Ln(11);
     }
 
@@ -87,31 +87,26 @@ class myPDF extends FPDF{
       
 
       
-
+        $this->SetFont('Arial','B',8);
+        $this->SetFillColor(220,220,220);
+        $this->Cell(35,5,'VOUCHER NUMBER:',1,0,'C',true);
+        $this->Cell(60,5,'ORGANIZATION:',1,0,'C',true);
+        $this->Cell(60,5,'AMOUNT:',1,0,'C',true);
+        $this->Cell(35,5,'DATE ISSUED:',1,0,'C',true);
+        $this->Ln();
       
-        $view_query = mysqli_query($con," SELECT OrgRemittance_NUMBER,OrgRemittance_ID,OrgAppProfile_NAME,OrgRemittance_SEND_BY,OrgRemittance_REC_BY,CONCAT('Php ', FORMAT(OrgRemittance_AMOUNT, 2)) AS AMOUNT  ,OrgRemittance_DESC,DATE_FORMAT(OrgRemittance_DATE_ADD, '%M %d, %Y') AS DATE  FROM t_org_remittance
-                INNER JOIN t_org_for_compliance ON OrgRemittance_ORG_CODE = OrgForCompliance_ORG_CODE
-                INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
-                WHERE OrgRemittance_DISPLAY_STAT = 'Active' AND OrgForCompliance_DISPAY_STAT = 'Active' AND OrgAppProfile_DISPLAY_STAT = 'Active' AND OrgRemittance_ID IN ('1'".$item.")  ORDER BY OrgRemittance_NUMBER ASC ");
+        $view_query = mysqli_query($con," SELECT DATE_FORMAT(OrgVoucher_DATE_MOD,'%M %d, %Y') AS DATEISSUED ,OrgAppProfile_NAME,OrgVoucher_CHECKED_BY,OrgVoucher_VOUCHED_BY,OrgVoucher_CASH_VOUCHER_NO,(SELECT GROUP_CONCAT(OrgVouchItems_ITEM_NAME SEPARATOR ', ') 
+        FROM t_org_voucher_items WHERE OrgVouchItems_VOUCHER_NO = OrgVoucher_CASH_VOUCHER_NO) AS ITEMS,(SELECT SUM(OrgVouchItems_AMOUNT) 
+        FROM t_org_voucher_items WHERE OrgVouchItems_VOUCHER_NO = OrgVoucher_CASH_VOUCHER_NO) AS AMOUNT FROM `t_org_voucher` INNER JOIN t_org_for_compliance ON OrgForCompliance_ORG_CODE = OrgVoucher_ORG_CODE INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE =  OrgAppProfile_APPL_CODE  WHERE OrgVoucher_ID  IN ('0'".$item.") AND OrgVoucher_STATUS = 'Approved' ");
         while($row = mysqli_fetch_assoc($view_query))
         {
-            $number = $row["OrgRemittance_NUMBER"];
+            $number = $row["OrgVoucher_CASH_VOUCHER_NO"];
             $name = $row["OrgAppProfile_NAME"];
-            $send = $row["OrgRemittance_SEND_BY"];
-            $rec = $row["OrgRemittance_REC_BY"];
-            $desc = $row["OrgRemittance_DESC"];
+            $send = $row["OrgVoucher_VOUCHED_BY"];
+            $rec = $row["OrgVoucher_CHECKED_BY"];
             $amount = $row["AMOUNT"];
-            $date = $row["DATE"];
-            
-            $this->SetFont('Arial','B',8);
-            $this->SetFillColor(220,220,220);
-            $this->Cell(35,5,'REMITTANCE NUMBER:',1,0,'C',true);
-            $this->Cell(60,5,'ORGANIZATION:',1,0,'C',true);
-            $this->Cell(60,5,'AMOUNT:',1,0,'C',true);
-            $this->Cell(35,5,'DATE ISSUED:',1,0,'C',true);
-            $this->SetAutoPageBreak(true , 80);
-            $this->Ln();
-            
+            $desc = $row["ITEMS"];
+            $date = $row["DATEISSUED"];
             
             $this->SetFont('Arial','B',8);
             $this->Cell(35,5,$number,1,0,'C');
@@ -135,14 +130,23 @@ class myPDF extends FPDF{
             $this->Cell(35,5,'RECEIVED BY:',1,0,'C',true);
             $this->Cell(155,5,$rec,1,0,'C');
             $this->Ln();
-
+            
+            $this->SetFont('Arial','B',8);
+            $this->SetFillColor(220,220,220);
+            $this->Cell(35,5,'VOUCHER NUMBER:',1,0,'C',true);
+            $this->Cell(60,5,'ORGANIZATION:',1,0,'C',true);
+            $this->Cell(60,5,'AMOUNT:',1,0,'C',true);
+            $this->Cell(35,5,'DATE ISSUED:',1,0,'C',true);
+            $this->SetAutoPageBreak(true , 80);
+            $this->Ln();
+            
         }
 
   }
   }
 
 $pdf = new myPDF(); 
-$pdf->SetTitle('Remittance'); 
+$pdf->SetTitle('Voucher'); 
 $pdf->AliasNbPages();
 $pdf->AddPage('P','Legal',0);  
 $pdf->headerTable();

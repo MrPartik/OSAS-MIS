@@ -1,14 +1,14 @@
 <?php
-require('../../ASSETS/fpdf17/fpdf.php');
+require('ASSETS/fpdf17/fpdf.php');
 
 
 class myPDF extends FPDF{
 // Page header
     function Header(){
-        require('../../config/connection.php');
+        require('config/connection.php');
         $item = $_GET['item'];
 
-        $query = mysqli_prepare($con, "SELECT OrgAppProfile_NAME,OrgVoucher_CASH_VOUCHER_NO,DATE_FORMAT(OrgVoucher_DATE_ADD, '%M %d, %Y ') AS DATEP,OrgVoucher_VOUCHED_BY, FORMAT(SUM(OrgVouchItems_AMOUNT), 2) AS AMOUNT,OrgForCompliance_ORG_CODE
+        $query = mysqli_prepare($con, "SELECT OrgAppProfile_NAME,OrgVoucher_CASH_VOUCHER_NO,DATE_FORMAT(OrgVoucher_DATE_ADD, '%M %d, %Y ') AS DATEP,OrgVoucher_VOUCHED_BY, FORMAT(SUM(OrgVouchItems_AMOUNT), 3) AS AMOUNT,OrgForCompliance_ORG_CODE
         FROM `t_org_voucher` 
         INNER JOIN t_org_for_compliance ON OrgVoucher_ORG_CODE = OrgForCompliance_ORG_CODE
         INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
@@ -29,19 +29,19 @@ class myPDF extends FPDF{
 
         }    
         
-        $picpath = '../../Avatar/'.$orgcode.'.png';
+        $picpath = 'Avatar/'.$orgcode.'.png';
 
 
         if (file_exists($picpath)) {
 
         }
         else {
-            $picpath = '../../Avatar/Default-Organization.png';
+            $picpath = 'Avatar/Default-Organization.png';
         }
 
         
         //Header Logo
-        $this->Image('../../ASSETS/images/PUPLogo.png',10,6,24);
+        $this->Image('ASSETS/images/PUPLogo.png',10,6,24);
         $this->Image($picpath,182,6,24);
         // $this->Image('deped.png',162,9,22);
 
@@ -101,10 +101,10 @@ class myPDF extends FPDF{
         $this->Cell(30,5,'Amount:',1,0,'C');
         $this->Ln();
 
-        require('../../config/connection.php');
+        require('config/connection.php');
         $item = $_GET['item'];
 
-        $query = mysqli_prepare($con, "SELECT OrgAppProfile_NAME,OrgVoucher_CASH_VOUCHER_NO,DATE_FORMAT(OrgVoucher_DATE_ADD, '%M %d, %Y ') AS DATEP,OrgVoucher_VOUCHED_BY, SUM(OrgVouchItems_AMOUNT) AS AMOUNT,FORMAT(SUM(OrgVouchItems_AMOUNT), 2) AS TAMOUNT,OrgForCompliance_ADVISER
+        $query = mysqli_prepare($con, "SELECT OrgAppProfile_NAME,OrgVoucher_CASH_VOUCHER_NO,DATE_FORMAT(OrgVoucher_DATE_ADD, '%M %d, %Y ') AS DATEP,OrgVoucher_VOUCHED_BY, SUM(OrgVouchItems_AMOUNT) AS AMOUNT,FORMAT(SUM(OrgVouchItems_AMOUNT), 3) AS TAMOUNT,OrgForCompliance_ADVISER
         FROM `t_org_voucher` 
         INNER JOIN t_org_for_compliance ON OrgVoucher_ORG_CODE = OrgForCompliance_ORG_CODE
         INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
@@ -122,7 +122,7 @@ class myPDF extends FPDF{
 
         }            
         
-        $view_query = mysqli_query($con," SELECT OrgVouchItems_ITEM_NAME,FORMAT(OrgVouchItems_AMOUNT, 2) AS AMOUNT FROM t_org_voucher_items WHERE OrgVouchItems_DISPLAY_STAT = 'Active' AND OrgVouchItems_VOUCHER_NO = '$vouchnum' ");
+        $view_query = mysqli_query($con," SELECT OrgVouchItems_ITEM_NAME,FORMAT(OrgVouchItems_AMOUNT, 3) AS AMOUNT FROM t_org_voucher_items WHERE OrgVouchItems_DISPLAY_STAT = 'Active' AND OrgVouchItems_VOUCHER_NO = '$vouchnum' ");
         while($row = mysqli_fetch_assoc($view_query))
         {
             $itemname = $row["OrgVouchItems_ITEM_NAME"];
@@ -196,7 +196,6 @@ function getCurrency(float $number)
 }
 
 $pdf = new myPDF();
-$pdf->SetTitle('Voucher Item'); 
 $pdf->AliasNbPages();
 $pdf->AddPage('P','Legal',0);
 $pdf->headerTable();

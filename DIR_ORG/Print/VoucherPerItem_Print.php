@@ -8,7 +8,7 @@ class myPDF extends FPDF{
         require('../../config/connection.php');
         $item = $_GET['item'];
 
-        $query = mysqli_prepare($con, "SELECT OrgAppProfile_NAME,OrgVoucher_CASH_VOUCHER_NO,DATE_FORMAT(OrgVoucher_DATE_ADD, '%M %d, %Y ') AS DATEP,OrgVoucher_VOUCHED_BY, FORMAT(SUM(OrgVouchItems_AMOUNT), 2) AS AMOUNT,OrgForCompliance_ORG_CODE
+        $query = mysqli_prepare($con, "SELECT OrgAppProfile_NAME,OrgVoucher_CASH_VOUCHER_NO,DATE_FORMAT(OrgVoucher_DATE_ADD, '%M %d, %Y ') AS DATEP,OrgVoucher_VOUCHED_BY, FORMAT(SUM(OrgVouchItems_AMOUNT),2) AS AMOUNT,OrgForCompliance_ORG_CODE
         FROM `t_org_voucher` 
         INNER JOIN t_org_for_compliance ON OrgVoucher_ORG_CODE = OrgForCompliance_ORG_CODE
         INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
