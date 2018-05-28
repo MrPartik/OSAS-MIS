@@ -226,21 +226,25 @@ WHERE A.AssSancStudStudent_TO_BE_DONE <= CURRENT_DATE AND A.AssSancStudStudent_S
                                     <tr>
                                         <th>Financial Assistance</th>
                                         <?php 
-                                            $view_query = mysqli_query($con,"SELECT FinAssiTitle_NAME FROM `r_financial_assistance_title` WHERE FinAssiTitle_DISPLAY_STAT = 'Active' "); 
-                                            
-                                            $legend= "";
+                                            $view_query = mysqli_query($con," SELECT FinAssiTitle_NAME FROM `r_financial_assistance_title` WHERE FinAssiTitle_DISPLAY_STAT = 'Active' ");
                                             while($row = mysqli_fetch_assoc($view_query))
                                             {
                                                 $legend = $row["FinAssiTitle_NAME"];
 
-                                                $view_query2 = mysqli_query($con,"SELECT COUNT(*) as COU FROM `t_assign_stud_finan_assistance`    
-                                                WHERE AssStudFinanAssistance_FINAN_NAME = '$legend' AND AssStudFinanAssistance_STATUS = 'Active'");
-                                                while($row2 = mysqli_fetch_assoc($view_query2))
-                                                {
-                                                    $item = $row2["COU"]; 
-                                                    echo " <td>$item</td> "; 
+                                                $view_query2 = mysqli_prepare($con, "SELECT COUNT(*) as COU FROM `t_assign_stud_finan_assistance`
+                                                WHERE AssStudFinanAssistance_FINAN_NAME = ? AND AssStudFinanAssistance_DISPLAY_STAT = 'Active'");
+                                                mysqli_stmt_bind_param($view_query2, 's', $legend);
+                                                mysqli_stmt_execute($view_query2);
+                                                $result = mysqli_stmt_get_result($view_query2);
+                                                while($row2 = mysqli_fetch_assoc($result)){
+                                                    $item = $row2["COU"];
+
+                                                    echo "
+                                                    <td>$item</td>
+                                                    ";
                                                 }
                                             }
+
 
                                         ?>
                                     </tr>
