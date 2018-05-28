@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+
+    <title>&nbsp</title>
+    <link rel='stylesheet' type='text/css' href='css/style.css' />
+    <link rel='stylesheet' type='text/css' href='css/print.css' media="print" />
+    <script type='text/javascript' src='js/jquery-1.3.2.min.js'></script>
+    <script type='text/javascript' src='js/example.js'></script>
+    <style>
+        @media print {
+            .header,
+            .hide {
+                visibility: hidden
+            }
+        }
+
+        <?php include('../../config/connection.php');
+
+        $view_query=mysqli_query($con, " SELECT UPPER(OSASHead_NAME) AS NAME FROM `r_osas_head` WHERE OSASHead_DISPLAY_STAT = 'Active' ");
+        while($row=mysqli_fetch_assoc($view_query)) {
+            $osas=$row["NAME"];
+
+        }
+        $orgc = $_GET['Organization'];
+        $view_query=mysqli_query($con, " SELECT OrgAppProfile_NAME,OrgForCompliance_BATCH_YEAR FROM `t_org_for_compliance`
+	INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE = OrgAppProfile_APPL_CODE
+    WHERE OrgForCompliance_ORG_CODE = '$orgc' ");
+        while($row=mysqli_fetch_assoc($view_query)) {
+            $orgname = $row["OrgAppProfile_NAME"];
+            $byear = $row["OrgForCompliance_BATCH_YEAR"];
+
+        }
+
+        $item='';
+        foreach (explode(',', $_GET['items']) as $data) {
+            $item=$item . ",'".$data."'";
+        }
+
+        ?>
+
+    </style>
+</head>
+
+<body>
+    <div id="page-wrap">
+        <div class="headerrow">
+            <div class="column">
+                <img src="images/puplogo.png">
+            </div>
+            <div class="column">
+                <center>
+                    <br/>
+                    <br/>
+                    <h5>Republic of the Philippines</h5>
+                    <h5>Polytechnic University of the Philippines</h5>
+                    <h5>Quezon City Branch</h5>
+                    <h5><?php echo $orgname; ?></h5>
+                    <h5>Batch of <?php echo $byear; ?></h5>
+                </center>
+            </div>
+            <div class="column">
+                <img src="<?php ?>" style="float:right;display:none"></div>
+        </div>
+        <p id="header">Organization Members
+        </p>
+
+
+
+        <div style="clear:both"></div>
+        <div id="event">
+        </div>
+
+        <table id="items">
+
+            <tr>
+                <th>Student Number</th>
+                <th>Student Name</th>
+                <th>Course - Year and Section</th>
+                <th>Position</th>
+            </tr>
+
+            <?php
+
+                $view_query = mysqli_query($con," SELECT CONCAT(Stud_LNAME,', ',Stud_FNAME ,' ', IFNULL(Stud_MNAME,''))  AS NAME , Stud_NO,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,' - ',Stud_SECTION) AS CAS, IFNULL((SELECT OrgOffiPosDetails_NAME FROM r_org_officer_position_details
+		INNER JOIN t_org_officers ON OrgOffiPosDetails_ID = OrgOffi_OrgOffiPosDetails_ID
+ 	WHERE OrgOffi_DISPLAY_STAT = 'Active' AND OrgOffi_STUD_NO = Stud_NO  AND OrgOffiPosDetails_DISPLAY_STAT = 'Active' AND OrgOffiPosDetails_ORG_CODE = '$orgc'   ),'Member') AS POS FROM t_assign_org_members
+		INNER JOIN r_stud_profile ON AssOrgMem_STUD_NO = Stud_NO
+        LEFT JOIN t_org_officers  ON OrgOffi_STUD_NO = AssOrgMem_STUD_NO
+        LEFT JOIN r_org_officer_position_details ON OrgOffiPosDetails_ID = OrgOffi_OrgOffiPosDetails_ID
+        WHERE AssOrgMem_DISPLAY_STAT = 'Active'  AND AssOrgMem_COMPL_ORG_CODE = '$orgc'  AND AssOrgMem_STUD_NO IN ('1'".$item.") GROUP BY Stud_NO ");
+                while($row = mysqli_fetch_assoc($view_query))
+                {
+                    $name = $row["NAME"];
+                    $no = $row["Stud_NO"];
+                    $cas = $row["CAS"];
+                    $pos = $row["POS"];
+
+                    echo "
+                    <tr class=''>
+                        <td style='width:250px'><label>$no</label></td>
+                        <td style='width:200px'><label>$name</label></td>
+                        <td style='width:200px'><label>$cas</label></td>
+                        <td><label>$pos</label></td>
+                    </tr>
+                            ";
+                }
+
+            ?>
+
+        </table>
+        <br><br><br><br><br><br>
+
+        <br><br><br>
+        <div id="row">
+            <div class="column">
+                <h3>Reviewed by: </h3>
+                <br><br>
+                <p>
+                    <?php echo $osas; ?>
+                </p>
+                Office of the Student Affairs
+            </div>
+
+        </div>
+
+        <br><br><br><br><br>
+        <br><br><br><br><br><br>
+
+        <div id="terms">
+
+            <h5>This report is generated by the system</h5>
+            Rothlener Bldg., PUP Quezon City Branch, Don Fabian St., Commonwealth Quezon City
+            <br>Phone: (Direct Lines) 9527817; 4289144; 9577817
+            <br>Email: commonwealth@pup.edu.ph/ Website: www.pup.edu.ph
+            <br> “The Country’s 1st Polytechnic U”
+            <br>
+        </div>
+        <script>
+            $(document).ready(function (){
+                window.print();
+
+            });
+
+        </script>
+
+    </div>
+
+</body>
+
+</html>
