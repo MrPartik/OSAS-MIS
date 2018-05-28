@@ -84,9 +84,9 @@ class myPDF extends FPDF{
             $item=$item . ",'".$data."'";
         }
 
-
-
-
+        $view_query = mysqli_query($con," SELECT DATE_FORMAT(OrgVoucher_DATE_MOD,'%M %d, %Y') AS DATEISSUED ,OrgAppProfile_NAME,OrgVoucher_CHECKED_BY,OrgVoucher_VOUCHED_BY,OrgVoucher_CASH_VOUCHER_NO,(SELECT GROUP_CONCAT(OrgVouchItems_ITEM_NAME SEPARATOR ', ')
+        FROM t_org_voucher_items WHERE OrgVouchItems_VOUCHER_NO = OrgVoucher_CASH_VOUCHER_NO) AS ITEMS,CONCAT('Php ',(SELECT FORMAT(SUM(OrgVouchItems_AMOUNT), 2)
+        FROM t_org_voucher_items WHERE OrgVouchItems_VOUCHER_NO = OrgVoucher_CASH_VOUCHER_NO)) AS AMOUNT FROM `t_org_voucher` INNER JOIN t_org_for_compliance ON OrgForCompliance_ORG_CODE = OrgVoucher_ORG_CODE INNER JOIN r_org_applicant_profile ON OrgForCompliance_OrgApplProfile_APPL_CODE =  OrgAppProfile_APPL_CODE  WHERE OrgVoucher_ID  IN ('0'".$item.") AND OrgVoucher_STATUS = 'Approved' ");
         $this->SetFont('Arial','B',8);
         $this->SetFillColor(220,220,220);
         $this->Cell(35,5,'VOUCHER NUMBER:',1,0,'C',true);
@@ -108,6 +108,17 @@ class myPDF extends FPDF{
             $desc = $row["ITEMS"];
             $date = $row["DATEISSUED"];
             
+
+
+            $this->SetFont('Arial','B',8);
+            $this->SetFillColor(220,220,220);
+            $this->Cell(35,5,'VOUCHER NUMBER:',1,0,'C',true);
+            $this->Cell(60,5,'ORGANIZATION:',1,0,'C',true);
+            $this->Cell(60,5,'AMOUNT:',1,0,'C',true);
+            $this->Cell(35,5,'DATE ISSUED:',1,0,'C',true);
+            $this->Ln();
+
+
             $this->SetFont('Arial','B',8);
             $this->Cell(35,5,$number,1,0,'C');
             $this->Cell(60,5,$name,1,0,'C');
@@ -129,14 +140,6 @@ class myPDF extends FPDF{
             $this->SetFillColor(220,220,220);
             $this->Cell(35,5,'RECEIVED BY:',1,0,'C',true);
             $this->Cell(155,5,$rec,1,0,'C');
-            $this->Ln();
-
-            $this->SetFont('Arial','B',8);
-            $this->SetFillColor(220,220,220);
-            $this->Cell(35,5,'VOUCHER NUMBER:',1,0,'C',true);
-            $this->Cell(60,5,'ORGANIZATION:',1,0,'C',true);
-            $this->Cell(60,5,'AMOUNT:',1,0,'C',true);
-            $this->Cell(35,5,'DATE ISSUED:',1,0,'C',true);
             $this->SetAutoPageBreak(true , 80);
             $this->Ln();
 
