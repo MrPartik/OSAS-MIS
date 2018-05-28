@@ -1,6 +1,36 @@
 <?php
 include('../config/query.php');
 include ('../config/connection.php');
+
+ function getCNSPUNQ($length){
+             $token = "";
+             $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+             $codeAlphabet.= "abcdefghijklmnopqrstuvwxyz";
+             $codeAlphabet.= "0123456789"; 
+             $max = strlen($codeAlphabet); // edited
+
+            for ($i=0; $i < $length; $i++) {
+                $token .= $codeAlphabet[rand(0, $max-1)];
+            } 
+            return $token;
+        }
+ $code =  getCNSPUNQ(15);
+
+if(isset($_POST['generateCode']))
+{
+    $studNo = $_POST['studNo'];
+    $CurrSem = $_POST['CurrSem'];
+    $CurrAcadY = $_POST['CurrAcadY'];
+   mysqli_query($con,"INSERT INTO `t_clearance_generated_code` (`ClearanceGenCode_STUD_NO`, `ClearanceGenCode_ACADEMIC_YEAR`, `ClearanceGenCode_SEMESTER`,`ClearanceGenCode_COD_VALUE`, `ClearanceGenCode_IS_GENERATE`, `ClearanceGenCode_DATE_ADD`, `ClearanceGenCode_DATE_MOD`) VALUES ('$studNo','$CurrAcadY','$CurrSem','$code',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP );");
+     
+}
+
+if(isset($_POST['deleteGeneratedCode']))
+{
+    $ID = $_POST['ID']; 
+   mysqli_query($con,"DELETE  FROM t_clearance_generated_code WHERE  ClearanceGenCode_ID = $ID");
+}
+
 if(isset($_POST['insertSig']))
 {
     $code = $_POST['Code'];

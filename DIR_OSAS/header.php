@@ -31,8 +31,27 @@ $referenced_user = $_SESSION['logged_user']['ref']; ?>
         <link rel="stylesheet" type="text/css" href="../ASSETS/js/jquery-tags-input/jquery.tagsinput.css" />
         <link rel="stylesheet" type="text/css" href="../ASSETS/js/bootstrap-datepicker/css/datepicker.css" />
         <link rel="stylesheet" type="text/css" href="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.css" />
-        <link rel="stylesheet" type="text/css" href="../ASSETS/js/select2/select2.css" /> </head>
-    <link rel="stylesheet" href="../ASSETS/js/data-tables/DT_bootstrap.css" /> </head>
+        <link rel="stylesheet" type="text/css" href="../ASSETS/js/select2/select2.css" />
+        <link rel="stylesheet" href="../ASSETS/js/data-tables/DT_bootstrap.css" />
+        <!--icheck-->
+        <link href="../ASSETS/js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+        <link href="../ASSETS/js/iCheck/skins/minimal/red.css" rel="stylesheet">
+        <link href="../ASSETS/js/iCheck/skins/minimal/green.css" rel="stylesheet">
+        <link href="../ASSETS/js/iCheck/skins/minimal/blue.css" rel="stylesheet">
+        <link href="../ASSETS/js/iCheck/skins/minimal/yellow.css" rel="stylesheet">
+        <link href="../ASSETS/js/iCheck/skins/minimal/purple.css" rel="stylesheet">
+        <link href="../ASSETS/js/iCheck/skins/square/square.css" rel="stylesheet">
+        <link href="../ASSETS/js/iCheck/skins/square/red.css" rel="stylesheet">
+        <link href="../ASSETS/js/iCheck/skins/square/green.css" rel="stylesheet">
+        <link href="../ASSETS/js/iCheck/skins/square/blue.css" rel="stylesheet">
+        <link href="../ASSETS/js/iCheck/skins/square/yellow.css" rel="stylesheet">
+        <link href="../ASSETS/js/iCheck/skins/square/purple.css" rel="stylesheet">
+        <link href="../ASSETS/js/iCheck/skins/flat/grey.css" rel="stylesheet">
+        <link href="../ASSETS/js/iCheck/skins/flat/red.css" rel="stylesheet">
+        <link href="../ASSETS/js/iCheck/skins/flat/green.css" rel="stylesheet">
+        <link href="../ASSETS/js/iCheck/skins/flat/blue.css" rel="stylesheet">
+        <link href="../ASSETS/js/iCheck/skins/flat/yellow.css" rel="stylesheet">
+        <link href="../ASSETS/js/iCheck/skins/flat/purple.css" rel="stylesheet"> </head>
     <section id="container">
         <!--header start-->
         <header class="header fixed-top clearfix">

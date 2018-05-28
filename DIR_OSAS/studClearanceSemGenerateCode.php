@@ -6,7 +6,7 @@ $breadcrumbs =" <div class='col-md-12'>
 <ul class='breadcrumbs-alt'>
     <li> <a href='dashboard.php'>Home</a> </li>
     <li> <a href='#'>Clearance Management</a> </li>
-    <li> <a class='current' href='studClearanceSem.php'>Semester Clearance</a> </li>
+    <li> <a class='current' href='studClearanceSem.php'>Semester Clearance (Cleared Student)</a> </li>
 </ul>
 </div>";
 include('header.php');
@@ -53,11 +53,15 @@ include('../config/connection.php');
                                                 <tr>
                                                     <th>Student Number</th>
                                                     <th>Student Details</th>
-                                                    <th>Date Claimed</th>
+                                                    <th>Generated Code</th>
                                                     <th>Date Generated</th>
-                                                    <th>Last Modified</th>
+                                                    <th>Date Claimed</th>
                                                     <th>
                                                         <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
+                                                    </th>
+                                                    <th>
+                                                        <center>
+                                                            <input type="checkbox" id="selectAll" style="transform: scale(1.5);"> </center>
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -83,17 +87,31 @@ AND R_SP.Stud_NO NOT IN (SELECT AssSancStudStudent_STUD_NO FROM t_assign_stud_sa
                                                         <td>
                                                             <?php echo '<strong>'.$stud_row['FullName'].'</strong><br>'.$stud_row['Course'];?> </td>
                                                         <td>
-                                                            <?php  echo $clearance["ClearanceGenCode_IS_CLAIMED"]; ?>
+                                                            <?php  echo $clearance["ClearanceGenCode_COD_VALUE"]; ?>
                                                         </td>
                                                         <td>
                                                             <?php  echo $clearance["ClearanceGenCode_IS_GENERATE"]; ?>
                                                         </td>
                                                         <td>
-                                                            <?php  echo $clearance["ClearanceGenCode_DATE_MOD"]; ?>
+                                                            <?php  echo $clearance["ClearanceGenCode_IS_CLAIMED"]; ?>
                                                         </td>
                                                         <td>
                                                             <center>
-                                                                <button id="StudSemModalClick" value="<?php echo $stud_row['Stud_NO']; ?>" class="btn btn-info " data-toggle="modal" href="#studSemClearance"> <i class="fa  fa-info-circle"></i> </button>
+                                                                <?php if($clearance["ClearanceGenCode_COD_VALUE"]!=""){?>
+                                                                    <button data-toggle="modal" href="#studSemClearanceQRCode" id="StudSemViewQR" value="<?php echo $clearance['ClearanceGenCode_ID']; ?>" studno="<?php echo $stud_row['Stud_NO']; ?>" genValue="<?php echo $clearance['ClearanceGenCode_COD_VALUE']; ?>" class="btn btn-info " title="View QR Code"> <i class="fa  fa-qrcode"></i> </button> |
+                                                                    <button id="StudSemUndo" value="<?php echo $clearance['ClearanceGenCode_ID']; ?>" class="btn btn-danger " title="Undo generated clearance form"> <i class="fa fa-rotate-left"></i> </button>
+                                                                    <?php }else{?>
+                                                                        <button id="StudSemModalGenerate" value="<?php echo $stud_row['Stud_NO']; ?>" class="btn btn-default " title="Generate Code"> <i class="fa  fa-check"></i> </button>
+                                                                        <?php }?>
+                                                            </center>
+                                                        </td>
+                                                        <td>
+                                                            <center>
+                                                                <?php if($clearance["ClearanceGenCode_COD_VALUE"]==""){?>
+                                                                    <input type="checkbox" id="selectMe" style="transform: scale(1.5);">
+                                                                    <?php }else {?>
+                                                                        <input type="checkbox" disabled style="transform: scale(1.5);">
+                                                                        <?php }?>
                                                             </center>
                                                         </td>
                                                     </tr>
@@ -104,11 +122,14 @@ AND R_SP.Stud_NO NOT IN (SELECT AssSancStudStudent_STUD_NO FROM t_assign_stud_sa
                                                 <tr>
                                                     <th>Student Number</th>
                                                     <th>Student Details</th>
-                                                    <th>Date Claimed</th>
+                                                    <th>Generated Code</th>
                                                     <th>Date Generated</th>
-                                                    <th>Last Modified</th>
+                                                    <th>Date Claimed</th>
                                                     <th>
                                                         <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
+                                                    </th>
+                                                    <th>
+                                                        <center><i style="font-size:20px" class="fa fa-check-square"></i></center>
                                                     </th>
                                                 </tr>
                                             </tfoot>
@@ -120,42 +141,7 @@ AND R_SP.Stud_NO NOT IN (SELECT AssSancStudStudent_STUD_NO FROM t_assign_stud_sa
                     </div>
                 </section>
             </section>
-            <!-- Modal Sanction-->
-            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="AddSanc" class="modal fade">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Add Sanction Details</h4> </div>
-                        <div class="modal-body">
-                            <br>
-                            <p>You are now adding sanction data</p>
-                            <br>
-                            <div class="row">
-                                <div class="col-md-6 form-group"> *Sanction Code
-                                    <input title="sanction code is depending on the sanction description, it is a short description for the sanction" id="sancCode" type="text" class="form-control" placeholder="ex. 2.1 3rdOffense" required/> </div>
-                                <div class="col-md-6 form-group"> *Sanction Time Interval
-                                    <input title="sanction time interval must in hours format" id="sancTime" type="number" class="form-control" placeholder="ex. 42" required/> </div>
-                                <div class="col-md-12 form-group"> *Sanction Name
-                                    <textarea title="sanction name" id="sancName" type="text" class="form-control" style="resize:vertical" placeholder="ex. 3rd Offense Failure to bring valid ID" required></textarea>
-                                </div>
-                                <div class="col-md-12 form-group"> *Sanction Description
-                                    <textarea id="sancDesc" type="text" class="form-control" placeholder="ex. 2.1 failure to bring valid ID in case the student can present his/her registration certificate" style=" resize:vertical " required></textarea>
-                                </div>
-                            </div>
-                            <div class="modal-footer ">
-                                <button class="btnInsertSanc btn btn-success " type="submit ">Submit</button>
-                                <button data-dismiss="modal" class="btn btn-cancel" type="button">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal Sanction-->
-            <!-- Modal Dest-->
-            <!-- Modal Dest-->
-            <div id="studSemClearance" class="modal fade content-sanction " role="dialog "> </div>
-            <div id="studSanction" class="modal fade content-sanctionss " role="dialog "> </div>
+            <div id="studSemClearanceQRCode" class="modal fade content-profile" role="dialog "> </div>
             <!--main content end-->
             <!-- Placed js at the end of the document so the pages load faster -->
             <!--Core js-->
@@ -164,14 +150,14 @@ AND R_SP.Stud_NO NOT IN (SELECT AssSancStudStudent_STUD_NO FROM t_assign_stud_sa
 
 </html>
 <script>
-    $("#StudSanctionModalClick ").on("click ", function () {
-        var datas = $(this).attr("value");
+    $("#TableStudSanc").on("click ", "#StudSemViewQR ", function () {
+        var datas = $(this).attr("genValue");
         $.ajax({
-            url: "studSanctionModal.php?StudNo=" + datas
+            url: "studClearanceSemGenerateCodeModal.php?genData=" + datas
             , cache: false
             , async: false
             , success: function (result) {
-                $(".content-sanctionss ").html(result);
+                $(".content-profile ").html(result);
             }
         });
     });
@@ -191,37 +177,111 @@ AND R_SP.Stud_NO NOT IN (SELECT AssSancStudStudent_STUD_NO FROM t_assign_stud_sa
             }
         }
         , aaSorting: [[4, "desc"]]
+        , "aoColumnDefs": [{
+                'bSortable': false
+                , 'aTargets': [6]
+                        }
+                ]
     });
-    $("#TableStudSanc ").on("click ", "#StudSemModalClick ", function () {
-        var datas = $(this).attr("value");
-        $.ajax({
-            url: "studClearanceSemModal.php?StudNo=" + datas
-            , cache: false
-            , async: false
-            , success: function (result) {
-                $(".content-sanction ").html(result);
+    $("button[id='StudSemModalGenerate']").on("click", function () {
+        var StudNo = $(this).val();
+        swal({
+            title: "Finalize the clearance of this student"
+            , text: "The Student: " + $(this).val() + " is subject for claiming clearance form"
+            , type: "warning"
+            , showCancelButton: true
+            , confirmButtonColor: '#9DD656'
+            , confirmButtonText: 'Yes!'
+            , cancelButtonText: "No!"
+            , closeOnConfirm: false
+            , closeOnCancel: false
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    type: 'post'
+                    , url: 'studClearanceSemSave.php'
+                    , data: {
+                        generateCode: 'generateCode'
+                        , studNo: StudNo
+                        , CurrSem: "<?php echo $current_semster?>"
+                        , CurrAcadY: "<?php echo $current_acadyear?>"
+                    }
+                    , success: function (result) {
+                        swal({
+                            title: "Woaah, that's neat!"
+                            , text: "The Code is Successfuly Generated"
+                            , type: "success"
+                            , showCancelButton: false
+                            , confirmButtonColor: '#9DD656'
+                            , confirmButtonText: 'Ok'
+                        }, function (isConfirm) {
+                            location.reload();
+                        });
+                    }
+                    , error: function (result) {
+                        swal("Error", "The transaction is cancelled", "error");
+                    }
+                });
+            }
+            else {
+                swal("Cancelled", "The transaction is cancelled", "error");
             }
         });
     });
-    $(".btnInsertSig").on("click", function () {
-        var $Code = $("#SigCode").val()
-            , $Name = $("#SigName").val()
-            , $Desc = $("#SigDesc").val()
-        $.ajax({
-            url: "studClearanceSemSave.php"
-            , cache: false
-            , async: false
-            , type: "Post"
-            , data: {
-                insertSig: 'insertNow'
-                , Code: $Code
-                , Name: $Name
-                , SDesc: $Desc
+    $("button[id='StudSemUndo']").on("click", function () {
+        var ID = $(this).val();
+        swal({
+            title: "Finalize the clearance of this student"
+            , text: "The Student: " + $(this).val() + " is subject for claiming clearance form"
+            , type: "warning"
+            , showCancelButton: true
+            , confirmButtonColor: '#9DD656'
+            , confirmButtonText: 'Yes!'
+            , cancelButtonText: "No!"
+            , closeOnConfirm: false
+            , closeOnCancel: false
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    type: 'post'
+                    , url: 'studClearanceSemSave.php'
+                    , data: {
+                        deleteGeneratedCode: 'generateCode'
+                        , ID: ID
+                        , CurrSem: "<?php echo $current_semster?>"
+                        , CurrAcadY: "<?php echo $current_acadyear?>"
+                    }
+                    , success: function (result) {
+                        swal({
+                            title: "Woaah, that's neat!"
+                            , text: "The Code is Successfuly Generated"
+                            , type: "success"
+                            , showCancelButton: false
+                            , confirmButtonColor: '#9DD656'
+                            , confirmButtonText: 'Ok'
+                        }, function (isConfirm) {
+                            location.reload();
+                        });
+                    }
+                    , error: function (result) {
+                        swal("Error", "The transaction is cancelled", "error");
+                    }
+                });
             }
-            , success: function (result) {
-                alert(result);
-                window.location.reload();
+            else {
+                swal("Cancelled", "The transaction is cancelled", "error");
             }
         });
+    });
+    $("#selectAll").on("click", function () { 
+           $(oTable.fnGetNodes()).find("td:nth-child(7) input").each(function (index) {   
+            if (!$(this).prop("checked") && !$(this).prop("disabled") ) {
+                $(this).prop('checked',true);
+            }
+            else {
+                $(this).prop("checked",false);
+            }
+        });  
+        oTable.fnDraw();
     });
 </script>
