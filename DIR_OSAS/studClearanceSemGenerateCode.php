@@ -177,7 +177,7 @@ AND R_SP.Stud_NO NOT IN (SELECT AssSancStudStudent_STUD_NO FROM t_assign_stud_sa
                 , "sNext": "Next"
             }
         }
-        , aaSorting: [[4, "desc"]]
+        , aaSorting: [[3, "desc"]]
         , "aoColumnDefs": [{
                 'bSortable': false
                 , 'aTargets': [6]
@@ -330,7 +330,8 @@ AND R_SP.Stud_NO NOT IN (SELECT AssSancStudStudent_STUD_NO FROM t_assign_stud_sa
                             }
                         });
                     }
-                }).promise().done(function () {
+                }).promise().done(function (result) {
+                    console.log(result);
                     setTimeout(function () {
                         swal({
                             title: "Woaah, that's neat!"
@@ -342,7 +343,7 @@ AND R_SP.Stud_NO NOT IN (SELECT AssSancStudStudent_STUD_NO FROM t_assign_stud_sa
                         }, function (isConfirm) {
                             location.reload();
                         })
-                    }, 3000)
+                    }, 10000)
                 });
             }
             else {
