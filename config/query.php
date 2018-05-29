@@ -21,9 +21,9 @@ $view_clearanceGeneratedCodeQuery ="";
                     global $view_clearanceGeneratedCodeQuery;
                     $view_clearanceGeneratedCodeQuery = mysqli_query($con,"SELECT *,CONCAT(RSP.Stud_LNAME,', ',RSP.Stud_FNAME,' ',COALESCE(RSP.Stud_MNAME,'')) AS FullName  FROM t_clearance_generated_code CGC
 INNER JOIN r_stud_profile RSP on CGC.ClearanceGenCode_STUD_NO = RSP.Stud_NO
-WHERE ClearanceGenCode_STUD_NO = '$id'
-AND ClearanceGenCode_ACADEMIC_YEAR = (SELECT ActiveAcadYear_Batch_YEAR FROM active_academic_year WHERE ActiveAcadYear_IS_ACTIVE = 1 AND ActiveAcadYear_ID = (SELECT MAX(ActiveAcadYear_ID) FROM active_academic_year))
-AND ClearanceGenCode_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM active_semester WHERE ActiveSemester_IS_ACTIVE = 1 AND ActiveSemester_ID = (SELECT MAX(ActiveSemester_ID) FROM active_semester))");
+WHERE ClearanceGenCode_STUD_NO = '2015-00073-Cm-0'
+AND ClearanceGenCode_ACADEMIC_YEAR = (SELECT ActiveAcadYear_Batch_YEAR FROM active_academic_year WHERE ActiveAcadYear_IS_ACTIVE = 1)
+AND ClearanceGenCode_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM active_semester WHERE ActiveSemester_IS_ACTIVE = 1)");
 
                 } function view_orgVoucherReq()
                 {
@@ -194,18 +194,21 @@ $view_studSanction = mysqli_query($con,"SELECT B.AssSancStudStudent_ID AssSancID
                                     AND B.AssSancStudStudent_CONSUMED_HOURS <> C.SancDetails_TIMEVAL ");
 
 
-$view_studProfile = mysqli_query($con,"select Stud_ID as ID 
-                                    ,Stud_NO ,CONCAT(Stud_LNAME,', ',Stud_FNAME,' ',COALESCE(Stud_MNAME,'')) as FullName 
-                                    ,CONCAT(Stud_COURSE,' ',Stud_YEAR_LEVEL,'-',Stud_SECTION) as Course
-                                    ,Stud_EMAIL ,Stud_MOBILE_NO
-                                    ,Stud_GENDER 
-                                    ,Stud_BIRTH_DATE
-                                    ,Stud_BIRTH_PLACE 
-                                    ,Stud_STATUS 
-                                    ,Stud_CITY_ADDRESS
-                                    ,Stud_DATE_ADD  
-                                        FROM osas.r_stud_profile 
-                                    where Stud_DISPLAY_STATUS='active'"); 
+$view_studProfile = mysqli_query($con,"select RSP.Stud_ID as ID
+                                    ,RSP.Stud_NO ,CONCAT(RSP.Stud_LNAME,', ',RSP.Stud_FNAME,' ',COALESCE(RSP.Stud_MNAME,'')) as FullName
+                                    ,CONCAT(RSP.Stud_COURSE,' ',RSP.Stud_YEAR_LEVEL,'-',RSP.Stud_SECTION) as Course
+                                    ,RSP.Stud_EMAIL
+                                    ,RSP.Stud_MOBILE_NO
+                                    ,RSP.Stud_GENDER
+                                    ,RSP.Stud_BIRTH_DATE
+                                    ,RSP.Stud_BIRTH_PLACE
+                                    ,RSP.Stud_STATUS
+                                    ,RSP.Stud_CITY_ADDRESS
+                                    ,RSP.Stud_DATE_ADD
+                                        FROM osas.r_stud_profile RSP
+                                        INNER JOIN r_stud_batch SB on  RSP.Stud_NO = SB.Stud_NO
+                                        INNER JOIN active_academic_year AY on SB.Batch_YEAR = ay.ActiveAcadYear_Batch_YEAR AND  Stud_DISPLAY_STATUS='active'
+                                        AND ay.ActiveAcadYear_IS_ACTIVE=1 ORDER BY ay.ActiveAcadYear_ID desc");
 
 $current_semster_query = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM  active_semester where `ActiveSemester_IS_ACTIVE` =1 and `ActiveSemester_ID` = (SELECT MAX(`ActiveSemester_ID`) FROM active_semester A 
 INNER JOIN r_semester B ON A.ActiveSemester_SEMESTRAL_NAME = B.Semestral_NAME AND B.Semestral_DISPLAY_STAT='ACTIVE' WHERE A.ActiveSemester_IS_ACTIVE =1 )"));

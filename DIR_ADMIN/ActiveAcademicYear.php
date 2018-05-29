@@ -79,7 +79,6 @@ include('../config/connection.php');
                                         $i = 1;
 										while($row = mysqli_fetch_assoc($view_query))
 										{
-											$code = $row["Batch_CODE"];
 											$name = $row["Batch_YEAR"];
 											$desc = $row["Batch_DESC"];										
 											$id = $row["Batch_ID"];								

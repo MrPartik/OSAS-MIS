@@ -58,8 +58,8 @@ class myPDF extends FPDF{
       $infoProfile = mysqli_fetch_array(mysqli_query($con,"SELECT *,CONCAT(RSP.Stud_LNAME,', ',RSP.Stud_FNAME,' ',COALESCE(RSP.Stud_MNAME,'')) AS FullName  FROM t_clearance_generated_code CGC
 INNER JOIN r_stud_profile RSP on CGC.ClearanceGenCode_STUD_NO = RSP.Stud_NO
 WHERE ClearanceGenCode_STUD_NO = '$StudentNo'
-AND ClearanceGenCode_ACADEMIC_YEAR = (SELECT ActiveAcadYear_Batch_YEAR FROM active_academic_year WHERE ActiveAcadYear_IS_ACTIVE = 1 AND ActiveAcadYear_ID = (SELECT MAX(ActiveAcadYear_ID) FROM active_academic_year))
-AND ClearanceGenCode_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM active_semester WHERE ActiveSemester_IS_ACTIVE = 1 AND ActiveSemester_ID = (SELECT MAX(ActiveSemester_ID) FROM active_semester))"));
+AND ClearanceGenCode_ACADEMIC_YEAR = (SELECT ActiveAcadYear_Batch_YEAR FROM active_academic_year WHERE ActiveAcadYear_IS_ACTIVE = 1 )
+AND ClearanceGenCode_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM active_semester WHERE ActiveSemester_IS_ACTIVE = 1) "));
 
 
         $this->SetFont('Arial','',10);

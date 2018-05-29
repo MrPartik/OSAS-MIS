@@ -6,19 +6,13 @@ $breadcrumbs =" <div class='col-md-12'>
 <ul class='breadcrumbs-alt'>
     <li> <a href='dashboard.php'>Home</a> </li>
     <li> <a href='#'>Clearance Management</a> </li>
-    <li> <a class='current' href='studClearanceSem.php'>Semester Clearance (Cleared Student)</a> </li>
+    <li> <a class='current' href='studClearanceSem.php'>Semester Clearance (Non-Cleared Student)</a> </li>
 </ul>
 </div>";
 include('header.php');
-$currentPage ='OSAS_StudClearanceGenerateCode';
+$currentPage ='OSAS_StudClearanceNon-Cleared';
 include('../config/connection.php');
-$profQuery  =  mysqli_query($con,"SELECT R_SP.Stud_ID as ID ,R_SP.Stud_NO ,R_SP.Stud_LNAME,R_SP.Stud_FNAME,R_SP.Stud_MNAME,CONCAT(R_SP.Stud_LNAME,', ',R_SP.Stud_FNAME,' ',COALESCE(R_SP.Stud_MNAME,'')) as FullName ,R_SP.Stud_COURSE,CONCAT(R_SP.Stud_COURSE,' ',R_SP.Stud_YEAR_LEVEL,'-',R_SP.Stud_SECTION) as Course ,R_SP.Stud_EMAIL , R_SP.Stud_SECTION,R_SP.Stud_MOBILE_NO ,R_SP.Stud_GENDER ,R_SP.Stud_BIRTH_DATE ,R_SP.Stud_BIRTH_PLACE ,R_SP.Stud_STATUS ,R_SP.Stud_CITY_ADDRESS  FROM r_stud_profile R_SP
-INNER JOIN r_stud_batch SB ON SB.Stud_NO = R_SP.Stud_NO
-INNER JOIN active_academic_year AY ON Ay.ActiveAcadYear_Batch_YEAR = SB.Batch_YEAR and ay.ActiveAcadYear_IS_ACTIVE=1
-WHERE R_SP.Stud_NO NOT IN (SELECT AssStudClearance_STUD_NO FROM t_assign_student_clearance WHERE  AssStudClearance_DISPLAY_STAT ='Active' AND AssStudClearance_BATCH = (SELECT ActiveAcadYear_Batch_YEAR FROM active_academic_year WHERE ActiveAcadYear_IS_ACTIVE = 1 ORDER BY ActiveAcadYear_ID DESC)
-AND AssStudClearance_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM active_semester WHERE ActiveSemester_IS_ACTIVE = 1 ORDER BY ActiveSemester_ID DESC))
-AND R_SP.Stud_NO NOT IN (SELECT AssSancStudStudent_STUD_NO FROM t_assign_stud_saction WHERE AssSancStudStudent_IS_FINISH = 'Processing' AND AssSancStudStudent_DISPLAY_STAT = 'Active' )
-ORDER BY ay.ActiveAcadYear_ID DESC");
+
 ?>
 
     <body>
@@ -30,8 +24,8 @@ ORDER BY ay.ActiveAcadYear_ID DESC");
                 <section class="wrapper">
                     <div class="row ">
                         <div class="col-md-4">
-                            <div class="mini-stat clearfix"> <span class="mini-stat-icon green"><i class="fa fa-tag"></i></span>
-                                <div class="mini-stat-info"> <span><?php echo mysqli_num_rows($profQuery)?></span> Students who cleared their clearance </div>
+                            <div class="mini-stat clearfix"> <span class="mini-stat-icon orange"><i class="fa fa-tag"></i></span>
+                                <div class="mini-stat-info"> <span><?php echo $count_stud_sanction?></span> Students who cleared their clearance </div>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -49,11 +43,11 @@ ORDER BY ay.ActiveAcadYear_ID DESC");
                         <div class="col-sm-12">
                             <section class="panel">
                                 <header class="panel-heading">Semestral Clearance Record <span class="tools pull-right">
-                            <a href="javascript:;" class="fa fa-chevron-down"></a>  
+                            <a href="javascript:;" class="fa fa-chevron-down"></a>
                             <a href="javascript:;" class="fa fa-times"></a>
                          </span> </header>
                                 <div id="TableStudSanc" class="panel-body">
-                                    <button class="btn btn-info" id="generateSelected"> <i class="fa fa-check-square"></i> (<span id="countSelected">0</span>) Generate Selected?</button>
+                                    <button class="btn btn-danger" id="generateSelected"> <i class="fa fa-check-square"></i> (<span id="countSelected">0</span>) Notify Selected?</button>
                                     <div class="adv-table">
                                         <table class="display table table-bordered table-striped" id="dynamic-table">
                                             <thead>
@@ -73,7 +67,13 @@ ORDER BY ay.ActiveAcadYear_ID DESC");
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?
+                                                <? $profQuery  =  mysqli_query($con,"SELECT R_SP.Stud_ID as ID ,R_SP.Stud_NO ,R_SP.Stud_LNAME,R_SP.Stud_FNAME,R_SP.Stud_MNAME,CONCAT(R_SP.Stud_LNAME,', ',  R_SP.Stud_FNAME,' ',COALESCE(R_SP.Stud_MNAME,'')) as FullName ,R_SP.Stud_COURSE,CONCAT(R_SP.Stud_COURSE,' ',R_SP.Stud_YEAR_LEVEL,'-',R_SP.Stud_SECTION) as Course ,R_SP.Stud_EMAIL , R_SP.Stud_SECTION,R_SP.Stud_MOBILE_NO ,R_SP.Stud_GENDER ,R_SP.Stud_BIRTH_DATE ,R_SP.Stud_BIRTH_PLACE ,R_SP.Stud_STATUS ,R_SP.Stud_CITY_ADDRESS  FROM r_stud_profile R_SP
+INNER JOIN r_stud_batch SB ON SB.Stud_NO = R_SP.Stud_NO
+INNER JOIN active_academic_year AY ON Ay.ActiveAcadYear_Batch_YEAR = SB.Batch_YEAR and ay.ActiveAcadYear_IS_ACTIVE=1
+WHERE R_SP.Stud_NO NOT IN (SELECT AssStudClearance_STUD_NO FROM t_assign_student_clearance WHERE  AssStudClearance_DISPLAY_STAT ='Active' AND AssStudClearance_BATCH = (SELECT ActiveAcadYear_Batch_YEAR FROM active_academic_year WHERE ActiveAcadYear_IS_ACTIVE = 1 ORDER BY ActiveAcadYear_ID DESC)
+AND AssStudClearance_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM active_semester WHERE ActiveSemester_IS_ACTIVE = 1 ORDER BY ActiveSemester_ID DESC))
+AND R_SP.Stud_NO NOT IN (SELECT AssSancStudStudent_STUD_NO FROM t_assign_stud_saction WHERE AssSancStudStudent_IS_FINISH = 'Processing' AND AssSancStudStudent_DISPLAY_STAT = 'Active' )
+ORDER BY ay.ActiveAcadYear_ID DESC");
                                                     while($stud_row = mysqli_fetch_assoc($profQuery))
                                                     {
                                                                 view_clearanceGen($stud_row['Stud_NO']);
