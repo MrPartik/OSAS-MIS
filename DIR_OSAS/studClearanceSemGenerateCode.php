@@ -99,7 +99,8 @@ AND R_SP.Stud_NO NOT IN (SELECT AssSancStudStudent_STUD_NO FROM t_assign_stud_sa
                                                         <td>
                                                             <center>
                                                                 <?php if($clearance["ClearanceGenCode_COD_VALUE"]!=""){?>
-                                                                    <button data-toggle="modal" href="#studSemClearanceQRCode" id="StudSemViewQR" value="<?php echo $clearance['ClearanceGenCode_ID']; ?>" studno="<?php echo $stud_row['Stud_NO']; ?>" genValue="<?php echo $clearance['ClearanceGenCode_COD_VALUE']; ?>" class="btn btn-info " title="View QR Code"> <i class="fa  fa-qrcode"></i> </button> |
+                                                                    <button data-toggle="modal" href="#studSemClearanceQRCode" id="StudSemViewQR" value="<?php echo $clearance['ClearanceGenCode_ID']; ?>" studno="<?php echo $stud_row['Stud_NO']; ?>" genValue="<?php echo $clearance['ClearanceGenCode_COD_VALUE']; ?>" class="btn btn-info " title="View QR Code"> <i class="fa  fa-qrcode"></i> </button>
+                                                                    <button data-toggle="modal" href="#studSemViewCompletion" id="StudSemViewCompletion" value="<?php echo $clearance['ClearanceGenCode_ID']; ?>" studno="<?php echo $stud_row['Stud_NO']; ?>" genValue="<?php echo $clearance['ClearanceGenCode_COD_VALUE']; ?>" class="btn btn-success " title="View Completion Form"> <i class="fa  fa-file"></i> </button> |
                                                                     <button id="StudSemUndo" value="<?php echo $clearance['ClearanceGenCode_ID']; ?>" class="btn btn-danger " title="Undo generated clearance form"> <i class="fa fa-rotate-left"></i> </button>
                                                                     <?php }else{?>
                                                                         <button id="StudSemModalGenerate" value="<?php echo $stud_row['Stud_NO']; ?>" class="btn btn-default " title="Generate Code"> <i class="fa  fa-check"></i> </button>
@@ -143,6 +144,7 @@ AND R_SP.Stud_NO NOT IN (SELECT AssSancStudStudent_STUD_NO FROM t_assign_stud_sa
                 </section>
             </section>
             <div id="studSemClearanceQRCode" class="modal fade content-profile" role="dialog "> </div>
+            <div id="studSemViewCompletion" class="modal fade content-Form" role="dialog "> </div>
             <!--main content end-->
             <!-- Placed js at the end of the document so the pages load faster -->
             <!--Core js-->
@@ -155,10 +157,29 @@ AND R_SP.Stud_NO NOT IN (SELECT AssSancStudStudent_STUD_NO FROM t_assign_stud_sa
         var datas = $(this).attr("genValue");
         $.ajax({
             url: "studClearanceSemGenerateCodeModal.php?genData=" + datas
+            , type: "POST"
+            , data: {
+                ViewQR: "ViewQR"
+            }
             , cache: false
             , async: false
             , success: function (result) {
                 $(".content-profile ").html(result);
+            }
+        });
+    });
+    $("#TableStudSanc").on("click ", "#StudSemViewCompletion ", function () {
+        var studno = $(this).attr('studno');
+        $.ajax({
+            url: "studClearanceSemGenerateCodeModal.php?studno=" + studno
+            , cache: false
+            , type: "POST"
+            , data: {
+                ViewCompletion: "ViewCompletion"
+            }
+            , async: false
+            , success: function (result) {
+                $(".content-Form").html(result);
             }
         });
     });
@@ -301,7 +322,7 @@ AND R_SP.Stud_NO NOT IN (SELECT AssSancStudStudent_STUD_NO FROM t_assign_stud_sa
     $("#generateSelected").on("click", function () {
         swal({
             title: "Are you sure?"
-            , text: $("#countSelected").text()+" students is subject for clearance completion"
+            , text: $("#countSelected").text() + " students is subject for clearance completion"
             , type: "warning"
             , showCancelButton: true
             , confirmButtonColor: '#9DD656'
