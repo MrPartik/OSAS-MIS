@@ -47,6 +47,7 @@ include('../config/connection.php');
                             <a href="javascript:;" class="fa fa-times"></a>
                          </span> </header>
                                 <div id="TableStudSanc" class="panel-body">
+                                    <button class="btn btn-info" id="generateSelected"> <i class="fa fa-check-square"></i> (<span id="countSelected">0</span>) Generate Selected?</button>
                                     <div class="adv-table">
                                         <table class="display table table-bordered table-striped" id="dynamic-table">
                                             <thead>
@@ -108,7 +109,7 @@ AND R_SP.Stud_NO NOT IN (SELECT AssSancStudStudent_STUD_NO FROM t_assign_stud_sa
                                                         <td>
                                                             <center>
                                                                 <?php if($clearance["ClearanceGenCode_COD_VALUE"]==""){?>
-                                                                    <input type="checkbox" id="selectMe" style="transform: scale(1.5);">
+                                                                    <input type="checkbox" id="selectMe" style="transform: scale(1.5);" value="<?php echo $stud_row['Stud_NO']; ?>">
                                                                     <?php }else {?>
                                                                         <input type="checkbox" disabled style="transform: scale(1.5);">
                                                                         <?php }?>
@@ -273,15 +274,80 @@ AND R_SP.Stud_NO NOT IN (SELECT AssSancStudStudent_STUD_NO FROM t_assign_stud_sa
             }
         });
     });
-    $("#selectAll").on("click", function () { 
-           $(oTable.fnGetNodes()).find("td:nth-child(7) input").each(function (index) {   
-            if (!$(this).prop("checked") && !$(this).prop("disabled") ) {
-                $(this).prop('checked',true);
+    $(oTable.fnGetNodes()).find("td:nth-child(7) input").on("click", function () {
+        var countt = 0;
+        $(oTable.fnGetNodes()).find("td:nth-child(7) input").each(function () {
+            if ($(this).prop("checked")) {
+                countt++;
+            }
+        });
+        $("#countSelected").text(countt);
+    });
+    $("#selectAll").on("click", function () {
+        var countt = 0;
+        $(oTable.fnGetNodes()).find("td:nth-child(7) input").each(function (index) {
+            if (!$(this).prop("checked") && !$(this).prop("disabled")) {
+                $(this).prop('checked', true);
+                var StudNo = $(this).val();
+                countt++;
             }
             else {
-                $(this).prop("checked",false);
+                $(this).prop("checked", false);
             }
-        });  
+        });
         oTable.fnDraw();
+        $("#countSelected").text(countt);
+    });
+    $("#generateSelected").on("click", function () {
+        swal({
+            title: "Are you sure?"
+            , text: $("#countSelected").text()+" students is subject for clearance completion"
+            , type: "warning"
+            , showCancelButton: true
+            , confirmButtonColor: '#9DD656'
+            , confirmButtonText: 'Yes!'
+            , cancelButtonText: "No!"
+            , closeOnConfirm: false
+            , closeOnCancel: false
+            , showLoaderOnConfirm: true
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $(oTable.fnGetNodes()).find("td:nth-child(7) input").each(function (index) {
+                    if ($(this).prop("checked") && !$(this).prop("disabled")) {
+                        var StudNo = $(this).val();
+                        $.ajax({
+                            type: 'post'
+                            , url: 'studClearanceSemSave.php'
+                            , data: {
+                                generateCode: 'generateCode'
+                                , studNo: StudNo
+                                , CurrSem: "<?php echo $current_semster?>"
+                                , CurrAcadY: "<?php echo $current_acadyear?>"
+                            }
+                            , success: function (result) {}
+                            , error: function (result) {
+                                swal("Error", "The transaction is cancelled", "error");
+                            }
+                        });
+                    }
+                }).promise().done(function () {
+                    setTimeout(function () {
+                        swal({
+                            title: "Woaah, that's neat!"
+                            , text: "The Code is Successfuly Generated"
+                            , type: "success"
+                            , showCancelButton: false
+                            , confirmButtonColor: '#9DD656'
+                            , confirmButtonText: 'Ok'
+                        }, function (isConfirm) {
+                            location.reload();
+                        })
+                    }, 3000)
+                });
+            }
+            else {
+                swal("Cancelled", "The transaction is cancelled", "error");
+            }
+        });
     });
 </script>
