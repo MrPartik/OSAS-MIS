@@ -71,9 +71,9 @@
                 <li class="sub-menu"> <a <?php if( $currentPage==='OSAS_StudClearance' || $currentPage==='OSAS_StudClearanceNon-Cleared' || $currentPage==='OSAS_StudClearanceGenerateCode') { echo 'class="active"';}?>  href="javascript:;" > <i class="fa fa-tag"></i> <span>Clearance Management</span> </a>
                     <ul class="sub">
                         <li <?php if( $currentPage==='OSAS_StudClearance' ) { echo 'class="active"';} ?> ><a href="studClearanceSem.php">Semestral Clearance</a></li>
-                        <li><a href="#">General Clearance</a></li>
+<!--                        <li><a href="#">General Clearance</a></li>-->
                         <li <?php if( $currentPage==='OSAS_StudClearanceGenerateCode' ) { echo 'class="active"';} ?> ><a href="studClearanceSemGenerateCode.php">Cleared Semestral Clearance</a></li>
-                        <li <?php if( $currentPage==='OSAS_StudClearanceNon-Cleared' ) { echo 'class="active"';} ?>><a href="studClearanceSemNotCleared.php">Non-Cleared Semestral Clearance</a></li>
+<!--                        <li <?php if( $currentPage==='OSAS_StudClearanceNon-Cleared' ) { echo 'class="active"';} ?>><a href="studClearanceSemNotCleared.php">Non-Cleared Semestral Clearance</a></li>-->
 
                     </ul>
                 </li>
