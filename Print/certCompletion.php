@@ -123,7 +123,7 @@ AND ClearanceGenCode_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM activ
      $this->Cell(0,0,'Student`s Copy',0,0,'R');
       $this->Ln(3);
     $QRY = $this->GetY();
-    $this->Image('http://'.$_SERVER['HTTP_HOST'].'/config/generateQR.php?text='.$infoProfile['ClearanceGenCode_COD_VALUE'].'#.png',182,$QRY-35,25);
+    $this->Image('http://'.$_SERVER['HTTP_HOST'].'/OSAS%20MIS/config/generateQR.php?text='.$infoProfile['ClearanceGenCode_COD_VALUE'].'#.png',182,$QRY-35,25);
       $this->SetFont('Arial','',10);
       $this->Cell(0,0,'-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------',0,0,'C');
           $this->Ln(3);
@@ -131,7 +131,7 @@ AND ClearanceGenCode_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM activ
      $this->Cell(0,0,(new datetime())->format('D M d, Y h:i A').' This is system generated form.',0,0,'L');
      $this->Cell(0,0,'University`s Copy',0,0,'R');
       $this->ln(15);
-      $this->Image('http://'.$_SERVER['HTTP_HOST'].'/config/generateQR.php?text='.$infoProfile['ClearanceGenCode_COD_VALUE'].'#.png',177.5,$QRY+43.5,28);
+      $this->Image('http://'.$_SERVER['HTTP_HOST'].'/OSAS%20MIS/config/generateQR.php?text='.$infoProfile['ClearanceGenCode_COD_VALUE'].'#.png',177.5,$QRY+43.5,28);
       $this->SetFont('Arial','B',15);
       $this->cell(0,0,$infoProfile['ClearanceGenCode_COD_VALUE'],0,0,"C");
          $this->Ln(15);

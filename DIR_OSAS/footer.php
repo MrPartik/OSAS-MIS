@@ -1,6 +1,5 @@
 <footer class="footer"></footer>
-<script src="../ASSETS/js/jquery.js"></script>
-<script src="../ASSETS/js/jquery-1.8.3.min.js"></script>
+<script src="../ASSETS/js/jquery.js"></script> 
 <script src="../ASSETS/js/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
 <script src="../ASSETS/bs3/js/bootstrap.min.js"></script>
 <script src="../ASSETS/js/jquery.dcjqaccordion.2.7.js"></script>

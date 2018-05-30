@@ -260,7 +260,9 @@ else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
                                             <option value="Administrator">Administrator</option>
                                             <option value="OSAS HEAD">OSAS HEAD</option>
                                             <option value="Organization">Organization</option>
-                                            <option value="Student">Student</option>
+                                                <option value="Student">Student</option>
+                                                <option value="Student Assistant">Student Assistant</option>
+                                                <option value="Staff">Staff</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-12" style="padding-top:10px" id="upddivref"> Reference
@@ -269,7 +271,9 @@ else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
                                             <option value="Administrator">Administrator</option>
                                             <option value="OSAS HEAD">OSAS HEAD</option>
                                             <option value="Organization">Organization</option>
-                                            <option value="Student">Student</option>
+                                                <option value="Student">Student</option>
+                                                <option value="Student Assistant">Student Assistant</option>
+                                                <option value="Staff">Staff</option>
                                         </select>
                                     </div>
                                 </div>

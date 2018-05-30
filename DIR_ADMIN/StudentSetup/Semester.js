@@ -394,7 +394,6 @@ var EditableTable = function () {
 
                                         },
                                         success: function (response) {
-                                            alert(jqInputs[1].value, );
                                             swal("Record Added!", "The data is successfully added!", "success");
                                             saveRow(oTable, nEditing);
                                             nEditing = null;
