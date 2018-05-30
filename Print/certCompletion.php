@@ -55,7 +55,7 @@ class myPDF extends FPDF{
             $StudentNo = $_GET['studno'];
             }
 
-      $infoProfile = mysqli_fetch_array(mysqli_query($con,"SELECT *,CONCAT(RSP.Stud_LNAME,', ',RSP.Stud_FNAME,' ',COALESCE(RSP.Stud_MNAME,'')) AS FullName  FROM t_clearance_generated_code CGC
+      $infoProfile = mysqli_fetch_array(mysqli_query($con,"SELECT *,upper(CONCAT(RSP.Stud_LNAME,', ',RSP.Stud_FNAME,' ',COALESCE(RSP.Stud_MNAME,''))) AS FullName  FROM t_clearance_generated_code CGC
 INNER JOIN r_stud_profile RSP on CGC.ClearanceGenCode_STUD_NO = RSP.Stud_NO
 WHERE ClearanceGenCode_STUD_NO = '$StudentNo'
 AND ClearanceGenCode_ACADEMIC_YEAR = (SELECT ActiveAcadYear_Batch_YEAR FROM active_academic_year WHERE ActiveAcadYear_IS_ACTIVE = 1 )
@@ -63,7 +63,7 @@ AND ClearanceGenCode_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM activ
 
 
         $this->SetFont('Arial','',10);
-        $this->MultiCell(0,8,'              This is to certify that '.$infoProfile['FullName'].' -  '. $infoProfile['ClearanceGenCode_STUD_NO'].' of '.$infoProfile['Stud_COURSE'] .' '.$infoProfile['Stud_YEAR_LEVEL'] .' - '. $infoProfile['Stud_SECTION'] .' has been cleared of  all accountabilities and obligations from this University for the '.$infoProfile['ClearanceGenCode_SEMESTER'] .', school year '.$infoProfile['ClearanceGenCode_ACADEMIC_YEAR'].'.'.' ',0,1,'');
+        $this->MultiCell(0,8,'              This is to certify that '.$infoProfile['FullName'].' ('.strtoupper( $infoProfile['ClearanceGenCode_STUD_NO']).') of '.strtoupper($infoProfile['Stud_COURSE'] ).' '.$infoProfile['Stud_YEAR_LEVEL'] .' - '. $infoProfile['Stud_SECTION'] .' has been cleared of  all accountabilities and obligations from this University for the '.strtoupper($infoProfile['ClearanceGenCode_SEMESTER'] ).', school year '.$infoProfile['ClearanceGenCode_ACADEMIC_YEAR'].'.'.' ',0,1,'');
         $this->Ln(12);
 
         $this->SetFont('Arial','B',10);
@@ -115,7 +115,7 @@ AND ClearanceGenCode_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM activ
   $this->Ln(4);
   $this->Cell(0,9,'    *   Bring your previous Registration Card and this clearance upon cliaming your present Registration Card.',0,0,'L');
   $this->Ln(4);
-  $this->Cell(0,9,'    *   Please make sure that the QR Code in the lower right side is valid.',0,0,'L');
+  $this->Cell(0,9,'    *   Please make sure that the QR Code in the lower right side is not tampered.',0,0,'L');
   $this->Ln(20);
 
       $this->SetFont('Arial','I',8);
@@ -130,11 +130,11 @@ AND ClearanceGenCode_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM activ
             $this->SetFont('Arial','I',8);
      $this->Cell(0,0,(new datetime())->format('D M d, Y h:i A').' This is system generated form.',0,0,'L');
      $this->Cell(0,0,'University`s Copy',0,0,'R');
-      $this->ln(10);
-
+      $this->ln(15);
+      $this->Image('http://'.$_SERVER['HTTP_HOST'].'/config/generateQR.php?text='.$infoProfile['ClearanceGenCode_COD_VALUE'].'#.png',177.5,$QRY+43.5,28);
       $this->SetFont('Arial','B',15);
       $this->cell(0,0,$infoProfile['ClearanceGenCode_COD_VALUE'],0,0,"C");
-         $this->Ln(10);
+         $this->Ln(15);
 
       $this->SetFont('Arial','B',9);
         $this->SetFillColor(220,220,220);
@@ -142,18 +142,18 @@ AND ClearanceGenCode_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM activ
         $this->Ln(10);
 
         $this->SetFont('Arial','B',8);
-        $this->Cell(50,8,'Student Number:  ',1,0,'R');
-        $this->Cell(145,8,$infoProfile['ClearanceGenCode_STUD_NO'],1,0,'L');
-      $this->Ln(8);
-        $this->Cell(50,8,'Full Name:  ',1,0,'R');
-        $this->Cell(145,8,$infoProfile['FullName'],1,0,'L');
-      $this->Ln(8);
-        $this->Cell(50,8,'Course/ Semester/ Acad. Year:  ',1,0,'R');
-        $this->Cell(145,8,$infoProfile['Stud_COURSE'] .' '.$infoProfile['Stud_YEAR_LEVEL'] .' - '. $infoProfile['Stud_SECTION'].'/ '.$infoProfile['ClearanceGenCode_SEMESTER'].'/ '.$infoProfile['ClearanceGenCode_ACADEMIC_YEAR'] ,1,0,'L');
-      $this->Ln(8);
-        $this->Cell(50,8,'Received By, w/ Signature  ',1,0,'R');
-        $this->Cell(145,8,'',1,0,'L');
-      $this->Ln(8);
+        $this->Cell(50,7,'Student Number:  ',1,0,'R');
+        $this->Cell(117,7,strtoupper($infoProfile['ClearanceGenCode_STUD_NO']),1,0,'L');
+      $this->Ln(7);
+        $this->Cell(50,7,'Full Name:  ',1,0,'R');
+        $this->Cell(117,7,$infoProfile['FullName'],1,0,'L');
+      $this->Ln(7);
+        $this->Cell(50,7,'Course/ Semester/ Acad. Year:  ',1,0,'R');
+        $this->Cell(117,7,$infoProfile['Stud_COURSE'] .' '.$infoProfile['Stud_YEAR_LEVEL'] .' - '. $infoProfile['Stud_SECTION'].'/ '.strtoupper($infoProfile['ClearanceGenCode_SEMESTER']).'/ '.$infoProfile['ClearanceGenCode_ACADEMIC_YEAR'] ,1,0,'L');
+      $this->Ln(7);
+        $this->Cell(50,7,'Received By, w/ Signature  ',1,0,'R');
+        $this->Cell(117,7,'',1,0,'L');
+      $this->Ln(7);
 
 
   }
