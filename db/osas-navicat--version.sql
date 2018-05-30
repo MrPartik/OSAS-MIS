@@ -11,7 +11,7 @@
  Target Server Version : 100108
  File Encoding         : 65001
 
- Date: 29/05/2018 23:39:21
+ Date: 30/05/2018 12:46:15
 */
 
 SET NAMES utf8mb4;
@@ -30,12 +30,15 @@ CREATE TABLE `active_academic_year`  (
   PRIMARY KEY (`ActiveAcadYear_ID`) USING BTREE,
   INDEX `FK_ActiveAcadYear_Batch_YEAR`(`ActiveAcadYear_Batch_YEAR`) USING BTREE,
   CONSTRAINT `FK_ActiveAcadYear_Batch_YEAR` FOREIGN KEY (`ActiveAcadYear_Batch_YEAR`) REFERENCES `r_batch_details` (`Batch_YEAR`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of active_academic_year
 -- ----------------------------
-INSERT INTO `active_academic_year` VALUES (5, '2019-2020', '1', '2018-05-21 00:38:41', NULL);
+INSERT INTO `active_academic_year` VALUES (5, '2019-2020', '0', '2018-05-21 00:38:41', NULL);
+INSERT INTO `active_academic_year` VALUES (6, '2018-2019', '1', '2018-05-30 03:25:24', NULL);
+INSERT INTO `active_academic_year` VALUES (7, '2017-2018', '0', '2018-05-30 03:26:12', NULL);
+INSERT INTO `active_academic_year` VALUES (8, '2014-2015', '0', '2018-05-30 04:08:51', NULL);
 
 -- ----------------------------
 -- Table structure for active_semester
@@ -50,12 +53,14 @@ CREATE TABLE `active_semester`  (
   PRIMARY KEY (`ActiveSemester_ID`) USING BTREE,
   INDEX `FK_ActiveSemester_SEMESTRAL_NAME`(`ActiveSemester_SEMESTRAL_NAME`) USING BTREE,
   CONSTRAINT `FK_ActiveSemester_SEMESTRAL_NAME` FOREIGN KEY (`ActiveSemester_SEMESTRAL_NAME`) REFERENCES `r_semester` (`Semestral_NAME`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of active_semester
 -- ----------------------------
 INSERT INTO `active_semester` VALUES (4, 'Summer Semester', '1', '2018-05-21 00:38:44', NULL);
+INSERT INTO `active_semester` VALUES (5, 'Fourth Semester', '0', '2018-05-30 04:08:41', NULL);
+INSERT INTO `active_semester` VALUES (6, 'Third Semester', '0', '2018-05-30 04:08:46', NULL);
 
 -- ----------------------------
 -- Table structure for log_sanction
@@ -214,7 +219,7 @@ CREATE TABLE `r_clearance_signatories`  (
   `ClearSignatories_DISPLAY_STAT` enum('Active','Inactive') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT 'Active',
   PRIMARY KEY (`ClearSignatories_ID`) USING BTREE,
   UNIQUE INDEX `UNQ_SancDetails_CODE`(`ClearSignatories_CODE`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of r_clearance_signatories
@@ -224,8 +229,9 @@ INSERT INTO `r_clearance_signatories` VALUES (12, 'SIG00002', 'Library', 'Librar
 INSERT INTO `r_clearance_signatories` VALUES (13, 'SIG00003', 'Academic/ Director\'s Office', 'Academic/ Director\'s Office', 'SEMESTRAL', '2018-05-21 00:34:56', '2018-05-21 00:34:56', 'Active');
 INSERT INTO `r_clearance_signatories` VALUES (14, 'SIG00004', 'Guidance and Counseling Office', 'Guidance and Counseling Office', 'SEMESTRAL', '2018-05-21 00:35:18', '2018-05-21 00:35:18', 'Active');
 INSERT INTO `r_clearance_signatories` VALUES (15, 'SIG00005', 'Student Affairs and Services', 'Student Affairs and Services', 'SEMESTRAL', '2018-05-21 00:35:40', '2018-05-21 00:35:40', 'Active');
-INSERT INTO `r_clearance_signatories` VALUES (16, 'Other', 'Other', 'Clearance Signatories Description', 'SEMESTRAL', '2018-05-29 21:53:37', '2018-05-29 21:53:37', 'Active');
-INSERT INTO `r_clearance_signatories` VALUES (17, 'asd', 'sda', 'Clearance Signatories Description', 'SEMESTRAL', '2018-05-29 22:12:36', '2018-05-29 22:12:36', 'Inactive');
+INSERT INTO `r_clearance_signatories` VALUES (16, 'SIG00006', 'Commits', 'Commits Description', 'SEMESTRAL', '2018-05-29 21:53:37', '2018-05-29 21:53:37', 'Active');
+INSERT INTO `r_clearance_signatories` VALUES (17, 'SIG00007', 'SSC', 'Supreme Student Council', 'SEMESTRAL', '2018-05-29 22:12:36', '2018-05-29 22:12:36', 'Active');
+INSERT INTO `r_clearance_signatories` VALUES (18, 'SIG00008', 'Vox Nova', 'University Publisher Description', 'SEMESTRAL', '2018-05-30 12:06:35', '2018-05-30 12:06:35', 'Active');
 
 -- ----------------------------
 -- Table structure for r_couns_appointment_type
@@ -672,12 +678,14 @@ CREATE TABLE `r_stud_batch`  (
   INDEX `FK_stdbtchyrrfrnc`(`Batch_YEAR`) USING BTREE,
   CONSTRAINT `FK_stdbtchrfrnc_STUD_NO` FOREIGN KEY (`Stud_NO`) REFERENCES `r_stud_profile` (`Stud_NO`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_stdbtchyrrfrnc` FOREIGN KEY (`Batch_YEAR`) REFERENCES `r_batch_details` (`Batch_YEAR`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of r_stud_batch
 -- ----------------------------
 INSERT INTO `r_stud_batch` VALUES (1, '2015-00138-CM-0', '2017-2018', 'Regular');
+INSERT INTO `r_stud_batch` VALUES (2, '2015-00073-Cm-0', '2019-2020', 'Regular');
+INSERT INTO `r_stud_batch` VALUES (3, '2015-00073-Cm-0', '2018-2019', 'Regular');
 
 -- ----------------------------
 -- Table structure for r_stud_educ_background
@@ -999,7 +1007,7 @@ CREATE TABLE `r_users`  (
 INSERT INTO `r_users` VALUES (14, 'Demelyn', '2018-OSAS-CM', 0x852FA0A245A1467FCFD3E79A8C1BB0C9, 'OSAS HEAD', NULL, '2018-05-20 23:49:40', '2018-05-20 23:49:40', 'Active');
 INSERT INTO `r_users` VALUES (15, 'admin', 'admin', 0x4D8EAB5029A8C36FE1BF1C3F13405F73, 'Administrator', NULL, '2018-05-20 23:51:59', '2018-05-20 23:51:59', 'Active');
 INSERT INTO `r_users` VALUES (16, 'staff', '-1', 0xC025BDDA58E2790A32D70E58B3F5F148, 'Staff', NULL, '2018-05-21 00:01:12', '2018-05-21 00:01:12', 'Active');
-INSERT INTO `r_users` VALUES (17, 'CITS2019', 'CITS2019', 0xFEFB12FA6206F5695691C396467CD6A1, 'Organization', NULL, '2018-05-23 12:44:31', '2018-05-23 12:44:31', 'Active');
+INSERT INTO `r_users` VALUES (17, 'CITS2019', 'CITS2019', 0xFEFB12FA6206F5695691C396467CD6A1, 'Organization', NULL, '2018-05-23 12:44:31', '2018-05-23 12:44:31', 'Inactive');
 
 -- ----------------------------
 -- Table structure for r_visit
@@ -1152,7 +1160,12 @@ CREATE TABLE `t_assign_stud_finan_assistance`  (
   INDEX `FK_AssStudFinanAssistance_FINAN_NAME`(`AssStudFinanAssistance_FINAN_NAME`) USING BTREE,
   CONSTRAINT `FK_AssStudFinanAssistance_FINAN_NAME` FOREIGN KEY (`AssStudFinanAssistance_FINAN_NAME`) REFERENCES `r_financial_assistance_title` (`FinAssiTitle_NAME`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_AssStudFinanAssistance_STUD_NO` FOREIGN KEY (`AssStudFinanAssistance_STUD_NO`) REFERENCES `r_stud_profile` (`Stud_NO`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of t_assign_stud_finan_assistance
+-- ----------------------------
+INSERT INTO `t_assign_stud_finan_assistance` VALUES (1, '2015-00073-Cm-0', 'CHED', 'Active', '', '2018-05-30 03:37:21', '2018-05-30 03:37:21', 'Active');
 
 -- ----------------------------
 -- Table structure for t_assign_stud_loss_id_regicard
@@ -1263,11 +1276,12 @@ CREATE TABLE `t_clearance_generated_code`  (
   CONSTRAINT `FK_ClearanceGenCode_BATCH` FOREIGN KEY (`ClearanceGenCode_ACADEMIC_YEAR`) REFERENCES `r_batch_details` (`Batch_YEAR`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_ClearanceGenCode_SEMESTER` FOREIGN KEY (`ClearanceGenCode_SEMESTER`) REFERENCES `r_semester` (`Semestral_NAME`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_ClearanceGenCode_STUD_NO` FOREIGN KEY (`ClearanceGenCode_STUD_NO`) REFERENCES `r_stud_profile` (`Stud_NO`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 73 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 74 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of t_clearance_generated_code
 -- ----------------------------
+INSERT INTO `t_clearance_generated_code` VALUES (73, '2015-00073-Cm-0', '2018-2019', 'Summer Semester', 0x796A66747279534B44475370735845, NULL, '2018-05-30 03:58:31', '2018-05-30 03:58:31', '2018-05-30 03:58:31', 'Active');
 INSERT INTO `t_clearance_generated_code` VALUES (2, '2015-00073-Cm-0', '2019-2020', 'Summer Semester', 0x68645655793734693676545A525570, NULL, '2018-05-29 09:57:33', '2018-05-29 09:57:33', '2018-05-29 09:57:33', 'Active');
 INSERT INTO `t_clearance_generated_code` VALUES (1, '2017-00057', '2019-2020', 'Summer Semester', 0x3852756950426743744F324B694A70, NULL, '2018-05-29 09:57:33', '2018-05-29 09:57:33', '2018-05-29 09:57:33', 'Active');
 INSERT INTO `t_clearance_generated_code` VALUES (3, '2017-00058', '2019-2020', 'Summer Semester', 0x7A553856646B5072574C3548723738, NULL, '2018-05-29 09:57:33', '2018-05-29 09:57:33', '2018-05-29 09:57:33', 'Active');
@@ -1303,7 +1317,6 @@ INSERT INTO `t_clearance_generated_code` VALUES (62, '2017-00259', '2019-2020', 
 INSERT INTO `t_clearance_generated_code` VALUES (61, '2017-00260', '2019-2020', 'Summer Semester', 0x504A7776796F6E754145346553657A, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
 INSERT INTO `t_clearance_generated_code` VALUES (60, '2017-00261', '2019-2020', 'Summer Semester', 0x4F6F75393154435247433635535267, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
 INSERT INTO `t_clearance_generated_code` VALUES (63, '2017-00262', '2019-2020', 'Summer Semester', 0x78434A496F796E49786B35356C3046, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
-INSERT INTO `t_clearance_generated_code` VALUES (65, '2017-00263', '2019-2020', 'Summer Semester', 0x36544679676B6C586F687275517846, NULL, '2018-05-29 09:57:40', '2018-05-29 09:57:40', '2018-05-29 09:57:40', 'Active');
 INSERT INTO `t_clearance_generated_code` VALUES (68, '2017-00264', '2019-2020', 'Summer Semester', 0x4334345A634E4C67486B6567664545, NULL, '2018-05-29 09:57:40', '2018-05-29 09:57:40', '2018-05-29 09:57:40', 'Active');
 INSERT INTO `t_clearance_generated_code` VALUES (69, '2017-00265', '2019-2020', 'Summer Semester', 0x4A5342597062756F716A5932374362, NULL, '2018-05-29 09:57:40', '2018-05-29 09:57:40', '2018-05-29 09:57:40', 'Active');
 INSERT INTO `t_clearance_generated_code` VALUES (66, '2017-00266', '2019-2020', 'Summer Semester', 0x316E66464C664E3653324E456A4E6B, NULL, '2018-05-29 09:57:40', '2018-05-29 09:57:40', '2018-05-29 09:57:40', 'Active');
@@ -1521,7 +1534,7 @@ CREATE TABLE `t_org_for_compliance`  (
 -- ----------------------------
 -- Records of t_org_for_compliance
 -- ----------------------------
-INSERT INTO `t_org_for_compliance` VALUES (1, 'CITS2019', 'CITS2019', 'Alma C. Fernandez', '2019-2020', '2018-05-23 12:44:12', '2018-05-23 12:44:12', 'Active');
+INSERT INTO `t_org_for_compliance` VALUES (1, 'CITS2019', 'CITS2019', 'Alma C. Fernandez', '2019-2020', '2018-05-23 12:44:12', '2018-05-23 12:44:12', 'Inactive');
 
 -- ----------------------------
 -- Table structure for t_org_officers
