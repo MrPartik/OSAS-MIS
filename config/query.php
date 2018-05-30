@@ -21,7 +21,7 @@ $view_clearanceGeneratedCodeQuery ="";
                     global $view_clearanceGeneratedCodeQuery;
                     $view_clearanceGeneratedCodeQuery = mysqli_query($con,"SELECT *,CONCAT(RSP.Stud_LNAME,', ',RSP.Stud_FNAME,' ',COALESCE(RSP.Stud_MNAME,'')) AS FullName  FROM t_clearance_generated_code CGC
 INNER JOIN r_stud_profile RSP on CGC.ClearanceGenCode_STUD_NO = RSP.Stud_NO
-WHERE ClearanceGenCode_STUD_NO = '2015-00073-Cm-0'
+WHERE ClearanceGenCode_STUD_NO = '$id'
 AND ClearanceGenCode_ACADEMIC_YEAR = (SELECT ActiveAcadYear_Batch_YEAR FROM active_academic_year WHERE ActiveAcadYear_IS_ACTIVE = 1)
 AND ClearanceGenCode_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM active_semester WHERE ActiveSemester_IS_ACTIVE = 1)");
 

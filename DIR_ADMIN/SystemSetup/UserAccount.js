@@ -193,7 +193,7 @@ var EditableTable = function () {
                                     processData: false, // To send DOMDocument or non processed data file it is set to false
                                     success: function (data) // A function to be called if request succeeds
                                     {
-                                        alert('okay')
+
                                     }
                                 });
 
@@ -273,12 +273,10 @@ var EditableTable = function () {
             });
             $('#updform-data').on('submit',function (e) {
                 e.preventDefault();
-                alert(latcode);
                 var username = document.getElementById("updtxtusername").value;
                 var role = document.getElementById("updselRole").value;
                 var password = document.getElementById("updtxtpassword").value;
                 var reference = document.getElementById("updselRef").value;
-                alert(username);
                 if (username.length)  
                         swal({
                                 title: "Are you sure?",
@@ -302,7 +300,7 @@ var EditableTable = function () {
                                         processData: false, // To send DOMDocument or non processed data file it is set to false
                                         success: function (data) // A function to be called if request succeeds
                                         {
-                                            alert(data);
+
                                         }
                                     });
     
@@ -458,7 +456,7 @@ var EditableTable = function () {
                 var nRow = $(this).parents('tr')[0];
                 editRow(oTable, nRow);
                 nEditing = nRow;
-                alert(latcode);
+
                 $.ajax({
                     type: 'post',
                     url: 'SystemSetup/UserAccount/Retrieve_UserDetails.php',
@@ -549,7 +547,7 @@ var EditableTable = function () {
                                 success: function (data2) {
                                     document.getElementById('updselRef').innerHTML = '<option value="-1">Please Select an User Reference</option>';
                                     $.each(data2, function (key, val) {
-                                        alert(getref + '-' + val.val);
+
                                         if (data.ref == val.val)
                                             $('#updselRef').append('<option value="' + val.val + '" selected>' + val.text + '</option>')
                                         else
