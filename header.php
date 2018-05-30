@@ -37,20 +37,15 @@
                 <div class="horizontal-menu navbar-collapse collapse pull-right">
                     <ul class="nav navbar-nav">
                         <li class="active"><a  href="index.php">Home</a></li>
-                        <li class="dropdown"> <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">Student Services <b class=" fa fa-angle-down"></b></a>
-                            <ul class="dropdown-menu">
-                                    <li><a href="login.php">Guidance and Counseling</a></li>  
-                                    <li><a href="login.php">Office of the Student Affairs and Services</a></li> 
-                            </ul>
-                        </li> 
+                        
                          
                         <li class="dropdown"> <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">Clearance <b class=" fa fa-angle-down"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Clearance Instructions</a></li>
                                 <li><a href="#  ">Claim Clearance</a></li>
-                            </ul>
-                        </li> 
-                        <li><a href="login.php">Login</a></li>  
+                            </ul> 
+                        <li class=""><a  href="login.php">OSAS MIS</a></li>
+                        <li class=""><a  href="../GCSMS/html/login.php">G&CSMS</a></li>
                     </ul>
                 </div>
               
