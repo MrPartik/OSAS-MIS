@@ -3,15 +3,15 @@
 
  Source Server         : con
  Source Server Type    : MySQL
- Source Server Version : 100108
+ Source Server Version : 100131
  Source Host           : 127.0.0.1:3306
  Source Schema         : osas
 
  Target Server Type    : MySQL
- Target Server Version : 100108
+ Target Server Version : 100131
  File Encoding         : 65001
 
- Date: 30/05/2018 12:56:33
+ Date: 30/05/2018 15:22:41
 */
 
 SET NAMES utf8mb4;
@@ -1219,7 +1219,7 @@ CREATE TABLE `t_upload`  (
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Active_AssignConfilicts_SemClearance`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Active_AssignConfilicts_SemClearance"(IN `id` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Active_AssignConfilicts_SemClearance`(IN `id` INT)
     NO SQL
 UPDATE `t_assign_student_clearance` SET
 `AssStudClearance_DATE_MOD`=CURRENT_TIMESTAMP
@@ -1233,7 +1233,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Archive_AssignConfilicts_SemClearance`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Archive_AssignConfilicts_SemClearance"(IN `id` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Archive_AssignConfilicts_SemClearance`(IN `id` INT)
     NO SQL
 UPDATE `t_assign_student_clearance` SET
 `AssStudClearance_DATE_MOD`=CURRENT_TIMESTAMP
@@ -1247,7 +1247,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Archive_AssignSanction`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Archive_AssignSanction"(IN `ID` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Archive_AssignSanction`(IN `ID` INT)
     NO SQL
 UPDATE `t_assign_stud_saction` SET `AssSancStudStudent_DISPLAY_STAT`='Inactive'
 ,`AssSancStudStudent_DATE_MOD` = CURRENT_TIMESTAMP
@@ -1261,7 +1261,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Archive_FinancialAss`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Archive_FinancialAss"(IN `ID` INT(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Archive_FinancialAss`(IN `ID` INT(100))
     NO SQL
 delete from `t_assign_stud_finan_assistance`
 where AssStudFinanAssistance_ID = ID
@@ -1273,7 +1273,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Archive_LossIDRegi`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Archive_LossIDRegi"(IN `ID` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Archive_LossIDRegi`(IN `ID` INT)
     NO SQL
 update t_assign_stud_loss_id_regicard
 set AssLoss_DISPLAY_STAT ='Inactive'
@@ -1297,7 +1297,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `FinishSanction`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "FinishSanction"(IN `ID` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `FinishSanction`(IN `ID` INT)
     NO SQL
 UPDATE t_assign_stud_saction
 set AssSancStudStudent_IS_FINISH ='Finished'
@@ -1310,7 +1310,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Insert_AssignConfilicts_SemClearance`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_AssignConfilicts_SemClearance"(IN `Studno` VARCHAR(15), IN `acadyear` VARCHAR(15), IN `sem` VARCHAR(50), IN `sigcode` VARCHAR(15))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_AssignConfilicts_SemClearance`(IN `Studno` VARCHAR(15), IN `acadyear` VARCHAR(15), IN `sem` VARCHAR(50), IN `sigcode` VARCHAR(15))
     NO SQL
 INSERT INTO `t_assign_student_clearance` (`AssStudClearance_STUD_NO`, `AssStudClearance_BATCH`, `AssStudClearance_SEMESTER`, `AssStudClearance_SIGNATORIES_CODE`) VALUES (Studno,acadyear,sem,sigcode)
 ;;
@@ -1321,7 +1321,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Insert_AssignFinancialAss`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_AssignFinancialAss"(IN `StudNo` VARCHAR(15), IN `FinanAssTitle` VARCHAR(100), IN `FinanAssStatus` ENUM('Active','Inactive','Void','Cancelled'), IN `FinanAssRemarks` VARCHAR(500))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_AssignFinancialAss`(IN `StudNo` VARCHAR(15), IN `FinanAssTitle` VARCHAR(100), IN `FinanAssStatus` ENUM('Active','Inactive','Void','Cancelled'), IN `FinanAssRemarks` VARCHAR(500))
     NO SQL
 INSERT INTO `t_assign_stud_finan_assistance` (`AssStudFinanAssistance_STUD_NO`, `AssStudFinanAssistance_FINAN_NAME`, `AssStudFinanAssistance_STATUS`, `AssStudFinanAssistance_REMARKS`, `AssStudFinanAssistance_DATE_ADD`) VALUES (StudNo,FinanAssTitle , FinanAssStatus, FinanAssRemarks, CURRENT_TIMESTAMP)
 ;;
@@ -1347,7 +1347,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Insert_DesignatedOffice`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_DesignatedOffice"(IN `DesiCode` VARCHAR(15), IN `DesiName` VARCHAR(100), IN `DesiDesc` VARCHAR(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_DesignatedOffice`(IN `DesiCode` VARCHAR(15), IN `DesiName` VARCHAR(100), IN `DesiDesc` VARCHAR(100))
     NO SQL
 INSERT INTO `r_designated_offices_details` (  `DesOffDetails_CODE`, `DesOffDetails_NAME`, `DesOffDetails_DESC`) VALUES (DesiCode,DesiName,DesiDesc)
 ;;
@@ -1358,7 +1358,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Insert_LossIDRegi`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_LossIDRegi"(IN `StudNo` VARCHAR(15), IN `Type` ENUM('Identification Card','Registration Card'), IN `Claim` DATETIME, IN `Remarks` VARCHAR(500))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_LossIDRegi`(IN `StudNo` VARCHAR(15), IN `Type` ENUM('Identification Card','Registration Card'), IN `Claim` DATETIME, IN `Remarks` VARCHAR(500))
     NO SQL
 INSERT INTO `t_assign_stud_loss_id_regicard` ( `AssLoss_STUD_NO`, `AssLoss_TYPE`, `AssLoss_REMARKS`, `AssLoss_DATE_CLAIM`) VALUES (StudNo,Type,Remarks,Claim)
 ;;
@@ -1369,7 +1369,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Insert_SanctionDetails`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_SanctionDetails"(IN `SancCode` VARCHAR(100), IN `SancName` VARCHAR(100), IN `SancDesc` VARCHAR(1000), IN `TimeVal` INT(11))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_SanctionDetails`(IN `SancCode` VARCHAR(100), IN `SancName` VARCHAR(100), IN `SancDesc` VARCHAR(1000), IN `TimeVal` INT(11))
     NO SQL
 INSERT INTO `r_sanction_details`
 (`SancDetails_CODE`
@@ -1389,7 +1389,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Insert_Signatories`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_Signatories"(IN `sCODE` VARCHAR(15), IN `sNAME` VARCHAR(100), IN `sDESC` VARCHAR(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_Signatories`(IN `sCODE` VARCHAR(15), IN `sNAME` VARCHAR(100), IN `sDESC` VARCHAR(100))
     NO SQL
 INSERT INTO `r_clearance_signatories` (`ClearSignatories_CODE`, `ClearSignatories_NAME`, `ClearSignatories_DESC` ) VALUES (sCODE,sNAME,sDESC)
 ;;
@@ -1400,7 +1400,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Insert_StudProfile`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_StudProfile"(IN `StudNO` VARCHAR(15), IN `FNAME` VARCHAR(100), IN `MNAME` VARCHAR(100), IN `LNAME` VARCHAR(100), IN `COUSRE` VARCHAR(15), IN `SECTION` VARCHAR(5), IN `GENDER` VARCHAR(10), IN `EMAIL` VARCHAR(100), IN `CONTACT` VARCHAR(20), IN `BDAY` DATE, IN `BPLACE` VARCHAR(500), IN `ADDRESS` VARCHAR(500), IN `STATUS` VARCHAR(50))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_StudProfile`(IN `StudNO` VARCHAR(15), IN `FNAME` VARCHAR(100), IN `MNAME` VARCHAR(100), IN `LNAME` VARCHAR(100), IN `COUSRE` VARCHAR(15), IN `SECTION` VARCHAR(5), IN `GENDER` VARCHAR(10), IN `EMAIL` VARCHAR(100), IN `CONTACT` VARCHAR(20), IN `BDAY` DATE, IN `BPLACE` VARCHAR(500), IN `ADDRESS` VARCHAR(500), IN `STATUS` VARCHAR(50))
     NO SQL
 INSERT INTO R_STUD_PROFILE
 (
@@ -1452,7 +1452,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Insert_Voucher`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_Voucher"(IN `Vouch` VARCHAR(15), IN `org` VARCHAR(15), IN `checkk` VARCHAR(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_Voucher`(IN `Vouch` VARCHAR(15), IN `org` VARCHAR(15), IN `checkk` VARCHAR(100))
     NO SQL
 INSERT INTO `t_org_voucher` (`OrgVoucher_CASH_VOUCHER_NO`, `OrgVoucher_ORG_CODE`,`OrgVoucher_VOUCHED_BY`) VALUES ( Vouch, org, checkk)
 ;;
@@ -1463,7 +1463,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Insert_Voucher_Item`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_Voucher_Item"(IN `Vouch` VARCHAR(15), IN `itemss` VARCHAR(100), IN `amo` DOUBLE(10,3))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_Voucher_Item`(IN `Vouch` VARCHAR(15), IN `itemss` VARCHAR(100), IN `amo` DOUBLE(10,3))
     NO SQL
 INSERT INTO `t_org_voucher_items` (`OrgVouchItems_VOUCHER_NO`, `OrgVouchItems_ITEM_NAME`, `OrgVouchItems_AMOUNT`) VALUES (Vouch,itemss,amo)
 ;;
@@ -1485,7 +1485,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Login_User`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Login_User"(IN `username` VARCHAR(100), IN `password` VARCHAR(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Login_User`(IN `username` VARCHAR(100), IN `password` VARCHAR(100))
     NO SQL
 SELECT *
 FROM osas.r_users
@@ -1500,7 +1500,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Log_Sanction`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Log_Sanction"(IN `SancID` INT, IN `Consuumed` INT, IN `Remarks` VARCHAR(100), IN `isFinish` ENUM('Processing','Finished'))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Log_Sanction`(IN `SancID` INT, IN `Consuumed` INT, IN `Remarks` VARCHAR(100), IN `isFinish` ENUM('Processing','Finished'))
     NO SQL
 INSERT INTO `log_sanction` ( `LogSanc_AssSancSudent_ID`, `LogSanc_CONSUMED_HOURS`, `LogSanc_REMARKS`, `LogSanc_IS_FINISH`) VALUES (SancID,Consuumed, Remarks, isFinish)
 ;;
@@ -1602,7 +1602,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Update_AssignFinancialAss`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Update_AssignFinancialAss"(IN `ID` INT, IN `FinanAssStat` ENUM('Active','Inactive','Void','Cancelled'), IN `Remarks` VARCHAR(500))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Update_AssignFinancialAss`(IN `ID` INT, IN `FinanAssStat` ENUM('Active','Inactive','Void','Cancelled'), IN `Remarks` VARCHAR(500))
     NO SQL
 UPDATE `t_assign_stud_finan_assistance`
 SET `AssStudFinanAssistance_STATUS` = FinanAssStat
@@ -1635,7 +1635,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Update_LossIDRegi`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Update_LossIDRegi"(IN `ID` INT, IN `Claim` DATETIME, IN `Remarks` VARCHAR(500))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Update_LossIDRegi`(IN `ID` INT, IN `Claim` DATETIME, IN `Remarks` VARCHAR(500))
     NO SQL
 update t_assign_stud_loss_id_regicard
 set AssLoss_DATE_CLAIM = Claim
@@ -1649,7 +1649,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Update_StudProfile`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Update_StudProfile"(IN `ID` INT(100), IN `StudNO` VARCHAR(15), IN `FNAME` VARCHAR(100), IN `MNAME` VARCHAR(100), IN `LNAME` VARCHAR(100), IN `COURSE` VARCHAR(15), IN `SECTION` VARCHAR(5), IN `GENDER` VARCHAR(10), IN `EMAIL` VARCHAR(100), IN `CONTACT` VARCHAR(20), IN `BDAY` DATE, IN `BPLACE` VARCHAR(500), IN `ADDRESS` VARCHAR(500), IN `STATUS` VARCHAR(50))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Update_StudProfile`(IN `ID` INT(100), IN `StudNO` VARCHAR(15), IN `FNAME` VARCHAR(100), IN `MNAME` VARCHAR(100), IN `LNAME` VARCHAR(100), IN `COURSE` VARCHAR(15), IN `SECTION` VARCHAR(5), IN `GENDER` VARCHAR(10), IN `EMAIL` VARCHAR(100), IN `CONTACT` VARCHAR(20), IN `BDAY` DATE, IN `BPLACE` VARCHAR(500), IN `ADDRESS` VARCHAR(500), IN `STATUS` VARCHAR(50))
     NO SQL
 UPDATE `r_stud_profile`
 SET
@@ -1687,7 +1687,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `View_Courses`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "View_Courses"()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `View_Courses`()
     NO SQL
 select * from r_courses where course_display_stat ='active'
 ;;
@@ -1698,7 +1698,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `View_StudProfile`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "View_StudProfile"()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `View_StudProfile`()
     NO SQL
 select
 	Stud_NO
@@ -1720,7 +1720,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `View_StudSanction`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "View_StudSanction"()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `View_StudSanction`()
     NO SQL
     DETERMINISTIC
 SELECT B.AssSancStudStudent_ID AssSancID
