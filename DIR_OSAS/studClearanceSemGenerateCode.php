@@ -73,7 +73,7 @@ ORDER BY ay.ActiveAcadYear_ID DESC");
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?
+                                                <?php
                                                     while($stud_row = mysqli_fetch_assoc($profQuery))
                                                     {
                                                                 view_clearanceGen($stud_row['Stud_NO']);
@@ -96,7 +96,7 @@ ORDER BY ay.ActiveAcadYear_ID DESC");
                                                         </td>
                                                         <td>
                                                             <center>
-                                                                <?php if($clearance["ClearanceGenCode_COD_VALUE"]!=""){?>
+                                                                <?php if($clearance["ClearanceGenCode_COD_VALUE"]!=""){ ?>
                                                                     <button data-toggle="modal" href="#studSemClearanceQRCode" id="StudSemViewQR" value="<?php echo $clearance['ClearanceGenCode_ID']; ?>" studno="<?php echo $stud_row['Stud_NO']; ?>" genValue="<?php echo $clearance['ClearanceGenCode_COD_VALUE']; ?>" class="btn btn-info " title="View QR Code"> <i class="fa  fa-qrcode"></i> </button>
                                                                     <button data-toggle="modal" href="#studSemViewCompletion" id="StudSemViewCompletion" value="<?php echo $clearance['ClearanceGenCode_ID']; ?>" studno="<?php echo $stud_row['Stud_NO']; ?>" genValue="<?php echo $clearance['ClearanceGenCode_COD_VALUE']; ?>" class="btn btn-success " title="View Completion Form"> <i class="fa  fa-file"></i> </button> |
                                                                     <button id="StudSemUndo" value="<?php echo $clearance['ClearanceGenCode_ID']; ?>" class="btn btn-danger " title="Undo generated clearance form"> <i class="fa fa-rotate-left"></i> </button>
@@ -107,11 +107,11 @@ ORDER BY ay.ActiveAcadYear_ID DESC");
                                                         </td>
                                                         <td>
                                                             <center>
-                                                                <?php if($clearance["ClearanceGenCode_COD_VALUE"]==""){?>
+                                                                <?php if($clearance["ClearanceGenCode_COD_VALUE"]==""){ ?>
                                                                     <input type="checkbox" id="selectMe" style="transform: scale(1.5);" value="<?php echo $stud_row['Stud_NO']; ?>">
-                                                                    <?php }else {?>
+                                                                    <?php }else { ?>
                                                                         <input type="checkbox" disabled style="transform: scale(1.5);">
-                                                                        <?php }?>
+                                                                        <?php } ?>
                                                             </center>
                                                         </td>
                                                     </tr>
