@@ -251,8 +251,8 @@ ORDER BY ay.ActiveAcadYear_ID DESC");
     $("button[id='StudSemUndo']").on("click", function () {
         var ID = $(this).val();
         swal({
-            title: "Finalize the clearance of this student"
-            , text: "The Student: " + $(this).val() + " is subject for claiming clearance form"
+            title: "Reset the Generated Code of this Student?"
+            , text: "Any of completion form created by this system will be void."
             , type: "warning"
             , showCancelButton: true
             , confirmButtonColor: '#9DD656'
@@ -274,7 +274,7 @@ ORDER BY ay.ActiveAcadYear_ID DESC");
                     , success: function (result) {
                         swal({
                             title: "Woaah, that's neat!"
-                            , text: "The Code is Successfuly Generated"
+                            , text: "The Code is Successfuly Reset"
                             , type: "success"
                             , showCancelButton: false
                             , confirmButtonColor: '#9DD656'
