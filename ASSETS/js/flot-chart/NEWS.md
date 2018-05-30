@@ -243,7 +243,7 @@ The base and overlay canvas are now using the CSS classes "flot-base" and
  - Ensure that the overlay and primary canvases remain aligned. (issue #670,
    pull request #901)
 
- - Added support for jQuery 1.9 by removing and replacing uses of $.browser.
+ - Added support for jQuery 1.9 by removing and replacing uses of $.support.
    (analysis and patch by Anthony Ryan, pull request #905)
 
  - Pie charts no longer disappear when redrawn during a resize or update.
@@ -438,7 +438,7 @@ also surfaced, if your graphs are slow in IE, you may want to give it a spin:
 
    ```{brightness: x, opacity: y }```
 
- - Don't use $.browser.msie, check for getContext on the created canvas element
+ - Don't use $.support.msie, check for getContext on the created canvas element
    instead and try to use excanvas if it's not found.
 
    Fixes IE 9 compatibility.

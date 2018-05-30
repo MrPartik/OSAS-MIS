@@ -195,7 +195,7 @@
           that.caret(pos)
       }
 
-      if ($.browser.msie)
+      if ($.support.msie)
         moveCaret()
       else
         setTimeout(moveCaret, 0)

@@ -415,7 +415,7 @@
                     ctx.beginPath();
                     if (Math.abs(angle - Math.PI*2) > 0.000000001)
                         ctx.moveTo(0,0); // Center of the pie
-                    else if ($.browser.msie)
+                    else if ($.support.msie)
                         angle -= 0.0001;
                     //ctx.arc(0,0,radius,0,angle,false); // This doesn't work properly in Opera
                     ctx.arc(0,0,radius,currentAngle,currentAngle+angle,false);
