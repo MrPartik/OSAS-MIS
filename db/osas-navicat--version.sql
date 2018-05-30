@@ -3,15 +3,15 @@
 
  Source Server         : con
  Source Server Type    : MySQL
- Source Server Version : 100108
+ Source Server Version : 100131
  Source Host           : 127.0.0.1:3306
  Source Schema         : osas
 
  Target Server Type    : MySQL
- Target Server Version : 100108
+ Target Server Version : 100131
  File Encoding         : 65001
 
- Date: 28/05/2018 10:57:56
+ Date: 30/05/2018 15:23:06
 */
 
 SET NAMES utf8mb4;
@@ -30,12 +30,15 @@ CREATE TABLE `active_academic_year`  (
   PRIMARY KEY (`ActiveAcadYear_ID`) USING BTREE,
   INDEX `FK_ActiveAcadYear_Batch_YEAR`(`ActiveAcadYear_Batch_YEAR`) USING BTREE,
   CONSTRAINT `FK_ActiveAcadYear_Batch_YEAR` FOREIGN KEY (`ActiveAcadYear_Batch_YEAR`) REFERENCES `r_batch_details` (`Batch_YEAR`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of active_academic_year
 -- ----------------------------
-INSERT INTO `active_academic_year` VALUES (5, '2019-2020', '1', '2018-05-21 00:38:41', NULL);
+INSERT INTO `active_academic_year` VALUES (5, '2019-2020', '0', '2018-05-21 00:38:41', NULL);
+INSERT INTO `active_academic_year` VALUES (6, '2018-2019', '1', '2018-05-30 03:25:24', NULL);
+INSERT INTO `active_academic_year` VALUES (7, '2017-2018', '0', '2018-05-30 03:26:12', NULL);
+INSERT INTO `active_academic_year` VALUES (8, '2014-2015', '0', '2018-05-30 04:08:51', NULL);
 
 -- ----------------------------
 -- Table structure for active_semester
@@ -50,12 +53,14 @@ CREATE TABLE `active_semester`  (
   PRIMARY KEY (`ActiveSemester_ID`) USING BTREE,
   INDEX `FK_ActiveSemester_SEMESTRAL_NAME`(`ActiveSemester_SEMESTRAL_NAME`) USING BTREE,
   CONSTRAINT `FK_ActiveSemester_SEMESTRAL_NAME` FOREIGN KEY (`ActiveSemester_SEMESTRAL_NAME`) REFERENCES `r_semester` (`Semestral_NAME`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of active_semester
 -- ----------------------------
 INSERT INTO `active_semester` VALUES (4, 'Summer Semester', '1', '2018-05-21 00:38:44', NULL);
+INSERT INTO `active_semester` VALUES (5, 'Fourth Semester', '0', '2018-05-30 04:08:41', NULL);
+INSERT INTO `active_semester` VALUES (6, 'Third Semester', '0', '2018-05-30 04:08:46', NULL);
 
 -- ----------------------------
 -- Table structure for log_sanction
@@ -208,21 +213,25 @@ CREATE TABLE `r_clearance_signatories`  (
   `ClearSignatories_CODE` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `ClearSignatories_NAME` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `ClearSignatories_DESC` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT 'Clearance Signatories Description',
+  `ClearSignatories_TYPE` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `ClearSignatories_DATE_MOD` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ClearSignatories_DATE_ADD` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ClearSignatories_DISPLAY_STAT` enum('Active','Inactive') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT 'Active',
   PRIMARY KEY (`ClearSignatories_ID`) USING BTREE,
   UNIQUE INDEX `UNQ_SancDetails_CODE`(`ClearSignatories_CODE`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of r_clearance_signatories
 -- ----------------------------
-INSERT INTO `r_clearance_signatories` VALUES (11, 'SIG00001', 'Accounting Office', 'Accounting Office', '2018-05-21 00:32:21', '2018-05-21 00:32:21', 'Active');
-INSERT INTO `r_clearance_signatories` VALUES (12, 'SIG00002', 'Library', 'Library', '2018-05-21 00:34:38', '2018-05-21 00:34:38', 'Active');
-INSERT INTO `r_clearance_signatories` VALUES (13, 'SIG00003', 'Academic/ Director\'s Office', 'Academic/ Director\'s Office', '2018-05-21 00:34:56', '2018-05-21 00:34:56', 'Active');
-INSERT INTO `r_clearance_signatories` VALUES (14, 'SIG00004', 'Guidance and Counseling Office', 'Guidance and Counseling Office', '2018-05-21 00:35:18', '2018-05-21 00:35:18', 'Active');
-INSERT INTO `r_clearance_signatories` VALUES (15, 'SIG00005', 'Student Affairs and Services', 'Student Affairs and Services', '2018-05-21 00:35:40', '2018-05-21 00:35:40', 'Active');
+INSERT INTO `r_clearance_signatories` VALUES (11, 'SIG00001', 'Accounting Office', 'Accounting Office', 'SEMESTRAL', '2018-05-21 00:32:21', '2018-05-21 00:32:21', 'Active');
+INSERT INTO `r_clearance_signatories` VALUES (12, 'SIG00002', 'Library', 'Library', 'SEMESTRAL', '2018-05-21 00:34:38', '2018-05-21 00:34:38', 'Active');
+INSERT INTO `r_clearance_signatories` VALUES (13, 'SIG00003', 'Academic/ Director\'s Office', 'Academic/ Director\'s Office', 'SEMESTRAL', '2018-05-21 00:34:56', '2018-05-21 00:34:56', 'Active');
+INSERT INTO `r_clearance_signatories` VALUES (14, 'SIG00004', 'Guidance and Counseling Office', 'Guidance and Counseling Office', 'SEMESTRAL', '2018-05-21 00:35:18', '2018-05-21 00:35:18', 'Active');
+INSERT INTO `r_clearance_signatories` VALUES (15, 'SIG00005', 'Student Affairs and Services', 'Student Affairs and Services', 'SEMESTRAL', '2018-05-21 00:35:40', '2018-05-21 00:35:40', 'Active');
+INSERT INTO `r_clearance_signatories` VALUES (16, 'SIG00006', 'Commits', 'Commits Description', 'SEMESTRAL', '2018-05-29 21:53:37', '2018-05-29 21:53:37', 'Active');
+INSERT INTO `r_clearance_signatories` VALUES (17, 'SIG00007', 'SSC', 'Supreme Student Council', 'SEMESTRAL', '2018-05-29 22:12:36', '2018-05-29 22:12:36', 'Active');
+INSERT INTO `r_clearance_signatories` VALUES (18, 'SIG00008', 'Vox Nova', 'University Publisher Description', 'SEMESTRAL', '2018-05-30 12:06:35', '2018-05-30 12:06:35', 'Active');
 
 -- ----------------------------
 -- Table structure for r_couns_appointment_type
@@ -398,8 +407,8 @@ CREATE TABLE `r_notification`  (
 -- ----------------------------
 -- Records of r_notification
 -- ----------------------------
-INSERT INTO `r_notification` VALUES (1, 'EVNT00003', 'CITS2019', '2018-OSAS-CM', 'Seen', 'Clicked', 'Organization', '2018-05-23 13:47:13', '2018-05-25 00:23:54', '2018-05-23 13:46:57');
-INSERT INTO `r_notification` VALUES (2, 'Vouch #00001', 'CITS2019', '2018-OSAS-CM', 'Seen', 'Clicked', 'OSAS Head', '2018-05-26 10:29:07', '2018-05-26 10:29:09', '2018-05-26 10:29:02');
+INSERT INTO `r_notification` VALUES (1, 'EVNT00003', 'CITS2019', '2018-OSAS-CM', 'Seen', 'Clicked', 'Organization', '2018-05-23 13:47:13', '2018-05-28 13:45:29', '2018-05-23 13:46:57');
+INSERT INTO `r_notification` VALUES (2, 'Vouch #00001', 'CITS2019', '2018-OSAS-CM', 'Seen', 'Clicked', 'OSAS Head', '2018-05-26 10:29:07', '2018-05-28 13:45:32', '2018-05-26 10:29:02');
 
 -- ----------------------------
 -- Table structure for r_org_accreditation_details
@@ -669,12 +678,14 @@ CREATE TABLE `r_stud_batch`  (
   INDEX `FK_stdbtchyrrfrnc`(`Batch_YEAR`) USING BTREE,
   CONSTRAINT `FK_stdbtchrfrnc_STUD_NO` FOREIGN KEY (`Stud_NO`) REFERENCES `r_stud_profile` (`Stud_NO`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_stdbtchyrrfrnc` FOREIGN KEY (`Batch_YEAR`) REFERENCES `r_batch_details` (`Batch_YEAR`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of r_stud_batch
 -- ----------------------------
 INSERT INTO `r_stud_batch` VALUES (1, '2015-00138-CM-0', '2017-2018', 'Regular');
+INSERT INTO `r_stud_batch` VALUES (2, '2015-00073-Cm-0', '2019-2020', 'Regular');
+INSERT INTO `r_stud_batch` VALUES (3, '2015-00073-Cm-0', '2018-2019', 'Regular');
 
 -- ----------------------------
 -- Table structure for r_stud_educ_background
@@ -850,7 +861,7 @@ CREATE TABLE `r_stud_profile`  (
 -- Records of r_stud_profile
 -- ----------------------------
 INSERT INTO `r_stud_profile` VALUES (1, '2015-00138-CM-0', 'Oliver', NULL, 'Gabriel', 'Male', 'BSIT', 3, '1', '1998-11-16', '24-D4 Oliveros Drive Apolonio Samson Quezon City', 'Not Specify', 'Not Specify', 'Not Specify', 'Not Specify', 'Not Specify', 'Regular', '2018-05-21 14:11:00', '2018-05-21 14:11:00', NULL, 'Active');
-INSERT INTO `r_stud_profile` VALUES (2, '2017-00056', 'jennifer', '', 'sanchez', 'Female', 'BSIT', 3, '1', '2015-11-11', 'Quezon City', 'Ilocos', '12479837', '98765432187', 'jen@gmail.com', 'Ilocos', 'Regular', '2018-05-24 18:03:12', '2018-05-24 18:03:12', NULL, 'Active');
+INSERT INTO `r_stud_profile` VALUES (2, '2015-00073-Cm-0', 'John Patrick', 'Balmonte', 'Loyola', 'Male', 'BSIT', 3, '1', '2015-11-11', 'Quezon City', 'Metro Manila', '12479837', '98765432187', 'loyolapat04@gmail.com', 'Metro Manila', 'Regular', '2018-05-24 18:03:12', '2018-05-24 18:03:12', NULL, 'Active');
 INSERT INTO `r_stud_profile` VALUES (3, '2017-00057', 'Bryan ', '', 'Cortesiano', 'Female', 'BSIT', 3, '1', '2015-11-12', 'Commonwealth', 'Agusan', '12479837', '90453567245', 'bry@gmail.com', 'Agusan', 'Regular', '2018-05-24 18:03:12', '2018-05-24 18:03:12', NULL, 'Active');
 INSERT INTO `r_stud_profile` VALUES (4, '2017-00058', 'Francheska', 'Nillo', 'Ronquillo', 'Female', 'BSIT', 3, '1', '2015-11-13', 'Caloocan', 'Zambales', '12479837', '98765423465', 'ches@gmail.com', 'Zambales', 'Regular', '2018-05-24 18:03:12', '2018-05-24 18:03:12', NULL, 'Active');
 INSERT INTO `r_stud_profile` VALUES (5, '2017-00059', 'Lkier', '', 'FFT', 'Female', 'BSIT', 3, '1', '2015-11-14', 'Fairview', 'Nueva Ecija', '12479837', '92929292923', 'fft@gmail.com', 'Nueva Ecija', 'Regular', '2018-05-24 18:03:13', '2018-05-24 18:03:13', NULL, 'Active');
@@ -996,7 +1007,7 @@ CREATE TABLE `r_users`  (
 INSERT INTO `r_users` VALUES (14, 'Demelyn', '2018-OSAS-CM', 0x852FA0A245A1467FCFD3E79A8C1BB0C9, 'OSAS HEAD', NULL, '2018-05-20 23:49:40', '2018-05-20 23:49:40', 'Active');
 INSERT INTO `r_users` VALUES (15, 'admin', 'admin', 0x4D8EAB5029A8C36FE1BF1C3F13405F73, 'Administrator', NULL, '2018-05-20 23:51:59', '2018-05-20 23:51:59', 'Active');
 INSERT INTO `r_users` VALUES (16, 'staff', '-1', 0xC025BDDA58E2790A32D70E58B3F5F148, 'Staff', NULL, '2018-05-21 00:01:12', '2018-05-21 00:01:12', 'Active');
-INSERT INTO `r_users` VALUES (17, 'CITS2019', 'CITS2019', 0xFEFB12FA6206F5695691C396467CD6A1, 'Organization', NULL, '2018-05-23 12:44:31', '2018-05-23 12:44:31', 'Active');
+INSERT INTO `r_users` VALUES (17, 'CITS2019', 'CITS2019', 0xFEFB12FA6206F5695691C396467CD6A1, 'Organization', NULL, '2018-05-23 12:44:31', '2018-05-23 12:44:31', 'Inactive');
 
 -- ----------------------------
 -- Table structure for r_visit
@@ -1149,7 +1160,12 @@ CREATE TABLE `t_assign_stud_finan_assistance`  (
   INDEX `FK_AssStudFinanAssistance_FINAN_NAME`(`AssStudFinanAssistance_FINAN_NAME`) USING BTREE,
   CONSTRAINT `FK_AssStudFinanAssistance_FINAN_NAME` FOREIGN KEY (`AssStudFinanAssistance_FINAN_NAME`) REFERENCES `r_financial_assistance_title` (`FinAssiTitle_NAME`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_AssStudFinanAssistance_STUD_NO` FOREIGN KEY (`AssStudFinanAssistance_STUD_NO`) REFERENCES `r_stud_profile` (`Stud_NO`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of t_assign_stud_finan_assistance
+-- ----------------------------
+INSERT INTO `t_assign_stud_finan_assistance` VALUES (1, '2015-00073-Cm-0', 'CHED', 'Active', '', '2018-05-30 03:37:21', '2018-05-30 03:37:21', 'Active');
 
 -- ----------------------------
 -- Table structure for t_assign_stud_loss_id_regicard
@@ -1222,7 +1238,7 @@ CREATE TABLE `t_assign_student_clearance`  (
   CONSTRAINT `FK_AssStudClearance_SEMESTER` FOREIGN KEY (`AssStudClearance_SEMESTER`) REFERENCES `r_semester` (`Semestral_NAME`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_AssStudClearance_SIGNATORIES_CODE` FOREIGN KEY (`AssStudClearance_SIGNATORIES_CODE`) REFERENCES `r_clearance_signatories` (`ClearSignatories_CODE`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_AssStudClearance_STUD_NO` FOREIGN KEY (`AssStudClearance_STUD_NO`) REFERENCES `r_stud_profile` (`Stud_NO`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of t_assign_student_clearance
@@ -1232,6 +1248,11 @@ INSERT INTO `t_assign_student_clearance` VALUES (4, '2012-00075-CM-0', '2019-202
 INSERT INTO `t_assign_student_clearance` VALUES (3, '2012-00075-CM-0', '2019-2020', 'Summer Semester', 'SIG00003', '2018-05-21 14:56:15', '2018-05-22 12:49:54', 'Inactive');
 INSERT INTO `t_assign_student_clearance` VALUES (2, '2012-00075-CM-0', '2019-2020', 'Summer Semester', 'SIG00004', '2018-05-21 14:56:15', '2018-05-22 12:49:54', 'Inactive');
 INSERT INTO `t_assign_student_clearance` VALUES (5, '2012-00075-CM-0', '2019-2020', 'Summer Semester', 'SIG00005', '2018-05-21 14:56:15', '2018-05-22 12:50:04', 'Inactive');
+INSERT INTO `t_assign_student_clearance` VALUES (6, '2015-00138-CM-0', '2019-2020', 'Summer Semester', 'SIG00001', '2018-05-28 14:03:23', '2018-05-28 16:12:16', 'Active');
+INSERT INTO `t_assign_student_clearance` VALUES (7, '2015-00138-CM-0', '2019-2020', 'Summer Semester', 'SIG00002', '2018-05-28 14:03:23', '2018-05-28 16:12:16', 'Active');
+INSERT INTO `t_assign_student_clearance` VALUES (9, '2015-00138-CM-0', '2019-2020', 'Summer Semester', 'SIG00003', '2018-05-28 14:03:23', '2018-05-28 14:03:23', 'Inactive');
+INSERT INTO `t_assign_student_clearance` VALUES (10, '2015-00138-CM-0', '2019-2020', 'Summer Semester', 'SIG00004', '2018-05-28 14:03:23', '2018-05-28 14:03:41', 'Inactive');
+INSERT INTO `t_assign_student_clearance` VALUES (8, '2015-00138-CM-0', '2019-2020', 'Summer Semester', 'SIG00005', '2018-05-28 14:03:23', '2018-05-28 14:03:41', 'Inactive');
 
 -- ----------------------------
 -- Table structure for t_clearance_generated_code
@@ -1255,7 +1276,83 @@ CREATE TABLE `t_clearance_generated_code`  (
   CONSTRAINT `FK_ClearanceGenCode_BATCH` FOREIGN KEY (`ClearanceGenCode_ACADEMIC_YEAR`) REFERENCES `r_batch_details` (`Batch_YEAR`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_ClearanceGenCode_SEMESTER` FOREIGN KEY (`ClearanceGenCode_SEMESTER`) REFERENCES `r_semester` (`Semestral_NAME`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_ClearanceGenCode_STUD_NO` FOREIGN KEY (`ClearanceGenCode_STUD_NO`) REFERENCES `r_stud_profile` (`Stud_NO`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 74 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of t_clearance_generated_code
+-- ----------------------------
+INSERT INTO `t_clearance_generated_code` VALUES (73, '2015-00073-Cm-0', '2018-2019', 'Summer Semester', 0x796A66747279534B44475370735845, NULL, '2018-05-30 03:58:31', '2018-05-30 03:58:31', '2018-05-30 03:58:31', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (2, '2015-00073-Cm-0', '2019-2020', 'Summer Semester', 0x68645655793734693676545A525570, NULL, '2018-05-29 09:57:33', '2018-05-29 09:57:33', '2018-05-29 09:57:33', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (1, '2017-00057', '2019-2020', 'Summer Semester', 0x3852756950426743744F324B694A70, NULL, '2018-05-29 09:57:33', '2018-05-29 09:57:33', '2018-05-29 09:57:33', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (3, '2017-00058', '2019-2020', 'Summer Semester', 0x7A553856646B5072574C3548723738, NULL, '2018-05-29 09:57:33', '2018-05-29 09:57:33', '2018-05-29 09:57:33', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (6, '2017-00059', '2019-2020', 'Summer Semester', 0x35463879787955326B38634358754D, NULL, '2018-05-29 09:57:33', '2018-05-29 09:57:33', '2018-05-29 09:57:33', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (5, '2017-00060', '2019-2020', 'Summer Semester', 0x70744C386E674D5A4A326D46533851, NULL, '2018-05-29 09:57:33', '2018-05-29 09:57:33', '2018-05-29 09:57:33', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (4, '2017-00061', '2019-2020', 'Summer Semester', 0x6133673564775679506F4F30307344, NULL, '2018-05-29 09:57:33', '2018-05-29 09:57:33', '2018-05-29 09:57:33', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (7, '2017-00062', '2019-2020', 'Summer Semester', 0x3552644F7641635A70557768475771, NULL, '2018-05-29 09:57:34', '2018-05-29 09:57:34', '2018-05-29 09:57:34', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (8, '2017-00063', '2019-2020', 'Summer Semester', 0x46706F6953624D4552643579754654, NULL, '2018-05-29 09:57:35', '2018-05-29 09:57:35', '2018-05-29 09:57:35', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (9, '2017-00064', '2019-2020', 'Summer Semester', 0x5077333341316D59504F6E4363394A, NULL, '2018-05-29 09:57:35', '2018-05-29 09:57:35', '2018-05-29 09:57:35', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (11, '2017-00065', '2019-2020', 'Summer Semester', 0x4D4E50314347346A4F47526931624D, NULL, '2018-05-29 09:57:36', '2018-05-29 09:57:36', '2018-05-29 09:57:36', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (10, '2017-00066', '2019-2020', 'Summer Semester', 0x4131724976577A5645387A415A7733, NULL, '2018-05-29 09:57:36', '2018-05-29 09:57:36', '2018-05-29 09:57:36', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (53, '2017-00140', '2019-2020', 'Summer Semester', 0x764D694831426C374A464859466356, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (55, '2017-00145', '2019-2020', 'Summer Semester', 0x33724D477144686C42385156386E4E, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (44, '2017-00156', '2019-2020', 'Summer Semester', 0x6C696845494E4D7454557461393274, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (43, '2017-00157', '2019-2020', 'Summer Semester', 0x7578696C72795967316341704E5547, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (45, '2017-00158', '2019-2020', 'Summer Semester', 0x544C3177587477704B476D48344A55, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (46, '2017-00159', '2019-2020', 'Summer Semester', 0x416B7757677866594E67464B536D65, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (47, '2017-00160', '2019-2020', 'Summer Semester', 0x74554F586C6E4B7455685532395267, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (51, '2017-00161', '2019-2020', 'Summer Semester', 0x7A6556544D707044503156444B3555, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (50, '2017-00162', '2019-2020', 'Summer Semester', 0x5A4E66336A306D47666A7336445661, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (49, '2017-00163', '2019-2020', 'Summer Semester', 0x3677795671656F3848456E516A3932, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (48, '2017-00164', '2019-2020', 'Summer Semester', 0x464D4F574771766B566F316334545A, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (52, '2017-00165', '2019-2020', 'Summer Semester', 0x5365614A31417745646A43724E5943, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (57, '2017-00166', '2019-2020', 'Summer Semester', 0x61324F384E5A4F427A39416B393738, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (54, '2017-00169', '2019-2020', 'Summer Semester', 0x385859736A31486E4E364D675A7331, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (56, '2017-00171', '2019-2020', 'Summer Semester', 0x4A6A707A353264664155506A6C7737, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (72, '2017-00240', '2019-2020', 'Summer Semester', 0x516A526D47785458314A7644334672, NULL, '2018-05-29 09:57:40', '2018-05-29 09:57:40', '2018-05-29 09:57:40', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (67, '2017-00245', '2019-2020', 'Summer Semester', 0x7433677352424735777A6952366F57, NULL, '2018-05-29 09:57:40', '2018-05-29 09:57:40', '2018-05-29 09:57:40', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (58, '2017-00256', '2019-2020', 'Summer Semester', 0x42704D4866374E48476F495A52304D, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (64, '2017-00257', '2019-2020', 'Summer Semester', 0x6D616A457472676965494133423831, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (59, '2017-00258', '2019-2020', 'Summer Semester', 0x78344B494F533837395A4D596F354D, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (62, '2017-00259', '2019-2020', 'Summer Semester', 0x4E46777943744E5232556E38425448, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (61, '2017-00260', '2019-2020', 'Summer Semester', 0x504A7776796F6E754145346553657A, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (60, '2017-00261', '2019-2020', 'Summer Semester', 0x4F6F75393154435247433635535267, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (63, '2017-00262', '2019-2020', 'Summer Semester', 0x78434A496F796E49786B35356C3046, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (68, '2017-00264', '2019-2020', 'Summer Semester', 0x4334345A634E4C67486B6567664545, NULL, '2018-05-29 09:57:40', '2018-05-29 09:57:40', '2018-05-29 09:57:40', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (69, '2017-00265', '2019-2020', 'Summer Semester', 0x4A5342597062756F716A5932374362, NULL, '2018-05-29 09:57:40', '2018-05-29 09:57:40', '2018-05-29 09:57:40', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (66, '2017-00266', '2019-2020', 'Summer Semester', 0x316E66464C664E3653324E456A4E6B, NULL, '2018-05-29 09:57:40', '2018-05-29 09:57:40', '2018-05-29 09:57:40', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (70, '2017-00269', '2019-2020', 'Summer Semester', 0x48577151624E324B4A62336138584D, NULL, '2018-05-29 09:57:40', '2018-05-29 09:57:40', '2018-05-29 09:57:40', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (71, '2017-00271', '2019-2020', 'Summer Semester', 0x52316139775842496E5472736F6C43, NULL, '2018-05-29 09:57:40', '2018-05-29 09:57:40', '2018-05-29 09:57:40', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (12, '2017-0067', '2019-2020', 'Summer Semester', 0x36706A666257314B6A376A6C786934, NULL, '2018-05-29 09:57:36', '2018-05-29 09:57:36', '2018-05-29 09:57:36', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (13, '2017-0068', '2019-2020', 'Summer Semester', 0x6F45766D6F327033644C3064616361, NULL, '2018-05-29 09:57:37', '2018-05-29 09:57:37', '2018-05-29 09:57:37', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (15, '2017-0069', '2019-2020', 'Summer Semester', 0x706C73356E4B67497746386663314D, NULL, '2018-05-29 09:57:37', '2018-05-29 09:57:37', '2018-05-29 09:57:37', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (16, '2017-0070', '2019-2020', 'Summer Semester', 0x776879417456626A5731454E4A4E33, NULL, '2018-05-29 09:57:37', '2018-05-29 09:57:37', '2018-05-29 09:57:37', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (14, '2017-0071', '2019-2020', 'Summer Semester', 0x644370336936576C6E774269434276, NULL, '2018-05-29 09:57:37', '2018-05-29 09:57:37', '2018-05-29 09:57:37', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (18, '2017-0072', '2019-2020', 'Summer Semester', 0x323448543165365A7A73576A5A5375, NULL, '2018-05-29 09:57:37', '2018-05-29 09:57:37', '2018-05-29 09:57:37', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (17, '2017-0073', '2019-2020', 'Summer Semester', 0x387558756B69306D7278784E6E3654, NULL, '2018-05-29 09:57:37', '2018-05-29 09:57:37', '2018-05-29 09:57:37', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (19, '2017-0074', '2019-2020', 'Summer Semester', 0x6A5871373370536A704852306C4747, NULL, '2018-05-29 09:57:37', '2018-05-29 09:57:37', '2018-05-29 09:57:37', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (20, '2017-0075', '2019-2020', 'Summer Semester', 0x526561764B4F5376576859796D744E, NULL, '2018-05-29 09:57:37', '2018-05-29 09:57:37', '2018-05-29 09:57:37', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (23, '2017-0076', '2019-2020', 'Summer Semester', 0x376E6E4B67744654654D5679695933, NULL, '2018-05-29 09:57:37', '2018-05-29 09:57:37', '2018-05-29 09:57:37', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (21, '2017-0077', '2019-2020', 'Summer Semester', 0x50716335615034516B4C326B704745, NULL, '2018-05-29 09:57:37', '2018-05-29 09:57:37', '2018-05-29 09:57:37', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (22, '2017-0078', '2019-2020', 'Summer Semester', 0x775038394133553548594173304763, NULL, '2018-05-29 09:57:37', '2018-05-29 09:57:37', '2018-05-29 09:57:37', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (24, '2017-0079', '2019-2020', 'Summer Semester', 0x7744376E6D694F666B6D6B5039734A, NULL, '2018-05-29 09:57:37', '2018-05-29 09:57:37', '2018-05-29 09:57:37', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (27, '2017-0080', '2019-2020', 'Summer Semester', 0x504A467346427468627449754B5033, NULL, '2018-05-29 09:57:37', '2018-05-29 09:57:37', '2018-05-29 09:57:37', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (25, '2017-0081', '2019-2020', 'Summer Semester', 0x3136627550586670454A483035376D, NULL, '2018-05-29 09:57:37', '2018-05-29 09:57:37', '2018-05-29 09:57:37', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (26, '2017-0082', '2019-2020', 'Summer Semester', 0x39486F74336D70596C546D4B74357A, NULL, '2018-05-29 09:57:37', '2018-05-29 09:57:37', '2018-05-29 09:57:37', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (30, '2017-0083', '2019-2020', 'Summer Semester', 0x44737865704657735336565A6F6D50, NULL, '2018-05-29 09:57:38', '2018-05-29 09:57:38', '2018-05-29 09:57:38', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (28, '2017-0084', '2019-2020', 'Summer Semester', 0x6259326F726443456B556270737061, NULL, '2018-05-29 09:57:38', '2018-05-29 09:57:38', '2018-05-29 09:57:38', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (33, '2017-0085', '2019-2020', 'Summer Semester', 0x763648717558754D3145485972766A, NULL, '2018-05-29 09:57:38', '2018-05-29 09:57:38', '2018-05-29 09:57:38', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (31, '2017-0086', '2019-2020', 'Summer Semester', 0x73344331536D464D424A5663314768, NULL, '2018-05-29 09:57:38', '2018-05-29 09:57:38', '2018-05-29 09:57:38', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (32, '2017-0087', '2019-2020', 'Summer Semester', 0x6958714B6548533763433944617664, NULL, '2018-05-29 09:57:38', '2018-05-29 09:57:38', '2018-05-29 09:57:38', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (29, '2017-0088', '2019-2020', 'Summer Semester', 0x456B4346726A465559633071564552, NULL, '2018-05-29 09:57:38', '2018-05-29 09:57:38', '2018-05-29 09:57:38', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (34, '2017-0089', '2019-2020', 'Summer Semester', 0x354A737A78664B427731517A797974, NULL, '2018-05-29 09:57:38', '2018-05-29 09:57:38', '2018-05-29 09:57:38', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (36, '2017-0090', '2019-2020', 'Summer Semester', 0x783057384273614D466545587A4932, NULL, '2018-05-29 09:57:38', '2018-05-29 09:57:38', '2018-05-29 09:57:38', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (39, '2017-0091', '2019-2020', 'Summer Semester', 0x703639424735584877786E69545146, NULL, '2018-05-29 09:57:38', '2018-05-29 09:57:38', '2018-05-29 09:57:38', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (35, '2017-0092', '2019-2020', 'Summer Semester', 0x75566E374E61626D5239595834704C, NULL, '2018-05-29 09:57:38', '2018-05-29 09:57:38', '2018-05-29 09:57:38', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (38, '2017-0093', '2019-2020', 'Summer Semester', 0x385369306D53474274553052495758, NULL, '2018-05-29 09:57:38', '2018-05-29 09:57:38', '2018-05-29 09:57:38', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (37, '2017-0094', '2019-2020', 'Summer Semester', 0x77527732715A5A6C416354357A6F55, NULL, '2018-05-29 09:57:38', '2018-05-29 09:57:38', '2018-05-29 09:57:38', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (40, '2017-0095', '2019-2020', 'Summer Semester', 0x6B5763764961594630627335695A41, NULL, '2018-05-29 09:57:38', '2018-05-29 09:57:38', '2018-05-29 09:57:38', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (42, '2017-0096', '2019-2020', 'Summer Semester', 0x7875727972317A6B6C767542386971, NULL, '2018-05-29 09:57:39', '2018-05-29 09:57:39', '2018-05-29 09:57:39', 'Active');
+INSERT INTO `t_clearance_generated_code` VALUES (41, '2017-0097', '2019-2020', 'Summer Semester', 0x4F6B4835384E5A3054446572653654, NULL, '2018-05-29 09:57:38', '2018-05-29 09:57:38', '2018-05-29 09:57:38', 'Active');
 
 -- ----------------------------
 -- Table structure for t_couns_approach
@@ -1437,7 +1534,7 @@ CREATE TABLE `t_org_for_compliance`  (
 -- ----------------------------
 -- Records of t_org_for_compliance
 -- ----------------------------
-INSERT INTO `t_org_for_compliance` VALUES (1, 'CITS2019', 'CITS2019', 'Alma C. Fernandez', '2019-2020', '2018-05-23 12:44:12', '2018-05-23 12:44:12', 'Active');
+INSERT INTO `t_org_for_compliance` VALUES (1, 'CITS2019', 'CITS2019', 'Alma C. Fernandez', '2019-2020', '2018-05-23 12:44:12', '2018-05-23 12:44:12', 'Inactive');
 
 -- ----------------------------
 -- Table structure for t_org_officers
@@ -1582,7 +1679,7 @@ CREATE TABLE `t_upload`  (
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Active_AssignConfilicts_SemClearance`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Active_AssignConfilicts_SemClearance"(IN `id` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Active_AssignConfilicts_SemClearance`(IN `id` INT)
     NO SQL
 UPDATE `t_assign_student_clearance` SET 
 `AssStudClearance_DATE_MOD`=CURRENT_TIMESTAMP
@@ -1596,7 +1693,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Archive_AssignConfilicts_SemClearance`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Archive_AssignConfilicts_SemClearance"(IN `id` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Archive_AssignConfilicts_SemClearance`(IN `id` INT)
     NO SQL
 UPDATE `t_assign_student_clearance` SET 
 `AssStudClearance_DATE_MOD`=CURRENT_TIMESTAMP
@@ -1610,7 +1707,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Archive_AssignSanction`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Archive_AssignSanction"(IN `ID` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Archive_AssignSanction`(IN `ID` INT)
     NO SQL
 UPDATE `t_assign_stud_saction` SET `AssSancStudStudent_DISPLAY_STAT`='Inactive' 
 ,`AssSancStudStudent_DATE_MOD` = CURRENT_TIMESTAMP
@@ -1624,7 +1721,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Archive_FinancialAss`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Archive_FinancialAss"(IN `ID` INT(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Archive_FinancialAss`(IN `ID` INT(100))
     NO SQL
 delete from `t_assign_stud_finan_assistance`  
 where AssStudFinanAssistance_ID = ID
@@ -1636,7 +1733,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Archive_LossIDRegi`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Archive_LossIDRegi"(IN `ID` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Archive_LossIDRegi`(IN `ID` INT)
     NO SQL
 update t_assign_stud_loss_id_regicard 
 set AssLoss_DISPLAY_STAT ='Inactive'
@@ -1660,7 +1757,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `FinishSanction`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "FinishSanction"(IN `ID` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `FinishSanction`(IN `ID` INT)
     NO SQL
 UPDATE t_assign_stud_saction 
 set AssSancStudStudent_IS_FINISH ='Finished'
@@ -1673,7 +1770,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Insert_AssignConfilicts_SemClearance`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_AssignConfilicts_SemClearance"(IN `Studno` VARCHAR(15), IN `acadyear` VARCHAR(15), IN `sem` VARCHAR(50), IN `sigcode` VARCHAR(15))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_AssignConfilicts_SemClearance`(IN `Studno` VARCHAR(15), IN `acadyear` VARCHAR(15), IN `sem` VARCHAR(50), IN `sigcode` VARCHAR(15))
     NO SQL
 INSERT INTO `t_assign_student_clearance` (`AssStudClearance_STUD_NO`, `AssStudClearance_BATCH`, `AssStudClearance_SEMESTER`, `AssStudClearance_SIGNATORIES_CODE`) VALUES (Studno,acadyear,sem,sigcode)
 ;;
@@ -1684,7 +1781,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Insert_AssignFinancialAss`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_AssignFinancialAss"(IN `StudNo` VARCHAR(15), IN `FinanAssTitle` VARCHAR(100), IN `FinanAssStatus` ENUM('Active','Inactive','Void','Cancelled'), IN `FinanAssRemarks` VARCHAR(500))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_AssignFinancialAss`(IN `StudNo` VARCHAR(15), IN `FinanAssTitle` VARCHAR(100), IN `FinanAssStatus` ENUM('Active','Inactive','Void','Cancelled'), IN `FinanAssRemarks` VARCHAR(500))
     NO SQL
 INSERT INTO `t_assign_stud_finan_assistance` (`AssStudFinanAssistance_STUD_NO`, `AssStudFinanAssistance_FINAN_NAME`, `AssStudFinanAssistance_STATUS`, `AssStudFinanAssistance_REMARKS`, `AssStudFinanAssistance_DATE_ADD`) VALUES (StudNo,FinanAssTitle , FinanAssStatus, FinanAssRemarks, CURRENT_TIMESTAMP)
 ;;
@@ -1710,7 +1807,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Insert_DesignatedOffice`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_DesignatedOffice"(IN `DesiCode` VARCHAR(15), IN `DesiName` VARCHAR(100), IN `DesiDesc` VARCHAR(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_DesignatedOffice`(IN `DesiCode` VARCHAR(15), IN `DesiName` VARCHAR(100), IN `DesiDesc` VARCHAR(100))
     NO SQL
 INSERT INTO `r_designated_offices_details` (  `DesOffDetails_CODE`, `DesOffDetails_NAME`, `DesOffDetails_DESC`) VALUES (DesiCode,DesiName,DesiDesc)
 ;;
@@ -1721,7 +1818,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Insert_LossIDRegi`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_LossIDRegi"(IN `StudNo` VARCHAR(15), IN `Type` ENUM('Identification Card','Registration Card'), IN `Claim` DATETIME, IN `Remarks` VARCHAR(500))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_LossIDRegi`(IN `StudNo` VARCHAR(15), IN `Type` ENUM('Identification Card','Registration Card'), IN `Claim` DATETIME, IN `Remarks` VARCHAR(500))
     NO SQL
 INSERT INTO `t_assign_stud_loss_id_regicard` ( `AssLoss_STUD_NO`, `AssLoss_TYPE`, `AssLoss_REMARKS`, `AssLoss_DATE_CLAIM`) VALUES (StudNo,Type,Remarks,Claim)
 ;;
@@ -1732,7 +1829,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Insert_SanctionDetails`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_SanctionDetails"(IN `SancCode` VARCHAR(100), IN `SancName` VARCHAR(100), IN `SancDesc` VARCHAR(1000), IN `TimeVal` INT(11))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_SanctionDetails`(IN `SancCode` VARCHAR(100), IN `SancName` VARCHAR(100), IN `SancDesc` VARCHAR(1000), IN `TimeVal` INT(11))
     NO SQL
 INSERT INTO `r_sanction_details` 
 (`SancDetails_CODE`
@@ -1752,7 +1849,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Insert_Signatories`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_Signatories"(IN `sCODE` VARCHAR(15), IN `sNAME` VARCHAR(100), IN `sDESC` VARCHAR(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_Signatories`(IN `sCODE` VARCHAR(15), IN `sNAME` VARCHAR(100), IN `sDESC` VARCHAR(100))
     NO SQL
 INSERT INTO `r_clearance_signatories` (`ClearSignatories_CODE`, `ClearSignatories_NAME`, `ClearSignatories_DESC` ) VALUES (sCODE,sNAME,sDESC)
 ;;
@@ -1763,7 +1860,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Insert_StudProfile`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_StudProfile"(IN `StudNO` VARCHAR(15), IN `FNAME` VARCHAR(100), IN `MNAME` VARCHAR(100), IN `LNAME` VARCHAR(100), IN `COUSRE` VARCHAR(15), IN `SECTION` VARCHAR(5), IN `GENDER` VARCHAR(10), IN `EMAIL` VARCHAR(100), IN `CONTACT` VARCHAR(20), IN `BDAY` DATE, IN `BPLACE` VARCHAR(500), IN `ADDRESS` VARCHAR(500), IN `STATUS` VARCHAR(50))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_StudProfile`(IN `StudNO` VARCHAR(15), IN `FNAME` VARCHAR(100), IN `MNAME` VARCHAR(100), IN `LNAME` VARCHAR(100), IN `COUSRE` VARCHAR(15), IN `SECTION` VARCHAR(5), IN `GENDER` VARCHAR(10), IN `EMAIL` VARCHAR(100), IN `CONTACT` VARCHAR(20), IN `BDAY` DATE, IN `BPLACE` VARCHAR(500), IN `ADDRESS` VARCHAR(500), IN `STATUS` VARCHAR(50))
     NO SQL
 INSERT INTO R_STUD_PROFILE
 (
@@ -1815,7 +1912,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Insert_Voucher`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_Voucher"(IN `Vouch` VARCHAR(15), IN `org` VARCHAR(15), IN `checkk` VARCHAR(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_Voucher`(IN `Vouch` VARCHAR(15), IN `org` VARCHAR(15), IN `checkk` VARCHAR(100))
     NO SQL
 INSERT INTO `t_org_voucher` (`OrgVoucher_CASH_VOUCHER_NO`, `OrgVoucher_ORG_CODE`,`OrgVoucher_VOUCHED_BY`) VALUES ( Vouch, org, checkk)
 ;;
@@ -1826,7 +1923,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Insert_Voucher_Item`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Insert_Voucher_Item"(IN `Vouch` VARCHAR(15), IN `itemss` VARCHAR(100), IN `amo` DOUBLE(10,3))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Insert_Voucher_Item`(IN `Vouch` VARCHAR(15), IN `itemss` VARCHAR(100), IN `amo` DOUBLE(10,3))
     NO SQL
 INSERT INTO `t_org_voucher_items` (`OrgVouchItems_VOUCHER_NO`, `OrgVouchItems_ITEM_NAME`, `OrgVouchItems_AMOUNT`) VALUES (Vouch,itemss,amo)
 ;;
@@ -1848,7 +1945,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Login_User`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Login_User"(IN `username` VARCHAR(100), IN `password` VARCHAR(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Login_User`(IN `username` VARCHAR(100), IN `password` VARCHAR(100))
     NO SQL
 SELECT * 
 FROM osas.r_users 
@@ -1863,7 +1960,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Log_Sanction`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Log_Sanction"(IN `SancID` INT, IN `Consuumed` INT, IN `Remarks` VARCHAR(100), IN `isFinish` ENUM('Processing','Finished'))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Log_Sanction`(IN `SancID` INT, IN `Consuumed` INT, IN `Remarks` VARCHAR(100), IN `isFinish` ENUM('Processing','Finished'))
     NO SQL
 INSERT INTO `log_sanction` ( `LogSanc_AssSancSudent_ID`, `LogSanc_CONSUMED_HOURS`, `LogSanc_REMARKS`, `LogSanc_IS_FINISH`) VALUES (SancID,Consuumed, Remarks, isFinish)
 ;;
@@ -1965,7 +2062,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Update_AssignFinancialAss`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Update_AssignFinancialAss"(IN `ID` INT, IN `FinanAssStat` ENUM('Active','Inactive','Void','Cancelled'), IN `Remarks` VARCHAR(500))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Update_AssignFinancialAss`(IN `ID` INT, IN `FinanAssStat` ENUM('Active','Inactive','Void','Cancelled'), IN `Remarks` VARCHAR(500))
     NO SQL
 UPDATE `t_assign_stud_finan_assistance` 
 SET `AssStudFinanAssistance_STATUS` = FinanAssStat 
@@ -1998,7 +2095,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Update_LossIDRegi`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Update_LossIDRegi"(IN `ID` INT, IN `Claim` DATETIME, IN `Remarks` VARCHAR(500))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Update_LossIDRegi`(IN `ID` INT, IN `Claim` DATETIME, IN `Remarks` VARCHAR(500))
     NO SQL
 update t_assign_stud_loss_id_regicard 
 set AssLoss_DATE_CLAIM = Claim
@@ -2012,7 +2109,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `Update_StudProfile`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "Update_StudProfile"(IN `ID` INT(100), IN `StudNO` VARCHAR(15), IN `FNAME` VARCHAR(100), IN `MNAME` VARCHAR(100), IN `LNAME` VARCHAR(100), IN `COURSE` VARCHAR(15), IN `SECTION` VARCHAR(5), IN `GENDER` VARCHAR(10), IN `EMAIL` VARCHAR(100), IN `CONTACT` VARCHAR(20), IN `BDAY` DATE, IN `BPLACE` VARCHAR(500), IN `ADDRESS` VARCHAR(500), IN `STATUS` VARCHAR(50))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Update_StudProfile`(IN `ID` INT(100), IN `StudNO` VARCHAR(15), IN `FNAME` VARCHAR(100), IN `MNAME` VARCHAR(100), IN `LNAME` VARCHAR(100), IN `COURSE` VARCHAR(15), IN `SECTION` VARCHAR(5), IN `GENDER` VARCHAR(10), IN `EMAIL` VARCHAR(100), IN `CONTACT` VARCHAR(20), IN `BDAY` DATE, IN `BPLACE` VARCHAR(500), IN `ADDRESS` VARCHAR(500), IN `STATUS` VARCHAR(50))
     NO SQL
 UPDATE `r_stud_profile`
 SET 
@@ -2050,7 +2147,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `View_Courses`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "View_Courses"()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `View_Courses`()
     NO SQL
 select * from r_courses where course_display_stat ='active'
 ;;
@@ -2061,7 +2158,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `View_StudProfile`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "View_StudProfile"()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `View_StudProfile`()
     NO SQL
 select 
 	Stud_NO
@@ -2083,7 +2180,7 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `View_StudSanction`;
 delimiter ;;
-CREATE DEFINER="root"@"localhost" PROCEDURE "View_StudSanction"()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `View_StudSanction`()
     NO SQL
     DETERMINISTIC
 SELECT B.AssSancStudStudent_ID AssSancID

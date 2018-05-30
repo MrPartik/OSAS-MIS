@@ -23,8 +23,8 @@ include('../config/connection.php');
                 <section class="wrapper">
                     <div class="row ">
                         <div class="col-md-4">
-                            <div class="mini-stat clearfix"> <span class="mini-stat-icon orange"><i class="fa fa-tag"></i></span>
-                                <div class="mini-stat-info"> <span><?php echo $count_stud_sanction?></span> Students who cleared their clearance </div>
+                            <div class="mini-stat clearfix"> <span class="mini-stat-icon pink"><i class="fa fa-tag"></i></span>
+                                <div class="mini-stat-info"> <span><?php echo mysqli_num_rows($view_studProfile)?></span> Students who cleared their clearance </div>
                             </div>
                         </div>
                         <div class="col-md-4">

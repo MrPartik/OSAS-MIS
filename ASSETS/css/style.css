@@ -5224,7 +5224,7 @@ ul.sidebar-menu li a.active i {
         padding: 15px;
     }
     .monthly-stats.pink {
-        background-color: #9972b5 !important;
+        background-color: #EF6295 !important;
     }
     .sparkline {
         text-align: center;
@@ -5681,7 +5681,7 @@ ul.sidebar-menu li a.active i {
         background: #aec785 !important;
     }
     .pink {
-        background: #a48ad4 !important;
+        background: #EF6295 !important;
     }
     .yellow-b {
         background: #fdd752 !important;
@@ -11794,7 +11794,7 @@ div.tagsinput span.tag {
 }
 
 .monthly-stats.pink {
-    background-color: #9972b5 !important;
+    background-color: #EF6295 !important;
     ;
 }
 
@@ -12344,7 +12344,7 @@ div.tagsinput span.tag {
 }
 
 .pink {
-    background: #a48ad4 !important;
+    background: #EF6295 !important;
 }
 
 .yellow-b {

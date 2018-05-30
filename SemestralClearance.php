@@ -11,7 +11,7 @@ function Header(){
  // $this->Image('deped.png',162,9,22); 
   //Header
   $this->SetFont('Times','',10);
-  $this->Cell(0,3,'                      Republic of the Philippines',0,0,'');
+  $this->Cell(0,3,'                      Republic of the Philippines',0,0,'C');
   $this->Ln(4);
 
   $this->SetFont('Times','',10);

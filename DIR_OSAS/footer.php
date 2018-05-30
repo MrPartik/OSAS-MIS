@@ -48,6 +48,10 @@
 <script src="../ASSETS/js/mini-upload-form/assets/js/script.js"></script>
 <script src="../ASSETS/js/jquery.nicescroll.js"></script>
 <script type="text/javascript" src="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+<!--icheck init -->
+<script src="../ASSETS/js/iCheck/jquery.icheck.js"></script>
+<script type="text/javascript" src="../ASSETS/js/ckeditor/ckeditor.js"></script>
+<script src="../ASSETS/js/icheck-init.js"></script>
 <script>
     $("#divVerify").css("display", "none");
     $("#OSAS_newpassword").on("input", function () {
