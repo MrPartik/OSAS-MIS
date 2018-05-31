@@ -13,7 +13,8 @@ $currentPage ='OSAS_StudSanction';
 include('header.php'); 
 include('../config/connection.php');
 ?>
-<link rel="stylesheet" type="text/css" href="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.css" />
+    <link rel="stylesheet" type="text/css" href="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.css" />
+
     <body>
         <!--sidebar start-->
         <?php include('sidenav.php')?>
@@ -38,6 +39,19 @@ include('../config/connection.php');
                                 <div id="TableStudSanc" class="panel-body">
                                     <button data-toggle="modal" href="#AddSanc" class="btn btn-default"> <i class="fa fa-plus"></i> Sanction</button>
                                     <button data-toggle="modal" href="#AddDest" class="btn  btn-default"> <i class="fa fa-plus"></i> Office Destination</button>
+                                    <div class="btn-group pull-right">
+                                        <form id="upload_csv" method="post" enctype="multipart/form-data">
+                                            <div class="controls col-md-12">
+                                                <div class="fileupload fileupload-new row" data-provides="fileupload"> <span class="btn btn-white btn-file" style="width:100px">
+                                                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select a file</span> <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                                    <input name="employee_file" id="file" type="file" class="default" accept=".csv" /> </span> <span class="fileupload-preview" style="margin-left:5px;"></span>
+                                                    <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none; margin-left:5px;"></a>
+                                                    <button type="submit" class='btn btn-success' id="upload"> <i class='fa fa-upload'></i> Import </button>
+                                                    <a type="button" href="../sample csvs/test(sanctions).csv" class='btn btn-info' id="download"> <i class='fa fa-download'></i> Template </a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                     <div class="adv-table">
                                         <table class="display table table-bordered table-striped" id="dynamic-table">
                                             <thead>
@@ -108,18 +122,6 @@ include('../config/connection.php');
                                                 </tr>
                                             </tfoot>
                                         </table>
-                                        <div class="btn-group">
-                                            <form id="upload_csv" method="post" enctype="multipart/form-data">
-                                                <div class="controls col-md-12">
-                                                    <div class="fileupload fileupload-new row" data-provides="fileupload"> <span class="btn btn-white btn-file" style="width:200px">
-                                                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Click to Import Members</span> <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
-                                                        <input name="employee_file" id="file" type="file" class="default" accept=".csv" /> </span> <span class="fileupload-preview" style="margin-left:5px;"></span>
-                                                        <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none; margin-left:5px;"></a>
-                                                        <button type="submit" class='btn btn-success' id="upload">Import <i class='fa fa-cloud-upload'></i></button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
                                     </div>
                                 </div>
                             </section>
@@ -191,91 +193,111 @@ include('../config/connection.php');
             <!-- Modal Dest-->
             <div id="studSanction" class="modal fade content-sanction " role="dialog "> </div>
             <!--Core js-->
-            <?php include('footer.php')?> <script type="text/javascript" src="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#getappcode').hide();
-            $('#updstudnum').hide();
-            var countreq = 0;
-            var flag = 0;
-            $('#upload_csv').on("submit", function(e) {
-                e.preventDefault();
-                $.ajax({
-                    url: "Student/export_stud_sanction.php",
-                    method: "POST",
-                    data: new FormData(this),
-                    contentType: false, // The content type used when sending data to the server.
-                    cache: false, // To unable request pages to be cached
-                    processData: false, // To send DOMDocument or non processed data file it is set to false
-                    success: function(data) {
-                        if (data == 'Error1') {
-                            swal("Invalid File");
-                        } else if (data == "Error2") {
-                            swal("Cancelled", "Please Select File", "error");
-                        } else {
-                                swal({
-                                    title: "Data Imported!",
-                                    text: "The csv file is successfully imported!",
-                                    type: "success",
-                                    confirmButtonColor: '#88A755',
-                                    confirmButtonText: 'Okay',
-                                    closeOnConfirm: false
-                                }, function (isConfirm) {
-                                alert('qwe')
-                                window.location.reload();
-
-                                });
-//                            $.each(data, function(key, val) {
-//                                //alert(val.snum)
-//                            });
-
-                            swal("Record Updated!", "The data is successfully imported!", "success");
-                        }
-                    },
-                    error: function(response) {
-                        swal("Error encountered while adding data", "Please try again", "error");
-                    }
-                })
-
-            });
-            $('#drpappcode').change(function() {
-                //                alert('qwe');
-                var _drpappcode = document.getElementById('drpappcode');
-                var drpname = _drpappcode.options[_drpappcode.selectedIndex].text;
-                var drpcode = _drpappcode.options[_drpappcode.selectedIndex].value;
-                $.ajax({
-                    type: "GET",
-                    url: 'Organization/OrganizationMembers/GetData-ajax.php',
-                    dataType: 'json',
-                    data: {
-                        _code: drpcode
-                    },
-                    success: function(data) {
-                        //                        alert(data.count);
-                        countreq = data.countlist;
-                        document.getElementById('accreqlist').innerHTML = data.list;
-                    },
-                    error: function(response) {
-                        swal("Error encountered while adding data", "Please try again", "error");
-                    }
-                });
-            });
-
-        });
+            <?php include('footer.php')?>
+                <script type="text/javascript" src="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+                <script>
+                    $(document).ready(function () {
+                        $('#getappcode').hide();
+                        $('#updstudnum').hide();
+                        var countreq = 0;
+                        var flag = 0;
+                        $('#upload_csv').on("submit", function (e) {
+                            e.preventDefault();
+                            swal({
+                                title: "Are you sure?"
+                                , text: "This record will be saved  and used for further transaction"
+                                , type: "warning"
+                                , showCancelButton: true
+                                , confirmButtonColor: '#9DD656'
+                                , confirmButtonText: 'Yes!'
+                                , cancelButtonText: "No!"
+                                , closeOnConfirm: false
+                                , closeOnCancel: false
+                                , showLoaderOnConfirm: true
+                            }, function (isConfirm) {
+                                if (isConfirm) {
 
 
-    </script>
+
+                                     $.ajax({
+                                        url: "Student/export_stud_sanction.php"
+                                        , method: "POST"
+                                        , data: new FormData($('#upload_csv')[0])
+                                        , contentType: false, // The content type used when sending data to the server.
+                                        cache: false, // To unable request pages to be cached
+                                        processData: false, // To send DOMDocument or non processed data file it is set to false
+                                        success: function (data) {
+                                            if (data == 'Error1') {
+                                                swal("Invalid File");
+                                            }
+                                            else if (data == "Error2") {
+                                                swal("Cancelled", "Please Select File", "error");
+                                            }
+                                            else {
+                                                setTimeout(function () {
+                                                    swal({
+                                                        title: "Woaah, that's neat!"
+                                                        , text: "The record has been successfully updated!"
+                                                        , type: "success"
+                                                        , showCancelButton: false
+                                                        , confirmButtonColor: '#9DD656'
+                                                        , confirmButtonText: 'Ok'
+                                                    }, function (isConfirm) {
+                                                        location.reload();
+                                                    })
+                                                }, 1000);
+                                            }
+                                        }
+                                        , error: function (response) {
+                                            swal("Error encountered while adding data", "Please try again", "error");
+                                        }
+                                    });
+
+
+
+
+
+                                }
+                                else {
+                                    swal("Cancelled", "The transaction is cancelled", "error");
+                                }
+                            });
+                        });
+                        $('#drpappcode').change(function () {
+                            //                alert('qwe');
+                            var _drpappcode = document.getElementById('drpappcode');
+                            var drpname = _drpappcode.options[_drpappcode.selectedIndex].text;
+                            var drpcode = _drpappcode.options[_drpappcode.selectedIndex].value;
+                            $.ajax({
+                                type: "GET"
+                                , url: 'Organization/OrganizationMembers/GetData-ajax.php'
+                                , dataType: 'json'
+                                , data: {
+                                    _code: drpcode
+                                }
+                                , success: function (data) {
+                                    //                        alert(data.count);
+                                    countreq = data.countlist;
+                                    document.getElementById('accreqlist').innerHTML = data.list;
+                                }
+                                , error: function (response) {
+                                    swal("Error encountered while adding data", "Please try again", "error");
+                                }
+                            });
+                        });
+                    });
+                </script>
     </body>
 
 </html>
 <script>
     $(document).ready(function () {
-                var oTable = $('#dynamic-table').dataTable({
-                        "aLengthMenu": [
+        var oTable = $('#dynamic-table').dataTable({
+            "aLengthMenu": [
                     [3, 5, 10, 15, 20, -1]
-                    , [3, 5,10, 15, 20, "All"] // change per page values here
+                    , [3, 5, 10, 15, 20, "All"] // change per page values here
                 ], // set the initial value
-                        "iDisplayLength": 10
+            "iDisplayLength": 10
             , "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>"
             , "sPaginationType": "bootstrap"
             , "oLanguage": {
@@ -304,22 +326,22 @@ include('../config/connection.php');
             , $Name = $("#sancName").val()
             , $Desc = $("#sancDesc").val()
             , $Time = $("#sancTime").val();
-        if($Code.lenght){
-            if($Name.lenght){
-                if($Desc.lenght){
-                    if($Time.lenght){
+        if ($Code.length) {
+            if ($Name.length) {
+                if ($Desc.length) {
+                    if ($Time.length) {
                         swal({
                             title: "Are you sure?"
                             , text: "This data will be saved and used in further transactions"
                             , type: "warning"
                             , showCancelButton: true
                             , confirmButtonColor: '#9DD656'
-                            , confirmButtonText: 'Yes, Update  it!'
+                            , confirmButtonText: 'Yes!'
                             , cancelButtonText: "No!"
                             , closeOnConfirm: false
                             , closeOnCancel: false
                         }, function (isConfirm) {
-                            if(isConfirm) {
+                            if (isConfirm) {
                                 $.ajax({
                                     url: "studSanctionSave.php"
                                     , cache: false
@@ -333,60 +355,81 @@ include('../config/connection.php');
                                         , Time: $Time
                                     }
                                     , success: function (result) {
-                                        alert(result);
-                                        window.location.reload();
+                                        swal({
+                                            title: "Woaah, that's neat!"
+                                            , text: "Student Sanction Details is Successfully added"
+                                            , type: "success"
+                                            , showCancelButton: false
+                                            , confirmButtonColor: '#9DD656'
+                                            , confirmButtonText: 'Ok'
+                                        }, function (isConfirm) {
+                                            location.reload();
+                                        });
                                     }
                                 });
                             }
-                            else
-                                swal("Cancelled", "The transaction is cancelled", "error");
+                            else swal("Cancelled", "The transaction is cancelled", "error");
                         });
                     }
-                    else
-                        swal("Please try again", "Please provide a time interval", "error");
+                    else swal("Please try again", "Please provide a time interval", "error");
                 }
-                else
-                    swal("Please try again", "Please provide a sanction description", "error");
+                else swal("Please try again", "Please provide a sanction description", "error");
             }
-            else
-                swal("Please try again", "Please provide a sanction name", "error");
+            else swal("Please try again", "Please provide a sanction name", "error");
         }
-        else
-            swal("Please try again", "Please provide a sanction code", "error");
-
+        else swal("Please try again", "Please provide a sanction code", "error");
     });
     $(".btnInsertOff").on("click", function () {
         var $Code = $("#OffCode").val()
             , $Name = $("#OffName").val()
             , $Desc = $("#OffDesc").val()
-
-        if($Code.length ){
-            if($Name.length ){
-                if($Desc.length ){
-                    $.ajax({
-                        url: "studSanctionSave.php"
-                        , cache: false
-                        , async: false
-                        , type: "Post"
-                        , data: {
-                            insertDesiDetails: 'insertDesiDetails'
-                            , Code: $Code
-                            , Name: $Name
-                            , SDesc: $Desc
+        if ($Code.length) {
+            if ($Name.length) {
+                if ($Desc.length) {
+                    swal({
+                        title: "Are you sure?"
+                        , text: "This data will be saved and used in further transactions"
+                        , type: "warning"
+                        , showCancelButton: true
+                        , confirmButtonColor: '#9DD656'
+                        , confirmButtonText: 'Yes!'
+                        , cancelButtonText: "No!"
+                        , closeOnConfirm: false
+                        , closeOnCancel: false
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                url: "studSanctionSave.php"
+                                , cache: false
+                                , async: false
+                                , type: "Post"
+                                , data: {
+                                    insertDesiDetails: 'insertDesiDetails'
+                                    , Code: $Code
+                                    , Name: $Name
+                                    , SDesc: $Desc
+                                }
+                                , success: function (result) {
+                                    swal({
+                                        title: "Woaah, that's neat!"
+                                        , text: "Student Sanction Designation Details is Successfully added"
+                                        , type: "success"
+                                        , showCancelButton: false
+                                        , confirmButtonColor: '#9DD656'
+                                        , confirmButtonText: 'Ok'
+                                    }, function (isConfirm) {
+                                        location.reload();
+                                    });
+                                }
+                            });
                         }
-                        , success: function (result) {
-                            alert(result);
-                            window.location.reload();
-                        }
+                        else swal("Cancelled", "The transaction is cancelled", "error");
                     });
                 }
-                else
-                    swal("Please try again", "Please provide a office description", "error");
+                else swal("Please try again", "Please provide a office description", "error");
             }
-            else
-                swal("Please try again", "Please provide a office name", "error");
+            else swal("Please try again", "Please provide a office name", "error");
         }
-        else
-            swal("Please try again", "Please provide a office code", "error");
+        else swal("Please try again", "Please provide a office code", "error");
     });
 </script>
