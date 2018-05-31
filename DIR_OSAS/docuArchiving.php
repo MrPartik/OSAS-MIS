@@ -34,7 +34,7 @@ include('../config/connection.php');
                         </div>
                         <div class="col-md-4">
                             <div class="mini-stat clearfix"> <span class="mini-stat-icon orange"><i class="fa fa-calendar"></i></span>
-                                <div class="mini-stat-info"> <span><?php $row = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM `r_system_config` WHERE `SysConfig_NAME` = 'DisposalDays'")); echo $row["SysConfig_PROPERTIES"]?></span>Disposal of Documents (Limitation in (Day/s))</div>
+                                <div class="mini-stat-info"> <span><?php echo $disposalDays?></span>Disposal of Documents (Limitation in (Day/s))</div>
                             </div>
                         </div>
                     </div>
@@ -62,7 +62,7 @@ include('../config/connection.php');
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php $query = mysqli_query($con,"SELECT `ArchDocuments_ORDER_NO`,`ArchDocuments_NAME`,`ArchDocuments_DESC`,`ArchDocuments_FILE_PATH`,`ArchDocuments_DATE_ADD` FROM `r_archiving_documents`");
+                                                <?php $query = mysqli_query($con,"SELECT `ArchDocuments_ORDER_NO`,`ArchDocuments_NAME`,`ArchDocuments_DESC`,`ArchDocuments_FILE_PATH`,`ArchDocuments_DATE_ADD` FROM `r_archiving_documents` where ArchDocuments_DISPLAY_STAT = 'Active'");
                                                             while($row=mysqli_fetch_assoc($query)){?>
                                                     <tr>
                                                         <td>
@@ -82,7 +82,7 @@ include('../config/connection.php');
                                                         </td>
                                                         <td>
                                                             <center>
-                                                                <button id="btnStudProfile" value="" data-toggle="modal" href="#" class="btn btn-info"> <i class="fa  fa-info-circle"></i> </button>
+                                                                <a href="../Documents/<?php echo  $row['ArchDocuments_FILE_PATH']?>" data-toggle="modal" href="#" class="btn btn-success"> <i class="fa  fa-download"></i> </a>
                                                             </center>
                                                         </td>
                                                     </tr>
@@ -223,6 +223,14 @@ include('../config/connection.php');
                                 $(".content-profile").html(result);
                             }
                         });
+                    });
+                    $.ajax({
+                        url: "docuArchivingSave.php"
+                        , type: "POST"
+                        , data: {
+                            checkfilee:"asd"
+                        }
+                        , success: function (data) {}
                     });
                 </script>
     </body>

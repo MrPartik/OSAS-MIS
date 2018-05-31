@@ -254,6 +254,7 @@ $count_loss_id_regi = $count_loss_id_regi_query['countt'];
 
 $count_request_vouch_query = mysqli_fetch_assoc(mysqli_query($con,"SELECT COUNT(`OrgVoucher_ID`) countt FROM `t_org_voucher` WHERE `OrgVoucher_STATUS` = 'Pending' AND `OrgVoucher_DISPLAY_STAT` = 'Active'"));
 $count_request_vouch = $count_request_vouch_query['countt'];
+$disposalQuery = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM `r_system_config` WHERE `SysConfig_NAME` = 'DisposalDays'")); $disposalDays =  $disposalQuery["SysConfig_PROPERTIES"];
 
 
 
