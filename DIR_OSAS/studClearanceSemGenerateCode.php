@@ -58,7 +58,7 @@ ORDER BY ay.ActiveAcadYear_ID DESC");
                                         <table class="display table table-bordered table-striped" id="dynamic-table">
                                             <thead>
                                                 <tr>
-                                                    <th>Student Number</th>
+                                                    <th class="hidden">Student Number</th>
                                                     <th>Student Details</th>
                                                     <th>Generated Code</th>
                                                     <th>Date Generated</th>
@@ -80,19 +80,19 @@ ORDER BY ay.ActiveAcadYear_ID DESC");
                                                                 $clearance = mysqli_fetch_assoc($view_clearanceGeneratedCodeQuery);
                                                 ?>
                                                     <tr>
-                                                        <td>
+                                                        <td class="hidden">
                                                             <?php echo $stud_row['Stud_NO'];?>
                                                         </td>
                                                         <td>
-                                                            <?php echo '<strong>'.$stud_row['FullName'].'</strong><br>'.$stud_row['Course'];?> </td>
+                                                            <?php echo $stud_row['Stud_NO'].'<br><strong>'.$stud_row['FullName'].'</strong><br>'.$stud_row['Course'];?> </td>
                                                         <td>
                                                             <?php  echo $clearance["ClearanceGenCode_COD_VALUE"]; ?>
                                                         </td>
                                                         <td>
-                                                            <?php  echo $clearance["ClearanceGenCode_IS_GENERATE"]; ?>
+                                                            <?php  echo  ($clearance["ClearanceGenCode_IS_GENERATE"]==null )?"":(new DateTime($clearance["ClearanceGenCode_IS_GENERATE"]))->format('D M d, Y h:i A')  ?>
                                                         </td>
                                                         <td>
-                                                            <?php  echo $clearance["ClearanceGenCode_IS_CLAIMED"]; ?>
+                                                            <?php  echo  ($clearance["ClearanceGenCode_IS_CLAIMED"]==null )?"":(new DateTime($clearance["ClearanceGenCode_IS_CLAIMED"]))->format('D M d, Y h:i A')  ?>
                                                         </td>
                                                         <td>
                                                             <center>
@@ -120,7 +120,7 @@ ORDER BY ay.ActiveAcadYear_ID DESC");
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th>Student Number</th>
+                                                    <th class="hidden">Student Number</th>
                                                     <th>Student Details</th>
                                                     <th>Generated Code</th>
                                                     <th>Date Generated</th>

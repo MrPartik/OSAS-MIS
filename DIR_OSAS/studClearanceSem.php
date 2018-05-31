@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <title>OSAS -Semester Clearance</title>
-    <?php
+<?php
 $breadcrumbs =" <div class='col-md-12'>
 <ul class='breadcrumbs-alt'>
     <li> <a href='dashboard.php'>Home</a> </li>
@@ -14,6 +14,7 @@ $currentPage ='OSAS_StudClearance';
 include('../config/connection.php');
 
 ?>
+
     <body>
         <!--sidebar start-->
         <?php include('sidenav.php')?>
@@ -33,7 +34,7 @@ include('../config/connection.php');
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="mini-stat clearfix"> <span class="mini-stat-icon tar"><i class="fa  fa-chain"></i></span> 
+                            <div class="mini-stat clearfix"> <span class="mini-stat-icon tar"><i class="fa  fa-chain"></i></span>
                                 <div class="mini-stat-info"> <span><?php echo $current_semster?></span> Activate Semester </div>
                             </div>
                         </div>
@@ -45,88 +46,105 @@ include('../config/connection.php');
                             <a href="javascript:;" class="fa fa-chevron-down"></a>  
                             <a href="javascript:;" class="fa fa-times"></a>
                          </span> </header>
-                                <div id="TableStudSanc" class="panel-body"> 
+                                <div id="TableStudSanc" class="panel-body">
                                     <button data-toggle="modal" href="#AddDest" class="btn  btn-default"> <i class="fa fa-plus"></i> Clerance signatories</button>
                                     <div class="adv-table">
-                                        <table class="display table table-bordered table-striped" id="dynamic-table" >
+                                        <table class="display table table-bordered table-striped" id="dynamic-table">
                                             <thead>
                                                 <tr>
                                                     <th>Student Number</th>
-                                                    <th>Student Details</th> 
+                                                    <th>Student Details</th>
                                                     <th>Sanction</th>
                                                     <th>Conficts</th>
                                                     <th>Last Modified</th>
-                                                    <th><center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
+                                                    <th>
+                                                        <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                
-                                                    <?php   
+                                                <?php
                                                     while($stud_row=mysqli_fetch_array($view_studProfile)) { ?>
-                                                        <tr>
-                                                            <td>
-                                                                <?php echo $stud_row['Stud_NO'];?>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo '<strong>'.$stud_row['FullName'].'</strong><br>'.$stud_row['Course'];?>
-                                                            </td> 
-                                                            <td>
-                                                                <?php  
+                                                    <tr>
+                                                        <td>
+                                                            <?php echo $stud_row['Stud_NO'];?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo '<strong>'.$stud_row['FullName'].'</strong><br>'.$stud_row['Course'];?> </td>
+                                                        <?php
                                                             $studNo = $stud_row['Stud_NO'];
                                                             $noRow = mysqli_fetch_array(mysqli_query($con,"SELECT `AssSancStudStudent_STUD_NO` FROM `t_assign_stud_saction` WHERE `AssSancStudStudent_STUD_NO` = '$studNo' and `AssSancStudStudent_DISPLAY_STAT` <> 'Inactive'  and `AssSancStudStudent_IS_FINISH` <>'finished'")); 
                                                             $countSanc = mysqli_num_rows(mysqli_query($con,"SELECT `AssSancStudStudent_STUD_NO` FROM `t_assign_stud_saction` WHERE `AssSancStudStudent_STUD_NO` = '$studNo' and `AssSancStudStudent_DISPLAY_STAT` <> 'Inactive'  and `AssSancStudStudent_IS_FINISH` <>'finished'"));
                                                         if($noRow){
 
                                                         ?>
-                                                        
-                                                        <center> <a id="StudSanctionModalClick" value="<?php echo $noRow[0] ; ?>" data-toggle="modal" href="#studSanction"  class="label label-danger label-mini"> <?php echo  $countSanc ?></a></center>
+                                                            <td style="background:#FF4460">
+                                                                <center>
+                                                                    <a id="StudSanctionModalClick" value="<?php echo $noRow[0] ; ?>" data-toggle="modal" href="#studSanction" class="label label-danger label-mini">
+                                                                        <?php echo  $countSanc ?>
+                                                                    </a>
+                                                                </center>
                                                             </td>
                                                             <?php
                                                         }else{ ?>
-                                                        <center> <a class="label label-success label-mini"> <?php echo  $countSanc ?></a></center>
-                                                        <?php } ?>
-                                                            <td style="width:20%;"> 
-                                                            <center> <strong>
-                                                                <?php
-                                                $clearance_view= mysqli_query($con,"SELECT B.ClearSignatories_NAME
+                                                                <td style="background:#d6fbd6">
+                                                                    <center>
+                                                                        <a class="label label-success label-mini">
+                                                                            <?php echo  $countSanc ?>
+                                                                        </a>
+                                                                    </center>
+                                                                </td>
+                                                                <?php }
+                                                        $clearance_view= mysqli_query($con,"SELECT B.ClearSignatories_NAME
                                                 FROM  t_assign_student_clearance  A
                                                 INNER JOIN  r_clearance_signatories B on A.`AssStudClearance_SIGNATORIES_CODE` = B.ClearSignatories_CODE
                                                 where A.`AssStudClearance_STUD_NO` = '$studNo' 
                                                 AND A.`AssStudClearance_BATCH` ='$current_acadyear'
                                                 AND A.`AssStudClearance_SEMESTER`='$current_semster'
                                                 AND A.`AssStudClearance_DISPLAY_STAT` ='Active'");
-                                                while($row=mysqli_fetch_array($clearance_view)){ 
-                                                ?>
+
+                                                        $countClearance = mysqli_num_rows($clearance_view);
+
+                                                        if($countClearance){
+                                                        ?>
+                                                                    <td style="width:20%; background:#FF4460; color:white">
+                                                                        <center> <strong>
+                                                                <?php
+                                                while($row=mysqli_fetch_array($clearance_view)){  ?>
                                                             <?php echo $row[0].',' ?>
                                                                     <?php }?>
-                                                                    </strong    >
-                                                                    </center>
-                                                            </td>
-                                                            <td> 
-                                                                <?php   
+                                                                    </strong> </center>
+                                                                    </td>
+                                                                    <?php }else{?>
+                                                                        <td style="width:20%; background:#d6fbd6"> </td>
+                                                                        <?php }?>
+                                                                            <td>
+                                                                                <?php
                                                                         $StudNo= $stud_row['Stud_NO'];
                                                                        $row=mysqli_fetch_array(mysqli_query($con,"select max(`AssStudClearance_DATE_MOD`) from t_assign_student_clearance where `AssStudClearance_STUD_NO` ='$StudNo' 
                                                                        AND `AssStudClearance_BATCH` ='$current_acadyear' 
                                                                        AND `AssStudClearance_SEMESTER`='$current_semster'"));
                                                                         echo  ($row[0]==null )?"":(new DateTime($row[0]))->format('D M d, Y h:i A'); 
                                                                 ?>
-                                                            </td>
-                                                            <td>
-                                                                <center>
-                                                                    <button id="StudSemModalClick" value="<?php echo $stud_row['Stud_NO']; ?>" class="btn btn-info " data-toggle="modal" href="#studSemClearance"> <i class="fa  fa-info-circle"></i> </button>
-                                                                </center>
-                                                            </td>
-                                                        </tr>
-                                                        <?php }?>
+                                                                            </td>
+                                                                            <td>
+                                                                                <center>
+                                                                                    <button id="StudSemModalClick" value="<?php echo $stud_row['Stud_NO']; ?>" class="btn btn-info " data-toggle="modal" href="#studSemClearance"> <i class="fa  fa-info-circle"></i> </button>
+                                                                                </center>
+                                                                            </td>
+                                                    </tr>
+                                                    <?php }?>
                                             </tbody>
                                             <tfoot>
                                                 <tr>
                                                     <th>Student Number</th>
-                                                    <th>Student Details</th> 
+                                                    <th>Student Details</th>
                                                     <th>Sanction</th>
                                                     <th>Confilicts</th>
                                                     <th>Last Modified</th>
-                                                    <th><center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
+                                                    <th>
+                                                        <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
+                                                    </th>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -204,13 +222,11 @@ include('../config/connection.php');
             <!--main content end-->
             <!-- Placed js at the end of the document so the pages load faster -->
             <!--Core js-->
-            
             <?php include('footer.php')?>
     </body>
 
 </html>
-<script>   
-
+<script>
     $("#StudSanctionModalClick ").on("click ", function () {
         var datas = $(this).attr("value");
         $.ajax({
@@ -222,24 +238,23 @@ include('../config/connection.php');
             }
         });
     });
-
-       var oTable = $('#dynamic-table').dataTable({
-                        "aLengthMenu": [
+    var oTable = $('#dynamic-table').dataTable({
+        "aLengthMenu": [
                     [3, 5, 10, 15, 20, -1]
-                    , [3, 5,10, 15, 20, "All"] // change per page values here
+                    , [3, 5, 10, 15, 20, "All"] // change per page values here
                 ], // set the initial value
-                        "iDisplayLength": 10
-            , "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>"
-            , "sPaginationType": "bootstrap"
-            , "oLanguage": {
-                "sLengthMenu": "_MENU_ records per page"
-                , "oPaginate": {
-                    "sPrevious": "Prev"
-                    , "sNext": "Next"
-                }
+        "iDisplayLength": 10
+        , "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>"
+        , "sPaginationType": "bootstrap"
+        , "oLanguage": {
+            "sLengthMenu": "_MENU_ records per page"
+            , "oPaginate": {
+                "sPrevious": "Prev"
+                , "sNext": "Next"
             }
-            , aaSorting: [[4, "desc"]]
-        });
+        }
+        , aaSorting: [[4, "desc"]]
+    });
     $("#TableStudSanc ").on("click ", "#StudSemModalClick ", function () {
         var datas = $(this).attr("value");
         $.ajax({
