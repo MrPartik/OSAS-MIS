@@ -133,7 +133,7 @@
                 </div>
             </div>
             <script>
-                $("tbody").find("tr").find("input#DateClaim").each(function () {
+                oTable.$("tr").find("input#DateClaim").each(function () {
                     if ($(this).val().length) {
                         $(this).closest("tr").find("td.TDLossDesc").css("background", "#d6fbd6");
                     }
@@ -209,8 +209,8 @@
                 $("#saveLossSet").on("click", function () {
                     $("input[id='DateClaim']").defaultValue = null;
                     var newLosscialAss = $('tbody').find("tr[id='newLosscialAss']").length
-                        , tobeRemoved = $("tbody").find("tr[class='tobeRemoved']").length
-                        , updatingRow = $("tbody").find("tr[class='updatingRow']").length;
+                        , tobeRemoved = oTable.$("tr[class='tobeRemoved']").length
+                        , updatingRow = oTable.$("tr[class='updatingRow']").length;
                     if (newLosscialAss != 0 || tobeRemoved != 0 || updatingRow != 0) {
                         if (newLosscialAss != 0) {
                             swal({
@@ -225,7 +225,7 @@
                                 , closeOnCancel: false
                             }, function (isConfirm) {
                                 if (isConfirm) {
-                                    $("tbody").find("tr[id='newLosscialAss']").each(function (i) {
+                                    $("tr[id='newLosscialAss']").each(function (i) {
                                         var $tds = $(this).find('td')
                                             , LossType = $tds.eq(1).attr("losstype")
                                             , LossClaim = $tds.eq(2).find("#DateClaim").val()
@@ -277,7 +277,7 @@
                                 , closeOnCancel: false
                             }, function (isConfirm) {
                                 if (isConfirm) {
-                                    $("tbody").find("tr[class='tobeRemoved']").each(function (i) {
+                                    oTable.$("tr[class='tobeRemoved']").each(function (i) {
                                         var $tds = $(this).find('td')
                                             , ID = $tds.eq(0).text();
                                         $.ajax({
@@ -323,7 +323,7 @@
                                 , closeOnCancel: false
                             }, function (isConfirm) {
                                 if (isConfirm) {
-                                    $("tbody").find("tr[class='updatingRow']").each(function (i) {
+                                    oTable.$("tr[class='updatingRow']").each(function (i) {
                                         var $tds = $(this).find('td')
                                             , ID = $tds.eq(0).text()
                                             , LossClaim = $tds.eq(2).find("#DateClaim").val()
