@@ -202,7 +202,7 @@ include('../config/connection.php');
                             <div class="col-lg-12 form-group" id="drpnon">
                                 <label class="control-label">Non Academic Category</label>
                                 <select class="form-control input-sm m-bot15 selectYear" id="nonacad">
-                                <option disabled selected>Please select category</option>
+                                    <option disabled selected>Please select category</option>
                                     <?php
 
                                         $view_query = mysqli_query($con,"SELECT OrgNonAcad_CODE AS CODE , OrgNonAcad_NAME AS NAME FROM `r_org_non_academic_details` WHERE OrgNonAcad_DISPLAY_STAT = 'Active'");
@@ -331,6 +331,15 @@ include('../config/connection.php');
                     $('#editable-sample_new').on('click', function () {
                         $('#updsubmit-data').hide();
                         $('#submit-data').show();
+                        $('.hidethis').hide();
+                        $('#drpnon').hide();
+                        $('#upddrpnon').hide();
+                        $('#updcourse').hide();
+                        $('#formcode').hide();
+                        $('#updsubmit-data').hide();
+                        $('#txtname').val('');
+                        $('#txtdesc').val('');
+                        $("#e9").select2("val", "");
                         $("#form-data2").trigger("reset");
                         stat = 'Add';
                     });
@@ -358,7 +367,7 @@ include('../config/connection.php');
                         }
                     });
                 });
-                    EditableTable.init();
+                EditableTable.init();
             </script>
     </body>
 
