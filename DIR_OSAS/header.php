@@ -8,6 +8,10 @@ if($_SESSION['logged_user']['role']=="Organization")
     { header("location:../DIR_ADMIN/dashboard.php"); }
     else if($_SESSION['logged_user']['role']=="Student")
     { }
+    else if($_SESSION['logged_user']['role']=="Student Assistant")
+    { header("location:../DIR_OSAS/dashboard.php"); }
+    else if($_SESSION['logged_user']['role']=="Staff")
+    { header("location:../DIR_OSAS/dashboard.php"); }
     else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
     { header("location:../");}
 $user_check = $_SESSION['logged_user']['username']; 
