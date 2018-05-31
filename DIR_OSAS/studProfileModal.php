@@ -34,6 +34,9 @@
                             <li>
                                 <a href="javascript:;"> <i class="fa  fa-arrow-circle-down"></i> Year Admitted <span class="label label-success pull-right r-activity"><?php echo substr($profileLayoutRow['Stud_NO'],0,4); ?></span></a>
                             </li>
+                            <li>
+                                <a href="javascript:;"> <i class="fa  fa-calendar"></i> Birth Date <span class="label label-success pull-right r-activity"><?php       echo  ($profileLayoutRow['Stud_BIRTH_DATE']==null )?"":(new DateTime($profileLayoutRow['Stud_BIRTH_DATE']))->format('D M d, Y h:i A'); ?></span></a>
+                            </li>
                             <?php  
                                         $counterSanction=0; 
                                         viewStudSanctionCond($profileLayoutRow['Stud_NO']);
