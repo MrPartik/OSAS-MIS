@@ -123,7 +123,9 @@ AND ClearanceGenCode_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM activ
      $this->Cell(0,0,'Student`s Copy',0,0,'R');
       $this->Ln(3);
     $QRY = $this->GetY();
-    $this->Image('http://'.$_SERVER['HTTP_HOST'].'/config/generateQR.php?text='.$infoProfile['ClearanceGenCode_COD_VALUE'].'#.png',182,$QRY-35,25);
+    $imgQRURL= nodots(absurl('../config/generateQR.php?text='.$infoProfile['ClearanceGenCode_COD_VALUE'].'#.png'));
+
+    $this->Image($imgQRURL,182,$QRY-35,25);
       $this->SetFont('Arial','',10);
       $this->Cell(0,0,'-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------',0,0,'C');
           $this->Ln(3);
@@ -131,7 +133,8 @@ AND ClearanceGenCode_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM activ
      $this->Cell(0,0,(new datetime())->format('D M d, Y h:i A').' This is system generated form.',0,0,'L');
      $this->Cell(0,0,'University`s Copy',0,0,'R');
       $this->ln(15);
-      $this->Image('http://'.$_SERVER['HTTP_HOST'].'/config/generateQR.php?text='.$infoProfile['ClearanceGenCode_COD_VALUE'].'#.png',177.5,$QRY+43.5,28);
+
+      $this->Image($imgQRURL,177.5,$QRY+43.5,28);
       $this->SetFont('Arial','B',15);
       $this->cell(0,0,$infoProfile['ClearanceGenCode_COD_VALUE'],0,0,"C");
          $this->Ln(15);
@@ -157,6 +160,43 @@ AND ClearanceGenCode_SEMESTER = (SELECT ActiveSemester_SEMESTRAL_NAME FROM activ
 
 
   }
+}
+
+$pgurl = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+
+function absurl($url) {
+ global $pgurl;
+ if(strpos($url,'://')) return $url;
+ if(substr($url,0,2)=='//') return 'http:'.$url;
+ if($url[0]=='/') return parse_url($pgurl,PHP_URL_SCHEME).'://'.parse_url($pgurl,PHP_URL_HOST).$url;
+ if(strpos($pgurl,'/',9)===false) $pgurl .= '/';
+ return substr($pgurl,0,strrpos($pgurl,'/')+1).$url;
+}
+
+function nodots($path) {
+ $arr1 = explode('/',$path);
+ $arr2 = array();
+ foreach($arr1 as $seg) {
+  switch($seg) {
+   case '.':
+    break;
+   case '..':
+    array_pop($arr2);
+    break;
+   case '...':
+    array_pop($arr2); array_pop($arr2);
+    break;
+   case '....':
+    array_pop($arr2); array_pop($arr2); array_pop($arr2);
+    break;
+   case '.....':
+    array_pop($arr2); array_pop($arr2); array_pop($arr2); array_pop($arr2);
+    break;
+   default:
+    $arr2[] = $seg;
+  }
+ }
+ return implode('/',$arr2);
 }
 
 $pdf = new myPDF();
