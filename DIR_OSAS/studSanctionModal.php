@@ -5,41 +5,38 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Student Details</h4> </div>
             <div class="modal-body">
-            <div class="row">
-            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
                         <br/>
                         <br/>
                         <button id="assignSanction" class="btnSave btn btn-default"><i class="fa fa-plus"></i> Add</button>
-                        <button id="MoreInfo" class="btnSave btn btn-info"><i class="fa fa-info-circle"></i> More Info</button> 
+                        <button id="MoreInfo" class="btnSave btn btn-info"><i class="fa fa-info-circle"></i> More Info</button>
                         <button id="History" class="btnSave btn btn-success"><i class="fa fa-tag"></i> History</button>
                         <br/>
-                        <br/> 
-                    </div>
-            </div>
-                <div id="profilee" >
-                    
-                        <div class="col-lg-12" style=" font-size: 20px;  background: #2b2a2a1f; color: black; padding: 10px 10px; ">
-                            Student Sanction History</div>
-                <div class='twt-feed maroon-bg'>
-                    <?php viewStudProfileCond( 0,$_GET['StudNo']) ?>
-                        <?php while($profileLayoutRow = mysqli_fetch_array($view_studProfile_cond)){ ?>
-                            <div class='corner-ribon black-ribon'><i class='fa fa-user'></i></div>
-                            <div class='fa fa-user wtt-mark'></div><a href='#'><img alt='<?php echo $profileLayoutRow['FullName']?>' src='../ASSETS/images/Student//Student.png'></a>
-                            <h1>
+                        <br/> </div>
+                </div>
+                <div id="profilee">
+                    <div class="col-lg-12" style=" font-size: 20px;  background: #2b2a2a1f; color: black; padding: 10px 10px; "> Student Sanction History</div>
+                    <div class='twt-feed maroon-bg'>
+                        <?php viewStudProfileCond( 0,$_GET['StudNo']) ?>
+                            <?php while($profileLayoutRow = mysqli_fetch_array($view_studProfile_cond)){ ?>
+                                <div class='corner-ribon black-ribon'><i class='fa fa-user'></i></div>
+                                <div class='fa fa-user wtt-mark'></div><a href='#'><img alt='<?php echo $profileLayoutRow['FullName']?>' src='../ASSETS/images/Student//Student.png'></a>
+                                <h1>
                     <?php echo $profileLayoutRow['FullName']?>
                 </h1>
-                            <p>
-                                <?php echo $profileLayoutRow['Stud_EMAIL']?>
-                            </p>
-                            <p>
-                                <?php echo $profileLayoutRow['Stud_NO']?>
-                            </p>
-                            <br/>
-                            <br/>
-                            <div class='weather-category twt-category'>
-                                <ul>
-                                    <li class='active'>
-                                        <h5>
+                                <p>
+                                    <?php echo $profileLayoutRow['Stud_EMAIL']?>
+                                </p>
+                                <p>
+                                    <?php echo $profileLayoutRow['Stud_NO']?>
+                                </p>
+                                <br/>
+                                <br/>
+                                <div class='weather-category twt-category'>
+                                    <ul>
+                                        <li class='active'>
+                                            <h5>
                                 <?php  
                                         $counterSanction=0; 
                                         viewStudSanctionCond($profileLayoutRow['Stud_NO']);
@@ -49,32 +46,28 @@
                                         echo $counterSanction;  
                                  ?>
                             </h5> Sanction /s </li>
-                                    <li>
-                                        <?php $percentageSanction = "0 %";
+                                        <li>
+                                            <?php $percentageSanction = "0 %";
                             viewStudSanctionComputation($profileLayoutRow['Stud_NO']);
                             while($row=mysqli_fetch_array($view_studSanctionComputation)){ 
                             
                             $percentageSanction = $row['Percentage']." %";
                             }?>
-                                            <h5>
+                                                <h5>
                                 <?php echo $percentageSanction; ?>
                             </h5>Percentage Finished</li>
-                                    <li>
-                                        <h5>
+                                        <li>
+                                            <h5>
                                 <?php echo $profileLayoutRow['Course']?>
                             </h5> Course </li>
-                                </ul>
-                            </div>
-                </div>
+                                    </ul>
+                                </div>
+                    </div>
                 </div>
                 <div class="row">
-                
                     <div class="col-md-12">
-                    
-                    <div id="TableStudSancHisto" class="panel-body" style="display:none ">    
-                        <div class="col-lg-12" style=" font-size: 20px;  background: #2b2a2a1f; color: black; padding: 10px 10px; ">
-                                Student Sanction History
-                            </div>
+                        <div id="TableStudSancHisto" class="panel-body" style="display:none ">
+                            <div class="col-lg-12" style=" font-size: 20px;  background: #2b2a2a1f; color: black; padding: 10px 10px; "> Student Sanction History </div>
                             <div class="adv-table">
                                 <table class="display table table-bordered table-striped" id="TableStudSancHistory">
                                     <thead>
@@ -82,13 +75,13 @@
                                             <th class="hidden">Sanction ID </th>
                                             <th style="width:80% ">Sanction Details</th>
                                             <th style="width:100%">Remarks</th>
-                                            <th class="numeric ">Consumed</th> 
+                                            <th class="numeric ">Consumed</th>
                                             <th>Finish</th>
-                                            <th>To be Finished</th> 
+                                            <th>To be Finished</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbodySanctionsHistory"> 
-                                            <?php 
+                                    <tbody id="tbodySanctionsHistory">
+                                        <?php
                                             $StudNo= $_GET['StudNo'];
                                             $query = mysqli_query($con,"SELECT LSanc.LogSanc_AssSancSudent_ID, LSanc.LogSanc_ID, ASS.AssSancStudStudent_STUD_NO, SD.SancDetails_NAME,SD.SancDetails_TIMEVAL, LSanc.LogSanc_REMARKS, LSanc.LogSanc_CONSUMED_HOURS, LSanc.LogSanc_SEMESTER, LSanc.LogSanc_ACAD_YEAR, LSanc.LogSanc_IS_FINISH, LSanc.LogSanc_DATE_MOD ,DOD.DesOffDetails_NAME, LSanc.LogSanc_TO_BE_DONE FROM `log_sanction` LSanc
 INNER JOIN t_assign_stud_saction ASS ON LSanc.LogSanc_AssSancSudent_ID = ASS.AssSancStudStudent_ID
@@ -97,32 +90,40 @@ INNER JOIN r_designated_offices_details DOD ON DOD.DesOffDetails_CODE = ASS.AssS
 INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHERE ASS.AssSancStudStudent_STUD_NO  ='$StudNo' ") ;
                                             while($row = mysqli_fetch_array($query)){
 ?>
-<tr>
-    <td class='hidden'><?php echo $row['LogSanc_ID']; ?></td>
-    <td> <strong><span class="spanSancName"><?php 
+                                            <tr>
+                                                <td class='hidden'>
+                                                    <?php echo $row['LogSanc_ID']; ?>
+                                                </td>
+                                                <td> <strong><span class="spanSancName"><?php
                                                 $dateMod =new DateTime($row['LogSanc_DATE_MOD']);
                                                 echo '('.$row['LogSanc_AssSancSudent_ID'].') '.$row['SancDetails_NAME'].'<br>Time Value:  '. $row['SancDetails_TIMEVAL'].' Hours<br>Designated Office: '.$row['DesOffDetails_NAME'].'<i style="font-size:10px"><br><br></strong>
-                                                    <br>Last Modified: '. $dateMod->format('D M d, Y h:i A').'</i>'?></span></td>
-    <td><?php echo $row['LogSanc_REMARKS']; ?></td>
-    <td><?php echo $row['LogSanc_CONSUMED_HOURS']; ?></td>
-    <td>  <center>
-                                                        <input  checkStatus="<?php echo  $row[ 'LogSanc_IS_FINISH'] ?>" <?php if( $row[ 'LogSanc_IS_FINISH']==='Finished' ) {echo 'checked';} ?> type="checkbox" disabled /></center></td>
-    <td>
+                                                    <br>Last Modified: '. $dateMod->format('D M d, Y h:i A').'</i>'?></span>
+                                                </td>
+                                                <td>
+                                                    <?php echo $row['LogSanc_REMARKS']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $row['LogSanc_CONSUMED_HOURS']; ?>
+                                                </td>
+                                                <td>
                                                     <center>
-                                                        <input  readonly class="form-control" type="text" value="<?php echo (new dateTime($row[ 'LogSanc_TO_BE_DONE']))->format(" D M d, Y ") ?>" sortt="<?php echo $row[ 'LogSanc_TO_BE_DONE'] ?>"> </center></td> 
-</tr>
-
-
-<?php }?>
+                                                        <input checkStatus="<?php echo  $row[ 'LogSanc_IS_FINISH'] ?>" <?php if( $row[ 'LogSanc_IS_FINISH']==='Finished' ) {echo 'checked';} ?> type="checkbox" disabled /></center>
+                                                </td>
+                                                <td>
+                                                    <center>
+                                                        <input readonly class="form-control" type="text" value="<?php echo (new dateTime($row[ 'LogSanc_TO_BE_DONE']))->format(" D M d, Y ") ?>" sortt="<?php echo $row[ 'LogSanc_TO_BE_DONE'] ?>"> </center>
+                                                </td>
+                                            </tr>
+                                            <?php }?>
                                     </tbody>
                                     <tfoot>
                                         <tr>
                                             <th class="hidden">Sanction ID </th>
                                             <th style="width:80% ">Sanction Details</th>
                                             <th style="width:100%">Remarks</th>
-                                            <th class="numeric ">Consumed</th> 
+                                            <th class="numeric ">Consumed</th>
                                             <th>Finish</th>
-                                            <th>To be Finished</th> 
+                                            <th>To be Finished</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -131,7 +132,6 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                     </div>
                 </div>
                 <div class="row">
-                  
                     <div class="collapse-group">
                         <div id="sanctionDiv" class="row collapse panel-body">
                             <div class="col-md-4" style="width:300px"> Available Sanction
@@ -161,110 +161,109 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                                 </center>
                             </div>
                         </div>
-                        <div class="rows" style="padding-top:10px"> 
-                            <div class="col-lg-12" style=" font-size: 20px;  background: #2b2a2a1f; color: black; padding: 10px 10px; ">
-                                Student Sanction Details
-                            </div>
-                        <div id="TableStudSanc " class="panel-body ">
-                            <div class="adv-table">
-                                <table class="display table table-bordered table-striped" id="dynamic-table-modals">
-                                    <thead>
-                                        <tr>
-                                            <th class="hidden">Sanction ID </th>
-                                            <th style="width:80% ">Sanction Details</th>
-                                            <th style="width:100%">Remarks</th>
-                                            <th class="numeric ">Consumed</th>
-                                            <th class="numeric ">Remaining</th>
-                                            <th>Finish</th>
-                                            <th>To be Finished</th>
-                                            <th>
-                                                        <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tbodySanctions">
-                                        <?php
+                        <div class="rows" style="padding-top:10px">
+                            <div class="col-lg-12" style=" font-size: 20px;  background: #2b2a2a1f; color: black; padding: 10px 10px; "> Student Sanction Details </div>
+                            <div id="TableStudSanc " class="panel-body ">
+                                <div class="adv-table">
+                                    <table class="display table table-bordered table-striped" id="dynamic-table-modals">
+                                        <thead>
+                                            <tr>
+                                                <th class="hidden">Sanction ID </th>
+                                                <th style="width:80% ">Sanction Details</th>
+                                                <th style="width:100%">Remarks</th>
+                                                <th class="numeric ">Consumed</th>
+                                                <th class="numeric ">Remaining</th>
+                                                <th>Finish</th>
+                                                <th>To be Finished</th>
+                                                <th>
+                                                    <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbodySanctions">
+                                            <?php
                             view_studSanctionDetails($profileLayoutRow['Stud_NO']);
                             while($SancDetrow=mysqli_fetch_array($view_studSanctionDetails)){ ?>
-                                            <tr>
-                                                <td class="hidden">
-                                                    <?php echo $SancDetrow['AssSancID']?>
-                                                </td>
-                                                <td class="TDSancName"> <strong><span class="spanSancName"><?php
+                                                <tr>
+                                                    <td class="hidden">
+                                                        <?php echo $SancDetrow['AssSancID']?>
+                                                    </td>
+                                                    <td class="TDSancName"> <strong><span class="spanSancName"><?php
                                                 $dateStart =new DateTime($SancDetrow['Start']);
                                                 $dateMod =new DateTime($SancDetrow['Mods']);
                                                 echo '('.$SancDetrow['AssSancID'].') '.$SancDetrow['SanctionName'].'<br>Time Value:  '. $SancDetrow['TimeVal'].' Hours<br>Designated Office: '.$SancDetrow['Office'].'<i style="font-size:10px"><br><br></strong>Date Started: '. $dateStart->format('D M d, Y h:i A').'
-                                                    <br>Last Modified: '. $dateMod->format('D M d, Y h:i A').'</i>'?></span>
-                                                </td>
-                                                <td>
-                                                    <textarea id="sancRemarks" style="resize:vertical; width:100%;height:100px" value="<?php echo $SancDetrow['Remarks']?>"><?php echo $SancDetrow['Remarks']?></textarea>
-                                                </td>
-                                                <td class="numeric ">
-                                                    <center>
-                                                        <input id="inputConsume" sancID="<?php echo $SancDetrow['AssSancID']?>" style="width:50px; text-align:center;" maxVal="<?php echo $SancDetrow[ 'TimeVal']?>" value="<?php echo $SancDetrow['Consumed']?>" required/> </center>
-                                                </td>
-                                                <td class="timeRemaining numeric ">
-                                                    <?php echo $SancDetrow['TimeVal']-$SancDetrow['Consumed']?>
-                                                </td>
-                                                <td>
-                                                    <center>
-                                                        <input id="checkFinished" checkStatus="<?php echo  $SancDetrow[ 'FINISHED'] ?>" <?php if( $SancDetrow[ 'FINISHED']==='Finished' ) {echo 'checked';} ?> type="checkbox" /></center>
-                                                </td>
-                                                <td>
-                                                    <center>
-                                                        <input id="tobeDone" readonly class="form-control" type="text" value="<?php echo (new dateTime($SancDetrow[ 'Done']))->format(" D M d, Y ") ?>" sortt="<?php echo $SancDetrow[ 'Done'] ?>"> </center>
-                                                </td>
-                                                <td class="actionDes">
-                                                    <center><i title="Delete" style='cursor:pointer;font-size: 20px; ' id='deletemotoInside' class='fa fa-minus-circle  '></i> </center>
-                                                    <br> 
-                                                </td>
-                                                <div id="sanctionDivs" class="row collapse panel-body">
-                                                    <div class="col-md-4" style="width:300px"> Available Sanction
-                                                        <select id="sanctionSelection" class="js-example-basic-single form-control m-bot15">
-                                                            <?php $querySanc =mysqli_query($con,"select * from r_sanction_details where SancDetails_DISPLAY_STAT = 'Active'");
-                                          while($row =mysqli_fetch_array($querySanc)) { ?>
-                                                                <option sanctionCode="<?php echo $row['SancDetails_CODE'];?>" sanctionTimeValue="<?php echo $row['SancDetails_TIMEVAL']?>">
-                                                                    <?php echo $row['SancDetails_NAME']?>
-                                                                </option>
-                                                                <?php } ?>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-4" style="width:270px"> Available Designated Office
-                                                        <select id="officesSelection" class="form-control m-bot15">
-                                                            <?php $queryDesignatedOffice =mysqli_query($con,"select * from r_designated_offices_details where DesOffDetails_DISPLAY_STAT = 'active'");
-                                          while($desRow =mysqli_fetch_array($queryDesignatedOffice)) { ?>
-                                                                <option value="<?php echo  $desRow['DesOffDetails_CODE']?>">
-                                                                    <?php echo  $desRow['DesOffDetails_NAME']?>
-                                                                </option>
-                                                                <?php }?>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-4" style="width:10px">
+                                                        <br>Last Modified: '. $dateMod->format('D M d, Y h:i A').'</i>'?></span>
+                                                    </td>
+                                                    <td>
+                                                        <textarea id="sancRemarks" style="resize:vertical; width:100%;height:100px" value="<?php echo $SancDetrow['Remarks']?>"><?php echo $SancDetrow['Remarks']?></textarea>
+                                                    </td>
+                                                    <td class="numeric ">
                                                         <center>
-                                                            <br>
-                                                            <button id="addSanction" class="btnSave btn btn-primary"><i class="fa fa-plus-circle "></i> Assign</button>
-                                                        </center>
+                                                            <input id="inputConsume" sancID="<?php echo $SancDetrow['AssSancID']?>" style="width:50px; text-align:center;" maxVal="<?php echo $SancDetrow[ 'TimeVal']?>" value="<?php echo $SancDetrow['Consumed']?>" required/> </center>
+                                                    </td>
+                                                    <td class="timeRemaining numeric ">
+                                                        <?php echo $SancDetrow['TimeVal']-$SancDetrow['Consumed']?>
+                                                    </td>
+                                                    <td>
+                                                        <center>
+                                                            <input id="checkFinished" checkStatus="<?php echo  $SancDetrow[ 'FINISHED'] ?>" <?php if( $SancDetrow[ 'FINISHED']==='Finished' ) {echo 'checked';} ?> type="checkbox" /></center>
+                                                    </td>
+                                                    <td>
+                                                        <center>
+                                                            <input id="tobeDone" readonly class="form-control" type="text" value="<?php echo (new dateTime($SancDetrow[ 'Done']))->format(" D M d, Y ") ?>" sortt="<?php echo $SancDetrow[ 'Done'] ?>"> </center>
+                                                    </td>
+                                                    <td class="actionDes">
+                                                        <center><i title="Delete" style='cursor:pointer;font-size: 20px; ' id='deletemotoInside' class='fa fa-minus-circle  '></i> </center>
+                                                        <br> </td>
+                                                    <div id="sanctionDivs" class="row collapse panel-body">
+                                                        <div class="col-md-4" style="width:300px"> Available Sanction
+                                                            <select id="sanctionSelection" class="js-example-basic-single form-control m-bot15">
+                                                                <?php $querySanc =mysqli_query($con,"select * from r_sanction_details where SancDetails_DISPLAY_STAT = 'Active'");
+                                          while($row =mysqli_fetch_array($querySanc)) { ?>
+                                                                    <option sanctionCode="<?php echo $row['SancDetails_CODE'];?>" sanctionTimeValue="<?php echo $row['SancDetails_TIMEVAL']?>">
+                                                                        <?php echo $row['SancDetails_NAME']?>
+                                                                    </option>
+                                                                    <?php } ?>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4" style="width:270px"> Available Designated Office
+                                                            <select id="officesSelection" class="form-control m-bot15">
+                                                                <?php $queryDesignatedOffice =mysqli_query($con,"select * from r_designated_offices_details where DesOffDetails_DISPLAY_STAT = 'active'");
+                                          while($desRow =mysqli_fetch_array($queryDesignatedOffice)) { ?>
+                                                                    <option value="<?php echo  $desRow['DesOffDetails_CODE']?>">
+                                                                        <?php echo  $desRow['DesOffDetails_NAME']?>
+                                                                    </option>
+                                                                    <?php }?>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4" style="width:10px">
+                                                            <center>
+                                                                <br>
+                                                                <button id="addSanction" class="btnSave btn btn-primary"><i class="fa fa-plus-circle "></i> Assign</button>
+                                                            </center>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </tr>
+                                                <?php }}?>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th class="hidden">Sanction ID </th>
+                                                <th style="width:80% ">Sanction Details</th>
+                                                <th style="width:100%">Remarks</th>
+                                                <th class="numeric ">Consumed</th>
+                                                <th class="numeric ">Remaining</th>
+                                                <th>Finish</th>
+                                                <th>To be Finished</th>
+                                                <th>
+                                                    <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
+                                                </th>
                                             </tr>
-                                            <?php }}?>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th class="hidden">Sanction ID </th>
-                                            <th style="width:80% ">Sanction Details</th>
-                                            <th style="width:100%">Remarks</th>
-                                            <th class="numeric ">Consumed</th>
-                                            <th class="numeric ">Remaining</th>
-                                            <th>Finish</th>
-                                            <th>To be Finished</th>
-                                            <th>
-                                                        <center><i style="font-size:20px" class="fa fa-bolt"></i></center></th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                                        </tfoot>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                            </div> 
                         <div class="modal-footer">
                             <button id="saveSanctionSet" type="submit" class="btnSave btn btn-success"><i class="fa fa-save"></i> Save</button>
                         </div>
@@ -278,42 +277,6 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
             $formatdateNewSanc = $dateNewSanc->format('D M d, Y');
         ?>
             <script>
-                $("#profilee").hide();
-            $("#MoreInfo").on("click",function(){
-                if(!$("#profilee:visible").length){
-                    $("#profilee").slideDown();
-                        $("#TableStudSancHisto").slideUp();
-                        $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide Info');
-                        $("#profilee").slideDown();
-                        $("#History").html('<i class="fa  fa-info-circle"></i> History');
-                }else{
-                     $("#profilee").slideUp();
-                    $(this).html('<i class="fa  fa-info-circle"></i> More Info');
-                }
-            });
-                
-                $("#History").on("click", function () {
-                    if (!$("#TableStudSancHisto:visible").length) {
-                        $("#TableStudSancHisto").slideDown();
-                        $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide History'); 
-                        $("#profilee").slideUp();
-                        $("#MoreInfo").html('<i class="fa  fa-info-circle"></i> More Info');
-                    }
-                    else {
-                        $("#TableStudSancHisto").slideUp();
-                        $(this).html('<i class="fa  fa-info-circle"></i> History');
-                    }
-                });
-                
-                var date = new Date();
-                dd = ('0' + date.getDate()).slice(-2), mm = ('0' + (date.getMonth() + 1)).slice(-2), y = date.getFullYear(), someFormattedDate = y + '-' + mm + '-' + dd;
-                $("tbody").find("tr").find("input[id='tobeDone']").each(function () {
-                    var date = new Date()
-                    dd = ('0' + date.getDate()).slice(-2), mm = ('0' + (date.getMonth() + 1)).slice(-2), y = date.getFullYear(), someFormattedDate = y + '-' + mm + '-' + dd;
-                    if ($(this).attr("sortt") <= someFormattedDate) {
-                        $(this).css("color", "red");
-                    }
-                });
                 var oTable = $('#dynamic-table-modals').dataTable({
                     "aLengthMenu": [
                     [3, 5, 15, 20, -1]
@@ -345,14 +308,49 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                             "sPrevious": "Prev"
                             , "sNext": "Next"
                         }
-                    
-                }, aaSorting: [[0, "desc"]],
-                "aoColumnDefs": [{
-                        'bSortable': false,
-                        'aTargets': [1,2,3,4,5]
-                    }]
                     }
-                );
+                    , aaSorting: [[0, "desc"]]
+                    , "aoColumnDefs": [{
+                        'bSortable': false
+                        , 'aTargets': [1, 2, 3, 4, 5]
+                    }]
+                });
+                $("#profilee").hide();
+                $("#MoreInfo").on("click", function () {
+                    if (!$("#profilee:visible").length) {
+                        $("#profilee").slideDown();
+                        $("#TableStudSancHisto").slideUp();
+                        $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide Info');
+                        $("#profilee").slideDown();
+                        $("#History").html('<i class="fa  fa-info-circle"></i> History');
+                    }
+                    else {
+                        $("#profilee").slideUp();
+                        $(this).html('<i class="fa  fa-info-circle"></i> More Info');
+                    }
+                });
+                $("#History").on("click", function () {
+                    if (!$("#TableStudSancHisto:visible").length) {
+                        $("#TableStudSancHisto").slideDown();
+                        $(this).html('<i class="fa  fa-arrow-circle-o-left"></i> Hide History');
+                        $("#profilee").slideUp();
+                        $("#MoreInfo").html('<i class="fa  fa-info-circle"></i> More Info');
+                    }
+                    else {
+                        $("#TableStudSancHisto").slideUp();
+                        $(this).html('<i class="fa  fa-info-circle"></i> History');
+                    }
+                });
+                var date = new Date();
+                dd = ('0' + date.getDate()).slice(-2), mm = ('0' + (date.getMonth() + 1)).slice(-2), y = date.getFullYear(), someFormattedDate = y + '-' + mm + '-' + dd;
+
+                $(oTable.$("tr")).find("input[id='tobeDone']").each(function () {
+                    var date = new Date()
+                    dd = ('0' + date.getDate()).slice(-2), mm = ('0' + (date.getMonth() + 1)).slice(-2), y = date.getFullYear(), someFormattedDate = y + '-' + mm + '-' + dd;
+                    if ($(this).attr("sortt") <= someFormattedDate) {
+                        $(this).css("color", "red");
+                    }
+                });
                 $('#assignSanction').on("click", function () {
                     if ($('#sanctionDiv:visible').length) {
                         $("#sanctionDiv").slideToggle(500);
@@ -456,9 +454,9 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                     }
                 });
                 $("#saveSanctionSet").on("click", function () {
-                    var newLosscialAss = $('tbody').find("tr[id='newSanction']").length
-                        , tobeRemoved = $("tbody").find("tr[class='tobeRemoved']").length
-                        , updatingRow = $("tbody").find("tr[class='updatingRow']").length;
+                    var newLosscialAss = $("tr[id='newSanction']").length
+                        , tobeRemoved = oTable.$("tr.tobeRemoved").length
+                        , updatingRow = oTable.$("tr.updatingRow").length;
                     if (newLosscialAss != 0 || tobeRemoved != 0 || updatingRow != 0) {
                         if (newLosscialAss != 0) {
                             swal({
@@ -474,7 +472,7 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                             }, function (isConfirm) {
                                 if (isConfirm) {
                                     $("#saveSanctionSet").attr("disabled", "disabled");
-                                    $("tbody").find("tr[id='newSanction']").each(function (i) {
+                                    $("tr[id='newSanction']").each(function (i) {
                                         var $tds = $(this).find('td')
                                             , SanctionCode = $tds.eq(0).text()
                                             , DesignatedOfficeCode = $tds.eq(1).text()
@@ -535,7 +533,7 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                                 , closeOnCancel: false
                             }, function (isConfirm) {
                                 if (isConfirm) {
-                                    $("tbody").find("tr[class='tobeRemoved']").each(function (i) {
+                                    $(oTable.$("tr.tobeRemoved")).each(function (i) {
                                         var $tds = $(this).find('td')
                                             , ID = $tds.eq(0).text()
                                             , UpdateConsumed = $tds.eq(3).find("input[id='inputConsume']").val()
@@ -594,7 +592,7 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                                 , closeOnCancel: false
                             }, function (isConfirm) {
                                 if (isConfirm) {
-                                    $("tbody").find("tr[class='updatingRow']").each(function (i) {
+                                    $(oTable.$("tr.updatingRow")).each(function (i) {
                                         var $tds = $(this).find('td')
                                             , ID = $tds.eq(0).text()
                                             , UpdateConsumed = $tds.eq(3).find("input[id='inputConsume']").val()
@@ -643,11 +641,11 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                         swal("Error", "no transaction has been made", "error");
                     }
                 });
-                $("input[id='tobeDone']").datepicker({
+                $(oTable.$("tr")).find("td input[id='tobeDone']").datepicker({
                     minDate: 0
                     , dateFormat: 'D M d, yy'
                 });
-                $("tbody").find("tr").find("input[id='checkFinished']").each(function () {
+                $($(oTable.$("tr")).find("td input[id='checkFinished']")).each(function () {
                     if ($(this).is(":checked")) {
                         $(this).closest("tr").find("td.TDSancName  ").css("background", "#d6fbd6");
                         $(this).closest("tr").find("td input[id='tobeDone']").css("color", "black");
