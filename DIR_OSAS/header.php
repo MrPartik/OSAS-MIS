@@ -2,14 +2,23 @@
 session_start();
 include('../config/dashboard/count.php'); 
 include('../config/query.php');
-if($_SESSION['logged_user']['role']=="Organization")
+if($_SESSION['logged_user']['role']=="Student Assistant" || $_SESSION['logged_user']['role']=="Staff" )
+    {}else
+    {
+         if($_SESSION['logged_user']['role']=="Student Assistant")
+        { header("location:../DIR_OSAS/dashboard.php"); }
+        else if($_SESSION['logged_user']['role']=="Staff")
+        { header("location:../DIR_OSAS/dashboard.php"); }
+    }
+     if($_SESSION['logged_user']['role']=="Organization")
     { }
-    else if($_SESSION['logged_user']['role']=="Administrator")
+     if($_SESSION['logged_user']['role']=="Administrator")
     { header("location:../DIR_ADMIN/dashboard.php"); }
-    else if($_SESSION['logged_user']['role']=="Student")
+     if($_SESSION['logged_user']['role']=="Student")
     { }
-    else if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
+     if(empty($_SESSION['logged_user'])||empty($_SESSION['logged_in']))
     { header("location:../");}
+
 $user_check = $_SESSION['logged_user']['username']; 
 $referenced_user = $_SESSION['logged_user']['ref']; ?>
     <!DOCTYPE html>
