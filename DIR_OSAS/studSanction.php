@@ -60,7 +60,7 @@ include('../config/connection.php');
                                                     <th>Full Name</th>
                                                     <th>Course</th>
                                                     <th style="width:10%">Status</th>
-                                                    <th>Progress</th>
+                                                    <th class="hidden">Progress</th>
                                                     <th>Last Modified</th>
                                                     <th>
                                                         <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
@@ -83,13 +83,13 @@ include('../config/connection.php');
                                                             <?php  
                                                             $studNo = $stud_row['Stud_NO'];
                                                             $noRow = mysqli_fetch_array(mysqli_query($con,"SELECT (SELECT COUNT(a.AssSancStudStudent_STUD_NO) FROM t_assign_stud_saction a inner join r_sanction_details b on a.AssSancStudStudent_SancDetails_CODE = b.SancDetails_CODE and b.SancDetails_DISPLAY_STAT='Active' WHERE a.AssSancStudStudent_STUD_NO = '$studNo' and a.AssSancStudStudent_DISPLAY_STAT <> 'Inactive'  and a.AssSancStudStudent_IS_FINISH <>'finished'), (SELECT COUNT(a.AssSancStudStudent_STUD_NO) FROM t_assign_stud_saction a inner join r_sanction_details b on a.AssSancStudStudent_SancDetails_CODE= b.SancDetails_CODE WHERE a.AssSancStudStudent_STUD_NO  = '$studNo' and a.AssSancStudStudent_IS_FINISH ='finished' and a.AssSancStudStudent_DISPLAY_STAT <> 'Inactive' )")); ?>
-                                                                <center> <span class="label label-danger label-mini"> <?php echo $noRow[0] ?>  </span> &nbsp; <span class="label label-success label-mini"> <?php echo $noRow[1] ?>  </span> </center>
+                                                                <center> <span Title="Current Sanction/s" class="label label-danger label-mini"> <?php echo $noRow[0] ?>  </span> &nbsp; <span Title="Current Cleared Sanction/s"  class="label label-success label-mini"> <?php echo $noRow[1] ?>  </span> </center>
                                                         </td>
                                                         <?php
                                                 viewStudSanctionComputation($stud_row['Stud_NO']);
                                                 $row=mysqli_fetch_array($view_studSanctionComputation) 
                                                 ?>
-                                                            <td style="width:20%;" title="<?php echo $row['Percentage'] ?>"> <span class="hidden"><?php echo $row['Percentage'] ?></span>
+                                                            <td class="hidden" style="width:20%;" title="<?php echo $row['Percentage'] ?>"> <span class="hidden"><?php echo $row['Percentage'] ?></span>
                                                                 <div class="progress progress-striped progress-xs">
                                                                     <div style="width:<?php echo $row['Percentage'] ?>%" aria-valuemax="100%" aria-valuemin="0" role="progressbar" class="progress-bar progress-bar-success"> <span class="sr-only">40% Complete (success)</span> </div>
                                                                 </div>
@@ -114,7 +114,7 @@ include('../config/connection.php');
                                                     <th>Full Name</th>
                                                     <th>Course</th>
                                                     <th style="width:10%">Status</th>
-                                                    <th>Progress</th>
+                                                    <th class="hidden">Progress</th>
                                                     <th>Last Modified</th>
                                                     <th>
                                                         <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
@@ -141,10 +141,12 @@ include('../config/connection.php');
                             <p>You are now adding sanction data</p>
                             <br>
                             <div class="row">
-                                <div class="col-md-6 form-group"> *Sanction Code
+                                <div class="col-md-12 form-group"> *Sanction Code
                                     <input title="sanction code is depending on the sanction description, it is a short description for the sanction" id="sancCode" type="text" class="form-control" placeholder="ex. 2.1 3rdOffense" required/> </div>
+<!--
                                 <div class="col-md-6 form-group"> *Sanction Time Interval
                                     <input title="sanction time interval must in hours format" id="sancTime" type="number" class="form-control" placeholder="ex. 42" required/> </div>
+-->
                                 <div class="col-md-12 form-group"> *Sanction Name
                                     <textarea title="sanction name" id="sancName" type="text" class="form-control" style="resize:vertical" placeholder="ex. 3rd Offense Failure to bring valid ID" required></textarea>
                                 </div>
@@ -325,11 +327,12 @@ include('../config/connection.php');
         var $Code = $("#sancCode").val()
             , $Name = $("#sancName").val()
             , $Desc = $("#sancDesc").val()
-            , $Time = $("#sancTime").val();
+            , $Time = 0;
+//            $("#sancTime").val();
         if ($Code.length) {
             if ($Name.length) {
                 if ($Desc.length) {
-                    if ($Time.length) {
+//                    if ($Time.length) {
                         swal({
                             title: "Are you sure?"
                             , text: "This data will be saved and used in further transactions"
@@ -370,8 +373,8 @@ include('../config/connection.php');
                             }
                             else swal("Cancelled", "The transaction is cancelled", "error");
                         });
-                    }
-                    else swal("Please try again", "Please provide a time interval", "error");
+//                    }
+//                    else swal("Please try again", "Please provide a time interval", "error");
                 }
                 else swal("Please try again", "Please provide a sanction description", "error");
             }

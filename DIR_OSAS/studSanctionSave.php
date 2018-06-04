@@ -1,6 +1,7 @@
 <?php 
 include('../config/query.php');
 include ('../config/connection.php'); 
+
 if(isset($_POST['insertSanction']))
 {
     $StudNumber = $_POST['StudNumber'];

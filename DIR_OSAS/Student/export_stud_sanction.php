@@ -1,7 +1,7 @@
 <?php
  if(!empty($_FILES["employee_file"]["name"]))
  {
-    //include('../../config/connection.php');
+    include('../../config/connection.php');
 
     $output = '';
     $allowed_ext = array("csv");
@@ -21,8 +21,8 @@
            fgetcsv($file_data);
            while($row = fgetcsv($file_data))
            {   
-               //adding students' sanction info
-                $sanction_date =  mysqli_real_escape_string($con, $row[0]);
+               //adding students' sanction info;
+                $sanction_date =  mysqli_real_escape_string($con, (new DateTime($row[0]))->format('Y-m-d H:i:s'));
                 $studnum = mysqli_real_escape_string($con, $row[1]);
                 $sanction_rmrk =  mysqli_real_escape_string($con, $row[7]);
                //adding designations
@@ -31,8 +31,10 @@
                 $sanction_code =  mysqli_real_escape_string($con, $row[3]);
                 $sanction_name =  mysqli_real_escape_string($con, $row[4]);
                 $sanction_time =  mysqli_real_escape_string($con, $row[5]);
-                $sanction_due =  mysqli_real_escape_string($con, $row[8]);
+                $sanction_due =  mysqli_real_escape_string($con, (new DateTime($row[8]))->format('Y-m-d H:i:s'));
            
+
+
                 mysqli_query($con,"INSERT INTO `t_assign_stud_saction` (`AssSancStudStudent_STUD_NO`, `AssSancStudStudent_SancDetails_CODE`, `AssSancStudStudent_DesOffDetails_CODE`, `AssSancStudStudent_TO_BE_DONE`, `AssSancStudStudent_REMARKS`, `AssSancStudStudent_DATE_ADD`) VALUES ('$studnum','$sanction_code','$sanction_plce','$sanction_due','$sanction_rmrk','$sanction_date')");
                
                //start adding sanction info

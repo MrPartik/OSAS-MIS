@@ -63,7 +63,7 @@ include('../config/connection.php');
                                             <tr>
                                                 <th>Sanction Code</th>
                                                 <th>Sanction Name</th>
-                                                <th>Time Value (Hour/s)</th>
+                                                <th class="hidden">Time Value (Hour/s)</th>
                                                 <th>Sanction Description</th>
                                                 <th>Action</th>
                                             </tr>
@@ -85,7 +85,7 @@ include('../config/connection.php');
                                             <tr>
                                                 <td style='width:180px'>$code</td>
                                                 <td>$name</td>
-                                                <td >$time</td>
+                                                <td class='hidden'>$time</td>
                                                 <td>$desc</td>
                                                     ";
                                     
@@ -129,7 +129,7 @@ include('../config/connection.php');
                                             <tr>
                                                 <th>Sanction Code</th>
                                                 <th>Sanction Name</th>
-                                                <th>Time Value (Hour/s)</th>
+                                                <th class="hidden">Time Value (Hour/s)</th>
                                                 <th>Sanction Description</th>
                                                 <th>Action</th>
                                             </tr>
@@ -186,8 +186,8 @@ include('../config/connection.php');
                             <div class="col-md-12"  style="padding-top:10px">
                                 Sanction Name <input type="text" class="form-control" placeholder="ex. Sanction" id="txtname">
                             </div>
-                            <div class="col-md-12"  style="padding-top:10px">
-                                Time Value (hour/s) <input type="text" class="form-control" placeholder="ex. 8" id="txthour">
+                            <div class="col-md-12 hidden"  style="padding-top:10px">
+                                Time Value (hour/s) <input type="text" class="form-control" placeholder="ex. 8" id="txthour" value="0">
                             </div>
                             <div class="col-md-12 " style="padding-top:10px">
                                 Sanction Description<textarea class="form-control" placeholder="ex. Sanction" rows="6" style="margin: 0px 202.5px 0px 0px;resize:none" id="txtdesc"></textarea>

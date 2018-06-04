@@ -75,7 +75,7 @@
                                             <th class="hidden">Sanction ID </th>
                                             <th style="width:80% ">Sanction Details</th>
                                             <th style="width:100%">Remarks</th>
-                                            <th class="numeric ">Consumed</th>
+                                            <th class="numeric ">Total Hours</th>
                                             <th>Finish</th>
                                             <th>To be Finished</th>
                                         </tr>
@@ -96,7 +96,7 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                                                 </td>
                                                 <td> <strong><span class="spanSancName"><?php
                                                 $dateMod =new DateTime($row['LogSanc_DATE_MOD']);
-                                                echo '('.$row['LogSanc_AssSancSudent_ID'].') '.$row['SancDetails_NAME'].'<br>Time Value:  '. $row['SancDetails_TIMEVAL'].' Hours<br>Designated Office: '.$row['DesOffDetails_NAME'].'<i style="font-size:10px"><br><br></strong>
+                                                echo '('.$row['LogSanc_AssSancSudent_ID'].') '.$row['SancDetails_NAME'].'<br>Total Hours:  '. $row['LogSanc_CONSUMED_HOURS'].' Hours<br>Designated Office: '.$row['DesOffDetails_NAME'].'<i style="font-size:10px"><br><br></strong>
                                                     <br>Last Modified: '. $dateMod->format('D M d, Y h:i A').'</i>'?></span>
                                                 </td>
                                                 <td>
@@ -121,7 +121,7 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                                             <th class="hidden">Sanction ID </th>
                                             <th style="width:80% ">Sanction Details</th>
                                             <th style="width:100%">Remarks</th>
-                                            <th class="numeric ">Consumed</th>
+                                            <th class="numeric ">Total Hours</th>
                                             <th>Finish</th>
                                             <th>To be Finished</th>
                                         </tr>
@@ -171,8 +171,8 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                                                 <th class="hidden">Sanction ID </th>
                                                 <th style="width:80% ">Sanction Details</th>
                                                 <th style="width:100%">Remarks</th>
-                                                <th class="numeric ">Consumed</th>
-                                                <th class="numeric ">Remaining</th>
+                                                <th class="numeric ">Total Hours</th>
+                                                <th class="numeric hidden">Remaining</th>
                                                 <th>Finish</th>
                                                 <th>To be Finished</th>
                                                 <th>
@@ -191,7 +191,7 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                                                     <td class="TDSancName"> <strong><span class="spanSancName"><?php
                                                 $dateStart =new DateTime($SancDetrow['Start']);
                                                 $dateMod =new DateTime($SancDetrow['Mods']);
-                                                echo '('.$SancDetrow['AssSancID'].') '.$SancDetrow['SanctionName'].'<br>Time Value:  '. $SancDetrow['TimeVal'].' Hours<br>Designated Office: '.$SancDetrow['Office'].'<i style="font-size:10px"><br><br></strong>Date Started: '. $dateStart->format('D M d, Y h:i A').'
+                                                echo '('.$SancDetrow['AssSancID'].') '.$SancDetrow['SanctionName'].'<br>Total Hours:  '. $SancDetrow['Consumed'].' Hours<br>Designated Office: '.$SancDetrow['Office'].'<i style="font-size:10px"><br><br></strong>Date Started: '. $dateStart->format('D M d, Y h:i A').'
                                                         <br>Last Modified: '. $dateMod->format('D M d, Y h:i A').'</i>'?></span>
                                                     </td>
                                                     <td>
@@ -199,9 +199,9 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                                                     </td>
                                                     <td class="numeric ">
                                                         <center>
-                                                            <input id="inputConsume" sancID="<?php echo $SancDetrow['AssSancID']?>" style="width:50px; text-align:center;" maxVal="<?php echo $SancDetrow[ 'TimeVal']?>" value="<?php echo $SancDetrow['Consumed']?>" required/> </center>
+                                                            <input id="inputConsume" sancID="<?php echo $SancDetrow['AssSancID']?>" style="width:100px; text-align:center;" maxVal="<?php echo $SancDetrow[ 'TimeVal<br />']?>" value="<?php echo $SancDetrow['Consumed']?>" required/> </center>
                                                     </td>
-                                                    <td class="timeRemaining numeric ">
+                                                    <td class="timeRemaining numeric hidden ">
                                                         <?php echo $SancDetrow['TimeVal']-$SancDetrow['Consumed']?>
                                                     </td>
                                                     <td>
@@ -251,8 +251,8 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                                                 <th class="hidden">Sanction ID </th>
                                                 <th style="width:80% ">Sanction Details</th>
                                                 <th style="width:100%">Remarks</th>
-                                                <th class="numeric ">Consumed</th>
-                                                <th class="numeric ">Remaining</th>
+                                                <th class="numeric ">Total Hours</th>
+                                                <th class="numeric hidden ">Remaining</th>
                                                 <th>Finish</th>
                                                 <th>To be Finished</th>
                                                 <th>
@@ -394,25 +394,25 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                     else {
                         $(this).closest('tr').addClass('updatingRow');
                     }
-                    if ($(this).is(':checked')) {
-                        $(this).closest("tr").find("#inputConsume").val($(this).closest("tr").find("#inputConsume").attr("maxval"));
-                        $(this).closest('tr').find('.timeRemaining').html($(this).closest("tr").find("#inputConsume").attr("maxval") - $(this).closest("tr").find("#inputConsume").val());
-                    }
-                    else {
-                        $(this).closest("tr").find("#inputConsume").val($(this).closest("tr").find("#inputConsume").attr("value"));
-                        $(this).closest('tr').find('.timeRemaining').html($(this).closest("tr").find("#inputConsume").attr("maxval") - $(this).closest("tr").find("#inputConsume").val());
-                    }
+//                    if ($(this).is(':checked')) {
+//                        $(this).closest("tr").find("#inputConsume").val($(this).closest("tr").find("#inputConsume").attr("maxval"));
+//                        $(this).closest('tr').find('.timeRemaining').html($(this).closest("tr").find("#inputConsume").attr("maxval") - $(this).closest("tr").find("#inputConsume").val());
+//                    }
+//                    else {
+//                        $(this).closest("tr").find("#inputConsume").val($(this).closest("tr").find("#inputConsume").attr("value"));
+//                        $(this).closest('tr').find('.timeRemaining').html($(this).closest("tr").find("#inputConsume").attr("maxval") - $(this).closest("tr").find("#inputConsume").val());
+//                    }
                 });
                 $("#addSanction").on("click", function () {
                     var SanctionCode = $('#sanctionSelection option:selected').attr("sanctionCode")
                         , SanctionName = $('#sanctionSelection option:selected').text()
-                        , Hrs = $('#sanctionSelection option:selected').attr("sanctionTimeValue")
+//                        , Hrs = $('#sanctionSelection option:selected').attr("sanctionTimeValue")
                         , DesignatedOfficeCode = $('#officesSelection option:selected').attr("value")
                         , DesignatedOfficeName = $('#officesSelection option:selected').text()
                         , currDate = "<?php echo dateNow(); ?>"
                         , Remaining = $('#sanctionSelection option:selected').attr("sanctionTimeValue");
                     $("#tbodySanctions").find(".dataTables_empty").closest("tr ").remove();
-                    $("#tbodySanctions").prepend("<tr id='newSanction'> <td class='hidden'>" + SanctionCode + "</td><td class='hidden'>" + DesignatedOfficeCode + "</td><td><span class='label label-success'>NEW</span><strong> " + SanctionName + '<br></strong>Time Value:  ' + Hrs + ' Hours' + "<br/><br/><i style='font-size:10px'>Date Added:" + currDate + "</i></td><td><textarea id='sancRemarks' style='resize:vertical; width:100%;height:100px'></textarea></td><td class='numeric'>  <center><input id='inputConsume' type='text' value='0' maxVal='" + Hrs + "' style='width:50px; text-align:center;' /> </center></td><td class='timeRemaining numeric'>" + Remaining + "</td><td> <center> <input id='checkFinished' type='checkbox'  /></center><td> <center><input id='tobeDone' class='form-control' type='text' readonly value=" + '"<?php echo $formatdateNewSanc ?>"' + " > </center></td></td> <td><center> <i title='Delete' style='cursor:pointer;font-size: 20px; ' id='deletemoto' class='fa fa-minus-circle '></i> </center></td>< /tr>  ");
+                    $("#tbodySanctions").prepend("<tr id='newSanction'> <td class='hidden'>" + SanctionCode + "</td><td class='hidden'>" + DesignatedOfficeCode + "</td><td><span class='label label-success'>NEW</span><strong> " + SanctionName + '<br>Designated Office: '+DesignatedOfficeName+'</strong>' + "<br><br><i style='font-size:10px'>Date Added:" + currDate + "</i></td><td><textarea id='sancRemarks' style='resize:vertical; width:100%;height:100px'></textarea></td><td class='numeric'>  <center><input id='inputConsume' type='text' value='0' style='width:100px; text-align:center;' /> </center></td><td class='timeRemaining hidden numeric'>" + Remaining + "</td><td> <center> <input id='checkFinished' type='checkbox'  /></center><td> <center><input id='tobeDone' class='form-control' type='text' readonly value=" + '"<?php echo $formatdateNewSanc ?>"' + " > </center></td></td> <td><center> <i title='Delete' style='cursor:pointer;font-size: 20px; ' id='deletemoto' class='fa fa-minus-circle '></i> </center></td>< /tr>  ");
                     $("input[id='tobeDone']").datepicker({
                         minDate: 0
                         , dateFormat: 'D M d, yy'
@@ -439,19 +439,19 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                     else {
                         $(this).closest('tr').addClass('updatingRow');
                     }
-                    if (parseInt($(this).attr("maxVal"), 10) < parseInt($(this).val(), 10)) {
-                        $(this).val($(this).attr("maxVal"));
-                        $(this).closest('tr').find('.timeRemaining').html($(this).attr('maxVal') - $(this).val());
-                    }
-                    else if (0 > parseInt($(this).val(), 10) || $(this).closest("tr").find(".timeRemaining").text() == "") {
-                        $(this).val(0);
-                    }
-                    if ($(this).attr("maxVal") == $(this).val()) {
-                        $(this).closest('tr').find("#checkFinished").prop("checked", true);
-                    }
-                    else {
-                        $(this).closest('tr').find("#checkFinished").prop("checked", false);
-                    }
+//                    if (parseInt($(this).attr("maxVal"), 10) < parseInt($(this).val(), 10)) {
+//                        $(this).val($(this).attr("maxVal"));
+//                        $(this).closest('tr').find('.timeRemaining').html($(this).attr('maxVal') - $(this).val());
+//                    }
+//                    else if (0 > parseInt($(this).val(), 10) || $(this).closest("tr").find(".timeRemaining").text() == "") {
+//                        $(this).val(0);
+//                    }
+//                    if ($(this).attr("maxVal") == $(this).val()) {
+//                        $(this).closest('tr').find("#checkFinished").prop("checked", true);
+//                    }
+//                    else {
+//                        $(this).closest('tr').find("#checkFinished").prop("checked", false);
+//                    }
                 });
                 $("#saveSanctionSet").on("click", function () {
                     var newLosscialAss = $("tr[id='newSanction']").length
