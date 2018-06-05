@@ -5,6 +5,14 @@ $(document).ready(function() {
         placeholder: "Select a State",
         allowClear: true
     });
+    $("#sanctionSelection").select2({
+        placeholder: "Select a State",
+        allowClear: true
+    });     
+    $("#officesSelection").select2({
+        placeholder: "Select a State",
+        allowClear: true
+    });    
     $("#e3").select2({
         minimumInputLength: 2
     });

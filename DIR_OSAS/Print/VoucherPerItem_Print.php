@@ -30,7 +30,7 @@ class myPDF extends FPDF{
 
         }
         
-        $picpath = '../../Avatar/'.$orgcode.'.png';
+        $picpath = '../../Avatar/'.$orgcode.'.jpg';
 
 
         if (file_exists($picpath)) {

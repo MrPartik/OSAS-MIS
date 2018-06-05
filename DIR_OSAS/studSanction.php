@@ -122,6 +122,7 @@ include('../config/connection.php');
                                                 </tr>
                                             </tfoot>
                                         </table>
+                                        
                                     </div>
                                 </div>
                             </section>
@@ -196,7 +197,8 @@ include('../config/connection.php');
             <div id="studSanction" class="modal fade content-sanction " role="dialog "> </div>
             <!--Core js-->
             <?php include('footer.php')?>
-                <script type="text/javascript" src="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+        
+                
                 <script>
                     $(document).ready(function () {
                         $('#getappcode').hide();
@@ -291,6 +293,7 @@ include('../config/connection.php');
                 </script>
     </body>
 
+    
 </html>
 <script>
     $(document).ready(function () {
