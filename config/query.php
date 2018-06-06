@@ -208,7 +208,7 @@ $view_studProfile = mysqli_query($con,"select RSP.Stud_ID as ID
                                         FROM osas.r_stud_profile RSP
                                         INNER JOIN r_stud_batch SB on  RSP.Stud_NO = SB.Stud_NO
                                         INNER JOIN active_academic_year AY on SB.Batch_YEAR = ay.ActiveAcadYear_Batch_YEAR AND  Stud_DISPLAY_STATUS='active'
-                                        AND ay.ActiveAcadYear_IS_ACTIVE=1 ORDER BY ay.ActiveAcadYear_ID desc");
+                                        AND ay.ActiveAcadYear_IS_ACTIVE=1 GROUP BY RSP.Stud_NO  ORDER BY ay.ActiveAcadYear_ID desc ");
 
 $current_semster_query = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM  active_semester where `ActiveSemester_IS_ACTIVE` =1 and `ActiveSemester_ID` = (SELECT MAX(`ActiveSemester_ID`) FROM active_semester A 
 INNER JOIN r_semester B ON A.ActiveSemester_SEMESTRAL_NAME = B.Semestral_NAME AND B.Semestral_DISPLAY_STAT='ACTIVE' WHERE A.ActiveSemester_IS_ACTIVE =1 )"));

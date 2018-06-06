@@ -48,6 +48,7 @@ include('../config/connection.php');
                                                     <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none; margin-left:5px;"></a>
                                                     <button type="submit" class='btn btn-success' id="upload"> <i class='fa fa-upload'></i> Import </button>
                                                     <a type="button" href="../sample csvs/test(sanctions).csv" class='btn btn-info' id="download"> <i class='fa fa-download'></i> Template </a>
+                                                    <a class="btn btn-default " id="btnprint">Print <i class="fa fa-print"></i></a>
                                                 </div>
                                             </div>
                                         </form>
@@ -70,7 +71,7 @@ include('../config/connection.php');
                                             <tbody>
                                                 <?php   while($stud_row=mysqli_fetch_array($view_studProfile)) { ?>
                                                     <tr>
-                                                        <td>
+                                                        <td studno="<?php echo $stud_row['Stud_NO'];?>">
                                                             <?php echo $stud_row['Stud_NO'];?>
                                                         </td>
                                                         <td>
@@ -122,6 +123,7 @@ include('../config/connection.php');
                                                 </tr>
                                             </tfoot>
                                         </table>
+                                        
                                     </div>
                                 </div>
                             </section>
@@ -196,7 +198,8 @@ include('../config/connection.php');
             <div id="studSanction" class="modal fade content-sanction " role="dialog "> </div>
             <!--Core js-->
             <?php include('footer.php')?>
-                <script type="text/javascript" src="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+        
+                
                 <script>
                     $(document).ready(function () {
                         $('#getappcode').hide();
@@ -291,6 +294,7 @@ include('../config/connection.php');
                 </script>
     </body>
 
+    
 </html>
 <script>
     $(document).ready(function () {
@@ -382,6 +386,17 @@ include('../config/connection.php');
         }
         else swal("Please try again", "Please provide a sanction code", "error");
     });
+    $('#btnprint').click(function () {
+        var items = [];
+        var rows = $('#dynamic-table').dataTable().$('tr', {
+            "filter": "applied"
+        });
+        $(rows).each(function (index, el) {
+            items.push($(this).closest('tr').children('td:first').attr("studno"));
+        })
+        window.open('Print/StudentSanction_Print.php?items=' + items, '_blank');
+    });
+
     $(".btnInsertOff").on("click", function () {
         var $Code = $("#OffCode").val()
             , $Name = $("#OffName").val()

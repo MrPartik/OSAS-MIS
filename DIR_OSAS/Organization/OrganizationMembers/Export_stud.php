@@ -48,6 +48,20 @@
                {
 
                  $queryy = mysqli_query($con," UPDATE `r_stud_profile` SET `Stud_FNAME` = '$studfname',`Stud_MNAME` = '$studmname',`Stud_LNAME` = '$studlname',`Stud_COURSE` = '$studcourse',`Stud_YEAR_LEVEL` = '$studyrlevel',`Stud_SECTION` = '$studsection',`Stud_GENDER` = '$studgender',`Stud_EMAIL` = '$studemail',`Stud_MOBILE_NO` = '$studcontact',`Stud_BIRTH_DATE` = '$studbday',`Stud_BIRTH_PLACE` = '$studbplace',`Stud_CITY_ADDRESS` = '$studaddress',`Stud_STATUS` = '$studstatus' WHERE `r_stud_profile`.`Stud_NO` = '$studnum'");
+                   
+                     $view_query2 = mysqli_query($con,"SELECT ActiveAcadYear_Batch_YEAR AS CODE FROM active_academic_year WHERE ActiveAcadYear_IS_ACTIVE= '1'");
+
+                    while($row2 = mysqli_fetch_assoc($view_query2))
+                    {
+                        $b = $row2["CODE"];
+
+                        $querybatch = mysqli_prepare($con, "INSERT INTO r_stud_batch(Stud_NO, Batch_YEAR, Stud_STATUS)
+                        VALUES (?,?,?)");
+                        mysqli_stmt_bind_param($querybatch, 'sss',$studnum,$b,$studstatus);
+                        mysqli_stmt_execute($querybatch);
+
+                    }
+                  
 
                }
                else
@@ -57,6 +71,20 @@
                 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 mysqli_stmt_bind_param($queryy, 'ssssssssssssss',$studnum,$studfname,$studmname,$studlname,$studcourse,$studyrlevel,$studsection,$studgender,$studemail,$studcontact,$studbday,$studbplace,$studaddress,$studstatus);
                 mysqli_stmt_execute($queryy);
+                
+                $view_query2 = mysqli_query($con,"SELECT ActiveAcadYear_Batch_YEAR AS CODE FROM active_academic_year WHERE ActiveAcadYear_IS_ACTIVE= '1'");
+
+                    while($row2 = mysqli_fetch_assoc($view_query2))
+                    {
+                        $b = $row2["CODE"];
+
+                        $querybatch = mysqli_prepare($con, "INSERT INTO r_stud_batch(Stud_NO, Batch_YEAR, Stud_STATUS)
+                        VALUES (?,?,?)");
+                        mysqli_stmt_bind_param($querybatch, 'sss',$studnum,$b,$studstatus);
+                        mysqli_stmt_execute($querybatch);
+
+                    }
+                  
                }
 
                $arr = array(

@@ -46,10 +46,11 @@ include('../config/connection.php');
                                 <div class="panel-body">
                                     <div class="clearfix">
                                         <div class="btn-group">
-<!--                                            <button data-toggle="modal" href="#Add" class="btn btn-default"> <i class="fa fa-plus"></i> Add</button>-->
+                                            <button data-toggle="modal" href="#Add" class="btn btn-default"> <i class="fa fa-plus"></i> Add</button>
                                         </div>
                                         <div class="btn-group pull-right">
-                                            <button class="btn btn-default " id="btnprint">Print <i class="fa fa-print"></i></button>
+                                            <a class="btn btn-default " id="btnprint">Print <i class="fa fa-print"></i></a>    
+                                            <a type="button" style="margin-left:5px" href="../sample csvs/test(import student info).csv" class="btn btn-info" id="download"> <i class="fa fa-download"></i> Template </a>                                            
                                         </div>
                                     </div>
                                     <div class="adv-table" id="TableStudProfile">
@@ -105,7 +106,6 @@ include('../config/connection.php');
                                                 </tr>
                                             </tfoot>
                                         </table>
-<!--
                                         <div class="btn-group">
                                             <form id="upload_csv" method="post" enctype="multipart/form-data">
                                                 <div class="controls col-md-12">
@@ -118,7 +118,6 @@ include('../config/connection.php');
                                                 </div>
                                             </form>
                                         </div>
--->
                                     </div>
                                 </div>
                             </section>
@@ -327,7 +326,6 @@ include('../config/connection.php');
                 </script>
     <!-- END JAVASCRIPTS -->
     <script type="text/javascript" src="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.js"></script>
-<!--
     <script>
         $(document).ready(function() {
             $('#getappcode').hide();
@@ -401,7 +399,6 @@ include('../config/connection.php');
 
 
     </script>
--->
     </body>
 
 </html>

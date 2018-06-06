@@ -110,13 +110,13 @@ class myPDF extends FPDF{
             
 
 
-            $this->SetFont('Arial','B',8);
-            $this->SetFillColor(220,220,220);
-            $this->Cell(35,5,'VOUCHER NUMBER:',1,0,'C',true);
-            $this->Cell(60,5,'ORGANIZATION:',1,0,'C',true);
-            $this->Cell(60,5,'AMOUNT:',1,0,'C',true);
-            $this->Cell(35,5,'DATE ISSUED:',1,0,'C',true);
-            $this->Ln();
+//            $this->SetFont('Arial','B',8);
+//            $this->SetFillColor(220,220,220);
+//            $this->Cell(35,5,'VOUCHER NUMBER:',1,0,'C',true);
+//            $this->Cell(60,5,'ORGANIZATION:',1,0,'C',true);
+//            $this->Cell(60,5,'AMOUNT:',1,0,'C',true);
+//            $this->Cell(35,5,'DATE ISSUED:',1,0,'C',true);
+//            $this->Ln();
 
 
             $this->SetFont('Arial','B',8);

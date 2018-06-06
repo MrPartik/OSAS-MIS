@@ -131,11 +131,12 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                         </div>
                     </div>
                 </div>
+                <script src="../ASSETS/js/select-init.js"></script>
                 <div class="row">
                     <div class="collapse-group">
                         <div id="sanctionDiv" class="row collapse panel-body">
-                            <div class="col-md-4" style="width:300px"> Available Sanction
-                                <select id="sanctionSelection" class="js-example-basic-single form-control m-bot15">
+                            <div class="col-md-4" > Available Sanction
+                                <select id="sanctionSelection" style="width:300px" class="populate placeholder">
                                     <?php $querySanc =mysqli_query($con,"select * from r_sanction_details where SancDetails_DISPLAY_STAT = 'Active'"); 
                                           while($row =mysqli_fetch_array($querySanc)) { ?>
                                         <option sanctionCode="<?php echo $row['SancDetails_CODE'];?>" sanctionTimeValue="<?php echo $row['SancDetails_TIMEVAL']?>">
@@ -144,8 +145,8 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                                         <?php } ?>
                                 </select>
                             </div>
-                            <div class="col-md-4" style="width:270px"> Available Designated Office
-                                <select id="officesSelection" class="form-control m-bot15">
+                            <div class="col-md-4" > Available Designated Office
+                                <select id="officesSelection" style="width:270px" class="populate placeholder">
                                     <?php $queryDesignatedOffice =mysqli_query($con,"select * from r_designated_offices_details where DesOffDetails_DISPLAY_STAT = 'active'"); 
                                           while($desRow =mysqli_fetch_array($queryDesignatedOffice)) { ?>
                                         <option value="<?php echo  $desRow['DesOffDetails_CODE']?>">
