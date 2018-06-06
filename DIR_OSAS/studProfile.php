@@ -228,90 +228,90 @@ include('../config/connection.php');
                             window.open('Print/StudentProfile_Print.php?items=' + items, '_blank');
                         });
                     });
-//                    $(".btnInsert").on("click", function () {
-//                        var $studno = $('#studno').val();
-//                        var $emailadd = $('#emailadd').val();
-//                        var $contact = $('#contact').val();
-//                        var $fname = $('#fname').val();
-//                        var $mname = $('#mname').val();
-//                        var $lname = $('#lname').val();
-//                        var $course = $('#course').val();
-//                        var $section = $('#section').val();
-//                        var $gender = $('#gender').val();
-//                        var $bdate = $('#bdate').val();
-//                        var $bplace = $('#bplace').val();
-//                        var $status = $('#studStat').val();
-//                        var $address = $('#address').val();
-//                        if($studno.length ){
-//                            if($emailadd.length ){
-//                                if($contact.length ){
-//                                    if($fname.length ){
-//                                        if($lname.length ){
-//                                            if($section.length ){
-//                                                if($bdate.length ){
-//                                                    if($bplace.length ){
-//                                                        if($address.length ){
-//                                                            $.ajax({
-//                                                                type: 'POST'
-//                                                                , url: 'studProfileSave.php'
-//                                                                , data: {
-//                                                                    action: 'insertActive'
-//                                                                    , studno: $studno
-//                                                                    , emailadd: $emailadd
-//                                                                    , contact: $contact
-//                                                                    , fname: $fname
-//                                                                    , mname: $mname
-//                                                                    , lname: $lname
-//                                                                    , course: $course
-//                                                                    , section: $section
-//                                                                    , gender: $gender
-//                                                                    , bdate: $bdate
-//                                                                    , bplace: $bplace
-//                                                                    , status: $status
-//                                                                    , address: $address
-//                                                                }
-//                                                                , success: function (result) {
-//                                                                    alert(result);
-//                                                                    window.location.reload();
-//                                                                }
-//                                                                , error: function (result) {
-//                                                                    alert('Error')
-//                                                                }
-//                                                            });
-//
-//                                                        }
-//                                                        else
-//                                                            swal("Please try again", "Please provide student number", "error");
-//                                                    }
-//                                                    else
-//                                                        swal("Please try again", "Please provide birth place", "error");
-//                                                }
-//                                                else
-//                                                    swal("Please try again", "Please provide birth date", "error");
-//                                            }
-//                                            else
-//                                                swal("Please try again", "Please provide section", "error");
-//                                        }
-//                                        else
-//                                            swal("Please try again", "Please provide last name", "error");
-//                                    }
-//                                    else
-//                                        swal("Please try again", "Please provide first name", "error");
-//                                }
-//                                else
-//                                    swal("Please try again", "Please provide contact number", "error");
-//                            }
-//                            else
-//                                swal("Please try again", "Please provide email address", "error");
+                    $(".btnInsert").on("click", function () {
+                        var $studno = $('#studno').val();
+                        var $emailadd = $('#emailadd').val();
+                        var $contact = $('#contact').val();
+                        var $fname = $('#fname').val();
+                        var $mname = $('#mname').val();
+                        var $lname = $('#lname').val();
+                        var $course = $('#course').val();
+                        var $section = $('#section').val();
+                        var $gender = $('#gender').val();
+                        var $bdate = $('#bdate').val();
+                        var $bplace = $('#bplace').val();
+                        var $status = $('#studStat').val();
+                        var $address = $('#address').val();
+                        if($studno.length ){
+                            if($emailadd.length ){
+                                if($contact.length ){
+                                    if($fname.length ){
+                                        if($lname.length ){
+                                            if($section.length ){
+                                                if($bdate.length ){
+                                                    if($bplace.length ){
+                                                        if($address.length ){
+                                                            $.ajax({
+                                                                type: 'POST'
+                                                                , url: 'studProfileSave.php'
+                                                                , data: {
+                                                                    action: 'insertActive'
+                                                                    , studno: $studno
+                                                                    , emailadd: $emailadd
+                                                                    , contact: $contact
+                                                                    , fname: $fname
+                                                                    , mname: $mname
+                                                                    , lname: $lname
+                                                                    , course: $course
+                                                                    , section: $section
+                                                                    , gender: $gender
+                                                                    , bdate: $bdate
+                                                                    , bplace: $bplace
+                                                                    , status: $status
+                                                                    , address: $address
+                                                                }
+                                                                , success: function (result) {
+                                                                    alert(result);
+                                                                    window.location.reload();
+                                                                }
+                                                                , error: function (result) {
+                                                                    alert('Error')
+                                                                }
+                                                            });
+
+                                                        }
+                                                        else
+                                                            swal("Please try again", "Please provide student number", "error");
+                                                    }
+                                                    else
+                                                        swal("Please try again", "Please provide birth place", "error");
+                                                }
+                                                else
+                                                    swal("Please try again", "Please provide birth date", "error");
+                                            }
+                                            else
+                                                swal("Please try again", "Please provide section", "error");
+                                        }
+                                        else
+                                            swal("Please try again", "Please provide last name", "error");
+                                    }
+                                    else
+                                        swal("Please try again", "Please provide first name", "error");
+                                }
+                                else
+                                    swal("Please try again", "Please provide contact number", "error");
+                            }
+                            else
+                                swal("Please try again", "Please provide email address", "error");
+                        }
+                        else
+                            swal("Please try again", "Please provide student number", "error");
+
+
+//                        if ($studno.length && $emailadd.length && $contact.length && $fname.length && $lname.length && $bdate.length && $section.length && $address.length) {
 //                        }
-//                        else
-//                            swal("Please try again", "Please provide student number", "error");
-//
-//
-////                        if ($studno.length && $emailadd.length && $contact.length && $fname.length && $lname.length && $bdate.length && $section.length && $address.length) {
-////                        }
-////                        else alert('(*) Please provide value in reqired fields');
-//                    });
+//                        else alert('(*) Please provide value in reqired fields');
+                    });
                     $("#TableStudProfile").on("click", "#btnStudProfile", function () {
                         var datas = $(this).attr("value");
                         $.ajax({
