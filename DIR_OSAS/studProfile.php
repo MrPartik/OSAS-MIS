@@ -33,7 +33,34 @@ include('../config/connection.php');
                         <div class="col-md-3">
                             <div class="mini-stat clearfix"> <span class="mini-stat-icon blue"><i class="fa fa-user"></i></span>
                                 <div class="mini-stat-info"> <span><?php echo $count_stud; ?></span> Number of Students </div>
+<!--
+                                <div class="mini-stat-info"> <span>
+                                    <?php 
+                                          $query = "select COUNT(*) AS COU,RSP.Stud_ID as ID
+                                    ,RSP.Stud_NO ,CONCAT(RSP.Stud_LNAME,', ',RSP.Stud_FNAME,' ',COALESCE(RSP.Stud_MNAME,'')) as FullName
+                                    ,CONCAT(RSP.Stud_COURSE,' ',RSP.Stud_YEAR_LEVEL,'-',RSP.Stud_SECTION) as Course
+                                    ,RSP.Stud_EMAIL
+                                    ,RSP.Stud_MOBILE_NO
+                                    ,RSP.Stud_GENDER
+                                    ,RSP.Stud_BIRTH_DATE
+                                    ,RSP.Stud_BIRTH_PLACE
+                                    ,RSP.Stud_STATUS
+                                    ,RSP.Stud_CITY_ADDRESS
+                                    ,RSP.Stud_DATE_ADD
+                                        FROM osas.r_stud_profile RSP
+                                        INNER JOIN r_stud_batch SB on  RSP.Stud_NO = SB.Stud_NO
+                                        INNER JOIN active_academic_year AY on SB.Batch_YEAR = ay.ActiveAcadYear_Batch_YEAR WHERE  Stud_DISPLAY_STATUS='active'
+                                        AND ay.ActiveAcadYear_IS_ACTIVE=1 GROUP BY RSP.Stud_NO   ORDER BY ay.ActiveAcadYear_ID desc ";
+                                        $container_arr = array();
+                                        while($row = mysqli_fetch_assoc($view_query))
+                                        {
+                                            $count = $row['COU'];
+                                        }
+                                        echo $count;
+                                    ?>
+                                    </span> Number of Students </div>
                             </div>
+-->
                         </div>
                     </div>
                     <div class="row ">
@@ -51,6 +78,58 @@ include('../config/connection.php');
                                         <div class="btn-group pull-right">
                                             <a class="btn btn-default " id="btnprint">Print <i class="fa fa-print"></i></a>    
                                             <a type="button" style="margin-left:5px" href="../sample csvs/test(import student info).csv" class="btn btn-info" id="download"> <i class="fa fa-download"></i> Template </a>                                            
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <div class="btn-group col-md-6">
+                                            <div class="col-md-3">
+                                                Course 
+                                                <select id="CourseFilter"  class="form-control">
+                                                    <option value='Default'> All </option>
+                                                    <?php
+														
+                                                        $view_query = mysqli_query($con,"SELECT Course_CODE FROM r_courses ");
+                                                        while($row = mysqli_fetch_assoc($view_query))
+                                                        {
+                                                            $code = $row["Course_CODE"];
+                                                            echo "<option value='$code'>$code</option>";
+                                                        }
+                                                    
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3">
+                                                Year 
+                                                <select id="YearFilter" class="form-control ">
+                                                    <option value='Default'> All </option>
+                                                    <?php
+														
+                                                        $view_query = mysqli_query($con,"SELECT Stud_YEAR_LEVEL FROM r_stud_profile GROUP BY Stud_YEAR_LEVEL");
+                                                        while($row = mysqli_fetch_assoc($view_query))
+                                                        {
+                                                            $code = $row["Stud_YEAR_LEVEL"];
+                                                            echo "<option value='$code'>$code</option>";
+                                                        }
+                                                    
+                                                    ?>
+                                                </select>   
+                                            </div>
+                                            <div class="col-md-3">
+                                                Section 
+                                                <select id="SectionFilter"  class="form-control ">
+                                                    <option value='Default'> All </option>
+                                                     <?php
+														
+                                                        $view_query = mysqli_query($con,"SELECT Stud_SECTION FROM r_stud_profile GROUP BY Stud_SECTION");
+                                                        while($row = mysqli_fetch_assoc($view_query))
+                                                        {
+                                                            $code = $row["Stud_SECTION"];
+                                                            echo "<option value='$code'>$code</option>";
+                                                        }
+                                                    
+                                                    ?>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="adv-table" id="TableStudProfile">
@@ -199,6 +278,47 @@ include('../config/connection.php');
             <!--Core js-->
             <?php include('footer.php')?>
                 <script>
+                    function FilterStudent (){
+                        var _CourseFilter = document.getElementById('CourseFilter');
+                        var CourseFilterName = _CourseFilter.options[_CourseFilter.selectedIndex].text;
+                        var CourseFilterValue = _CourseFilter.options[_CourseFilter.selectedIndex].value;
+                        
+                        var _YearFilter = document.getElementById('YearFilter');
+                        var YearFilterName = _YearFilter.options[_YearFilter.selectedIndex].text;
+                        var YearFilterValue = _YearFilter.options[_YearFilter.selectedIndex].value;
+                        
+                        var _SectionFilter = document.getElementById('SectionFilter');
+                        var SectionFilterName = _SectionFilter.options[_SectionFilter.selectedIndex].text;
+                        var SectionFilterValue = _SectionFilter.options[_SectionFilter.selectedIndex].value;
+                        
+                        
+                        $.ajax({
+                            type: "GET"
+                            , url: 'Student/FillTableStudentProfile.php'
+                            , dataType: 'json'
+                            , data: {
+                                _CourseVal: CourseFilterValue,
+                                _YearVal: YearFilterValue,
+                                _SectionVal: SectionFilterValue
+                                
+                            }
+                            , success: function (data) {
+                                var table = $('#dynamic-table').DataTable();
+                                jQuery(table.fnGetNodes()).each(function () {
+                                    oTable.fnDeleteRow(0);
+                                });
+                                $.each(data, function (key, val) {
+                                    var aiNew = oTable.fnAddData([val.studnum ,val.name,val.course,val.email , val.num ,"<center> <button id='btnStudProfile' value="+val.id +" data-toggle='modal' href='#Profile' class='btn btn-info'> <i class='fa  fa-info-circle'></i> </button></center>"]);
+                                    var nRow = oTable.fnGetNodes(aiNew[0]);
+                                });
+                            }
+                            , error: function (response) {
+                                swal("Error encountered while adding data", "Please try again", "error");
+                            }
+                        });  
+                        
+                    }
+
                     var oTable = $('#dynamic-table').dataTable({
                         "aLengthMenu": [
                     [5, 10,15, 20, -1]
@@ -227,6 +347,16 @@ include('../config/connection.php');
                             })
                             window.open('Print/StudentProfile_Print.php?items=' + items, '_blank');
                         });
+                    });
+                    
+                    $('#CourseFilter').change(function() {
+                        FilterStudent();
+                    });
+                    $('#YearFilter').change(function() {
+                        FilterStudent();
+                    });
+                    $('#SectionFilter').change(function() {
+                        FilterStudent();
                     });
                     $(".btnInsert").on("click", function () {
                         var $studno = $('#studno').val();
@@ -355,7 +485,6 @@ include('../config/connection.php');
                                     confirmButtonText: 'Okay',
                                     closeOnConfirm: false
                                 }, function (isConfirm) {
-                                alert('qwe')
                                 window.location.reload();
 
                                 });
