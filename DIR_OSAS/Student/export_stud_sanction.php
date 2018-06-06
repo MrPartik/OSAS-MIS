@@ -38,69 +38,107 @@
                 mysqli_query($con,"INSERT INTO `t_assign_stud_saction` (`AssSancStudStudent_STUD_NO`, `AssSancStudStudent_SancDetails_CODE`, `AssSancStudStudent_DesOffDetails_CODE`, `AssSancStudStudent_TO_BE_DONE`, `AssSancStudStudent_REMARKS`, `AssSancStudStudent_DATE_ADD`) VALUES ('$studnum','$sanction_code','$sanction_plce','$sanction_due','$sanction_rmrk','$sanction_date')");
                
                //start adding sanction info
-//               $view_query_sanction = mysqli_query($con,"SELECT COUNT(*) AS COUP FROM r_sanction_details WHERE SancDetails_CODE = '$sanction_code'");
-//
-//                //checking if the sanction code is available
-//                while($row = mysqli_fetch_assoc($view_query_sanction))
-//                {
-//                    $getcou = $row["COUP"];
-//
-//                }
-//                //sanction code seen
-//               if($getcou == '1')
-//               {
-//
-//                 $querysanc = mysqli_query($con,"UPDATE `r_sanction_details` SET `SancDetails_CODE`='$sanction_code',`SancDetails_NAME`='$sanction_name',`SancDetails_TIMEVAL`='$sanction_time',WHERE `SancDetails_CODE`='$sanction_code'");
-//
-//               }
-//               else
-//               {
-//
-//                $querysanc = mysqli_prepare($con, "INSERT INTO `r_sanction_details`(`SancDetails_CODE`, `SancDetails_NAME`, `SancDetails_TIMEVAL`) VALUES (?,?,?)");
-//                mysqli_stmt_bind_param($querysanc,'sss',$sanction_code,$sanction_name,$sanction_time);
-//                mysqli_stmt_execute($querysanc);
-//
-//               }
-//
-//               $arr = array(
-//                'sunccode'  => $sanction_code
-//               );
-//               array_push( $container_arr, (array)$arr);
-//
-//
-//                //start adding place info
-//               $view_query_place = mysqli_query($con,"SELECT COUNT(*) AS COUPD FROM r_designated_offices_details WHERE DesOffDetails_NAME = '$sanction_plce'");
-//
-//                //checking if the sanction code is available
-//                while($row = mysqli_fetch_assoc($view_query_place))
-//                {
-//                    $getcount = $row["COUPD"];
-//
-//                }
-//                //sanction code seen
-//               if($getcount == '1')
-//               {
-//
-////                 $querysanc = mysqli_query($con,"UPDATE `r_sanction_details` SET `SancDetails_CODE`='$sanction_code',`SancDetails_NAME`='$sanction_name',`SancDetails_TIMEVAL`='$sanction_time',WHERE `SancDetails_CODE`='$sanction_code'");
-//
-//               }
-//               else
-//               {
-//
-//                $queryplace = mysqli_prepare($con, "INSERT INTO `r_designated_offices_details`(`DesOffDetails_CODE`, `DesOffDetails_NAME`) VALUES (?,?)");
-//                mysqli_stmt_bind_param($queryplace,'ss',$sanction_plce,$sanction_plce);
-//                mysqli_stmt_execute($queryplace);
-//
-//               }
+               $view_query_sanction = mysqli_query($con,"SELECT COUNT(*) AS COUP FROM r_sanction_details WHERE SancDetails_CODE = '$sanction_code'");
 
-//               $arr = array(
-//                'place'  => $sanction_plce
-//               );
-//               array_push( $container_arr, (array)$arr );
+                //checking if the sanction code is available
+                while($row = mysqli_fetch_assoc($view_query_sanction))
+                {
+                    $getcou = $row["COUP"];
+
+                }
+                //sanction code seen
+               if($getcou == '1')
+               {
+
+                 $querysanc = mysqli_query($con,"UPDATE `r_sanction_details` SET `SancDetails_CODE`='$sanction_code',`SancDetails_NAME`='$sanction_name',`SancDetails_TIMEVAL`='$sanction_time',WHERE `SancDetails_CODE`='$sanction_code'");
+
+               }
+               else
+               {
+
+                $querysanc = mysqli_prepare($con, "INSERT INTO `r_sanction_details`(`SancDetails_CODE`, `SancDetails_NAME`, `SancDetails_TIMEVAL`) VALUES (?,?,?)");
+                mysqli_stmt_bind_param($querysanc,'sss',$sanction_code,$sanction_name,$sanction_time);
+                mysqli_stmt_execute($querysanc);
+
+               }
+
+               $arr = array(
+                'sunccode'  => $sanction_code
+               );
+               array_push( $container_arr, (array)$arr);
+
+
+                //start adding place info
+               $view_query_place = mysqli_query($con,"SELECT COUNT(*) AS COUPD FROM r_designated_offices_details WHERE DesOffDetails_NAME = '$sanction_plce'");
+
+                //checking if the sanction code is available
+                while($row = mysqli_fetch_assoc($view_query_place))
+                {
+                    $getcount = $row["COUPD"];
+
+                }
+                //sanction code seen
+               if($getcount == '1')
+               {
+
+
+               }
+               else
+               {
+
+                $queryplace = mysqli_prepare($con, "INSERT INTO `r_designated_offices_details`(`DesOffDetails_CODE`, `DesOffDetails_NAME`) VALUES (?,?)");
+                mysqli_stmt_bind_param($queryplace,'ss',$sanction_plce,$sanction_plce);
+                mysqli_stmt_execute($queryplace);
+
+               }
+               
+                 //start adding student sanction
+               $view_stud_exist = mysqli_query($con,"SELECT COUNT(*) AS STUD FROM r_stud_profile WHERE Stud_NO = '$studnum'");
+
+                //checking if student exist
+                while($row = mysqli_fetch_assoc($view_stud_exist))
+                {
+                    $getcount = $row["STUD"];
+
+                }
+                //Student dont exist
+               if($getcount == '0')
+               {
+
+                   //idk wat to do
+
+               }
+               else
+               {
+                   
+                    $view_stud_sanc = mysqli_query($con,"SELECT COUNT(*) AS STUD_SANC FROM t_assign_stud_saction WHERE AssSancStudStudent_STUD_NO = '$studnum'");
+                        
+                        //Student dont exist
+                       if($getcount == '1')
+                       {
+
+                           //update
+
+                       }
+                       else
+                       {
+                        $queryaddsanc = mysqli_prepare($con, "INSERT INTO `t_assign_stud_saction`(`AssSancStudStudent_STUD_NO`, `AssSancStudStudent_SancDetails_CODE`, `AssSancStudStudent_DesOffDetails_CODE`, `AssSancStudStudent_TO_BE_DONE`, `AssSancStudStudent_REMARKS`) VALUES (?,?,?,?,?)");
+                        mysqli_stmt_bind_param($queryaddsanc,'sssss',$studnum,$sanction_code,$sanction_plce,$sanction_due,$sanction_rmrk);
+                        mysqli_stmt_execute($queryaddsanc);
+                       }
+
+               }
+               
+               
+
+               $arr = array(
+                'place'  => $sanction_plce
+               );
+               array_push( $container_arr, (array)$arr );
 
 
            }
-//            echo json_encode($container_arr);
+            echo json_encode($container_arr);
           echo 'okay';
       }
       else
