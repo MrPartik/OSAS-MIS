@@ -1,6 +1,11 @@
 (function ($) {
     "use strict";
     $(document).ready(function () {
+
+        $.ajax({
+            url:"../../../config/currentYear.php"
+        });
+
         /*==Left Navigation Accordion ==*/
         if ($.fn.dcAccordion) {
             $('#nav-accordion').dcAccordion({
