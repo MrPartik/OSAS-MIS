@@ -14,7 +14,8 @@ include('header.php');
 include('../config/connection.php');     
 
 ?>
-<link rel="stylesheet" type="text/css" href="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.css" />
+    <link rel="stylesheet" type="text/css" href="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.css" />
+
     <body>
         <!--sidebar start-->
         <?php include('sidenav.php')?>
@@ -33,7 +34,8 @@ include('../config/connection.php');
                         <div class="col-md-3">
                             <div class="mini-stat clearfix"> <span class="mini-stat-icon blue"><i class="fa fa-user"></i></span>
                                 <div class="mini-stat-info"> <span><?php echo $count_stud; ?></span> Number of Students </div>
-<!--
+                            </div>
+                                <!--
                                 <div class="mini-stat-info"> <span>
                                     <?php 
                                           $query = "select COUNT(*) AS COU,RSP.Stud_ID as ID
@@ -60,33 +62,39 @@ include('../config/connection.php');
                                     ?>
                                     </span> Number of Students </div>
                             </div>
--->
+--></div>
                         </div>
-                    </div>
-                    <div class="row ">
-                        <div class="col-md-12">
-                            <section class="panel">
-                                <header class="panel-heading"> Student Record <span class="tools pull-right">
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <section class="panel">
+                                    <header class="panel-heading"> Student Record <span class="tools pull-right">
                             <a href="javascript:;" class="fa fa-chevron-down"></a> 
                             <a href="javascript:;" class="fa fa-times"></a>
                          </span> </header>
-                                <div class="panel-body">
-                                    <div class="clearfix">
-                                        <div class="btn-group">
-                                            <button data-toggle="modal" href="#Add" class="btn btn-default"> <i class="fa fa-plus"></i> Add</button>
-                                        </div>
-                                        <div class="btn-group pull-right">
-                                            <a class="btn btn-default " id="btnprint">Print <i class="fa fa-print"></i></a>    
-                                            <a type="button" style="margin-left:5px" href="../sample csvs/test(import student info).csv" class="btn btn-info" id="download"> <i class="fa fa-download"></i> Template </a>                                            
-                                        </div>
-                                        <br/>
-                                        <br/>
-                                        <div class="btn-group col-md-6">
-                                            <div class="col-md-3">
-                                                Course 
-                                                <select id="CourseFilter"  class="form-control">
-                                                    <option value='Default'> All </option>
-                                                    <?php
+                                    <div class="panel-body">
+                                        <div class="clearfix">
+                                            <div class="btn-group">
+                                                <button data-toggle="modal" href="#Add" class="btn btn-default"> <i class="fa fa-plus"></i> Add</button>
+                                            </div>
+                                            <div class="btn-group pull-right">
+                                                <form id="upload_csv" method="post" enctype="multipart/form-data">
+                                                    <div class="controls col-md-12">
+                                                        <div class="fileupload fileupload-new row" data-provides="fileupload"> <span class="btn btn-white btn-file" style="width:100px">
+                                                                    <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select a file</span> <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                                            <input name="employee_file" id="file" type="file" class="default" accept=".csv" /> </span> <span class="fileupload-preview" style="margin-left:5px;"></span>
+                                                            <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none; margin-left:5px;"></a>
+                                                            <button type="submit" class='btn btn-success' id="upload"> <i class='fa fa-upload'></i> Import </button>
+                                                            <a type="button" style="margin-left:5px" href="../sample csvs/test(import student info).csv" class="btn btn-info" id="download"> <i class="fa fa-download"></i> Template </a> <a class="btn btn-default " id="btnprint">Print <i class="fa fa-print"></i></a> </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <br/>
+                                            <br/>
+                                            <div class="col-md-6" style="margin-left:-30px;">
+                                                <div class="col-md-3"> Course
+                                                    <select id="CourseFilter" class="form-control">
+                                                        <option value='Default'> All </option>
+                                                        <?php
 														
                                                         $view_query = mysqli_query($con,"SELECT Course_CODE FROM r_courses ");
                                                         while($row = mysqli_fetch_assoc($view_query))
@@ -96,13 +104,12 @@ include('../config/connection.php');
                                                         }
                                                     
                                                     ?>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-3">
-                                                Year 
-                                                <select id="YearFilter" class="form-control ">
-                                                    <option value='Default'> All </option>
-                                                    <?php
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3"> Year
+                                                    <select id="YearFilter" class="form-control ">
+                                                        <option value='Default'> All </option>
+                                                        <?php
 														
                                                         $view_query = mysqli_query($con,"SELECT Stud_YEAR_LEVEL FROM r_stud_profile GROUP BY Stud_YEAR_LEVEL");
                                                         while($row = mysqli_fetch_assoc($view_query))
@@ -112,13 +119,12 @@ include('../config/connection.php');
                                                         }
                                                     
                                                     ?>
-                                                </select>   
-                                            </div>
-                                            <div class="col-md-3">
-                                                Section 
-                                                <select id="SectionFilter"  class="form-control ">
-                                                    <option value='Default'> All </option>
-                                                     <?php
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3"> Section
+                                                    <select id="SectionFilter" class="form-control ">
+                                                        <option value='Default'> All </option>
+                                                        <?php
 														
                                                         $view_query = mysqli_query($con,"SELECT Stud_SECTION FROM r_stud_profile GROUP BY Stud_SECTION");
                                                         while($row = mysqli_fetch_assoc($view_query))
@@ -128,80 +134,68 @@ include('../config/connection.php');
                                                         }
                                                     
                                                     ?>
-                                                </select>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="adv-table" id="TableStudProfile">
-                                        <table class="display table table-striped table-hover table-bordered" id="dynamic-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Student Number</th>
-                                                    <th>Full Name</th>
-                                                    <th>Course year and Section</th>
-                                                    <th>Email Address</th>
-                                                    <th>Contact Number</th>
-                                                    <th>
-                                                        <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php  while($stud_row=mysqli_fetch_array($view_studProfile)) { ?>
+                                        <div class="adv-table" id="TableStudProfile">
+                                            <table class="display table table-striped table-hover table-bordered" id="dynamic-table">
+                                                <thead>
                                                     <tr>
-                                                        <td studno="<?php echo $stud_row['Stud_NO'];?>">
-                                                            <?php echo $stud_row['Stud_NO'];?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $stud_row['FullName'];?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $stud_row['Course']?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $stud_row['Stud_EMAIL']?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $stud_row['Stud_MOBILE_NO']?>
-                                                        </td>
-                                                        <td>
-                                                            <center>
-                                                                <button id="btnStudProfile" value="<?php echo $stud_row['ID']; ?>" data-toggle="modal" href="#Profile" class="btn btn-info"> <i class="fa  fa-info-circle"></i> </button>
-                                                            </center>
-                                                        </td>
+                                                        <th>Student Number</th>
+                                                        <th>Full Name</th>
+                                                        <th>Course year and Section</th>
+                                                        <th>Email Address</th>
+                                                        <th>Contact Number</th>
+                                                        <th>
+                                                            <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
+                                                        </th>
                                                     </tr>
-                                                    <?php }?>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Student Number</th>
-                                                    <th>Full Name</th>
-                                                    <th>Course year and Section</th>
-                                                    <th>Email Address</th>
-                                                    <th>Contact Number</th>
-                                                    <th>
-                                                        <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
-                                                    </th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                        <div class="btn-group">
-                                            <form id="upload_csv" method="post" enctype="multipart/form-data">
-                                                <div class="controls col-md-12">
-                                                    <div class="fileupload fileupload-new row" data-provides="fileupload"> <span class="btn btn-white btn-file" style="width:200px">
-                                                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Click to Import Members</span> <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
-                                                        <input name="employee_file" id="file" type="file" class="default" accept=".csv" /> </span> <span class="fileupload-preview" style="margin-left:5px;"></span>
-                                                        <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none; margin-left:5px;"></a>
-                                                        <button type="submit" class='btn btn-success' id="upload">Import <i class='fa fa-cloud-upload'></i></button>
-                                                    </div>
-                                                </div>
-                                            </form>
+                                                </thead>
+                                                <tbody>
+                                                    <?php  while($stud_row=mysqli_fetch_array($view_studProfile)) { ?>
+                                                        <tr>
+                                                            <td studno="<?php echo $stud_row['Stud_NO'];?>">
+                                                                <?php echo $stud_row['Stud_NO'];?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $stud_row['FullName'];?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $stud_row['Course']?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $stud_row['Stud_EMAIL']?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $stud_row['Stud_MOBILE_NO']?>
+                                                            </td>
+                                                            <td>
+                                                                <center>
+                                                                    <button id="btnStudProfile" value="<?php echo $stud_row['ID']; ?>" data-toggle="modal" href="#Profile" class="btn btn-info"> <i class="fa  fa-info-circle"></i> </button>
+                                                                </center>
+                                                            </td>
+                                                        </tr>
+                                                        <?php }?>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Student Number</th>
+                                                        <th>Full Name</th>
+                                                        <th>Course year and Section</th>
+                                                        <th>Email Address</th>
+                                                        <th>Contact Number</th>
+                                                        <th>
+                                                            <center><i style="font-size:20px" class="fa fa-bolt"></i></center>
+                                                        </th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
                                         </div>
                                     </div>
-                                </div>
-                            </section>
+                                </section>
+                            </div>
                         </div>
-                    </div>
                 </section>
             </section>
             <!-- Modal -->
@@ -271,36 +265,31 @@ include('../config/connection.php');
                 </div>
             </div>
             <!-- modal -->
-            <div id="Profile" class="modal fade content-profile" > </div>           
+            <div id="Profile" class="modal fade content-profile"> </div>
             <div id="studSanction" class="modal fade content-sanctionss "> </div>
             <!--main content end-->
             <!-- Placed js at the end of the document so the pages load faster -->
             <!--Core js-->
             <?php include('footer.php')?>
                 <script>
-                    function FilterStudent (){
+                    function FilterStudent() {
                         var _CourseFilter = document.getElementById('CourseFilter');
                         var CourseFilterName = _CourseFilter.options[_CourseFilter.selectedIndex].text;
                         var CourseFilterValue = _CourseFilter.options[_CourseFilter.selectedIndex].value;
-                        
                         var _YearFilter = document.getElementById('YearFilter');
                         var YearFilterName = _YearFilter.options[_YearFilter.selectedIndex].text;
                         var YearFilterValue = _YearFilter.options[_YearFilter.selectedIndex].value;
-                        
                         var _SectionFilter = document.getElementById('SectionFilter');
                         var SectionFilterName = _SectionFilter.options[_SectionFilter.selectedIndex].text;
                         var SectionFilterValue = _SectionFilter.options[_SectionFilter.selectedIndex].value;
-                        
-                        
                         $.ajax({
                             type: "GET"
                             , url: 'Student/FillTableStudentProfile.php'
                             , dataType: 'json'
                             , data: {
-                                _CourseVal: CourseFilterValue,
-                                _YearVal: YearFilterValue,
-                                _SectionVal: SectionFilterValue
-                                
+                                _CourseVal: CourseFilterValue
+                                , _YearVal: YearFilterValue
+                                , _SectionVal: SectionFilterValue
                             }
                             , success: function (data) {
                                 var table = $('#dynamic-table').DataTable();
@@ -308,21 +297,19 @@ include('../config/connection.php');
                                     oTable.fnDeleteRow(0);
                                 });
                                 $.each(data, function (key, val) {
-                                    var aiNew = oTable.fnAddData([val.studnum ,val.name,val.course,val.email , val.num ,"<center> <button id='btnStudProfile' value="+val.id +" data-toggle='modal' href='#Profile' class='btn btn-info'> <i class='fa  fa-info-circle'></i> </button></center>"]);
+                                    var aiNew = oTable.fnAddData([val.studnum, val.name, val.course, val.email, val.num, "<center> <button id='btnStudProfile' value=" + val.id + " data-toggle='modal' href='#Profile' class='btn btn-info'> <i class='fa  fa-info-circle'></i> </button></center>"]);
                                     var nRow = oTable.fnGetNodes(aiNew[0]);
                                 });
                             }
                             , error: function (response) {
                                 swal("Error encountered while adding data", "Please try again", "error");
                             }
-                        });  
-                        
+                        });
                     }
-
                     var oTable = $('#dynamic-table').dataTable({
                         "aLengthMenu": [
-                    [5, 10,15, 20, -1]
-                    , [5, 10,15, 20, "All"] // change per page values here
+                    [5, 10, 15, 20, -1]
+                    , [5, 10, 15, 20, "All"] // change per page values here
                 ], // set the initial value
                         "iDisplayLength": 10
                         , "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>"
@@ -348,14 +335,13 @@ include('../config/connection.php');
                             window.open('Print/StudentProfile_Print.php?items=' + items, '_blank');
                         });
                     });
-                    
-                    $('#CourseFilter').change(function() {
+                    $('#CourseFilter').change(function () {
                         FilterStudent();
                     });
-                    $('#YearFilter').change(function() {
+                    $('#YearFilter').change(function () {
                         FilterStudent();
                     });
-                    $('#SectionFilter').change(function() {
+                    $('#SectionFilter').change(function () {
                         FilterStudent();
                     });
                     $(".btnInsert").on("click", function () {
@@ -372,15 +358,15 @@ include('../config/connection.php');
                         var $bplace = $('#bplace').val();
                         var $status = $('#studStat').val();
                         var $address = $('#address').val();
-                        if($studno.length ){
-                            if($emailadd.length ){
-                                if($contact.length ){
-                                    if($fname.length ){
-                                        if($lname.length ){
-                                            if($section.length ){
-                                                if($bdate.length ){
-                                                    if($bplace.length ){
-                                                        if($address.length ){
+                        if ($studno.length) {
+                            if ($emailadd.length) {
+                                if ($contact.length) {
+                                    if ($fname.length) {
+                                        if ($lname.length) {
+                                            if ($section.length) {
+                                                if ($bdate.length) {
+                                                    if ($bplace.length) {
+                                                        if ($address.length) {
                                                             $.ajax({
                                                                 type: 'POST'
                                                                 , url: 'studProfileSave.php'
@@ -408,39 +394,27 @@ include('../config/connection.php');
                                                                     alert('Error')
                                                                 }
                                                             });
-
                                                         }
-                                                        else
-                                                            swal("Please try again", "Please provide student number", "error");
+                                                        else swal("Please try again", "Please provide student number", "error");
                                                     }
-                                                    else
-                                                        swal("Please try again", "Please provide birth place", "error");
+                                                    else swal("Please try again", "Please provide birth place", "error");
                                                 }
-                                                else
-                                                    swal("Please try again", "Please provide birth date", "error");
+                                                else swal("Please try again", "Please provide birth date", "error");
                                             }
-                                            else
-                                                swal("Please try again", "Please provide section", "error");
+                                            else swal("Please try again", "Please provide section", "error");
                                         }
-                                        else
-                                            swal("Please try again", "Please provide last name", "error");
+                                        else swal("Please try again", "Please provide last name", "error");
                                     }
-                                    else
-                                        swal("Please try again", "Please provide first name", "error");
+                                    else swal("Please try again", "Please provide first name", "error");
                                 }
-                                else
-                                    swal("Please try again", "Please provide contact number", "error");
+                                else swal("Please try again", "Please provide contact number", "error");
                             }
-                            else
-                                swal("Please try again", "Please provide email address", "error");
+                            else swal("Please try again", "Please provide email address", "error");
                         }
-                        else
-                            swal("Please try again", "Please provide student number", "error");
-
-
-//                        if ($studno.length && $emailadd.length && $contact.length && $fname.length && $lname.length && $bdate.length && $section.length && $address.length) {
-//                        }
-//                        else alert('(*) Please provide value in reqired fields');
+                        else swal("Please try again", "Please provide student number", "error");
+                        //                        if ($studno.length && $emailadd.length && $contact.length && $fname.length && $lname.length && $bdate.length && $section.length && $address.length) {
+                        //                        }
+                        //                        else alert('(*) Please provide value in reqired fields');
                     });
                     $("#TableStudProfile").on("click", "#btnStudProfile", function () {
                         var datas = $(this).attr("value");
@@ -454,80 +428,76 @@ include('../config/connection.php');
                         });
                     });
                 </script>
-    <!-- END JAVASCRIPTS -->
-    <script type="text/javascript" src="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#getappcode').hide();
-            $('#updstudnum').hide();
-            var countreq = 0;
-            var flag = 0;
-            $('#upload_csv').on("submit", function(e) {
-                e.preventDefault();
-                $.ajax({
-                    url: "Organization/OrganizationMembers/Export_stud.php",
-                    method: "POST",
-                    data: new FormData(this),
-                    contentType: false, // The content type used when sending data to the server.
-                    cache: false, // To unable request pages to be cached
-                    processData: false, // To send DOMDocument or non processed data file it is set to false
-                    success: function(data) {
-                        if (data == 'Error1') {
-                            swal("Invalid File");
-                        } else if (data == "Error2") {
-                            swal("Cancelled", "Please Select File", "error");
-                        } else {
-                                swal({
-                                    title: "Data Imported!",
-                                    text: "The csv file is successfully imported!",
-                                    type: "success",
-                                    confirmButtonColor: '#88A755',
-                                    confirmButtonText: 'Okay',
-                                    closeOnConfirm: false
-                                }, function (isConfirm) {
-                                window.location.reload();
-
-                                });
-//                            $.each(data, function(key, val) {
-//                                //alert(val.snum)
-//                            });
-
-                            swal("Record Updated!", "The data is successfully imported!", "success");
-                        }
-                    },
-                    error: function(response) {
-                        swal("Error encountered while adding data", "Please try again", "error");
-                    }
-                })
-
-            });
-            $('#drpappcode').change(function() {
-                //                alert('qwe');
-                var _drpappcode = document.getElementById('drpappcode');
-                var drpname = _drpappcode.options[_drpappcode.selectedIndex].text;
-                var drpcode = _drpappcode.options[_drpappcode.selectedIndex].value;
-                $.ajax({
-                    type: "GET",
-                    url: 'Organization/OrganizationMembers/GetData-ajax.php',
-                    dataType: 'json',
-                    data: {
-                        _code: drpcode
-                    },
-                    success: function(data) {
-                        //                        alert(data.count);
-                        countreq = data.countlist;
-                        document.getElementById('accreqlist').innerHTML = data.list;
-                    },
-                    error: function(response) {
-                        swal("Error encountered while adding data", "Please try again", "error");
-                    }
-                });
-            });
-
-        });
-
-
-    </script>
+                <!-- END JAVASCRIPTS -->
+                <script type="text/javascript" src="../ASSETS/js/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+                <script>
+                    $(document).ready(function () {
+                        $('#getappcode').hide();
+                        $('#updstudnum').hide();
+                        var countreq = 0;
+                        var flag = 0;
+                        $('#upload_csv').on("submit", function (e) {
+                            e.preventDefault();
+                            $.ajax({
+                                url: "Organization/OrganizationMembers/Export_stud.php"
+                                , method: "POST"
+                                , data: new FormData(this)
+                                , contentType: false, // The content type used when sending data to the server.
+                                cache: false, // To unable request pages to be cached
+                                processData: false, // To send DOMDocument or non processed data file it is set to false
+                                success: function (data) {
+                                    if (data == 'Error1') {
+                                        swal("Invalid File");
+                                    }
+                                    else if (data == "Error2") {
+                                        swal("Cancelled", "Please Select File", "error");
+                                    }
+                                    else {
+                                        swal({
+                                            title: "Data Imported!"
+                                            , text: "The csv file is successfully imported!"
+                                            , type: "success"
+                                            , confirmButtonColor: '#88A755'
+                                            , confirmButtonText: 'Okay'
+                                            , closeOnConfirm: false
+                                        }, function (isConfirm) {
+                                            window.location.reload();
+                                        });
+                                        //                            $.each(data, function(key, val) {
+                                        //                                //alert(val.snum)
+                                        //                            });
+                                        swal("Record Updated!", "The data is successfully imported!", "success");
+                                    }
+                                }
+                                , error: function (response) {
+                                    swal("Error encountered while adding data", "Please try again", "error");
+                                }
+                            })
+                        });
+                        $('#drpappcode').change(function () {
+                            //                alert('qwe');
+                            var _drpappcode = document.getElementById('drpappcode');
+                            var drpname = _drpappcode.options[_drpappcode.selectedIndex].text;
+                            var drpcode = _drpappcode.options[_drpappcode.selectedIndex].value;
+                            $.ajax({
+                                type: "GET"
+                                , url: 'Organization/OrganizationMembers/GetData-ajax.php'
+                                , dataType: 'json'
+                                , data: {
+                                    _code: drpcode
+                                }
+                                , success: function (data) {
+                                    //                        alert(data.count);
+                                    countreq = data.countlist;
+                                    document.getElementById('accreqlist').innerHTML = data.list;
+                                }
+                                , error: function (response) {
+                                    swal("Error encountered while adding data", "Please try again", "error");
+                                }
+                            });
+                        });
+                    });
+                </script>
     </body>
 
 </html>

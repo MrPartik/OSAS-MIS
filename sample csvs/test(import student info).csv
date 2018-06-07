@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 Student Number,Last Name,Middle Name,First Name,Course,Year Level,Section,Gender,Email Address,Contact Number,Birth Day,Birth Place,Address,Status
-20123-00075-CM-0,AGNIR,ELBA,LOWELL DAVE,BSIT-CM,3,1,Male,sampleemail@gmail.com,9182035678,10/30/1998,qc,qc,Regular
-=======
-stud no,lastname,middle,fname ,section,yr level,section,gender,email,nmber,bday,bplace,address,status
 20123-00075-CM-0,AGNIR,ELBA,LOWELL DAVE,BSIT,3,1,Male,sampleemail@gmail.com,9182035678,10/30/1998,qc,qc,Regular
 2016-00410-CM-0,ALEJANDRIA,CRUZ,MA. MICHAELA ,BSIT,3,1,Female,sampleemail@gmail.com,9182035678,10/30/1998,qc,qc,Regular
 2015-00046-CM-0,ALVIOR,NOBONG,KEITH EYVAN ,BSIT,3,1,Male,sampleemail@gmail.com,9182035678,10/30/1998,qc,qc,Regular
@@ -11,4 +7,3 @@ stud no,lastname,middle,fname ,section,yr level,section,gender,email,nmber,bday,
 2020-00410-CM-0,ALEJANDRIA,CRUZ,MA. MICHAELA ,BSIT,3,1,Female,sampleemail@gmail.com,9182035678,10/30/1998,qc,qc,Regular
 2032-00410-CM-0,ALEJANDRIA,CRUZ,MA. MICHAELA ,BSIT,3,1,Female,sampleemail@gmail.com,9182035678,10/30/1998,qc,qc,Regular
 2032-99999-CM-0,ALEJANDRIA,CRUZ,MA. MICHAELA ,BSIT,3,1,Female,sampleemail@gmail.com,9182035678,10/30/1998,qc,qc,Regular
->>>>>>> 6f17674f83dd3fb1746ef6be7d19545ba22a200e

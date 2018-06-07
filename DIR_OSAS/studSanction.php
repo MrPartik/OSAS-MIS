@@ -67,8 +67,8 @@ include('../config/connection.php');
                                     <br/>
                                     <br/>
                                         <div class="clearfix">
-                                            <div class="btn-group col-md-6">
-                                                <div class="col-md-3">
+                                            <div class=" col-md-12"  style="margin-left:-30px;">
+                                                <div class="col-md-2">
                                                     Course 
                                                     <select id="CourseFilter"  class="form-control">
                                                         <option value='Default'> All </option>
@@ -84,7 +84,7 @@ include('../config/connection.php');
                                                         ?>
                                                     </select>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
                                                     Year 
                                                     <select id="YearFilter" class="form-control ">
                                                         <option value='Default'> All </option>
@@ -100,7 +100,7 @@ include('../config/connection.php');
                                                         ?>
                                                     </select>   
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
                                                     Section 
                                                     <select id="SectionFilter"  class="form-control ">
                                                         <option value='Default'> All </option>
@@ -116,18 +116,16 @@ include('../config/connection.php');
                                                         ?>
                                                     </select>
                                                 </div>
-                                            </div>
-                                            <div class="btn-group col-md-12 ">
-                                            <br/>
+                                                <div class="col-md-6">
                                                    By Status
                                                 <div class="row">
-                                                    <div class="flat-red col-sm-2">
+                                                    <div class="flat-red col-sm-4">
                                                         <div class="radio ">
                                                             <input type="checkbox" checked="checked" id="NotClearedFilter" >
                                                             <label style="font-size:15px;color:#EC7063">Not Cleared </label>
                                                         </div>
                                                     </div>
-                                                    <div class="flat-green col-md-1">
+                                                    <div class="flat-green col-md-2">
                                                         <div class="radio ">
                                                             <input type="checkbox" checked="checked" id="ClearedFilter">
                                                             <label style="font-size:15px;color:#1ABC9C">Cleared   </label>
@@ -136,6 +134,8 @@ include('../config/connection.php');
                                                     
                                                 </div>
                                             </div>
+                                            </div>
+
                                         </div>                                    
                                     </div>
                                     
