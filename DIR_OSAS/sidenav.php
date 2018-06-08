@@ -78,6 +78,7 @@
                     </ul>
                 </li>
                 <li class="sub-menu"> <a href="docuArchiving.php" <?php if( $currentPage==='OSAS_docuArchive' ) {echo 'class="active"';} ?> > <i class="fa fa-envelope"></i> <span>Document Archiving </span> </a> </li>
+                <li class="sub-menu"> <a href="printReports.php" <?php if( $currentPage==='OSAS_print' ) {echo 'class="active"';} ?> > <i class="fa fa-print"></i> <span>Print Reports </span> </a> </li>
                 <li class="sub-menu" style="position: absolute;bottom: 0;width: 100%;"> <a href="docuArchiving.php" <?php if( $currentPage==='Config' ) {echo 'class="active"';} ?> > <i class="fa fa-gears"></i> <span>Configuration & Maintenance </span> </a>
                     <ul class="sub">
                         <!-- Please modify this -->

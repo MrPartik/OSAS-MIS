@@ -480,7 +480,7 @@ include('../config/connection.php');
                     , "sNext": "Next"
                 }
             }
-            , aaSorting: [[5, "desc"]]
+            , aaSorting: [[4, "desc"]]
         });
     });
     $("#TableStudSanc ").on("click ", "#StudSanctionModalClick ", function () {
