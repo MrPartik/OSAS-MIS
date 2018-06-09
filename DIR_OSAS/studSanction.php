@@ -555,13 +555,17 @@ include('../config/connection.php');
     });
     $('#btnprint').click(function () {
         var items = [];
+        alert($('#CourseFilter').val())
+        var Course = $('#CourseFilter').val()
+        var Year = $('#YearFilter').val()
+        var Section = $('#SectionFilter').val()
         var rows = $('#dynamic-table').dataTable().$('tr', {
             "filter": "applied"
         });
         $(rows).each(function (index, el) {
             items.push($(this).closest('tr').children('td:first').find('label').text());
         })
-        window.open('Print/StudentSanction_Print.php?items=' + items, '_blank');
+        window.open('Print/StudentSanction_Print.php?items=' + items + '&Course='+Course+'&Year='+Year+'&Section='+Section, '_blank');
     });
 
     $(".btnInsertOff").on("click", function () {
