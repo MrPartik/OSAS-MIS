@@ -200,7 +200,7 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                                                     </td>
                                                     <td class="numeric ">
                                                         <center>
-                                                            <input id="inputConsume" sancID="<?php echo $SancDetrow['AssSancID']?>" style="width:100px; text-align:center;" maxVal="<?php echo $SancDetrow[ 'TimeVal<br />']?>" value="<?php echo $SancDetrow['Consumed']?>" required/> </center>
+                                                            <input id="inputConsume" sancID="<?php echo $SancDetrow['AssSancID']?>" style="width:100px; text-align:center;" maxVal="<?php echo $SancDetrow[ 'TimeVal']?>" value="<?php echo $SancDetrow['Consumed']?>" required/> </center>
                                                     </td>
                                                     <td class="timeRemaining numeric hidden ">
                                                         <?php echo $SancDetrow['TimeVal']-$SancDetrow['Consumed']?>
@@ -211,7 +211,7 @@ INNER JOIN r_stud_profile SP ON SP.Stud_NO = ASS.AssSancStudStudent_STUD_NO WHER
                                                     </td>
                                                     <td>
                                                         <center>
-                                                            <input id="tobeDone" readonly class="form-control" type="text" value="<?php echo (new dateTime($SancDetrow[ 'Done']))->format(" D M d, Y ") ?>" sortt="<?php echo $SancDetrow[ 'Done'] ?>"> </center>
+                                                            <input id="tobeDone"  class="form-control" type="text" value="<?php echo (new dateTime($SancDetrow[ 'Done']))->format(" D M d, Y ") ?>" sortt="<?php echo $SancDetrow[ 'Done'] ?>"> </center>
                                                     </td>
                                                     <td class="actionDes">
                                                         <center><i title="Delete" style='cursor:pointer;font-size: 20px; ' id='deletemotoInside' class='fa fa-minus-circle  '></i> </center>
