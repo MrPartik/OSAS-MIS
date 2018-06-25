@@ -71,7 +71,7 @@
         }
     });
     $("button[name='insertUpdateProfileInfo']").on("click", function () {
-        if ($("#OSAS_ProfilePicture").val().length || $("#OSAS_username").val().length && $("#OSAS_currentpassword").val().length && $("#OSAS_newpassword").val().length && $("#OSAS_verifypassword").val().length) {
+        if ( $("#OSAS_username").val().length && $("#OSAS_currentpassword").val().length && $("#OSAS_newpassword").val().length && $("#OSAS_verifypassword").val().length) {
             if ($("#OSAS_newpassword").val() == $("#OSAS_verifypassword").val()) {
                 swal({
                     title: "Are you sure you want to save your profile?"
@@ -85,13 +85,14 @@
                     , closeOnCancel: false
                 }, function (isConfirm) {
                     if (isConfirm) {
-                        var file_data = $('#OSAS_ProfilePicture').prop('files')[0]
-                            , form_data = new FormData();
+                        var
+//                        file_data = $('#OSAS_ProfilePicture').prop('files')[0],
+                            form_data = new FormData();
                         form_data.append('OSAS_Save', 'insertDoc');
                         form_data.append('username', $("#OSAS_username").val());
                         form_data.append('prevpassword', $("#OSAS_currentpassword").val());
                         form_data.append('password', $("#OSAS_verifypassword").val());
-                        form_data.append('file', file_data);
+//                        form_data.append('file', file_data);
                         $.ajax({
                             url: "../config/saveProfile.php"
                             , type: "POST"

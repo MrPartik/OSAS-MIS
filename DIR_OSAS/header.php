@@ -2,13 +2,18 @@
 session_start();
 include('../config/dashboard/count.php'); 
 include('../config/query.php');
+// include composer autoload
+require '../vendor/autoload.php';
+// import the Avatar class
+use Laravolt\Avatar\Avatar;
+$avatar = new Avatar($configAvatar);
 if($_SESSION['logged_user']['role']=="Student Assistant" || $_SESSION['logged_user']['role']=="Staff" )
     {}else
     {
-         if($_SESSION['logged_user']['role']=="Student Assistant")
-        { header("location:../DIR_OSAS/dashboard.php"); }
-        else if($_SESSION['logged_user']['role']=="Staff")
-        { header("location:../DIR_OSAS/dashboard.php"); }
+    if($_SESSION['logged_user']['role']=="Student Assistant")
+    { header("location:../DIR_OSAS/dashboard.php"); }
+    else if($_SESSION['logged_user']['role']=="Staff")
+    { header("location:../DIR_OSAS/dashboard.php"); }
     }
      if($_SESSION['logged_user']['role']=="Organization")
     { }
@@ -86,10 +91,12 @@ $referenced_user = $_SESSION['logged_user']['ref']; ?>
                     <li>
                         <input type="text" class="form-control search" name="search" placeholder="Search" autocomplete="off"> </li>
                     <!-- user login dropdown start-->
-                    <li class="dropdown"> <a data-toggle="dropdown" class="dropdown-toggle" href="#">  <img alt="" src='../Avatar/<?php echo  $user_check; ?>.png'><span class="username" code='<?php echo $referenced_user  ?>'><?php echo $user_check; ?> </span> <b class="caret"></b> </a>
+
+                    <li class="dropdown"> <a data-toggle="dropdown" class="dropdown-toggle" href="#">  <img alt="" src="<?php echo $avatar->create($user_check)->toBase64();?>" title="<?php echo strToUpper($user_check); ?>"><span class="username" code='<?php echo $referenced_user  ?>'></span> <b class="caret"></b> </a>
                         <ul class="dropdown-menu extended logout">
                             <!-- <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li> -->
-                            <li><a href="#Change" data-toggle="modal"><i class="fa fa-key"></i> Change Profile</a></li>
+                            <li><a><i class="fa fa-user"></i>  <?php echo strToUpper($user_check); ?></a></li>
+                            <li><a href="#Change" data-toggle="modal"><i class="fa fa-key"></i> Change Password</a></li>
                             <li><a href="../config/logout.php"><i class="fa fa-sign-out"></i> Log Out</a></li>
                         </ul>
                     </li>
@@ -104,14 +111,15 @@ $referenced_user = $_SESSION['logged_user']['ref']; ?>
             </div>
         </header>
         <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Change" class="modal fade">
-            <div class="modal-dialog" style="width:700px">
+            <div class="modal-dialog" style="width:400px">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Change Profile</h4> </div>
+                        <h4 class="modal-title">Change Password</h4> </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6">
+<!--
                                 <div class="col-lg-12">
                                     <div class="fileupload fileupload-new" data-provides="fileupload">
                                         <div class="fileupload-new thumbnail"> <img src='../Avatar/<?php echo  $user_check; ?>.png' alt="" /> </div>
@@ -122,9 +130,12 @@ $referenced_user = $_SESSION['logged_user']['ref']; ?>
                                             <input type="file" id="OSAS_ProfilePicture" class="default" /> </span> <a href="#" class="btn btn-danger btn-sm fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i>Remove</a> </div>
                                     </div>
                                 </div>
+-->
                             </div>
-                            <div class="col-md-6">
-                                <div class="col-md-12" style="padding-top:10px">Username
+
+                            <div class="col-md-12">
+                                <center><img alt="" src="<?php echo $avatar->create($user_check)->toBase64();?>" title="<?php echo strToUpper($user_check); ?>"></center>
+                                <div disabled class="col-md-12" style="padding-top:10px">Username
                                     <input id="OSAS_username" type="text" class="form-control" placeholder="your username" value="<?php echo $user_check; ?>"> </div>
                                 <div class="col-md-12" style="padding-top:10px">Current Password
                                     <input id="OSAS_currentpassword" type="password" class="form-control" placeholder="your previous password"> </div>
@@ -137,7 +148,7 @@ $referenced_user = $_SESSION['logged_user']['ref']; ?>
                     </div>
                     <div class="modal-footer">
                         <button data-dismiss="modal" class="btn btn-cancel" type="button">Cancel</button>
-                        <button name="insertUpdateProfileInfo" class="btnInsert btn btn-success" type="submit">Save</button>
+                        <button name="insertUpdateProfileInfo" class="btn btn-success" type="submit">Save</button>
                     </div>
                 </div>
             </div>
